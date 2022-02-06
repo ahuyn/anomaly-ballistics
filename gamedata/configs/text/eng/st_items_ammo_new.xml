@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<!--
+	Ammunition
+-->
+
+<string_table>
+	
+	<string id="ammo-11.43x23-fmj">
+		<text>.45 ACP rounds</text>
+	</string>
+	<string id="ammo-11.43x23-fmj_descr">
+		<text>The .45 calibre full metal jacket round has enjoyed popularity for a hundred years thanks to its ballistic performance and a relatively small propelling charge. As a result, the bullet in this round is relatively slow but highly accurate and provides considerable stopping power.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]none\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="ammo-11.43x23-fmj_s">
+		<text>.45 ACP</text>
+	</string>
+	
+	
+	<string id="ammo-7.62x39-api">
+		<text>7.62x39 Armor-Piercing Incendiary rounds</text>
+	</string>
+	<string id="ammo-7.62x39-api_descr">
+		<text>The .45 calibre full metal jacket round has enjoyed popularity for a hundred years thanks to its ballistic performance and a relatively small propelling charge. As a result, the bullet in this round is relatively slow but highly accurate and provides considerable stopping power.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]none\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="ammo-7.62x39-api_s">
+		<text>.45 ACP</text>
+	</string>
+
+    <string id="ammo_12.7x55_exp">
+		<text>12.7x55 mm YL rounds</text>
+	</string>
+	<string id="ammo_12.7x55_exp_descr">
+		<text>A relatively new and restricted evelopment, these experimental rounds utilize a small amount of explosive material in the tip to, in theory, cause a directed explosion designed to defeat armor. Issues with the manufacturing process means that in practice, the whole round detonates on impact, acting as a sort of micro grenade. While extremely hazardous, certain eccentric stalkers will pay dearly for these rounds to hunt extremely large mutants.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IV\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]very high</text>
+	</string>
+	<string id="ammo_12.7x55_exp_s">
+		<text>12.7x55 AP</text>
+	</string>
+</string_table>

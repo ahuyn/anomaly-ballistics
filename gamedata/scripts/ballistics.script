@@ -25,7 +25,9 @@ function init()
 end
 
 -- modify the hit to apply the desired amount of damage, inverting and going around the misery damage formula 
-function modify_hit(desired, hit)
+-- ap overkill can be fully negated by simply setting the ap equal to bone armor and 
+function modify_hit(hit, ap_scale, )
+
 end
 
 -- check actor shot bullet type, 
