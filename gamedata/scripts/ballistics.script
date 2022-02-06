@@ -1,0 +1,41 @@
+-- track and store armor reductions
+local bone_reduced_armor = {}
+
+-- pull npc bone sections based on the outfit they wear
+-- if not there, fall back to a standard armor based on rank
+function get_human_bones_data(npc, visual)
+    local visual = visual or npc:get_visual_name()
+	local tbl = get_outfit_by_npc_visual(visual)
+    local outfit_sec = tbl and tbl[1]
+    local helmet_sec = tbl and tbl[2]
+    local outfit_bones = SYS_GetParam(0, outfit_sec, "bones_koeff_protection")
+
+    local helmet_bones = SYS_GetParam(0, helmet_sec, "bones_koeff_protection")
+    return {outfit_bones, helmet_bones}
+end
+
+-- pull mutant
+function get_mutant_bones_data(npc)
+
+
+end
+
+function init()
+
+end
+
+-- modify the hit to apply the desired amount of damage, inverting and going around the misery damage formula 
+function modify_hit(desired, hit)
+end
+
+-- check actor shot bullet type, 
+function npc_on_before_hit(npc,shit,bone_id)
+end
+
+
+function mutant_on_before_hit(npc,shit,bone_id)
+end
+
+function on_game_start()
+end
+
