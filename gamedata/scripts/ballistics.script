@@ -24,20 +24,82 @@ function init()
 
 end
 
--- modify the hit to apply the desired amount of damage, inverting and going around the misery damage formula 
--- ap overkill can be fully negated by simply setting the ap equal to bone armor and 
-function modify_hit(hit, ap_scale, )
-
+-- checking if actor shot the gun and if gun is gun
+function validate_hit(shit)
+    if shit.draftsman and shit.draftsman:id() ~= AC_ID then return end
+	if bone_id == 65535 then return end
+	if shit.power >= 50 then return end
+	local shooter = shit.draftsman
+	local wpn = level.object_by_id(shit.weapon_id)
+	if not wpn or IsGrenade(wpn) or (not IsWeapon(wpn)) then return end
+	local sec = wpn:section()
+	if ini_sys:r_string_ex(sec, "class") == "S_EXPLO" then return end
+	if IsItem("fake_ammo_wpn",sec) then return end
+    return {
+        ["weapon"] = wpn, 
+        ["section"] = sec
+    } -- returning stuff we parsed, so we don't parse it again
 end
 
--- check actor shot bullet type, 
-function npc_on_before_hit(npc,shit,bone_id)
+function npc_on_before_hit(npc,s_hit,bone_id)
+    local valid_hit_data = validate_hit(s_hit)
+    if not (valid_hit_data) then -- no data, so we don't care about the hit
+        return false 
+    end
+    local wpn = valid_hit_data.weapon
+    local sec = valid_hit_data.section
+    printf("Actor hit npc [%s] with [%s]", npc:section(), sec)
+    return {
+        ["shit"] = s_hit,
+        ["bone_id"] = bone_id
+    } -- just returning something for now
 end
 
-
-function mutant_on_before_hit(npc,shit,bone_id)
+function monster_on_before_hit(monster,s_hit,bone_id)
+    local valid_hit_data = validate_hit(s_hit)
+    if not (valid_hit_data) then 
+        return false 
+    end
+    local wpn = valid_hit_data.weapon
+    local sec = valid_hit_data.section
+    printf("Actor hit monster [%s] with [%s]", monster:section(), sec)
+    return {
+        ["shit"] = s_hit,
+        ["bone_id"] = bone_id
+    }
 end
 
-function on_game_start()
+-- Overriding hit callbacks so our custom hits can communicate with other scripts
+local flags = { ret_value = true }
+
+_G.CAI_Stalker__BeforeHitCallback = function(npc,shit,bone_id)
+    local s_hit = shit
+    flags.ret_value = true
+    local custom_hit = npc_on_before_hit(npc,s_hit,bone_id)
+    if custom_hit then
+        SendScriptCallback("npc_on_before_hit",npc,custom_hit.shit,custom_hit.bone_id, flags)
+        if flags.ret_value then
+            npc:set_health_ex(npc.health - custom_hit.shit.power)
+            shit.power = 0.0001 -- removing engine stuff
+        end
+    else
+        SendScriptCallback("npc_on_before_hit",npc,shit,bone_id,flags)
+    end
+	return flags.ret_value
 end
 
+_G.CBaseMonster__BeforeHitCallback = function(monster,shit,bone_id)
+	local s_hit = shit
+    flags.ret_value = true
+    local custom_hit = monster_on_before_hit(monster,s_hit,bone_id)
+    if custom_hit then
+        SendScriptCallback("monster_on_before_hit",monster,custom_hit.shit,custom_hit.bone_id, flags)
+        if flags.ret_value then
+            monster:set_health_ex(monster.health - custom_hit.shit.power)
+            shit.power = 0.0001
+        end
+    else
+        SendScriptCallback("monster_on_before_hit",monster,shit,bone_id,flags)
+    end
+	return flags.ret_value
+end
