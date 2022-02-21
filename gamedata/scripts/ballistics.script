@@ -1,6 +1,8 @@
 -- track and store armor reductions
 local bone_reduced_armor = {}
 
+local ini_ammo = ini_file("items\\ammo\\importer.ltx")
+
 -- pull npc bone sections based on the outfit they wear
 -- if not there, fall back to a standard armor based on rank
 function get_human_bones_data(npc, visual)
