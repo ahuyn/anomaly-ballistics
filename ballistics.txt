@@ -1,0 +1,40 @@
+0.011 = Nothing. Paper. Handgun bullets should be slowed down a little bit but it's nothing.
+0.075 = Class I armor, single kevlar vest stuff. Should stop hollowpoint handgun rounds reliably
+
+0.1   = Class II armor - basic stalker suit
+0.125 = Combat suits, not body armor - advanced stalker suit, STS suits
+0.15  = Heavier combat suits, PS5s
+
+0.2   = Berill 
+0.25  = no armors use this, ignore
+
+0.3   = Only CS3 heavy
+0.35  = SKAT-9 armor
+
+0.4   = Duty PSZ armor, light exosuits
+0.45  = Exoskeleton and Nosorog armor, AP short or full rifle rounds at minimum
+0.47+ = ULTRA T H I C C only penetrable by fullsize rifle AP ammo (barely) and anti-material rounds. Only Duty and Military exos (standard?) have this
+
+0.0-0.1 = no armor to basic
+    - can be defeated by most pistol rounds, hollowpoints, etc
+0.1-0.2 = kevlar armor to just below plate
+    - pistol rounds start to struggle
+0.2-0.3 = basic metal plate
+    - smallbore rifle fmj, ap pistol
+0.3-0.4 = advanced metal plate
+    - largebore rifle fmj, smallbore ap
+0.4+ = super strong armor, exosuit quality
+    - o.4 is exosuit, 0.45 is exoskeleton/nosorog
+    - largebore rifle ap
+
+When it comes to AP:
+- bullets have an AP roughly tiered the same as the armors
+- bullets within the same tier or one above will reliably penetrate with consistent damage
+- two or more above, you see overpenetration issues and damage is reduced
+- one below, chance to defeat but damage is greatly reduced
+- successive below exponentially reduces effectiveness
+
+
+Basic formula
+
+In order for a bullet to defeat an armor, the AP tier must match or exceed the bone armor tier.

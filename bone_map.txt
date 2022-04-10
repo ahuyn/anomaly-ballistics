@@ -1,0 +1,250 @@
+-- no ballistic prot
+O: novice_outfit                       BONE: actor_armor_novice          HEAD: 0.0    BODY: 0.011  FWP: 0.2
+O: bandit_novice_outfit                BONE: actor_armor_novice          HEAD: 0.0    BODY: 0.011  FWP: 0.2
+O: bandit_novice_outfit_alt            BONE: actor_armor_novice          HEAD: 0.0    BODY: 0.011  FWP: 0.22
+O: cs_novice_outfit                    BONE: actor_armor_novice          HEAD: 0.0    BODY: 0.011  FWP: 0.2
+O: dolg_novice_outfit                  BONE: actor_armor_novice          HEAD: 0.0    BODY: 0.011  FWP: 0.2
+O: svoboda_novice_outfit               BONE: actor_armor_novice          HEAD: 0.0    BODY: 0.011  FWP: 0.2
+O: novice_outfit_camo                  BONE: actor_armor_novice          HEAD: 0.0    BODY: 0.011  FWP: 0.22
+O: novice_outfit_tourist               BONE: actor_armor_novice          HEAD: 0.0    BODY: 0.011  FWP: 0.24
+O: redline_novice_outfit               BONE: actor_armor_novice          HEAD: 0.0    BODY: 0.011  FWP: 0.22
+
+O: ecolog_outfit_orange                BONE: actor_armor_ssp99           HEAD: 0.15   BODY: 0.011  FWP: 0.14
+O: ecolog_outfit_white                 BONE: actor_armor_ssp99           HEAD: 0.15   BODY: 0.011  FWP: 0.14
+O: ecolog_outfit_yello                 BONE: actor_armor_ssp99           HEAD: 0.15   BODY: 0.011  FWP: 0.14
+
+-- class I
+O: ecolog_outfit_red                   BONE: actor_armor_ssp99m          HEAD: 0.15   BODY: 0.075  FWP: 0.14
+O: ecolog_outfit_blue                  BONE: actor_armor_ssp99m          HEAD: 0.15   BODY: 0.075  FWP: 0.14
+O: ecolog_outfit_green                 BONE: actor_armor_ssp99m          HEAD: 0.15   BODY: 0.075  FWP: 0.14
+O: cs_light_novice_outfit              BONE: actor_armor_cs1             HEAD: 0.0    BODY: 0.075  FWP: 0.25
+O: army_outfit                         BONE: actor_armor_cs1             HEAD: 0.0    BODY: 0.075  FWP: 0.25
+O: ghillie_outfit                      BONE: actor_armor_ghillie         HEAD: 0.0    BODY: 0.075  FWP: 0.16
+O: travel_outfit                       BONE: actor_armor_class1          HEAD: 0.0    BODY: 0.075  FWP: 0.2
+
+-- class IIA
+O: monolith_nbc_outfit                 BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.19
+O: cs_nbc_outfit                       BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.25
+O: cs_stalker_outfit                   BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.25
+O: cs_stalker_proto_exo_outfit         BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.25
+O: nbc_dolg_outfit                     BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.25
+O: nbc_freedom_outfit                  BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.25
+O: bandit_nbc_outfit                   BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.27
+O: nbc_outfit                          BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.27
+O: nbc_merc_outfit                     BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.3224
+
+O: merc_scout_outfit                   BONE: actor_armor_freedom_wind    HEAD: 0.0    BODY: 0.1    FWP: 0.15
+O: monolith_outfit                     BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.19
+O: monolith_proto_exo_outfit           BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.19
+O: dolg_scout_outfit                   BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.2
+O: merc_fighter_outfit                 BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.2
+O: svoboda_light_outfit                BONE: actor_armor_freedom_wind    HEAD: 0.0    BODY: 0.1    FWP: 0.25
+O: svoboda_light_proto_exo_outfit      BONE: actor_armor_freedom_wind    HEAD: 0.0    BODY: 0.1    FWP: 0.25
+O: bandit_sun_outfit                   BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.27
+O: ecolog_guard_outfit                 BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.27
+O: merc_sun_outfit                     BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.27
+O: stalker_outfit                      BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.27
+O: stalker_proto_exo_outfit            BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.27
+O: ecolog_proto_exo_outfit             BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.2767
+O: dolg_red_outfit                     BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.28
+O: isg_outfit                          BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.32
+O: isg_proto_exo_outfit                BONE: actor_armor_suit            HEAD: 0.0    BODY: 0.1    FWP: 0.32
+
+-- class IIA+
+O: cs_light_outfit                     BONE: actor_armor_cs2             HEAD: 0.0    BODY: 0.125  FWP: 0.2
+O: dolg_scientific_wood_outfit         BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.25
+O: stalker_autumn_outfit               BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.27
+O: stalker_bear_outfit                 BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.27
+O: stalker_drought_outfit              BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.27
+O: stalker_graphite_outfit             BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.27
+O: stalker_predator_outfit             BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.27
+O: stalker_salamander_outfit           BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.27
+O: bandit_scientific_dark_outfit       BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.29
+O: merc_wolven_outfit                  BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.26
+O: monolith_scientific_light_outfit    BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.29
+O: renegade_scientific_outfit          BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.29
+O: merc_sunset_outfit                  BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.3
+O: dolg_scientific_red_outfit          BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.31
+O: stalker_tigerstripe_outfit          BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.37
+O: merc_coyote_outfit                  BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.4
+O: merc_jackal_outfit                  BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.4
+O: nomad_outfit                        BONE: actor_armor_class2          HEAD: 0.0    BODY: 0.125  FWP: 0.4
+
+-- class II
+O: isg_lcs_camo_outfit                 BONE: actor_armor_bandit          HEAD: 0.0    BODY: 0.15   FWP: 0.1
+O: isg_lcs_outfit                      BONE: actor_armor_bandit          HEAD: 0.0    BODY: 0.15   FWP: 0.2
+O: banditmerc_outfit                   BONE: actor_armor_bandit          HEAD: 0.0    BODY: 0.15   FWP: 0.22
+O: cs_scientific_outfit                BONE: actor_armor_duty_seva       HEAD: 0.15   BODY: 0.15   FWP: 0.23
+O: dolg_outfit                         BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.25
+O: dolg_proto_exo_outfit               BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.25
+O: bandit_ps5_outfit                   BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.26
+O: cs_scientific_outfit_good           BONE: actor_armor_seva            HEAD: 0.15   BODY: 0.15   FWP: 0.27
+O: svoboda_scientific_outfit           BONE: actor_armor_seva            HEAD: 0.15   BODY: 0.15   FWP: 0.27
+O: isg_scientific_outfit               BONE: actor_armor_seva            HEAD: 0.15   BODY: 0.15   FWP: 0.27
+O: bandit_scientific_outfit            BONE: actor_armor_seva            HEAD: 0.15   BODY: 0.15   FWP: 0.28
+O: dolg_scientific_outfit              BONE: actor_armor_seva            HEAD: 0.15   BODY: 0.15   FWP: 0.28
+O: scientific_outfit                   BONE: actor_armor_seva            HEAD: 0.15   BODY: 0.15   FWP: 0.28
+O: monolith_scientific_outfit          BONE: actor_armor_seva            HEAD: 0.15   BODY: 0.15   FWP: 0.28
+O: greh_ps5_outfit                     BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.29
+O: greh_armored_camo_outfit            BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.3
+O: greh_armored_outfit                 BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.3
+O: greh_trenchcoat_outfit              BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.3
+O: trenchcoat_brown_outfit             BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.3
+O: trenchcoat_dolg_brown_outfit        BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.3
+O: trenchcoat_freedom_brown_outfit     BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.3
+O: trenchcoat_green_outfit             BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.3
+O: isg_lcs_urban_outfit                BONE: actor_armor_bandit          HEAD: 0.0    BODY: 0.15   FWP: 0.3
+O: monolith_trenchcoat_outfit          BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.3
+O: renegademerc_outfit                 BONE: actor_armor_bandit          HEAD: 0.0    BODY: 0.15   FWP: 0.32
+O: merc_outfit                         BONE: actor_armor_bandit          HEAD: 0.0    BODY: 0.15   FWP: 0.32
+O: merc_scientific_outfit              BONE: actor_armor_seva            HEAD: 0.15   BODY: 0.15   FWP: 0.32
+O: isg_camo_outfit                     BONE: actor_armor_duty_suit       HEAD: 0.0    BODY: 0.15   FWP: 0.32
+O: svoboda_heavy_outfit_2              BONE: actor_armor_freedom_suit    HEAD: 0.0    BODY: 0.15   FWP: 0.33
+
+-- class IIIA
+O: wastelander_outfit                  BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.3
+O: cs_medium_outfit                    BONE: actor_armor_cs3             HEAD: 0.0    BODY: 0.2    FWP: 0.3
+O: specops_bandit_outfit               BONE: actor_armor_berill          HEAD: 0.0    BODY: 0.2    FWP: 0.31
+O: specops_dolg_outfit                 BONE: actor_armor_berill          HEAD: 0.0    BODY: 0.2    FWP: 0.31
+O: specops_merc_outfit                 BONE: actor_armor_berill          HEAD: 0.0    BODY: 0.2    FWP: 0.31
+O: specops_outfit                      BONE: actor_armor_berill          HEAD: 0.0    BODY: 0.2    FWP: 0.31
+O: svoboda_heavy_outfit                BONE: actor_armor_berill          HEAD: 0.0    BODY: 0.2    FWP: 0.32
+O: merc_scientific_armored_outfit      BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.34
+O: dolg_voin_outfit                    BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.34
+O: dolg_specops_red_outfit             BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.35
+O: hybrid_outfit                       BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.35
+O: light_dolg_outfit                   BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.35
+O: light_freedom_outfit                BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.35
+O: light_isg_outfit                    BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.35
+O: light_loner_outfit                  BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.35
+O: light_merc_outfit                   BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.35
+O: light_monolit_outfit                BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.35
+O: light_voen_outfit                   BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.35
+O: merc_nighthunter_outfit             BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.36
+O: merc_ace_outfit                     BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.38
+O: merc_combat_scientific_outfit       BONE: actor_armor_class3          HEAD: 0.0    BODY: 0.2    FWP: 0.38
+
+-- class III
+O: cs_heavy_outfit                     BONE: actor_armor_cs_heavy        HEAD: 0.0    BODY: 0.3    FWP: 0.3
+
+O: military_bandit_outfit              BONE: actor_armor_skat            HEAD: 0.0    BODY: 0.35   FWP: 0.3
+O: military_sky_outfit                 BONE: actor_armor_skat            HEAD: 0.0    BODY: 0.35   FWP: 0.3
+O: military_freedom_outfit             BONE: actor_armor_skat            HEAD: 0.0    BODY: 0.35   FWP: 0.38
+O: military_merc_outfit                BONE: actor_armor_skat            HEAD: 0.0    BODY: 0.35   FWP: 0.38
+O: military_monolit_outfit             BONE: actor_armor_skat            HEAD: 0.0    BODY: 0.35   FWP: 0.38
+O: military_outfit                     BONE: actor_armor_skat            HEAD: 0.0    BODY: 0.35   FWP: 0.38
+O: military_proto_exo_outfit           BONE: actor_armor_skat            HEAD: 0.0    BODY: 0.35   FWP: 0.38
+
+-- class III+
+O: dolg_pantsir_outfit                 BONE: actor_armor_class4          HEAD: 0.0    BODY: 0.4    FWP: 0.42
+O: dolg_heavy_outfit                   BONE: actor_armor_psz             HEAD: 0.0    BODY: 0.4    FWP: 0.44
+O: dolg_heavy_proto_exo_outfit         BONE: actor_armor_psz             HEAD: 0.0    BODY: 0.4    FWP: 0.44
+O: cs_exolight_outfit                  BONE: actor_armor_radiation       HEAD: 0.3    BODY: 0.4    FWP: 0.48
+O: dolg_heavy_redline_outfit           BONE: actor_armor_class4          HEAD: 0.0    BODY: 0.4    FWP: 0.49
+O: dolg_exolight_outfit                BONE: actor_armor_radiation       HEAD: 0.3    BODY: 0.4    FWP: 0.51
+O: isg_exolight_outfit                 BONE: actor_armor_radiation       HEAD: 0.3    BODY: 0.4    FWP: 0.57
+O: svoboda_exolight_outfit             BONE: actor_armor_radiation       HEAD: 0.3    BODY: 0.4    FWP: 0.57
+O: exolight_outfit                     BONE: actor_armor_radiation       HEAD: 0.3    BODY: 0.4    FWP: 0.58
+O: bandit_exolight_outfit              BONE: actor_armor_radiation       HEAD: 0.3    BODY: 0.4    FWP: 0.58
+O: merc_exolight_outfit                BONE: actor_armor_radiation       HEAD: 0.3    BODY: 0.4    FWP: 0.59
+O: monolith_exolight_outfit            BONE: actor_armor_radiation       HEAD: 0.3    BODY: 0.4    FWP: 0.6
+O: military_exolight_outfit            BONE: actor_armor_radiation       HEAD: 0.3    BODY: 0.4    FWP: 0.6
+
+O: bandit_exo_outfit                   BONE: actor_armor_bandit_exo      HEAD: 0.3    BODY: 0.43   FWP: 0.58
+O: svoboda_exo_outfit                  BONE: actor_armor_freedom_exo     HEAD: 0.3    BODY: 0.43   FWP: 0.57
+
+-- effectively class IV
+O: renegade_exo_outfit                 BONE: actor_armor_exo             HEAD: 0.3    BODY: 0.45   FWP: 0.48
+O: ecolog_exo_outfit                   BONE: actor_armor_exo             HEAD: 0.3    BODY: 0.45   FWP: 0.48
+O: cs_exo_outfit                       BONE: actor_armor_exo             HEAD: 0.3    BODY: 0.45   FWP: 0.48
+O: freedom_exo_vineleaf_outfit         BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.58
+O: dolg_nosorog_outfit                 BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.51
+O: freedom_nosorog_outfit              BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.57
+O: exo_dolg_outfit                     BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.58
+O: exo_dolg_red_outfit                 BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.58
+O: exo_dolg_urban_outfit               BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.58
+O: exo_dolg_wood_outfit                BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.58
+O: exo_merc_grass_outfit               BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.58
+O: exo_merc_urban_outfit               BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.58
+O: exo_merc_wood_outfit                BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.58
+O: exo_outfit                          BONE: actor_armor_exo             HEAD: 0.3    BODY: 0.45   FWP: 0.58
+O: exo_wood_outfit                     BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.58
+O: merc_exo_outfit                     BONE: actor_armor_exo             HEAD: 0.3    BODY: 0.45   FWP: 0.59
+O: merc_nosorog_outfit                 BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.59
+O: army_nosorog_outfit                 BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.6
+O: isg_exo_outfit                      BONE: actor_armor_exo             HEAD: 0.3    BODY: 0.45   FWP: 0.6
+O: greh_exo_outfit                     BONE: actor_armor_exo             HEAD: 0.3    BODY: 0.45   FWP: 0.6
+O: isg_nosorog_outfit                  BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.6
+O: monolith_exo_outfit                 BONE: actor_armor_exo             HEAD: 0.3    BODY: 0.45   FWP: 0.6
+O: monolith_nosorog_outfit             BONE: actor_armor_class5          HEAD: 0.35   BODY: 0.45   FWP: 0.6
+
+O: dolg_exo_outfit                     BONE: actor_armor_duty_exo        HEAD: 0.3    BODY: 0.47   FWP: 0.51
+
+O: military_exo_outfit                 BONE: actor_armor_military_exo    HEAD: 0.35   BODY: 0.5    FWP: 0.6
+
+-- helmets
+O: helm_bandana                        BONE: actor_helm_absent           HEAD: 0.0    BODY: 0.0    FWP: nil
+O: helm_rp_bala                        BONE: actor_helm_absent           HEAD: 0.0    BODY: 0.0    FWP: nil
+O: helm_cloth_mask                     BONE: actor_helm_absent           HEAD: 0.0    BODY: 0.0    FWP: nil
+O: helm_ach7                           BONE: actor_helm_hardhat          HEAD: 0.01   BODY: 0.0    FWP: nil
+O: helm_ach7ex                         BONE: actor_helm_hardhat          HEAD: 0.01   BODY: 0.0    FWP: nil
+O: helm_ranger                         BONE: actor_helm_m40              HEAD: 0.011  BODY: 0.0    FWP: nil
+O: helm_resp                           BONE: actor_helm_respirator       HEAD: 0.011  BODY: 0.0    FWP: nil
+O: helm_respirator                     BONE: actor_helm_respirator       HEAD: 0.011  BODY: 0.0    FWP: nil
+O: helm_respirator_gp5                 BONE: actor_helm_respirator       HEAD: 0.011  BODY: 0.0    FWP: nil
+O: helm_respirator_old                 BONE: actor_helm_respirator       HEAD: 0.011  BODY: 0.0    FWP: nil
+O: helm_m40                            BONE: actor_helm_m40              HEAD: 0.011  BODY: 0.0    FWP: nil
+O: helm_m50                            BONE: actor_helm_m40              HEAD: 0.011  BODY: 0.0    FWP: nil
+O: helm_ppm88                          BONE: actor_helm_m40              HEAD: 0.011  BODY: 0.0    FWP: nil
+O: helm_protective                     BONE: actor_helm_screen           HEAD: 0.15   BODY: 0.0    FWP: nil
+O: helm_hardhat                        BONE: actor_helm_hardhat          HEAD: 0.20   BODY: 0.0    FWP: nil
+O: helm_hardhat_snag                   BONE: actor_helm_hardhat          HEAD: 0.20   BODY: 0.0    FWP: nil
+O: helm_tactic                         BONE: actor_helm_tactic           HEAD: 0.3    BODY: 0.0    FWP: nil
+O: helm_battle                         BONE: actor_helm_battle           HEAD: 0.35   BODY: 0.0    FWP: nil
+O: helm_exo                            BONE: actor_helm_exo              HEAD: 0.4    BODY: 0.0    FWP: nil
+O: helm_metro                          BONE: actor_helm_exo              HEAD: 0.4    BODY: 0.0    FWP: nil
+O: helm_spartan                        BONE: actor_helm_spartan          HEAD: 0.45   BODY: 0.0    FWP: nil
+
+Inferences:
+All bones have the mentioned level of protection. Feet and hands have 20% of the listed protection.
+
+Bone armor levels mapped to threat protection levels
+
+General damage system (can also refer to npc bone protections themselves tbh):
+
+
+0.011 = Nothing. Paper. Handgun bullets should be slowed down a little bit but it's nothing.
+0.075 = Class I armor, single kevlar vest stuff. Should stop hollowpoint handgun rounds reliably
+
+0.1   = Class II armor - basic stalker suit
+0.125 = Combat suits, not body armor - advanced stalker suit, STS suits
+0.15  = Heavier combat suits, PS5s
+
+0.2   = Berill 
+0.25  = no armors use this, ignore
+
+0.3   = Only CS3 heavy
+0.35  = SKAT-9 armor
+
+0.4   = Duty PSZ armor, light exosuits
+0.45  = Exoskeleton and Nosorog armor, AP short or full rifle rounds at minimum
+0.47+ = ULTRA T H I C C only penetrable by fullsize rifle AP ammo (barely) and anti-material rounds. Only Duty and Military exos (standard?) have this
+
+0.0-0.1 = no armor to basic
+    - can be defeated by most pistol rounds, hollowpoints, etc
+0.1-0.2 = kevlar armor to just below plate
+    - pistol rounds start to struggle
+0.2-0.3 = basic metal plate
+    - smallbore rifle fmj, ap pistol
+0.3-0.4 = advanced metal plate
+    - largebore rifle fmj, smallbore ap
+0.4+ = super strong armor, exosuit quality
+    - o.4 is exosuit, 0.45 is exoskeleton/nosorog
+    - largebore rifle ap
+
+When it comes to AP:
+- bullets have an AP roughly tiered the same as the armors
+- bullets within the same tier or one above will reliably penetrate with consistent damage
+- two or more above, you see overpenetration issues and damage is reduced
+- one below, chance to defeat but damage is greatly reduced
+- successive below exponentially reduces effectiveness

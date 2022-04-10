@@ -1,48 +1,84 @@
-[ammo_9x18_fmj]
+; 9x18
+[ammo_9x18_fmj] ; +P
+hit = 1
+ap = 0.1
+impulse = 0.6
+impair = 1
+
+[ammo_9x18_fmj_bad]:ammo_9x18_fmj ; surplus PST
+hit			= 1
+impulse		= 0.56
+ap			= 0.09
+
+[ammo_9x18_pmm] ; RG028 JHP
 hit = 1
 ap = 1
 impulse = 1
 
-[ammo_9x18_fmj_bad]:ammo_9x18_fmj
+[ammo_9x18_pmm_bad]:ammo_9x18_pmm ; HP hunting
 
-[ammo_9x18_pmm]
+[ammo_9x18_ap] ; 7N16 PMM, modern AP
 hit = 1
 ap = 1
 impulse = 1
 
-[ammo_9x18_pmm_bad]:ammo_9x18_pmm
+[ammo_9x18_ap_bad]:ammo_9x18_ap ; 7N15 AP
 
-[ammo_9x18_fmj]
+; 9x19
+[ammo_9x19_fmj] ; +P+
 hit = 1
 ap = 1
 impulse = 1
 
-[ammo_9x18_fmj_bad]:ammo_9x18_fmj
+[ammo_9x19_fmj_bad]:ammo_9x19_fmj ; standard FMJ
 
-[ammo_9x18_ap]
+[ammo_9x19_pbp] ; JHP +P
 hit = 1
 ap = 1
 impulse = 1
 
-[ammo_9x18_ap_bad]:ammo_9x18_ap
+[ammo_9x19_pbp_bad]:ammo_9x19_pbp ; JHP
 
-[ammo_9x18_fmj]
+[ammo_9x19_ap] ; 7N31 overpressure AP
 hit = 1
 ap = 1
 impulse = 1
 
-[ammo_9x18_fmj_bad]:ammo_9x18_fmj
+[ammo_9x19_ap_bad]:ammo_9x19_ap ; 7N21 overpressure
 
-[ammo_9x19_fmj]
+
+[ammo_11.43x23_fmj] ; soft point
 hit = 1
 ap = 1
 impulse = 1
 
-[ammo_9x19_fmj_bad]:ammo_9x19_fmj
+[ammo_11.43x23_fmj_bad]:ammo_11.43x23_fmj ; FMJ
 
-[ammo_9x18_fmj]
+[ammo_11.43x23_hydro] ; hydrashok HP
 hit = 1
 ap = 1
 impulse = 1
 
-[ammo_9x18_fmj_bad]:ammo_9x18_fmj
+[ammo_11.43x23_hydro_bad]:ammo_11.43x23_hydro ; HP
+
+
+[ammo_357_hp_mag] ; handload JFP
+hit = 1
+ap = 1
+impulse = 1
+
+[ammo_357_hp_mag_bad]:ammo_357_hp_mag ; standard HP
+
+[ammo_9x18_fmj] ; +P
+hit = 0.2
+ap = 1
+impulse = 1
+
+[ammo_9x18_fmj_bad]:ammo_9x18_fmj ; surplus PST
+
+[ammo_9x18_fmj] ; +P
+hit = 0.2
+ap = 1
+impulse = 1
+
+[ammo_9x18_fmj_bad]:ammo_9x18_fmj ; surplus PST

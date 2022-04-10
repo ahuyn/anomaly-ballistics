@@ -1,0 +1,47 @@
+Bone_IDs = {
+    [2]  =	"bip01_pelvis",
+    [3]  =	"bip01_l_thigh",
+    [4]  =	"bip01_l_calf",
+    [5]  =	"bip01_l_foot",
+    [7]  =	"bip01_r_thigh",
+    [8]  =	"bip01_r_calf",
+    [9]  =	"bip01_r_foot",
+    [11] =	"bip01_spine",
+    [12] =	"bip01_spine1",
+    [13] =	"bip01_spine2",
+    -- head
+    [14] =	"bip01_neck", 
+    [15] =	"bip01_head",
+    [16] =	"eye_left",
+    [17] =	"eye_right",
+    [18] =	"eyelid_1",
+    [19] =	"jaw_1",
+    -- endhead
+    [20] =	"bip01_l_clavicle",
+    [21] =	"bip01_l_upperarm",
+    [22] =	"bip01_l_forearm",
+    [23] =	"bip01_l_forearm",
+    [33] =	"bip01_r_clavicle",
+    [34] =	"bip01_r_upperarm",
+    [35] =	"bip01_r_forearm",
+    [36] =	"bip01_r_forearm",
+    }
+
+
+function npc_on_before_hit(npc,shit,bone_id)
+    local weapon = db.actor:active_item()
+    local weapon_sec = weapon and weapon:section() or "None"
+    local ammo_sec = "none"
+    if weapon then
+        ammo_map = utils_item.get_ammo(nil, shit.weapon_id)
+        ammo_sec = ammo_map[weapon:get_ammo_type() + 1]
+    end
+    printf("NPC %s Bone %s (name %s) Damage %s Weapon %s Ammo %s", npc:section(), bone_id, Bone_IDs[bone_id], 
+    -- npc:get_bone_protection(), 
+    shit.power, weapon_sec, ammo_sec)
+end
+
+function on_game_start()
+    RegisterScriptCallback("npc_on_before_hit",npc_on_before_hit)
+
+end
