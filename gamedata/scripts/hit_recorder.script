@@ -36,9 +36,12 @@ function npc_on_before_hit(npc,shit,bone_id)
         ammo_map = utils_item.get_ammo(nil, shit.weapon_id)
         ammo_sec = ammo_map[weapon:get_ammo_type() + 1]
     end
-    printf("NPC %s Bone %s (name %s) Damage %s Weapon %s Ammo %s", npc:section(), bone_id, Bone_IDs[bone_id], 
+    local npc_pos = npc:position()
+    local actor_pos = shit.draftsman:position()
+    local dist = npc_pos:distance_to(actor_pos)
+    printf("NPC %s Bone %s (name %s) Damage %s Dist %s Weapon %s Ammo %s", npc:section(), bone_id, Bone_IDs[bone_id], 
     -- npc:get_bone_protection(), 
-    shit.power, weapon_sec, ammo_sec)
+    shit.power, dist, weapon_sec, ammo_sec)
 end
 
 function on_game_start()

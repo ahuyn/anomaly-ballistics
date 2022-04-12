@@ -46,6 +46,7 @@ head_bones = {
 local bone_cache = {}
 -- pull npc bone sections based on the outfit they wear
 -- if not there, fall back to a standard armor based on rank
+-- will be deprecated
 function get_npc_bone_armor(npc, visual, bone_id)
     local visual = visual or npc:get_visual_name()
 	local tbl = death_manager.get_outfit_by_npc_visual(visual)
@@ -91,12 +92,14 @@ function get_ammo_data(ammo_sec)
     end
 end
 
--- Modify a base hit power by distance and air resistance of the projectile
-function modify_distance(hit_power, shooter, npc, air_res)
+-- Provide a damage modifier based on distance, adjusted by bullet velocity and flatness
+-- todo: factor in flatness modifiers
+function modify_distance(shooter, npc, air_res, vel_data)
     local npc_pos = npc:position()
 	local shooter_pos = shooter:position()
 	local dist = npc_pos:distance_to(shooter_pos)
 
+    return 1 / ( 1 + dist / 200 * ( air_res * 0.5 / ( 1 - air_res + 0.1 )))
 end
 
 -- checking if actor shot the gun and if gun is gun
@@ -120,15 +123,80 @@ function validate_hit(shit)
 end
 
 
--- Default means to calculate damage.
--- 
-function calculate_damage(npc, s_hit, hit_data,bone_data, is_human)
+local stalker_damage = {}
+-- pull the bone_mult from [stalker_damage] section
+function npc_bone_mult(bone_id)
+    local damage_mult = stalker_damage[bone_id]
+    if damage_mult then return damage_mult 
+    else
+        -- pull from data and cache
+        local bone_name = Bone_IDs[bone_id] or "bip01_spine"
+        local damages = SYS_Get_Param(0, "stalker_damage", bone_name)
+        damages = str_explode(damages, ",")
+        stalker_damage[bone_id] = tonumber(damages[1])
+        return damages[1]
+    end
+
+end
+
+local cur_wep_data = {}
+-- check and update current weapon to cache hit power and velocity
+function actor_on_weapon_before_fire(flags)
+    local current_wpn = db.actor:active_item()
+    -- cache
+    if (not cur_wep_data.id or cur_wep_data.id ~= current_wpn:id()) and (IsWeapon(obj) and (not IsItem("fake_ammo_wpn",obj:section()))) then
+        local sec = SYS_GetParam(0, current_wpn:section(),"parent_section") or current_wpn:section()
+        cur_wep_data.id = current_wpn:id()
+        cur_wep_data.hit = ui_wpn_params.read_float(sec, "", "hit_power")
+        cur_wep_data.base_vel = SYS_GetParam(2, sec, "bullet_speed")
+        local vel_add = 0
+        local upgrades = utils_item.get_upgrades_installed(current_wpn)
+        for _, upgrade in pairs(upgrades) do
+            local section = ini_sys:r_string_ex(upgrade, "section")
+            local speed_adj = ini_sys:r_string_ex(section,"bullet_speed")
+            if speed_adj then
+                local op = string.sub(speed_adj, 1, 1)
+                local val = tonumber(string.sub(speed_adj, 2))
+    
+                vel_add = op == "+" and vel_add + val or vel_add - val
+            end
+        end
+        cur_wep_data.true_vel = cur_wep_data.base_vel + vel_add
+    end
+end
+
+-- Default means to calculate damage
+function calculate_damage(npc, s_hit, hit_data, bone_data, is_human)
+    local base_hp = hit_data.hit_power
+    local air_res = SYS_GetParam(2, hit_data.ammo, "k_air_resistance") or 0.05
+    base_hp = base_hp * hit_data.hit
+    if get_config("distance") then
+        base_hp = base_hp * modify_distance(s_hit.draftsman, npc, air_res)
+    end
     local bone_armor_rounded = math.floor(bone_data.armor * 10)
     local armor_tier = math.floor(bone_armor_rounded)
     local armor_frac = math.fmod(bone_armor_rounded,1)
 
     local ap_rounded = (s_hit.ap * 10)
     local ap_tier = math.floor(ap_rounded)
+    local ap_frac = math.fmod(ap_rounded,1)
+
+    local diff = ap_tier - armor_tier
+    -- if the tiers match, modify damage by difference in fractional
+    if diff == 0 then -- match, reduce dmg by up to the fractional diff
+        local frac_diff = clamp(armor_frac - ap_frac, 0, 0.5)
+        base_hp = base_hp * (1 - frac_diff)
+        -- unlisted, but if bullets are 1-2 tiers above then deal full dmg
+    elseif diff == -1 then -- armor slightly tougher, halved
+        base_hp = base_hp * 0.5
+    elseif diff > 2 then -- overpenetration - reduce by up to 80%
+        base_hp = base_hp * (1 - 0.3*(diff - 2))
+    elseif diff < -1 then -- bullets bounce off lel
+        base_hp = base_hp * 0.01 * (diff + 5)
+    end
+
+    s_hit.power = base_hp
+    return s_hit
 end
 
 
@@ -150,7 +218,7 @@ function npc_on_before_hit(npc,s_hit,bone_id)
     local wpn_hit_power = ui_wpn_params.read_float(sec, "", "hit_power")
     -- reduce base hit power by distance and velocity
     local hit_data = {
-        hit_base = wpn_hit_power,
+        hit_power = wpn_hit_power,
         wpn = wpn,
         ammo = ammo
     }
@@ -161,33 +229,17 @@ function npc_on_before_hit(npc,s_hit,bone_id)
         armor = get_npc_bone_armor(npc, nil, bone_id),
         mult = npc_bone_mult(bone_id)
     }
-    -- compare the bone armor vs. the ap of the shot
     -- pass to the ammo processor
+    -- return value should be the new hit
     local func = ammo_data.processor
     if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
-        s_hit.power = _G[func[1]][func[2]](npc, s_hit, hit_data, bone_data, true)
+        s_hit = _G[func[1]][func[2]](npc, s_hit, hit_data, bone_data, true)
     end
 
     return {
         ["shit"] = s_hit,
         ["bone_id"] = bone_id
     } -- just returning something for now
-end
-
-local stalker_damage = {}
--- pull the bone_mult from [stalker_damage] section
-function npc_bone_mult(bone_id)
-    local damage_mult = stalker_damage[bone_id]
-    if damage_mult then return damage_mult 
-    else
-        -- pull from data and cache
-        local bone_name = Bone_IDs[bone_id] or "bip01_spine"
-        local damages = SYS_Get_Param(0, "stalker_damage", bone_name)
-        damages = str_explode(damages, ",")
-        stalker_damage[bone_id] = tonumber(damages[1])
-        return damages[1]
-    end
-
 end
 
 function monster_on_before_hit(monster,s_hit,bone_id)

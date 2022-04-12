@@ -6,34 +6,605 @@
 
 <string_table>
 	
-	<string id="ammo-11.43x23-fmj">
+<!-- shotgun -->
+	<string id="ammo_new-12x70-buck">
+		<text>12x70 buckshot shells</text>
+	</string>
+	<string id="ammo_new-12x70-buck_descr">
+		<text>Standard 12 gauge shell filled with 8mm shot. Highly lethal at close range but effectiveness drops quickly. Only suitable for use with smoothbore weapons.</text>
+	</string>
+	<string id="ammo_new-12x70-buck_s">
+		<text>12x70 shot</text>
+	</string>
+	
+	<string id="ammo_new_12x70_magnum">
+		<text>12x70 Magnum Buckshot</text>
+	</string>
+	<string id="ammo_new_12x70_magnum_descr">
+		<text>#00 Buckshot loaded with an increased powder charge. Provides a huge increase in stopping power and slightly better armor penetration at the cost of increased wear on the weapon. Excellent for hunting and the sheer force of the shot can seriously injure even protected limbs.</text>
+	</string>
+	<string id="ammo_new_12x70_magnum_s">
+		<text>12x70 Magnum</text>
+	</string>
+
+	<string id="ammo_new-12x76-zhekan">
+		<text>12x76 slug shells</text>
+	</string>
+	<string id="ammo_new-12x76-zhekan_descr">
+		<text>This heavy 12 gauge slug round is normally used for hunting big game, but is also good for other purposes. Instead of piercing, this hefty slug simply crushes through armour.</text>
+	</string>
+	<string id="ammo_new-12x76-zhekan_s">
+		<text>12x76 slug</text>
+	</string>
+	<string id="ammo_new-12x76-dart">
+		<text>12x76 Dart shells</text>
+	</string>
+	<string id="ammo_new-12x76-dart_descr">
+		<text>12 gauge armor-piercing dart round capable of providing equivalent armor penetration of rifle rounds with a considerable increase in stopping power.</text>
+	</string>
+	<string id="ammo_new-12x76-dart_s">
+		<text>12x76 Dart</text>
+	</string>
+	
+	<string id="ammo_new_12x70_flechette">
+		<text>12x70 Flechette Rounds</text>
+	</string>
+	<string id="ammo_new_12x70_flechette_descr">
+		<text>12 gauge shotgun shell filled with hardened steel spikes. Provides tight groupings and good armor penetration compared to buckshot, but lacks sheer stopping power.</text>
+	</string>
+	<string id="ammo_new_12x70_flechette_s">
+		<text>12x70 Flechette</text>
+	</string>
+	<string id="ammo_new_12x70_dragon">
+		<text>12x70 'Dragon's Breath' Rounds</text>
+	</string>
+	<string id="ammo_new_12x70_dragon_descr">
+		<text>12 gauge shotgun shell filled with very small pieces of Fireball and Night Star artifacts. When fired, the gunpowder explosion sets off a runaway anomalous interaction that superheats the artifact pieces to temperatures equivalent to that of ignited thermite. The impact is devastating to flesh and melts most armors, but the extreme heat generated is hugely damaging to the weapon it is shot out of.</text>
+	</string>
+	<string id="ammo_new_12x70_dragon_s">
+		<text>12x70 Dragonsbreath</text>
+	</string>
+	
+	<string id="ammo_new-12x76-bull">
+		<text>12x76 Bull shells</text>
+	</string>
+	<string id="ammo_new-12x76-bull_descr">
+		<text>12 gauge custom-made slugs for putting down dinosaurs and mutants. Slug inside is made of lead covered in copper that has steel, dart-like insert inside. Slug is very long and has got big powder load. It really can break your hands with recoil.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IIIA\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]very high</text>
+	</string>
+	<string id="ammo_new-12x76-bull_s">
+		<text>12x76 Bull</text>
+	</string>	
+	
+
+
+	<!-- handgun -->
+	<string id="ammo_new-9x18-fmj">
+		<text>9x18mm PST FMJ rounds</text>
+	</string>
+	<string id="ammo_new-9x18-fmj_descr">
+		<text>A full metal jacket round with a steel penetrator and a lead core under a metal jacket. Such rounds are the most common type of handgun round throughout the former Soviet Union. Provides good stopping power but is ineffective against body armour.</text>
+	</string>
+	<string id="ammo_new-9x18-fmj_s">
+		<text>9x18 FMJ</text>
+	</string>
+	
+	<string id="ammo_new-9x18-plus">
+		<text>9x18mm +P+ FMJ rounds</text>
+	</string>
+	<string id="ammo_new-9x18-plus_descr">
+		<text>Full metal jacket round with overpressure powder load. Provides a 30% increase in muzzle velocity and commensurately increased stopping power and effectiveness against armor, at the cost of increased wear on the weapon.</text>
+	</string>
+	<string id="ammo_new-9x18-plus_s">
+		<text>9x18 +P+</text>
+	</string>
+
+	<string id="ammo_new-9x18-hp">
+		<text>9x18mm HP rounds</text>
+	</string>
+	<string id="ammo_new-9x18-hp_descr">
+		<text>Civilian-grade hollow-point 9x18mm round. Used primarily for hunting of small creatures and home defense. Quite a common find amongst Loners who bring their personal weapons to the Zone.</text>
+	</string>
+	<string id="ammo_new-9x18-hp_s">
+		<text>9x18 HP</text>
+	</string>
+
+	<string id="ammo_new-9x18-sp7">
+		<text>9x18mm SP-7 rounds</text>
+	</string>
+	<string id="ammo_new-9x18-sp7_descr">
+		<text>Military-spec jacketed hollowpoint bullet with a plastic plug and increased powder charge. Quite effective at stopping man and mutant alike, and as such is commonly used by the SSU in their sidearms and submachine guns.</text>
+	</string>
+	<string id="ammo_new-9x18-sp7_s">
+		<text>9x18 SP-7</text>
+	</string>
+	
+	<string id="ammo_new-9x18-ap">
+		<text>9x18 RG028 rounds</text>
+	</string>
+	<string id="ammo_new-9x18-ap_descr">
+		<text>RG028 is a cartridge used for its armour penetration capabilities. The goal of the RG028 was to become a counter to body armour; for this reason, it's loaded with a hardened steel core. Unfortunately, the round itself isn't much of an improvement over the standard, it just has a stronger impact than typical 9x18 round.</text>
+	</string>
+	<string id="ammo_new-9x18-ap_s">
+		<text>9x18 RG028</text>
+	</string>
+
+	<string id="ammo_new-9x18-7n25">
+		<text>9x18 7N25 AP rounds</text>
+	</string>
+	<string id="ammo_new-9x18-7n25_descr">
+		<text>Modern 9x18 armor-piercing handgun round with a carbon steel core and increased powder load. This round is able to reliably defeat body armor, but due to the powder charge and shape of the penetrator it suffers from reduced stopping power and increased wear on the weapon's internal components.</text>
+	</string>
+	<string id="ammo_new-9x18-7n25_s">
+		<text>9x18 7N25</text>
+	</string>
+	
+	<string id="ammo_new-9x19-7n31">
+		<text>9x19mm 7N31 AP rounds</text>
+	</string>
+	<string id="ammo_new-9x19-7n31_descr">
+		<text>Enhanced Russian AP round with a stronger powder charge and lighter bullet. Provides much better peak performance and armor defeating capability than its predecessor, at the cost of higher wear. </text>
+	</string>
+	<string id="ammo_new-9x19-7n31_s">
+		<text>9x19 7N31 AP</text>
+	</string>
+	
+	<string id="ammo_new-9x19-ap">
+		<text>9x19mm AP rounds</text>
+	</string>
+	<string id="ammo_new-9x19-ap_descr">
+		<text>Russian-designed armor piercing pistol round designed to go in tandem with their newest suite of sidearms and submachine guns. Has a considerably higher muzzle velocity compared to other 9x19mm rounds and is much more effective at defeating armor. This is considered an 'overpressure' cartridge and thus caution must be used when firing this round. Relatively rare in the Zone and usually imported by mercenaries.</text>
+	</string>
+	<string id="ammo_new-9x19-ap_s">
+		<text>9x19 AP</text>
+	</string>
+
+	<string id="ammo_new-9x19-fmj">
+		<text>9x19 mm FMJ rounds</text>
+	</string>
+	<string id="ammo_new-9x19-fmj_descr">
+		<text>This basic 9x19 calibre round with a jacketed bullet has good characteristics while being simple to produce. The round is popular due to the fact that international conventions prohibit the use of expanding ammunition in combat. Ineffective against body armour.</text>
+	</string>
+	<string id="ammo_new-9x19-fmj_s">
+		<text>9x19 FMJ</text>
+	</string>
+	
+	<string id="ammo_new-9x19_plus">
+		<text>9x19 mm FMJ +P+ rounds</text>
+	</string>
+	<string id="ammo_new-9x19-plus_descr">
+		<text>Standard 9x19 Parabellum round with an overpressure powder load. Overpressure loads shoot straighter and have increased stopping power, but kick harder and wear on the weapon more.</text>
+	</string>
+	<string id="ammo_new-9x19-plus_s">
+		<text>9x19 FMJ+</text>
+	</string>
+	
+	<string id="ammo_new-9x19-pbp">
+		<text>9x19mm JHP rounds</text>
+	</string>
+	<string id="ammo_new-9x19-pbp_descr">
+		<text>This 9x19 calibre jacketed hollow-point bullet with an expanding hollow has high stopping power and low ricochet propensity. Popular amongst police officers and with concealed carry for its high stopping power. Ineffective against body armour due to its low penetration potential.</text>
+	</string>
+	<string id="ammo_new-9x19-pbp_s">
+		<text>9x19 JHP</text>
+	</string>
+	
+	<string id="ammo_new-9x19-pbps">
+		<text>9x19mm JSP Hand Loaded rounds</text>
+	</string>
+	<string id="ammo_new-9x19-pbps_descr">
+		<text>9mm hand loaded JSP rounds. Soft Point rounds are semi-jacketed and expose the lead tip, and expand like hollowpoint rounds while retaining better armor penetration properties. These are custom-order rounds from folk craftsmen that have earned the nickname of 'Man-Stopper' due to their purported ability to stop men dead in their tracks.</text>
+	</string>
+	<string id="ammo_new-9x19-pbps_s">
+		<text>9x19 JSP</text>
+	</string>
+
+	<string id="ammo_new-11.43x23-fmj">
 		<text>.45 ACP rounds</text>
 	</string>
-	<string id="ammo-11.43x23-fmj_descr">
+	<string id="ammo_new-11.43x23-fmj_descr">
+		<text>The .45 calibre full metal jacket round has enjoyed popularity for a hundred years thanks to its ballistic performance and a relatively small propelling charge. As a result, the bullet in this round is relatively slow but highly accurate and provides considerable stopping power.</text>
+	</string>
+	<string id="ammo_new-11.43x23-fmj_s">
+		<text>.45 ACP</text>
+	</string>
+	<string id="ammo_new-11.43x23-fmjs">
+		<text>.45 ACP +P rounds</text>
+	</string>
+	<string id="ammo_new-11.43x23-fmjs_descr">
+		<text>.45 ACP round with an overpressure load to bring the terminal performance of the .45 bullet to modern standards. Recommended to use in a modern handgun that is capable of withstanding the increased pressure, otherwise the round poses a danger to the operator.</text>
+	</string>
+	<string id="ammo_new-11.43x23-fmjs_s">
+		<text>.45 ACP+</text>
+	</string>
+	
+	<string id="ammo_new-11.43x23-hp">
+		<text>.45 ACP JHP rounds</text>
+	</string>
+	<string id="ammo_new-11.43x23-hp_descr">
+		<text>Standard load .45 ACP round with a hollow point bullet. Infamously effective against unarmored human targets and is a mainstay round of most law enforcement.</text>
+	</string>
+	<string id="ammo_new-11.43x23-hp_s">
+		<text>.45 HP</text>
+	</string>
+
+	<string id="ammo_new-11.43x23-hydro">
+		<text>.45 ACP Hydra-shock rounds</text>
+	</string>
+	<string id="ammo_new-11.43x23-hydro_descr">
+		<text>This unusual .45 ACP calibre round consists of a jacketed soft point bullet with a hollow steel core, possessing both their advantages and disadvantages. Capable of </text>
+	</string>
+	<string id="ammo_new-11.43x23-hydro_s">
+		<text>.45 HS</text>
+	</string>
+
+	<string id="ammo_new-357-hp">
+		<text>.357 HP rounds</text>
+	</string>
+	<string id="ammo_new-357-hp_descr">
+		<text>The .357 HP round is a hollow-point bullet. The purpose of the round is to slow down upon impact, which decreases its penetration, but at the same time causes larger internal tissue damage. \n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]II\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-357-hp_s">
+		<text>.357 HP</text>
+	</string>
+	<string id="ammo_new-357-jfp">
+		<text>.357 JFP Handload rounds</text>
+	</string>
+	<string id="ammo_new-357-jfp_descr">
+		<text>Hand loaded .357 round designed for hunters and target shooters. While lacking the sheer stopping power of hollow-point rounds, they fly straighter and penetrate armor to a much more effective degree.</text>
+	</string>
+	<string id="ammo_new-357-jfp_s">
+		<text>.357 JFP</text>
+	</string>
+	
+	<!-- todo -->
+	<string id="ammo_new-7.62x25-p">
+		<text>7.62x25 mm P rounds</text>
+	</string>
+	<string id="ammo_new-7.62x25-p_descr">
+		<text>The 7.62x25mm cartridge is a Russian bottle-necked pistol cartridge widely used in former Soviet satellite states, China and Pakistan among other countries. The cartridge is an enhanced Russian version of the 7.63x25mm Mauser. It has an excellent penetration and can easily defeat lighter ballistic vests as well as kevlar helmets. Although most firearms chambered in this calibre are obsolete and removed from military inventories, the cartridge still sees widespread use because of the large quantity of stored ammunition available. \n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]I\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="ammo_new-7.62x25-p_s">
+		<text>7.62x25 P</text>
+	</string>
+	
+	<string id="ammo_new-7.62x25-ps">
+		<text>7.62x25 mm Pst rounds</text>
+	</string>
+	<string id="ammo_new-7.62x25-ps_descr">
+		<text>The steel core 7.62x25mm cartridge is a Russian bottle-necked pistol cartridge widely used in former Soviet satellite states, China and Pakistan among other countries. It's very effective against unarmoured targets. \n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]II\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="ammo_new-7.62x25-ps_s">
+		<text>7.62x25 Pst</text>
+	</string>
+	
+	<!-- small rifle -->
+
+
+	<string id="ammo_new_12.7x55_ap">
+		<text>12.7x55 mm STs-130 VPS rounds</text>
+	</string>
+	<string id="ammo_new_12.7x55_ap_descr">
+		<text>The armour-piercing 12.7x55mm subsonic cartridge is used in the VKS bullpup sniper rifle. The cartridge can carry a projectile weighing between from 59 grams (911 grains) and 76 g (1173 grains), yielding massive amounts of kinetic energy.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IV\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]very high</text>
+	</string>
+	<string id="ammo_new_12.7x55_ap_s">
+		<text>12.7x55 AP</text>
+	</string>
+	
+	<string id="ammo_new-12.7x55-fmj">
+		<text>12.7x55mm STs-130 rounds</text>
+	</string>
+	<string id="ammo_new-12.7x55-fmj_descr">
+		<text>The full metal jacket 12.7x55mm subsonic cartridge is used in the VKS bullpup sniper rifle. The cartridge can carry a projectile weighing between from 59 grams (911 grains) and 76 g (1173 grains), yielding massive amounts of kinetic energy.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]very high</text>
+	</string>
+	<string id="ammo_new-12.7x55-fmj_s">
+		<text>12.7x55</text>
+	</string>
+	
+	<string id="ammo_new-338-lapua">
+		<text>.338 Lapua Magnum rounds</text>
+	</string>
+	<string id="ammo_new-338-lapua_descr">
+		<text>The .338 Lapua Magnum is a specialised rimless bottlenecked centrefire cartridge developed for military long-range sniper rifles. The Afghanistan War and Iraq War made it a combat-proven round with ready and substantial ammunition availability. The .338 Lapua is a dual-purpose anti-personnel and anti-materiel round, but its anti-materiel potential is limited.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IV\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]very high</text>
+	</string>
+	<string id="ammo_new-338-lapua_s">
+		<text>.338 Lapua Magnum</text>
+	</string>
+	
+	
+	<string id="ammo_new-5.45x39-ap">
+		<text>5.45x39 mm AP rounds</text>
+	</string>
+	<string id="ammo_new-5.45x39-ap_descr">
+		<text>Military 5.45x39 calibre 7N22 armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hard-alloy armour-piercing penetrator. Effective against body armour.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IV\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="ammo_new-5.45x39-ap_s">
+		<text>5.45x39 AP</text>
+	</string>
+	
+	<string id="ammo_new-5.45x39-ep">
+		<text>5.45x39 mm EP rounds</text>
+	</string>
+	<string id="ammo_new-5.45x39-ep_descr">
+		<text>Military 5.45x39 calibre 7N10 is an enhanced penetration round for automatic rifles of Warsaw Pact countries. A harder and sleeker steel core is used to improve penetration.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IIIA\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="ammo_new-5.45x39-ep_s">
+		<text>5.45x39 EP</text>
+	</string>
+	
+	<string id="ammo_new-5.45x39-fmj">
+		<text>5.45x39 mm FMJ rounds</text>
+	</string>
+	<string id="ammo_new-5.45x39-fmj_descr">
+		<text>Military 5.45x39 calibre 7N6 was the first standard issue round for automatic rifles of Warsaw Pact countries using the new intermediate cartridge. Provides better accuracy than the 7.62 calibre round thanks to reduced recoil and a 100-metre increase in range.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IIIA\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="ammo_new-5.45x39-fmj_s">
+		<text>5.45x39 FMJ</text>
+	</string>
+	
+	<string id="ammo_new-5.56x45-ap">
+		<text>5.56x45 mm AP rounds</text>
+	</string>
+	<string id="ammo_new-5.56x45-ap_descr">
+		<text>The latest NATO military 5.56x45 calibre enhanced penetration round, known as M855A1, used by the US armed forces. Increased effectiveness against both body armour and soft tissue.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="ammo_new-5.56x45-ap_s">
+		<text>5.56x45 AP</text>
+	</string>
+	
+	<string id="ammo_new-5.56x45-ss190">
+		<text>5.56x45 mm EP rounds</text>
+	</string>
+	<string id="ammo_new-5.56x45-ss190_descr">
+		<text>A standard-issue NATO 5.56x45 calibre round with a steel core. The new design improved penetration at the cost of less reliable tissue damage. Widely known under its M855 index.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="ammo_new-5.56x45-ss190_s">
+		<text>5.56x45 EP</text>
+	</string>
+	
+	<string id="ammo_new-5.56x45-fmj">
+		<text>5.56x45 mm FMJ rounds</text>
+	</string>
+	<string id="ammo_new-5.56x45-fmj_descr">
+		<text>A standard-issue NATO 5.56x45 calibre M193 round specially designed for accurate automatic fire. Provides good ballistic characteristics, having been designed on the basis of a hunting round. Well known for being used in the Vietnam war and having great performance against tissue, but limited penetration.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IIIA\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-5.56x45-fmj_s">
+		<text>5.56x45 FMJ</text>
+	</string>
+	
+	<string id="ammo_new-5.7x28-ss190">
+		<text>5.7x28 SS190 rounds</text>
+	</string>
+	<string id="ammo_new-5.7x28-ss190_descr">
+		<text>The FN 5.7x28mm is a high velocity cartridge designed and manufactured by FN Herstal. It is a bottlenecked centrefire cartridge that is somewhat similar to the .22 Hornet or .22 K-Hornet. The 5.7x28mm was developed in conjunction with the FN P90 personal defense weapon (PDW) and FN Five-seven pistol, in response to NATO requests for a replacement for the 9x19mm Parabellum cartridge.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IIIA\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]low - medium</text>
+	</string>
+	<string id="ammo_new-5.7x28-ss190_s">
+		<text>5.7x28 AP</text>
+	</string>
+	
+	<string id="ammo_new-4.6x30-fmj">
+		<text>4.6x30 mm FMJ rounds</text>
+	</string>
+	<string id="ammo_new-4.6x30-fmj_descr">
+		<text>The HK 4.6?30mm cartridge is a type of ammunition primarily used in the Heckler & Koch MP7 Personal defense weapon (PDW). It is designed to minimize weight and recoil while increasing penetration of body armor. It features a bottlenecked case and a pointed, steel-core, brass-jacketed bullet. 
+		\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IIIA
+		\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]low - medium</text>
+	</string>
+	<string id="ammo_new-4.6x30-fmj_s">
+		<text>4.6x30 FMJ</text>
+	</string>
+	<string id="ammo_new-4.6x30-fmj_bad">
+		<text>4.6x30 mm FMJ rounds (old)</text>
+	</string>
+	<string id="ammo_new-4.6x30-fmj_verybad">
+		<text>4.6x30 mm FMJ rounds (damaged)</text>
+	</string>
+	
+	<string id="ammo_new-5.7x28-ss195">
+		<text>5.7x28 mm SS195 rounds</text>
+	</string>
+	<string id="ammo_new-5.7x28-ss195_descr">
+		<text>The SS195 FN 5.7x28mm is an expansive cartridge designed and manufactured by FN Herstal. It is a bottlenecked centrefire cartridge that is somewhat similar to the .22 Hornet or .22 K-Hornet. \n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IIA\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="ammo_new-5.7x28-ss195_s">
+		<text>5.7x28 HP</text>
+	</string>
+	
+	<string id="ammo_new-50-bmg">
+		<text>.50 BMG rounds</text>
+	</string>
+	<string id="ammo_new-50-bmg_descr">
+		<text>The .50 Browning Machine Gun (12.7?99mm NATO and designated as the 50 Browning by the C.I.P.) is a cartridge developed for the Browning .50 caliber machine gun in the late 1910s, entering official service in 1921. Under STANAG 4383, it is a standard cartridge for NATO forces as well as many non-NATO countries. The cartridge itself has been made in many variants: multiple generations of regular ball, tracer, armor-piercing (AP), incendiary, and saboted sub-caliber rounds. The rounds intended for machine guns are made into a continuous belt using metallic links. 
+		\nThe .50 BMG cartridge is also used in long-range target and anti-materiel rifles, as well as other .50-caliber machine guns.
+		\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IV
+		\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-50-bmg_s">
+		<text>.50 BMG</text>
+	</string>
+	<string id="ammo_new-50-bmg_bad">
+		<text>.50 BMG rounds (old)</text>
+	</string>
+	<string id="ammo_new-50-bmg_verybad">
+		<text>.50 BMG rounds (damaged)</text>
+	</string>
+	
+	<string id="ammo_new-7.62x39_ap">
+		<text>7.62x39 mm M43 rounds</text>
+	</string>
+	<string id="ammo_new-7.62x39_ap_descr">
+		<text>7.62x39 M43 is an armour piercing round produced in China, which is why it's often referred to as "7.62x39 CN". This round features a mild steel core which enhances its penetration capabilities. This Chinese round (as well as all other M43 ammunition) is currently banned for import in the US because US federal law classifies the round as an armour-piercing handgun round. This classification is based on materials and bullet design rather than on empirical ability to penetrate armour.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-7.62x39_ap_s">
+		<text>7.62x39 AP</text>
+	</string>
+	
+	<string id="ammo_new-7.62x39_fmj">
+		<text>7.62x39 mm FMJ rounds</text>
+	</string>
+	<string id="ammo_new-7.62x39_fmj_descr">
+		<text>7.62x39 Full Metal Jacket is one the most commonly used types of ammunition, especially in Africa and in the Middle East. Some nicknamed it the "Round of the Revolution" due to its favored use by both terrorist and criminal organizations. Due to the sheer power of the round most military organizations have turned to using additional steel plates to counter 7.62x39 as there is a high probability of encountering it in combat situations.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-7.62x39_fmj_s">
+		<text>7.62x39 FMJ</text>
+	</string>
+	
+	<string id="ammo_new-7.62x51_ap">
+		<text>7.62x51 mm NATO AP rounds</text>
+	</string>
+	<string id="ammo_new-7.62x51_ap_descr">
+		<text>Military 7.62x51 calibre M61 armor-piercing round with a hardened steel core. It retains high damage while greatly improving performance against body armor.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IV\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-7.62x51_ap_s">
+		<text>7.62x51 AP</text>
+	</string>
+	
+	<string id="ammo_new-7.62x51_fmj">
+		<text>7.62x51 mm NATO ball rounds</text>
+	</string>
+	<string id="ammo_new-7.62x51_fmj_descr">
+		<text>The 7.62x51 NATO round is a military variant of the .308 round which was used as a standard-issue by the NATO forces until 5.56 ammunition was introduced in the '70s in the Vietnam War. At present, it is most commonly employed by private military contractors all over the world. The 7.62x51 round is a very common machine gun calibre, and can also be used in battle or sniper rifles.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IIIA\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-7.62x51_fmj_s">
+		<text>7.62x51 ball</text>
+	</string>
+	
+	<string id="ammo_new-7.62x54_7n14">
+		<text>7.62x54 mm 7N14 rounds</text>
+	</string>
+	<string id="ammo_new-7.62x54_7n14_descr">
+		<text>The 7.62x54 calibre 7N14 is an armour-piercing cartridge. The bullet has a steel core to penetrate body armour or light barriers, and a boat-tail base to increase accuracy.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IV\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-7.62x54_7n14_s">
+		<text>7.62x54 7N14</text>
+	</string>
+	
+	<string id="ammo_new-7.62x54-7n1">
+		<text>7.62x54 mm 7N1 rounds</text>
+	</string>
+	<string id="ammo_new-7.62x54-7n1_descr">
+		<text>A 7.62x54 calibre sniper round with a steel penetrator specially designed for the SVD. Unlike the machine gun round, the 7N1 provides much tighter groupings.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-7.62x54-7n1_s">
+		<text>7.62x54 7N1</text>
+	</string>
+	
+	<string id="ammo_new-7.62x54-ap">
+		<text>7.62x54 mm AP rounds</text>
+	</string>
+	<string id="ammo_new-7.62x54-ap_descr">
+		<text>The 7.62x54mm calibre 7N13 armor-piercing machine gun round. It is a high-powered round and thanks to a hard steel core it possesses quite good penetrative capabilities.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IV\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-7.62x54-ap_s">
+		<text>7.62x54 AP</text>
+	</string>
+	
+	<string id="ammo_new-7.62x54-r">
+		<text>7.62x54 mm PP rounds</text>
+	</string>
+	<string id="ammo_new-7.62x54-r_descr">
+		<text>The 7.62x54 PP is a dated rifle calibre introduced in the Soviet Empire at the turn of the 19th century and was still used by the USSR after World War II. It was originally designed for the Mosin-Nagant standard-issue infantry rifle and is quite common in the Zone due to the popularity of the rifle. The round is relatively cheap but has surprisingly good penetrative capabilities, even in comparison to more modern ammo types. It can also be used as a cheaper solution in the PKM machine gun.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-7.62x54-r_s">
+		<text>7.62x54 PP</text>
+	</string>
+	
+	<string id="ammo_new-7.92x33_ap">
+		<text>7.92x57 mm SA rounds</text>
+	</string>
+	<string id="ammo_new-7.92x33_ap_descr">
+		<text>7.92x57 SA is a round that was used by the British military against armoured targets. It features a hardened steel core which gives it higher piercing capabilities. Used primarily for long range shots, the grain quality of this round is higher than the standard. This cartridge is supported by several sniper rifles.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IV\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-7.92x33_ap_s">
+		<text>7.62x57 AP</text>
+	</string>
+	
+	<string id="ammo_new-7.92x33_fmj">
+		<text>7.92x57 mm Mauser rounds</text>
+	</string>
+	<string id="ammo_new-7.92x33_fmj_descr">
+		<text>The 7.92x57 Mauser round was adopted by the German Empire and then the Third Reich. It was one of the most popular cartridges in the period of two world wars. However, nowadays, the round is primarily used for hunting and sports.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	</string>
+	<string id="ammo_new-7.92x33_fmj_s">
+		<text>7.62x57 FMJ</text>
+	</string>
+	
+	<string id="ammo_new-9x39-ap">
+		<text>9x39 mm SP-6 rounds</text>
+	</string>
+	<string id="ammo_new-9x39-ap_descr">
+		<text>The SP-6 is a subsonic armour-piercing round with a jacketed soft point bullet with a hard steel core that protrudes from the casing. Requires a suppressor for stealth firing. Used by special services of Warsaw Pact countries. Effective against light body armour.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high\n \n%c[ui_gray_1]SPECIAL:\n \n%c[d_red] • %c[ui_gray_2] sub-sonic ammunition\n%c[d_purple] • %c[ui_gray_2] greatly increased projectile drop with distance</text>
+	</string>
+	<string id="ammo_new-9x39-ap_s">
+		<text>9x39 SP-6</text>
+	</string>
+	
+	<string id="ammo_new-9x39-pab9">
+		<text>9x39 mm SP-5 rounds</text>
+	</string>
+	<string id="ammo_new-9x39-pab9_descr">
+		<text>The SP-5 is a subsonic rifle round with a bimetallic casing. The round contains a steel core with a gap behind it that is filled with lead. Requires a suppressor for stealth firing. Used by special services of Warsaw Pact countries.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IIIA\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high\n \n%c[ui_gray_1]SPECIAL:\n \n%c[d_red] • %c[ui_gray_2] sub-sonic ammunition\n%c[d_purple] • %c[ui_gray_2] greatly increased projectile drop with distance</text>
+	</string>
+	<string id="ammo_new-9x39-pab9_s">
+		<text>9x39 SP-5</text>
+	</string>
+	
+
+	
+	<string id="ammo_new">
+		<text>.45 ACP rounds</text>
+	</string>
+	<string id="_descr">
 		<text>The .45 calibre full metal jacket round has enjoyed popularity for a hundred years thanks to its ballistic performance and a relatively small propelling charge. As a result, the bullet in this round is relatively slow but highly accurate and provides considerable stopping power.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]none\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
 	</string>
-	<string id="ammo-11.43x23-fmj_s">
+	<string id="_s">
+		<text>.45 ACP</text>
+	</string>	
+	<string id="ammo_new">
+		<text>.45 ACP rounds</text>
+	</string>
+	<string id="_descr">
+		<text>The .45 calibre full metal jacket round has enjoyed popularity for a hundred years thanks to its ballistic performance and a relatively small propelling charge. As a result, the bullet in this round is relatively slow but highly accurate and provides considerable stopping power.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]none\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="_s">
+		<text>.45 ACP</text>
+	</string>	
+	<string id="ammo_new">
+		<text>.45 ACP rounds</text>
+	</string>
+	<string id="_descr">
+		<text>The .45 calibre full metal jacket round has enjoyed popularity for a hundred years thanks to its ballistic performance and a relatively small propelling charge. As a result, the bullet in this round is relatively slow but highly accurate and provides considerable stopping power.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]none\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="_s">
+		<text>.45 ACP</text>
+	</string>	
+	<string id="ammo_new">
+		<text>.45 ACP rounds</text>
+	</string>
+	<string id="_descr">
+		<text>The .45 calibre full metal jacket round has enjoyed popularity for a hundred years thanks to its ballistic performance and a relatively small propelling charge. As a result, the bullet in this round is relatively slow but highly accurate and provides considerable stopping power.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]none\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
+	</string>
+	<string id="_s">
 		<text>.45 ACP</text>
 	</string>
 	
 	
-	<string id="ammo-7.62x39-api">
+	<string id="ammo_new-7.62x39-api">
 		<text>7.62x39 Armor-Piercing Incendiary rounds</text>
 	</string>
-	<string id="ammo-7.62x39-api_descr">
+	<string id="ammo_new-7.62x39-api_descr">
 		<text>The .45 calibre full metal jacket round has enjoyed popularity for a hundred years thanks to its ballistic performance and a relatively small propelling charge. As a result, the bullet in this round is relatively slow but highly accurate and provides considerable stopping power.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]none\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]medium</text>
 	</string>
-	<string id="ammo-7.62x39-api_s">
+	<string id="ammo_new-7.62x39-api_s">
 		<text>.45 ACP</text>
 	</string>
 
-    <string id="ammo_12.7x55_exp">
-		<text>12.7x55 mm YL rounds</text>
+    <string id="ammo_new_12.7x55_exp">
+		<text>12.7x55mm Explosive rounds</text>
 	</string>
-	<string id="ammo_12.7x55_exp_descr">
+	<string id="ammo_new_12.7x55_exp_descr">
 		<text>A relatively new and restricted evelopment, these experimental rounds utilize a small amount of explosive material in the tip to, in theory, cause a directed explosion designed to defeat armor. Issues with the manufacturing process means that in practice, the whole round detonates on impact, acting as a sort of micro grenade. While extremely hazardous, certain eccentric stalkers will pay dearly for these rounds to hunt extremely large mutants.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]IV\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]very high</text>
 	</string>
-	<string id="ammo_12.7x55_exp_s">
+	<string id="ammo_new_12.7x55_exp_s">
 		<text>12.7x55 AP</text>
 	</string>
 </string_table>

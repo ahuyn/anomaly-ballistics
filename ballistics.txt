@@ -27,14 +27,19 @@
     - o.4 is exosuit, 0.45 is exoskeleton/nosorog
     - largebore rifle ap
 
-When it comes to AP:
-- bullets have an AP roughly tiered the same as the armors
-- bullets within the same tier or one above will reliably penetrate with consistent damage
-- two or more above, you see overpenetration issues and damage is reduced
-- one below, chance to defeat but damage is greatly reduced
-- successive below exponentially reduces effectiveness
-
-
 Basic formula
 
 In order for a bullet to defeat an armor, the AP tier must match or exceed the bone armor tier.
+Within the tier, compare the fractional parts and reduce based on the difference.
+AP tier - bone tier is:
+4: Overpenetrate, -60% damage
+3: Overpenetrate, -30% damage
+2: Ignore fractional, always full damage
+1: Ignore fractional, always full damage
+0: Modify by difference in fractional (no increase)
+-1: 50% damage flat modifier
+-2: 100% Impact damage only
+-3: 10% Impact 
+-4: 1% impact
+
+For HP the impact damage for underperforming is increased, but it cannot overpenetrate.

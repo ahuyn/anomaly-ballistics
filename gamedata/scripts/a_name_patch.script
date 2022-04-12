@@ -1,0 +1,12 @@
+GetFirstName = ui_item.build_name_first
+
+local ini_ammo = ini_file("items\\ammo\\importer.ltx")
+
+function ui_item.build_name_first(obj, sec, str)
+    str = str or gc(ini_sys:r_string_ex(sec,"inv_name"))
+    if not str then return "" end
+    if not ini_ammo:section_exist(sec) then
+        return GetFirstName(obj, sec, str)
+    end
+    return str
+end
