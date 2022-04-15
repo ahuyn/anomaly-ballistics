@@ -1,72 +1,89 @@
 ; 9x18
-[ammo_9x18_fmj] ; +P
-hit = 1
-ap = 0.1
-impair = 1
+[ammo_9x18_fmj]:ammo_base; +P
+hit = 1.2
+ap = 0.075
+
 
 [ammo_9x18_fmj_bad]:ammo_9x18_fmj ; surplus PST
 hit			= 1
-ap			= 0.09
+ap			= 0.05
 
-[ammo_9x18_pmm] ; RG028 JHP
-hit = 1
-ap = 1
+[ammo_9x18_pmm]:ammo_base; SP7 JHP
+hit = 1.75
+ap = 0.0011
 
 [ammo_9x18_pmm_bad]:ammo_9x18_pmm ; HP hunting
+hit = 1.5
+ap = 0.0011
 
-[ammo_9x18_ap] ; 7N16 PMM, modern AP
+[ammo_9x18_ap]:ammo_base; 7N16 PMM, modern AP
 hit = 1
 ap = 1
 
 [ammo_9x18_ap_bad]:ammo_9x18_ap ; 7N15 AP
 
 ; 9x19
-[ammo_9x19_fmj] ; +P+
+[ammo_9x19_fmj]:ammo_base; +P+
 hit = 1
 ap = 1
 
 [ammo_9x19_fmj_bad]:ammo_9x19_fmj ; standard FMJ
 
-[ammo_9x19_pbp] ; JHP +P
+[ammo_9x19_pbp]:ammo_base; JHP +P
 hit = 1
 ap = 1
+desc = st_ballistics_flinch
 
 [ammo_9x19_pbp_bad]:ammo_9x19_pbp ; JHP
 
-[ammo_9x19_ap] ; 7N31 overpressure AP
+[ammo_9x19_ap]:ammo_base; 7N31 overpressure AP
 hit = 1
 ap = 1
 
 [ammo_9x19_ap_bad]:ammo_9x19_ap ; 7N21 overpressure
 
 
-[ammo_11.43x23_fmj] ; soft point
+[ammo_11.43x23_fmj]:ammo_base; soft point
 hit = 1
 ap = 1
 
 [ammo_11.43x23_fmj_bad]:ammo_11.43x23_fmj ; FMJ
 
-[ammo_11.43x23_hydro] ; hydrashok HP
+[ammo_11.43x23_hydro]:ammo_base; hydrashok HP
 hit = 1
 ap = 1
+desc = st_ballistics_flinch_2
 
 [ammo_11.43x23_hydro_bad]:ammo_11.43x23_hydro ; HP
 
 
-[ammo_357_hp_mag] ; handload JFP
+[ammo_357_hp_mag]:ammo_base; handload JFP
 hit = 1
 ap = 1
 
 [ammo_357_hp_mag_bad]:ammo_357_hp_mag ; standard HP
 
-[ammo_9x18_fmj] ; +P
+[ammo_7.62x25_p]:ammo_base; +P
 hit = 0.2
 ap = 1
 
-[ammo_9x18_fmj_bad]:ammo_9x18_fmj ; surplus PST
+[ammo_7.62x25_p_bad]:ammo_7.62x25_p ; surplus PST
 
-[ammo_9x18_fmj] ; +P
+[ammo_7.62x25_ps]:ammo_base; +P
 hit = 0.2
 ap = 1
 
-[ammo_9x18_fmj_bad]:ammo_9x18_fmj ; surplus PST
+[ammo_7.62x25_ps_bad]:ammo_7.62x25_ps ; surplus PST
+
+[ammo_5.7x28_ss190]:ammo_base; +P
+hit = 1
+ap = 0.1
+
+
+[ammo_5.7x28_ss190_bad]:ammo_5.7x28_ss190 ; surplus PST[ammo_9x18_fmj]:ammo_base; +P
+hit = 1
+ap = 0.1
+
+[ammo_5.7x28_ss195]:ammo_base
+
+[ammo_5.7x28_ss195_bad]:ammo_5.7x28_ss195 ; surplus PST

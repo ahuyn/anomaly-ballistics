@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<!--
+	Ammunition
+-->
+
+<string_table>
+    
+	<string id="st_ballistics_flinch">
+		<text>chance to stagger human enemies</text>
+	</string>
+	<string id="st_ballistics_varma">
+		<text>deals extra damage to mutants</text>
+	</string>
+	<string id="st_ballistics_explodes">
+		<text>it fucking explodes</text>
+	</string>
+	<string id="st_ballistics_chaos">
+		<text>randomized damage</text>
+	</string>
+	<string id="st_ballistics_acid">
+		<text>no AP, melts armor</text>
+	</string>
+	<string id="st_ballistics_dragon">
+		<text>high damage, melts armor</text>
+	</string>
+	<string id="st_ballistics_api">
+		<text>high damage and burns armor</text>
+	</string>
+    <string id="st_armor_pen">
+		<text>Defeats armor level: </text>
+	</string>
+    <string id="st_hp">
+		<text>Damage multiplier: </text>
+	</string>
+    
+
+</string_table>

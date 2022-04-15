@@ -1,3 +1,4 @@
+get_config = ballistics_mcm.get_config
 -- track and store armor reductions
 local bone_reduced_armor = {}
 
@@ -43,63 +44,10 @@ head_bones = {
     [19] =	"jaw_1",
 }
 
-local bone_cache = {}
--- pull npc bone sections based on the outfit they wear
--- if not there, fall back to a standard armor based on rank
--- will be deprecated
-function get_npc_bone_armor(npc, visual, bone_id)
-    local visual = visual or npc:get_visual_name()
-	local tbl = death_manager.get_outfit_by_npc_visual(visual)
-    local outfit_sec = tbl and tbl[1] or "scientific_outfit"
-    local helmet_sec = tbl and tbl[2]
-    local outfit_bones = SYS_GetParam(0, outfit_sec, "bones_koeff_protection")
-    if head_bones[bone_id] then
-        -- try to pull helmet
-        local helm_bones = helmet_sec and SYS_GetParam(0, helmet_sec, "bones_koeff_protection") or outfit_bones
-        if not bone_cache[helm_bones] then bone_cache[helm_bones] = {} end
-        if not bone_cache[helm_bones][bone_id] then
-            helm_bone_armor = SYS_GetParam(0, helm_bones, head_bones[bone_id])
-            helm_bone_armor = str_explode(helm_bone_armor, ",")
-            bone_cache[helm_bones][bone_id] = tonumber(helm_bone_armor[2])
-        end
-        return bone_cache[helm_bones][bone_id]
-    else
-        if not bone_cache[outfit_bones][bone_id] then
-            bone_armor = SYS_GetParam(0, outfit_bones, Bone_IDs[bone_id])
-            bone_armor = str_explode(helm_bone_armor, ",")
-            bone_cache[outfit_bones][bone_id] = tonumber(bone_armor[2])
-        end
-        return bone_cache[helm_bones][bone_id]
-    end
-end
-
--- pull mutant
-function get_mutant_bone_armor(npc)
-
-
-end
-
-function get_ammo_data(ammo_sec)
-    if ammo_importer:section_exist(ammo_sec) then
-        local proc = ammo_importer:r_string_ex(ammo_sec, "handler") or "ballistics.calculate_damage"
-        proc = str_explode(proc, "%.")
-        return {
-            hit     = ammo_importer:r_float_ex(ammo_sec, "hit"),
-            ap      = ammo_importer:r_float_ex(ammo_sec, "ap"),
-            impulse = ammo_importer:r_float_ex(ammo_sec, "impulse"),
-            processor = proc
-        }
-    end
-end
-
--- Provide a damage modifier based on distance, adjusted by bullet velocity and flatness
--- todo: factor in flatness modifiers
-function modify_distance(shooter, npc, air_res, vel_data)
-    local npc_pos = npc:position()
-	local shooter_pos = shooter:position()
-	local dist = npc_pos:distance_to(shooter_pos)
-
-    return 1 / ( 1 + dist / 200 * ( air_res * 0.5 / ( 1 - air_res + 0.1 )))
+function print_dbg(text, ...) 
+	if get_config("debug") then
+		printf("ballistics | %s | " .. text, time_global(), ...)
+	end
 end
 
 -- checking if actor shot the gun and if gun is gun
@@ -122,8 +70,72 @@ function validate_hit(shit)
     } -- returning stuff we parsed, so we don't parse it again
 end
 
+local bone_cache = {}
+-- pull npc bone sections based on the outfit they wear
+-- if not there, fall back to a standard armor based on rank
+-- will be deprecated
+function get_npc_bone_armor(npc, visual, bone_id)
+    -- local npc_id = npc:id()
+    -- if custom_bone_data[npc_id] and custom_bone_data[npc_id][bone_id] then
+    --     return custom_bone_data[npc_id][bone_id]
+    -- end
+    -- local visual = visual or npc:get_visual_name()
+	-- local tbl = death_manager.get_outfit_by_npc_visual(visual)
+    -- local outfit_sec = tbl and tbl[1] or "scientific_outfit"
+    -- local helmet_sec = tbl and tbl[2]
+    -- local outfit_bones = SYS_GetParam(0, outfit_sec, "bones_koeff_protection")
+    -- if head_bones[bone_id] then
+    --     -- try to pull helmet
+    --     local helm_bones = helmet_sec and SYS_GetParam(0, helmet_sec, "bones_koeff_protection") or outfit_bones
+    --     if not bone_cache[helm_bones] then bone_cache[helm_bones] = {} end
+    --     if not bone_cache[helm_bones][bone_id] then
+    --         helm_bone_armor = SYS_GetParam(0, helm_bones, head_bones[bone_id])
+    --         helm_bone_armor = str_explode(helm_bone_armor, ",")
+    --         bone_cache[helm_bones][bone_id] = tonumber(helm_bone_armor[2])
+    --     end
+    --     return bone_cache[helm_bones][bone_id]
+    -- else
+    --     if not bone_cache[outfit_bones][bone_id] then
+    --         bone_armor = SYS_GetParam(0, outfit_bones, Bone_IDs[bone_id])
+    --         bone_armor = str_explode(helm_bone_armor, ",")
+    --         bone_cache[outfit_bones][bone_id] = tonumber(bone_armor[2])
+    --     end
+    --     return bone_cache[helm_bones][bone_id]
+    -- end
+end
+
+-- use lucy custom func
+function get_npc_bone_armor_l(npc, bone_id)
+    return npc:get_bone_protection(bone_id)
+end
+
+function get_ammo_data(ammo_sec)
+    if ini_ammo:section_exist(ammo_sec) then
+        local proc = ini_ammo:r_string_ex(ammo_sec, "handler") or "ballistics.calculate_damage"
+        proc = str_explode(proc, "%.")
+        return {
+            sec     = ammo_sec,
+            k_hit   = ini_ammo:r_float_ex(ammo_sec, "hit") or 1,
+            k_ap    = ini_ammo:r_float_ex(ammo_sec, "ap") or 0,
+            processor = proc
+        }
+    end
+end
+
+-- Provide a damage modifier based on distance, adjusted by bullet velocity and flatness
+-- todo: factor in flatness modifiers
+function modify_distance(shooter, npc, air_res, vel_data)
+    local npc_pos = npc:position()
+	local shooter_pos = shooter:position()
+	local dist = npc_pos:distance_to(shooter_pos)
+
+    return clamp((vel_data.true_vel/vel_data.base_vel) / ( 1 + dist / 200 * ( air_res * 0.5 / ( 1 - air_res + 0.1 )))
+    , 0, 1)
+end
+
 
 local stalker_damage = {}
+local custom_bone_data = {}
 -- pull the bone_mult from [stalker_damage] section
 function npc_bone_mult(bone_id)
     local damage_mult = stalker_damage[bone_id]
@@ -131,12 +143,19 @@ function npc_bone_mult(bone_id)
     else
         -- pull from data and cache
         local bone_name = Bone_IDs[bone_id] or "bip01_spine"
-        local damages = SYS_Get_Param(0, "stalker_damage", bone_name)
+        local damages = SYS_GetParam(0, "stalker_damage", bone_name)
         damages = str_explode(damages, ",")
         stalker_damage[bone_id] = tonumber(damages[1])
         return damages[1]
     end
 
+end
+
+-- Used to modify the custom values of a stalker's bone armors (to account for reductions, etc)
+function modify_bone(npc, bone_id, val)
+    local npc_id = npc:id()
+    if not custom_bone_data[npc_id] then custom_bone_data[npc_id] = {} end
+    custom_bone_data[npc_id][bone_id] = val
 end
 
 local cur_wep_data = {}
@@ -166,35 +185,45 @@ function actor_on_weapon_before_fire(flags)
 end
 
 -- Default means to calculate damage
-function calculate_damage(npc, s_hit, hit_data, bone_data, is_human)
-    local base_hp = hit_data.hit_power
-    local air_res = SYS_GetParam(2, hit_data.ammo, "k_air_resistance") or 0.05
-    base_hp = base_hp * hit_data.hit
-    if get_config("distance") then
-        base_hp = base_hp * modify_distance(s_hit.draftsman, npc, air_res)
+function calculate_damage(npc, s_hit, data, is_human)
+    if not is_human then return s_hit end
+    local base_hp = data.hit.base_power
+    base_hp = base_hp * data.ammo.k_hit
+    if get_config("velocity") then
+        local air_res = SYS_GetParam(2, data.hit.ammo, "k_air_resistance") or 0.05
+        -- todo implement properly
+        -- base_hp = base_hp * modify_distance(s_hit.draftsman, npc, air_res, cur_wep_data)
     end
-    local bone_armor_rounded = math.floor(bone_data.armor * 10)
+    local bone_armor_rounded = math.floor(data.bone.armor * 10)
     local armor_tier = math.floor(bone_armor_rounded)
     local armor_frac = math.fmod(bone_armor_rounded,1)
 
-    local ap_rounded = (s_hit.ap * 10)
+    local ap_rounded = (data.ammo.k_ap * 10)
     local ap_tier = math.floor(ap_rounded)
     local ap_frac = math.fmod(ap_rounded,1)
 
     local diff = ap_tier - armor_tier
     -- if the tiers match, modify damage by difference in fractional
     if diff == 0 then -- match, reduce dmg by up to the fractional diff
+        print_dbg("Tier Match")
         local frac_diff = clamp(armor_frac - ap_frac, 0, 0.5)
         base_hp = base_hp * (1 - frac_diff)
         -- unlisted, but if bullets are 1-2 tiers above then deal full dmg
     elseif diff == -1 then -- armor slightly tougher, halved
+        print_dbg("Armor > AP 1")
         base_hp = base_hp * 0.5
     elseif diff > 2 then -- overpenetration - reduce by up to 80%
+        print_dbg("AP > Armor 2")
         base_hp = base_hp * (1 - 0.3*(diff - 2))
     elseif diff < -1 then -- bullets bounce off lel
+        print_dbg("Armor > AP 1")
         base_hp = base_hp * 0.01 * (diff + 5)
     end
 
+    -- Apply bone mult
+    base_hp = base_hp * data.bone.mult
+
+    print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Original: %s. Base hit: %s. Final hit: %s", data.bone.name, data.bone.armor, data.bone.mult, data.ammo.k_ap, s_hit.power, data.hit.base_power, base_hp)
     s_hit.power = base_hp
     return s_hit
 end
@@ -211,29 +240,33 @@ function npc_on_before_hit(npc,s_hit,bone_id)
     local wpn = valid_hit_data.weapon
     local ammo = valid_hit_data.ammo
     local sec = valid_hit_data.section
-    printf("Actor hit npc [%s] with [%s]", npc:section(), sec)
-    -- get ammo information with custom hit, ap, impulse
+    -- get ammo information with custom hit, ap
     local ammo_data = get_ammo_data(ammo)
     if not ammo_data then return false end
+    print_dbg("Valid ammo %s used, providing custom hit modifier %s, AP %s", ammo, ammo_data.k_hit, ammo_data.k_ap)
     local wpn_hit_power = ui_wpn_params.read_float(sec, "", "hit_power")
     -- reduce base hit power by distance and velocity
     local hit_data = {
-        hit_power = wpn_hit_power,
-        wpn = wpn,
-        ammo = ammo
+        base_power = wpn_hit_power,
+        wpn = wpn
     }
     -- get bone data
     local bone_data = {
         id = bone_id,
         name = Bone_IDs[bone_id],
-        armor = get_npc_bone_armor(npc, nil, bone_id),
+        armor = npc:get_bone_protection(bone_id),
         mult = npc_bone_mult(bone_id)
+    }
+    local data = {
+        hit = hit_data,
+        bone = bone_data,
+        ammo = ammo_data
     }
     -- pass to the ammo processor
     -- return value should be the new hit
     local func = ammo_data.processor
     if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
-        s_hit = _G[func[1]][func[2]](npc, s_hit, hit_data, bone_data, true)
+        s_hit = _G[func[1]][func[2]](npc, s_hit, data, true)
     end
 
     return {

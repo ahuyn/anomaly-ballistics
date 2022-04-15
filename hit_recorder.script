@@ -39,8 +39,9 @@ function npc_on_before_hit(npc,shit,bone_id)
     local npc_pos = npc:position()
     local actor_pos = shit.draftsman:position()
     local dist = npc_pos:distance_to(actor_pos)
-    printf("NPC %s Bone %s (name %s) Damage %s Dist %s Weapon %s Ammo %s", npc:section(), bone_id, Bone_IDs[bone_id], 
-    -- npc:get_bone_protection(), 
+    printf("NPC %s Bone %s (name %s) Prot %s, HitS %s, Damage %s Dist %s Weapon %s Ammo %s", npc:section(), bone_id, Bone_IDs[bone_id], 
+    npc:get_bone_protection(bone_id), 
+    npc:get_hit_scale(Bone_IDs[bone_id]),
     shit.power, dist, weapon_sec, ammo_sec)
 end
 

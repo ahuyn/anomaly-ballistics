@@ -16,16 +16,22 @@
 0.47+ = ULTRA T H I C C only penetrable by fullsize rifle AP ammo (barely) and anti-material rounds. Only Duty and Military exos (standard?) have this
 
 0.0-0.1 = no armor to basic
+    - 0.0075 is class 1
     - can be defeated by most pistol rounds, hollowpoints, etc
 0.1-0.2 = kevlar armor to just below plate
     - pistol rounds start to struggle
+    - 0.1 is class 2
+    - 0.125+ is class 2A
 0.2-0.3 = basic metal plate
     - smallbore rifle fmj, ap pistol
+    - 0.2 is class 3
 0.3-0.4 = advanced metal plate
     - largebore rifle fmj, smallbore ap
+    - 0.3+ is class 4
 0.4+ = super strong armor, exosuit quality
     - o.4 is exosuit, 0.45 is exoskeleton/nosorog
     - largebore rifle ap
+    0.45 is class 6A
 
 Basic formula
 
