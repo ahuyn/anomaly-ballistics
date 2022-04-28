@@ -1,8 +1,0 @@
---[[
-    apply custom hit effects here
-    args are the same as on_before_hit
-    is_human determines if hit is applied on npc or not
-]]
-function modify_hit(npc,shit,bone_id, is_human)
-
-end

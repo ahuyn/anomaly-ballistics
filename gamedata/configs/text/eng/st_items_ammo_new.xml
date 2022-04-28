@@ -132,7 +132,7 @@
 		<text>9x18 7N25 AP rounds</text>
 	</string>
 	<string id="ammo_new-9x18-7n25_descr">
-		<text>Modern 9x18 armor-piercing handgun round with a carbon steel core and increased powder load. This round is able to reliably defeat body armor, but due to the powder charge and shape of the penetrator it suffers from reduced stopping power and increased wear on the weapon's internal components.</text>
+		<text>Modern 9x18 armor-piercing handgun round with a carbon steel core and increased powder load. This round is able to reliably defeat soft body armor and deal some damage to even rifle plates, but due to the powder charge and shape of the penetrator it suffers from reduced stopping power and increased wear on the weapon's internal components.</text>
 	</string>
 	<string id="ammo_new-9x18-7n25_s">
 		<text>9x18 7N25</text>
@@ -542,20 +542,20 @@
 	<!-- large rifle -->
 
 	<string id="ammo_new-7.62x54r">
-		<text>7.62x54mmR rounds</text>
+		<text>7.62x54mm PP rounds</text>
 	</string>
 	<string id="ammo_new-7.62x54r_descr">
-		<text>A surplus 7.62x54mm round. The 7.62x54mm round is the second-oldest rifle cartridge still in use today, first produced in 1891 for the Mosin-Nagant rifle. The basic design of the bullet has not changed much since 1908, and remains very popular today amongst hunters and target shooters.</text>
+		<text>Surplus 7.62x54mm ammunition. The 7.62x54mm round is the second-oldest rifle cartridge still in use today, first produced in 1891 for the Mosin-Nagant rifle. The basic design of the bullet has not changed much since 1908, and remains very popular today amongst hunters and target shooters. These rounds are loose, but can be linked together for use in the PK machine gun.</text>
 	</string>
 	<string id="ammo_new-7.62x54r-s">
-		<text>7.62x54mmR</text>
+		<text>7.62x54mm PP</text>
 	</string>
 
 	<string id="ammo_new-7.62x54-7n1">
 		<text>7.62x54mm 7N1 rounds</text>
 	</string>
 	<string id="ammo_new-7.62x54-7n1_descr">
-		<text>A 7.62x54 FMJ round specially designed for the SVD sniper rifle. Provides extremely good groupings and consistent stopping power against lightly armored targets, though suffers slightly when dealing with modern body armor.</text>
+		<text>A 7.62x54 FMJ round specially designed for the SVD sniper rifle. Provides extremely tight groupings and consistent stopping power against lightly armored targets, but suffers slightly when dealing with modern body armor.</text>
 	</string>
 	<string id="ammo_new-7.62x54-7n1_s">
 		<text>7.62x54 7N1</text>
@@ -581,14 +581,24 @@
 		<text>7.62x54 AP</text>
 	</string>
 	
-	<string id="ammo_new-7.62x54-r">
-		<text>7.62x54 mm PP rounds</text>
+	<string id="ammo_new-7.62x54-ppr">
+		<text>7.62x54mm PP rounds (linked)</text>
 	</string>
-	<string id="ammo_new-7.62x54-r_descr">
-		<text>The 7.62x54 PP is a dated rifle calibre introduced in the Soviet Empire at the turn of the 19th century and was still used by the USSR after World War II. It was originally designed for the Mosin-Nagant standard-issue infantry rifle and is quite common in the Zone due to the popularity of the rifle. The round is relatively cheap but has surprisingly good penetrative capabilities, even in comparison to more modern ammo types. It can also be used as a cheaper solution in the PKM machine gun.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+	<string id="ammo_new-7.62x54-ppr_descr">
+		<text>Surplus 7.62x54mm ammunition. The 7.62x54mm round is the second-oldest rifle cartridge still in use today, first produced in 1891 for the Mosin-Nagant rifle. The basic design of the bullet has not changed much since 1908, and remains very popular today amongst hunters and target shooters. These rounds are linked in a belt for use in the PK machine gun, but can be tediously unlinked to be used in other weapons.</text>
 	</string>
-	<string id="ammo_new-7.62x54-r_s">
-		<text>7.62x54 PP</text>
+	<string id="ammo_new-7.62x54-ppr_s">
+		<text>7.62x54 PP MG</text>
+	</string>
+	
+	<string id="ammo_new-7.62x54-mg">
+		<text>7.62x54mm BZAPI rounds (linked)</text>
+	</string>
+	<string id="ammo_new-7.62x54-mg_descr">
+		<text>Incendiary armor-piercing 7.62x54 rounds. These rounds are unsafe to fire from a sniper rifle, and as such are used in machine guns when destruction of enemy equipment is a top priority. The rounds punch through armor and the incendiary elements at the base of the bullet spark off, igniting ammunition and fuel.</text>
+	</string>
+	<string id="ammo_new-7.62x54-mg_s">
+		<text>7.62x54 PP MG</text>
 	</string>
 
 	<string id="ammo_new-7.62x51_ap">
@@ -629,7 +639,7 @@
 		<text>The 7.92x57 Mauser round was adopted by the German Empire and then the Third Reich. It was one of the most popular cartridges in the period of two world wars. However, nowadays, the round is primarily used for hunting and sports.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
 	</string>
 	<string id="ammo_new-7.92x33_fmj_s">
-		<text>7.62x57 FMJ</text>
+		<text>7.92x57 FMJ</text>
 	</string>
 
     <string id="ammo_new_12.7x55_exp">
@@ -655,7 +665,7 @@
 		<text>12.7x55mm STs-130 rounds</text>
 	</string>
 	<string id="ammo_new-12.7x55-fmj_descr">
-		<text>The full metal jacket 12.7x55mm subsonic cartridge is used in the VKS bullpup sniper rifle. The cartridge can carry a projectile weighing between from 59 grams (911 grains) and 76 g (1173 grains), yielding massive amounts of kinetic energy.\n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]III\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]very high</text>
+		<text>The full metal jacket 12.7x55mm subsonic cartridge is used in the VKS bullpup sniper rifle. The cartridge can carry a projectile weighing between from 59 grams (911 grains) and 76 g (1173 grains), yielding massive amounts of kinetic energy.</text>
 	</string>
 	<string id="ammo_new-12.7x55-fmj_s">
 		<text>12.7x55</text>
@@ -672,14 +682,14 @@
 	</string>
 	
 	
-	<string id="ammo_new-338-elephant">
-		<text>.338 LM Elephant rounds</text>
+	<string id="ammo_new-338-ap">
+		<text>.338 'Soulripper' Sabot rounds</text>
 	</string>
-	<string id="ammo_new-338-elephant_descr">
-		<text>Hunting variant of the .338 Lapua Magnum round, designed to take down the biggest game. The point is hollowed out and filled with a plastic tip, and delivers enough stopping power to put down land elephants with one shot. The effects against large mutants should be similarly devastating.</text>
+	<string id="ammo_new-338-ap_descr">
+		<text>.338 round consisting of a depleted uranium penetrator wrapped in a sabot and propelled with an extra strong charge. The uranium penetrator cuts through any and all body armor like it is nothing, and the thin round and strong propellant ensure extremely flat and long range shooting. Extremely powerful and effective against all human targets - if the bullet does not kill them, the sheer force of impact will. This bullet is the pinnacle of conventional small arms technology.</text>
 	</string>
-	<string id="ammo_new-338-elephant_s">
-		<text>.338 Elephant</text>
+	<string id="ammo_new-338-ap_s">
+		<text>.338 AP</text>
 	</string>
 	
 	
