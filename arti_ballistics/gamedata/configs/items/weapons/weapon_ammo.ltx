@@ -16,7 +16,7 @@ box_size		                         = 1
 4to1_tracer                              = true
 buck_shot                                = 1
 explosive                                = false
-impair                                   = 1
+impair			= 1
 k_bullet_speed                           = 1
 k_cam_dispersion                         = 1
 k_dist                                   = 1
@@ -59,7 +59,7 @@ inv_grid_y                               = 0
 k_hit			                         = 19.0
 k_impulse		                         = 1.1
 k_ap			                         = 0.92
-impair			                         = 1.5
+impair			= 1
 tracer			                         = off
 wm_size         	                     = 0.085
 k_air_resistance 	                     = 1.5
@@ -92,7 +92,7 @@ inv_grid_y                               = 0
 k_hit			                         = 19.0
 k_impulse		                         = 1.2
 k_ap			                         = 2.45
-impair			                         = 1.5
+impair			= 1
 tracer			                         = off
 wm_size         	                     = 0.085
 k_air_resistance 	                     = 1.5
@@ -125,7 +125,7 @@ inv_grid_y                               = 0
 k_hit			                         = 19.0
 k_impulse		                         = 1.2
 k_ap			                         = 2.84
-impair			                         = 1.5
+impair			= 1
 tracer			                         = off
 wm_size         	                     = 0.085
 k_air_resistance 	                     = 1.5
@@ -158,7 +158,7 @@ inv_grid_y                               = 0
 k_hit			                         = 19.0
 k_impulse		                         = 1.2
 k_ap			                         = 1.78
-impair			                         = 1.5
+impair			= 1
 tracer			                         = off
 wm_size         	                     = 0.085
 k_air_resistance 	                     = 1.5
@@ -191,7 +191,7 @@ inv_grid_y                               = 0
 k_hit			                         = 19.0
 k_impulse		                         = 1.0
 k_ap			                         = 1.62
-impair			                         = 1.5
+impair			= 1
 tracer			                         = off
 wm_size         	                     = 0.085
 k_air_resistance 	                     = 1.5
@@ -227,7 +227,7 @@ k_disp			= 1
 k_hit			= 1
 k_impulse		= 1
 k_ap			= 1
-impair			= 1.5 ; 1
+impair			= 1 ; 1
 buck_shot		= 1
 tracer			= off
 wm_size         	= 0.001
@@ -282,7 +282,7 @@ k_disp				= 1
 k_hit				= 1
 k_impulse			= 1
 k_ap				= 1
-impair				= 1
+impair			= 1
 buck_shot			= 1
 tracer				= off
 wm_size         	= 1
@@ -317,7 +317,7 @@ k_disp				= 1
 k_hit				= 1
 k_impulse			= 1
 k_ap				= 1
-impair				= 1
+impair			= 1
 buck_shot			= 1
 tracer				= off
 wm_size         	= 1
@@ -352,7 +352,7 @@ k_disp				= 1
 k_hit				= 1
 k_impulse			= 1
 k_ap				= 1
-impair				= 1
+impair			= 1
 buck_shot			= 1
 tracer				= off
 wm_size         	= 1
@@ -380,13 +380,11 @@ box_size		= 15
 
 inv_grid_x			= 55
 inv_grid_y			= 0
-; for the most part we want to preserve values for things like shooting mutants
-; k_ap and k_hit will be overridden
 k_hit           = 1.2
 k_ap			= 0.1
 k_disp			= 0.66
 k_impulse		= 0.6
-impair			= 1.3
+impair			= 1
 tracer_color_ID	= 1
 wm_size			= 0.042
 k_air_resistance = 0.8
@@ -397,7 +395,7 @@ k_bullet_speed	= 1.3
 [ammo_9x18_fmj_bad]:ammo_9x18_fmj ; PST
 inv_name		= ammo_new-9x18-fmj
 inv_name_short	= ammo_new-9x18-fmj_s
-inv_name_short	= ammo_new-9x18-fmj_descr
+description 	= ammo_new-9x18-fmj_descr
 inv_weight		= .16
 cost			= 320
 
@@ -465,7 +463,7 @@ k_disp			= 0.7
 k_hit			= 1.0 ;  1.2
 k_impulse		= 0.66
 k_ap			= 0.14
-impair			= 1.2
+impair			= 1
 tracer_color_ID	= 1
 wm_size         = 0.062
 k_air_resistance = 0.8
@@ -539,8 +537,6 @@ class			= AMMO_S
 cform                   = skeleton
 visual                  = dynamics\weapons\wpn_ammo\ammo_9x19_fmj.ogf
 $prefetch 		= 64
-
-
 
 inv_name		= ammo_new-9x19-plus
 inv_name_short	= ammo_new-9x19-plus_s
@@ -639,7 +635,7 @@ k_disp			= 0.7
 k_hit			= 1.0 ;  1.27
 k_impulse		= 0.96
 k_ap			= 0.14
-impair			= 1.2
+impair			= 1
 tracer_color_ID	= 2
 wm_size         = 0.068
 k_air_resistance = 0.8
@@ -702,7 +698,7 @@ k_disp			= 0.7
 k_hit			= 1.0 ;  0.95
 k_impulse		= 0.32
 k_ap			= 0.28
-impair			= 1.2
+impair			= 1
 tracer_color_ID	= 1
 wm_size         = 0.033
 k_air_resistance = 0.8
@@ -1482,7 +1478,7 @@ k_disp			= 0.66
 k_hit			= 1.0 ;  1.1
 k_impulse		= 0.54
 k_ap			= 0.55
-impair			= 1.05
+impair			= 1
 tracer_color_ID	= 2
 wm_size         = 0.034
 k_air_resistance = 0.25
@@ -1866,7 +1862,7 @@ k_disp			= 0.5
 k_hit			= 2.0 ;  2.0
 k_impulse		= 2.0
 k_ap			= 0.2
-impair			= 1.05
+impair			= 1
 tracer			= off
 4to1_tracer		= false
 wm_size         = 0.052
@@ -1942,7 +1938,7 @@ k_hit			= 0.3 ;  0.3
 k_impulse		= 0.25
 k_ap			= 0.03
 buck_shot		= 11
-impair			= 1.0
+impair			= 1
 tracer			= off
 4to1_tracer		= false
 wm_size         = 0.02
@@ -2012,7 +2008,7 @@ k_disp			= 0.33
 k_hit			= 1.75 ;  1.75
 k_impulse		= 1.5
 k_ap			= 0.3
-impair			= 1.05
+impair			= 1
 tracer			= off
 4to1_tracer		= false
 wm_size         = 0.05
@@ -2594,6 +2590,77 @@ k_bullet_speed	= 0.95
 
 tier                                     = 4
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[ammo_7.62x54_7h14]:ammo_base
+GroupControlSection	= spawn_group
+discovery_dependency	= 
+$spawn			= "weapons\ammo\ammo_7.62x54_7h14" ; option for Level Editor
+class			= AMMO
+cform                   = skeleton
+visual                  = dynamics\weapons\wpn_ammo\ammo_762x54_7h14.ogf
+description		= ammo_new-7.62x54_7n14_descr
+$prefetch 		= 64
+
+cost					 = 2350
+
+box_size		= 10
+
+inv_name		= ammo_new-7.62x54_7n14
+inv_name_short		= ammo_new-7.62x54_7n14_s
+inv_weight		= .22
+
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 55
+inv_grid_y         = 31
+
+k_disp			= 0.66
+k_impulse		= 0.74
+k_ap			= 0.6
+tracer_color_ID	= 1
+wm_size         = 0.06
+k_air_resistance = 0.05
+
+tier                                     = 4
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[ammo_7.62x54_7h14_bad]:ammo_7.62x54_7h14
+GroupControlSection	= spawn_group
+discovery_dependency	= 
+$spawn			= "weapons\ammo\ammo_7.62x54_7h14" ; option for Level Editor
+class			= AMMO
+cform                   = skeleton
+visual                  = dynamics\weapons\wpn_ammo\ammo_762x54_7h14.ogf
+description		= ammo_new-7.62x54_7n14_descr
+$prefetch 		= 64
+
+cost					 = 1290
+
+box_size		= 10
+
+;inv_name		= ammo_new-7.62x54_7n14_bad
+inv_name_short		= ammo_new-7.62x54_7n14_s
+inv_weight		= .22
+
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 57
+inv_grid_y         = 31
+
+k_disp			= 0.7
+k_hit			= 1.0 ;  0.95
+k_impulse		= 0.71
+k_ap			= 0.58
+
+tracer_color_ID	= 1
+wm_size         = 0.06
+k_air_resistance = 0.05
+k_bullet_speed	= 0.95
+
+tier                                     = 4
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -2699,7 +2766,7 @@ k_disp			= 0.75
 k_hit			= 1.0 ;  0.9
 k_impulse		= 0.3
 k_ap			= 0.3
-impair			= 1.3
+impair			= 1
 tracer_color_ID	= 2
 wm_size         = 0.017
 k_air_resistance = 0.8
@@ -2707,77 +2774,6 @@ k_bullet_speed	= 0.9
 
 tier                                     = 1
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_7.62x54_7h14]:ammo_base
-GroupControlSection	= spawn_group
-discovery_dependency	= 
-$spawn			= "weapons\ammo\ammo_7.62x54_7h14" ; option for Level Editor
-class			= AMMO
-cform                   = skeleton
-visual                  = dynamics\weapons\wpn_ammo\ammo_762x54_7h14.ogf
-description		= ammo_new-7.62x54_7n14_descr
-$prefetch 		= 64
-
-cost					 = 2350
-
-box_size		= 10
-
-inv_name		= ammo_new-7.62x54_7n14
-inv_name_short		= ammo_new-7.62x54_7n14_s
-inv_weight		= .22
-
-inv_grid_width     = 2
-inv_grid_height    = 1
-inv_grid_x         = 55
-inv_grid_y         = 31
-
-k_disp			= 0.66
-k_impulse		= 0.74
-k_ap			= 0.6
-tracer_color_ID	= 1
-wm_size         = 0.06
-k_air_resistance = 0.05
-
-tier                                     = 4
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_7.62x54_7h14_bad]:ammo_7.62x54_7h14
-GroupControlSection	= spawn_group
-discovery_dependency	= 
-$spawn			= "weapons\ammo\ammo_7.62x54_7h14" ; option for Level Editor
-class			= AMMO
-cform                   = skeleton
-visual                  = dynamics\weapons\wpn_ammo\ammo_762x54_7h14.ogf
-description		= ammo_new-7.62x54_7n14_descr
-$prefetch 		= 64
-
-cost					 = 1290
-
-box_size		= 10
-
-;inv_name		= ammo_new-7.62x54_7n14_bad
-inv_name_short		= ammo_new-7.62x54_7n14_s
-inv_weight		= .22
-
-inv_grid_width     = 2
-inv_grid_height    = 1
-inv_grid_x         = 57
-inv_grid_y         = 31
-
-k_disp			= 0.7
-k_hit			= 1.0 ;  0.95
-k_impulse		= 0.71
-k_ap			= 0.58
-
-tracer_color_ID	= 1
-wm_size         = 0.06
-k_air_resistance = 0.05
-k_bullet_speed	= 0.95
-
-tier                                     = 4
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -3107,7 +3103,7 @@ inv_grid_y         = 38
 k_hit			= 1.0 ;  0.9
 k_impulse		= 0.4
 k_ap		    = 0.55
-impair			= 1.3
+impair			= 1
 tracer_color_ID	= 1
 wm_size         = 0.051
 k_air_resistance = 0.05
@@ -3239,7 +3235,7 @@ k_disp			= 0.66
 k_hit			= 1.0 ;  1.01
 k_impulse		= 1.12
 k_ap			= 0.27
-impair			= 1.3
+impair			= 1
 buck_shot		= 0
 tracer			= off
 wm_size         = 0.05
@@ -3380,7 +3376,7 @@ k_disp			= 0.66
 k_hit			= 1.0 ;  1.38
 k_impulse		= 1.26
 k_ap			= 0.301
-impair			= 1.3
+impair			= 1
 buck_shot		= 0
 tracer			= off
 wm_size         = 0.05
@@ -3502,7 +3498,7 @@ k_disp			= 1.52
 k_hit			= 1.0 ;  1.29
 k_impulse		= 1.3
 k_ap			= 1.22
-impair			= 1.3
+impair			= 1
 buck_shot		= 0
 tracer			= off
 wm_size         = 0.1
@@ -3613,7 +3609,7 @@ k_disp			= 0.75
 k_hit			= 2.0 ;  2.0
 k_impulse		= 1
 k_ap			= 4.0
-impair			= 1.3
+impair			= 1
 tracer			= off
 wm_size         = 0.01
 k_air_resistance = 0.01

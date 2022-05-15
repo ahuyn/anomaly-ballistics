@@ -1,19 +1,5 @@
-[ammo_base] ; +P
-; this is your k_hit value
-hit = 1
-; this is your k_ap value, 0.049 guarantees full damage to unarmored targets
-; below that value allows for up to 30% hit reduction, if desired
-ap = 0.049
-; this determines how much damage is lost from overpenetration
-pen = 0.5
+[ammo_base]
 ; this is the handler function
-handler = ballistic_handlers.calculate_damage
-
-; hp ammo gets a bonus to damage on full or 0 pen
-[ammo_base_hp]:ammo_base
-hp_mult = 1.5
-handler = ballistic_handlers.hp_damage
-
-(1 - ap_frac) * 0.4
-
--1 - diff
+handler = ballistic_handlers.default
+; name and desc can also be provided if you want to override without modifying weapon_ammo
+; any other fields you can define you can put in here if you want to refer to them

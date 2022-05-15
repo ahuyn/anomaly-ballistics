@@ -142,7 +142,7 @@
 		<text>9x19mm 7N31 AP rounds</text>
 	</string>
 	<string id="ammo_new-9x19-7n31_descr">
-		<text>Enhanced Russian AP round with a stronger powder charge and lighter bullet. Provides much better peak performance and armor defeating capability than its predecessor, at the cost of higher wear. </text>
+		<text>Enhanced Russian AP round with a stronger powder charge and lighter bullet. Provides much better peak performance and armor defeating capability than its predecessor, at the cost of higher wear. Extremely rare in the Zone and issued only to Spetsnaz or Russian Mercenaries.</text>
 	</string>
 	<string id="ammo_new-9x19-7n31_s">
 		<text>9x19 7N31 AP</text>
@@ -162,13 +162,13 @@
 		<text>9x19 mm FMJ rounds</text>
 	</string>
 	<string id="ammo_new-9x19-fmj_descr">
-		<text>This basic 9x19 calibre round with a jacketed bullet has good characteristics while being simple to produce. The round is popular due to the fact that international conventions prohibit the use of expanding ammunition in combat. Ineffective against body armour.</text>
+		<text>Basic and ubiquitous 9x19 caliber round with a jacketed bullet. Possesses good flight characteristics and appreciable stopping power while being simple to produce. The round is popular due to the fact that international conventions prohibit the use of expanding ammunition in combat. Ineffective against body armour.</text>
 	</string>
 	<string id="ammo_new-9x19-fmj_s">
 		<text>9x19 FMJ</text>
 	</string>
 	
-	<string id="ammo_new-9x19_plus">
+	<string id="ammo_new-9x19-plus">
 		<text>9x19 mm FMJ +P+ rounds</text>
 	</string>
 	<string id="ammo_new-9x19-plus_descr">
@@ -271,7 +271,7 @@
 		<text>7.62x25mm Pst rounds</text>
 	</string>
 	<string id="ammo_new-7.62x25-ps_descr">
-		<text>The steel core 7.62x25mm cartridge is a Russian bottle-necked pistol cartridge widely used in former Soviet satellite states, China and Pakistan among other countries. It's very effective against unarmoured targets.</text>
+		<text>The steel core 7.62x25mm cartridge is a Russian bottle-necked pistol cartridge widely used in former Soviet satellite states, China and Pakistan among other countries. It's effective against lightly armoured targets thanks to the steel core, without sacrificing much in the way of stopping power.</text>
 	</string>
 	<string id="ammo_new-7.62x25-ps_s">
 		<text>7.62x25 Pst</text>
@@ -300,7 +300,7 @@
 		<text>5.7x28 FMJ rounds</text>
 	</string>
 	<string id="ammo_new-5.7x28-fmj">
-		<text>Outdated 5.7x28 FMJ round. This round was quickly superseded by the SS190, and as such large quantities of the round found their way to the Zone. Performance is overall inferior to the SS190, but it is far more common.</text>
+		<text>Outdated 5.7x28 FMJ round. This round was quickly superseded by the SS190, and as such large quantities of the round found their way to the Zone. Performance is overall inferior to the SS190, but makes up in price and commonality.</text>
 	</string>
 	<string id="ammo_new-5.7x28-fmj_s">
 		<text>5.7x28 AP</text>
@@ -319,7 +319,7 @@
 		<text>5.7x28 CHAOS rounds</text>
 	</string>
 	<string id="ammo_new-5.7x28-chaos_descr">
-		<text>5.7x28mm SS190 rounds with signs of unknown anomalous tampering. These are rarely found in the employ of mercenary operators, and possess markers of treatment in the same vein as other experimental ammo types. These in particular have a bullet that destabilizes in the metaphysical sense, causing randomized fluctuations of force on impact. The performance of the round is highly irregular and ranges from stinging like a mere airsoft pellet to hitting as hard as a full-size rifle round.</text>
+		<text>5.7x28mm SS190 rounds with signs of unknown anomalous tampering. These are rarely found in the employ of Monolith and Sinners, and possess markers of treatment in the same vein as other experimental ammo types. These in particular have a bullet that destabilizes in the metaphysical sense, causing randomized fluctuations of force on impact. The performance of the round is highly irregular and ranges from stinging like a mere airsoft pellet to hitting as hard as a full-size rifle round.</text>
 	</string>
 	<string id="ammo_new-5.7x28-chaos_s">
 		<text>5.7x28 CHAOS</text>

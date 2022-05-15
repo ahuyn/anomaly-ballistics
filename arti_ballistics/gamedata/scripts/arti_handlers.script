@@ -1,0 +1,167 @@
+get_config          = ballistics_mcm.get_config
+print_dbg           = ballistics_mcm.print_dbg
+npc_bone_mult       = ballistics_utils.npc_bone_mult
+npc_bone_protection = ballistics_utils.npc_bone_protection
+npc_bone_data       = ballistics_utils.npc_bone_data
+modify_velocity     = ballistics_utils.modify_velocity
+get_cur_vel         = ballistics_utils.get_cur_vel
+math_floor          = math.floor
+math_abs            = math.abs
+
+ini_ammo            = ballistics_utils.ini_ammo
+
+-- pulls custom ap and hit power values from code
+function get_ammo_data(ammo_sec)
+    if ini_ammo:section_exist(ammo_sec) then
+        return {
+            sec     = ammo_sec,
+            k_hit   = ini_ammo:r_float_ex(ammo_sec, "k_hit") or SYS_GetParam(2, ammo_sec, "k_hit") or 1,
+            k_ap    = ini_ammo:r_float_ex(ammo_sec, "k_ap") or SYS_GetParam(2, ammo_sec, "k_ap") or 0,
+            k_pen   = ini_ammo:r_float_ex(ammo_sec, "k_pen") or 0.5,
+        }
+    end
+end
+
+-- deal residual impact damage only
+function impact(base_hp, diff, ap_frac, pen)
+    printf("Impact")
+    return base_hp / (10 * (diff - 2))
+end
+
+-- reduction based on AP frac and diff
+function reduce(base_hp, diff, ap_frac, pen)
+    local modifier =  1 - (0.3 * (1 + diff - ap_frac))
+    printf("Reduction of %s", modifier)
+    return base_hp * modifier
+end
+
+-- deal full damage (does nothing lol)
+function full(base_hp, diff, ap_frac, pen)
+    printf("Full")
+    return base_hp
+end
+
+-- overpenetrate and lose damage (based on diff and pen)
+-- default is reducing down to pen 
+function penetrate(base_hp, diff, ap_frac, pen)
+    printf("Overkill")
+    loss = 1 - pen
+    adj = (diff - 3)/4
+    return base_hp *  1 - (loss * adj)
+end
+
+local damage_subcalcs = {
+    [-7] = impact,
+    [-6] = impact,
+    [-5] = impact,
+    [-4] = impact,
+    [-3] = impact,
+    [-2] = reduce,
+    [-1] = reduce,
+    [0] = reduce,
+    [1] = full,
+    [2] = full,
+    [3] = full,
+    [4] = penetrate,
+    [5] = penetrate,
+    [6] = penetrate,
+    [7] = penetrate,
+}
+
+-- refer to ballistics_mcm.txt for logic details
+function ballistic_handlers.default(npc, s_hit, ctx)
+    if not ctx.is_npc then return s_hit end
+
+    local base_power = ui_wpn_params.read_float(ctx.hit_data.wpn_sec, "", "hit_power")
+    local base_hp = base_power
+    local ammo_data = get_ammo_data(ctx.hit_data.ammo)
+    local bone_data = npc_bone_data(npc, ctx.bone_id)
+
+    base_hp = base_hp * ammo_data.k_hit
+    -- modify by velocity
+    base_hp = base_hp * modify_velocity(s_hit.draftsman, npc, ammo_data.sec)
+
+    local armor_tier = clamp(math_floor(bone_data.armor * 20), 0, 7)
+
+    local ap_rounded = ammo_data.k_ap * 20
+    local ap_tier = math_floor(ap_rounded)
+    local ap_frac = math.fmod(ap_rounded,1)
+    if ap_frac > 0.9 then ap_frac = 1 end
+
+    local diff = ap_tier - armor_tier
+    printf("Difference of %s, AP fraction of %s", diff, ap_frac)
+    base_hp = damage_subcalcs[diff](base_hp, math_abs(diff), ap_frac, ammo_data.k_pen)
+
+    -- Apply bone mult
+    base_hp = base_hp * bone_data.mult
+
+    print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, base_power, base_hp)
+    s_hit.power = base_hp
+    return s_hit
+end
+
+-- hollowpoints (we only deal expansive bonus dmg on penetration)
+function hp_damage(npc, s_hit, bone_id, hit_data, is_human)
+    s_hit = ballistic_handlers.default(npc, s_hit, bone_id, hit_data, is_human)
+    local bone_data = npc_bone_data(npc, bone_id)
+    local ammo_data = get_ammo_data(hit_data.ammo)
+
+    local bone_armor_rounded = math_floor(bone_data.armor * 20)
+    local armor_tier = clamp(math_floor(bone_armor_rounded), 0, 7)
+
+    local ap_rounded = (ammo_data.k_ap * 20)
+    local ap_tier = math_floor(ap_rounded)
+
+    -- for hp, only apply expansion damage if penetration is sufficient
+    if ap_tier >= armor_tier then
+        s_hit.power = s_hit.power * (ini_ammo:r_float_ex(hit_data.ammo, "hp_mult") or 1)
+        printf("HP round penetrated - new power %s", s_hit.power)
+    end
+    return s_hit
+end
+
+-- for shit that shreds armor
+function shred_damage(npc, s_hit, bone_id, hit_data, is_human)
+    s_hit = ballistic_handlers.default(npc, s_hit, bone_id, hit_data, is_human)
+    -- shred after damage :)
+
+    return s_hit
+end
+
+-- buckshot has slightly different impact calculations
+function buckshot_damage(npc, s_hit, bone_id, hit_data, is_human)
+    s_hit = ballistic_handlers.default(npc, s_hit, bone_id, hit_data, is_human)
+    -- deal extra damage to limbs if applicable
+    return s_hit
+end
+
+local anims = {
+    "norm_2_critical_hit_torso_0", -- good
+    "norm_1_critical_hit_head_0", -- good
+}
+
+function flinch_damage(npc, s_hit, bone_id, hit_data, is_human)
+    s_hit = ballistic_handlers.default(npc, s_hit, bone_id, hit_data, is_human)
+    local bone_data = get_bone_data(npc, bone_id)
+    local ammo_data = get_ammo_data(hit_data.ammo)
+
+    local bone_armor_rounded = math_floor(bone_data.armor * 20)
+    local armor_tier = clamp(math_floor(bone_armor_rounded), 0, 7)
+
+    local ap_rounded = (ammo_data.k_ap * 20)
+    local ap_tier = math_floor(ap_rounded)
+
+    -- for hp, only apply expansion damage if penetration is sufficient
+    if ap_tier >= armor_tier then
+        s_hit.power = s_hit.power * (ini_ammo:r_float_ex(hit_data.ammo, "hp_mult") or 1)
+        printf("HP round penetrated - new power %s", s_hit.power)
+        local flinch_hance = ini_ammo:r_float_ex(hit_data.ammo, "flinch_chance") or 0.6
+        if math.random() < flinch_chance then
+            if npc:movement_type() == move.walk or npc:movement_type() == move.run then
+                npc:set_movement_type(move.stand)
+            end
+            npc:play_cycle(anims[math.random(#anims)], true)
+        end
+    end
+    return s_hit
+end

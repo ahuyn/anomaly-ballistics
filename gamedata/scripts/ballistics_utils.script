@@ -1,0 +1,210 @@
+-- Utility scripts to help calculate things.
+
+get_config = ballistics_mcm.get_config
+print_dbg = ballistics_mcm.print_dbg
+
+ini_ammo = ini_file("items\\ammo\\importer.ltx")
+ini_damage = ini_file("creatures\\damages.ltx")
+
+Bone_IDs = {
+    [2]  =	"bip01_pelvis",
+    [3]  =	"bip01_l_thigh",
+    [4]  =	"bip01_l_calf",
+    [5]  =	"bip01_l_foot",
+    [7]  =	"bip01_r_thigh",
+    [8]  =	"bip01_r_calf",
+    [9]  =	"bip01_r_foot",
+    [11] =	"bip01_spine",
+    [12] =	"bip01_spine1",
+    [13] =	"bip01_spine2",
+    -- head
+    [14] =	"bip01_neck", 
+    [15] =	"bip01_head",
+    [16] =	"eye_left",
+    [17] =	"eye_right",
+    [18] =	"eyelid_1",
+    [19] =	"jaw_1",
+    -- endhead
+    [20] =	"bip01_l_clavicle",
+    [21] =	"bip01_l_upperarm",
+    [22] =	"bip01_l_forearm",
+    [23] =	"bip01_l_forearm",
+    [33] =	"bip01_r_clavicle",
+    [34] =	"bip01_r_upperarm",
+    [35] =	"bip01_r_forearm",
+    [36] =	"bip01_r_forearm",
+    }
+
+head_bones = {
+        
+    [14] =	"bip01_neck", 
+    [15] =	"bip01_head",
+    [16] =	"eye_left",
+    [17] =	"eye_right",
+    [18] =	"eyelid_1",
+    [19] =	"jaw_1",
+}
+
+-- pull the bone_mult from [stalker_damage] section, cache the values to prevent excessive stringsplitting
+local stalker_damage = {}
+function npc_bone_mult(bone_id)
+    local damage_mult = stalker_damage[bone_id]
+    if damage_mult then return damage_mult 
+    else
+        -- pull from data and cache
+        local bone_name = Bone_IDs[bone_id] or "bip01_spine"
+        local damages = SYS_GetParam(0, "stalker_damage", bone_name)
+        damages = str_explode(damages, ",")
+        stalker_damage[bone_id] = tonumber(damages[1])
+        return damages[1]
+    end
+end
+
+-- Pull bone protection for a given NPC's bone. Can use custom bone data.
+-- returns two arguments, second one indicates if this has already been modified
+local bone_cache = {}
+local custom_bone_data = {}
+function npc_bone_protection(npc, bone_id)
+    local id = npc:id()
+    if custom_bone_data[id] and custom_bone_data[id][bone_id] then return custom_bone_data[id][bone_id], True
+    else
+        local visual_data = game.get_visual_userdata(npc:get_visual_name())
+        local bone_sec = visual_data:r_string_ex("bone_protection", "bones_protection_sect", "stalker_hero_1") 
+        local bone_name = Bone_IDs[bone_id] or "bip01_spine"
+        if not bone_cache[bone_sec] then bone_cache[bone_sec] = {} end
+        if not bone_cache[bone_sec][bone_name] then
+            local bone_armor = str_explode(ini_damage:r_string_ex(bone_sec, bone_name), ",") 
+            bone_cache[bone_sec][bone_name] = tonumber(bone_armor[2]) or 0
+        end
+        return bone_cache[bone_sec][bone_name], False
+    end
+end
+
+-- Used to modify the custom values of a stalker's bone armors (to account for reductions, etc)
+function modify_bone(npc, bone_id, new_val)
+    local npc_id = npc:id()
+    if not custom_bone_data[npc_id] then custom_bone_data[npc_id] = {} end
+    custom_bone_data[npc_id][bone_id] = new_val
+end
+
+-- util to collect information about a bone - damage multiplier, id, name
+function npc_bone_data(npc, bone_id)
+    armor, modified = npc_bone_protection(npc, bone_id)
+    return {
+        id = bone_id,
+        name = Bone_IDs[bone_id],
+        armor = armor,
+        modified = modified,
+        mult = npc_bone_mult(bone_id)
+    }
+end
+
+-- Utils to handle storing velocity. Before weapon fired, compute and cache velocity modifier
+local cur_wep_data = {}
+-- check and update current weapon to cache hit power and velocity
+function actor_on_weapon_before_fire(flags)
+    local current_wpn = db.actor:active_item()
+    if not current_wpn then return end
+    print_dbg("Before fire %s", current_wpn:section())
+    -- cache
+    local id = current_wpn:id()
+    local sec = current_wpn:section()
+    if not cur_wep_data.id or cur_wep_data.id ~= id then
+        if IsWeapon(current_wpn) and not IsItem("fake_ammo_wpn",sec) then
+            cur_wep_data.id = current_wpn:id()
+            base_vel = SYS_GetParam(2, sec, "bullet_speed")
+            base_degrade = SYS_GetParam(2, sec, "condition_shot_dec") or 0
+            local vel_add = 0
+            local upgrades = utils_item.get_upgrades_installed(current_wpn)
+            for _, upgrade in pairs(upgrades) do
+                local section = ini_sys:r_string_ex(upgrade, "section")
+                local speed_adj = ini_sys:r_string_ex(section,"bullet_speed")
+                if speed_adj then
+                    local op = string.sub(speed_adj, 1, 1)
+                    local val = tonumber(string.sub(speed_adj, 2))
+        
+                    vel_add = op == "+" and vel_add + val or vel_add - val
+                end
+
+                local shot_dec = ini_sys:r_string_ex(section,"condition_shot_dec")
+				if shot_dec then
+					local op = string.sub(shot_dec, 1, 1)
+					local val = tonumber(string.sub(shot_dec, 2))
+					base_degrade = op == "+" and base_degrade + val or base_degrade - val
+				end
+            end
+            cur_wep_data.vel_mod = vel_add/base_vel
+            cur_wep_data.dec = base_degrade
+            print_dbg("Stored velocity mod %s, degradation %s for wpn %s", cur_wep_data.vel_mod, base_degrade, sec)
+        else
+            -- clear
+            print_dbg("Clearing cwd")
+            cur_wep_data.id = 0
+            cur_wep_data.vel_mod = 0
+            cur_wep_data.dec = 0
+        end
+    end
+end
+
+-- return the velocity modifier for the current weapon, or 1
+function get_cur_vel(id)
+    return cur_wep_data.id == id and cur_wep_data.vel_mod or 0
+end
+
+
+-- Provide a damage modifier based on distance, adjusted by bullet velocity and flatness
+function modify_distance(shooter, npc, air_res)
+    local npc_pos = npc:position()
+	local shooter_pos = shooter:position()
+	local dist = npc_pos:distance_to(shooter_pos)
+
+    return clamp(1 / ( 1 + dist / 200 * ( air_res * 0.5 / ( 1 - air_res + 0.1 )))
+    , 0, 1)
+end
+
+-- One way to modify damage based on velocity. 20% of bonus velocity (e.g. taken from flatness upgrades) is added as hit damage.
+-- Of course, you don't need to use this
+function modify_velocity(shooter, npc, ammo)
+    local air_res = SYS_GetParam(2, ammo, "k_air_resistance") or 0.05
+    -- 20% of velocity bonus becomes damage
+    local velocity_mod = (1 + (get_cur_vel() / 5)) * modify_distance(shooter, npc, air_res)
+    print_dbg("Applying velocity damage multiplier of %s", velocity_mod)
+    return velocity_mod
+end
+
+-- Modify weapon degradation based on ammo type to be correct, if needed. Leverage stored data
+-- eg. if ammo degrade in custom config is 1.5 and is 1 in weapon_ammo, reduce weapon dura by 0.5 x condition_shot_dec
+function actor_on_weapon_fired(obj, weapon, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
+    if weapon:id() ~= cur_wep_data.id then return end
+    local sec = weapon:section()
+    ammo_map = utils_item.get_ammo(nil, cur_wep_data.id)
+    local ammo = ammo_map[weapon:get_ammo_type() + 1]
+    local base_degrade = SYS_GetParam(2, ammo, "impair")
+    local actual_degrade = ini_ammo:r_float_ex(ammo, "impair") or base_degrade
+    if base_degrade == actual_degrade then return end
+    local diff = (actual_degrade - base_degrade) * cur_wep_data.dec
+    print_dbg("Adjusting weapon cond by %s", diff)
+    weapon:set_condition(clamp(weapon:condition() + diff, 0.001, 0.999))
+end
+
+
+function on_get_item_cost(kind, obj, profile, calculated_cost, ret)
+	if not (obj and profile) then
+		return nil
+	end
+
+	local sec = obj:section()
+	local discount = profile.discount
+
+	local ammo = IsItem("ammo",sec)
+	if ammo and ini_ammo:section_exist(sec) and ini_ammo:r_float_ex(sec, "cost") then
+        ret.new_cost = ini_ammo:r_float_ex(sec, "cost") * discount * (obj:ammo_get_count() / ammo)
+	end
+end
+
+function on_game_start()
+    RegisterScriptCallback("actor_on_weapon_before_fire", actor_on_weapon_before_fire)
+    RegisterScriptCallback("actor_on_weapon_fired", actor_on_weapon_fired)
+    RegisterScriptCallback("on_get_item_cost", on_get_item_cost)
+    
+end
