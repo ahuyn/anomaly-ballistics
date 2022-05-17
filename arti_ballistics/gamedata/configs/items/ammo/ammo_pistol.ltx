@@ -13,13 +13,13 @@ k_ap		= 0.05
 cost        = 500
 
 [ammo_9x18_pmm]:ammo_base; SP7 JHP
-handler		= arti_handlers.hp_damage
 name		= ammo_new-9x18-sp7
 k_hit		= 1
 k_ap		= 0.069
 k_hp        = 1.8
 impair      = 1.3
 cost        = 1216
+special     = hp
 
 [ammo_9x18_pmm_bad]:ammo_9x18_pmm ; HP hunting
 name		= ammo_new-9x18-hp
@@ -27,17 +27,19 @@ k_hit		= 1
 k_ap		= 0.049
 k_hp        = 1.5
 cost        = 950
+special     = hp
 
 [ammo_9x18_ap]:ammo_base; 7N16 PMM, modern AP
 name		= ammo_new-9x18-7n25
 k_hit		= 0.8
 k_ap		= 0.2
 k_pen		= 0.7
+impair      = 1.3
 cost        = 1450
 
 [ammo_9x18_ap_bad]:ammo_9x18_ap ; 7N15 AP
 name		= ammo_new-9x18-ap
-k_hit		= 0.9
+k_hit		= 0.95
 k_ap		= 0.135
 cost        = 840
 
@@ -45,118 +47,147 @@ cost        = 840
 [ammo_9x19_fmj]:ammo_base; +P+
 name		= ammo_new-9x19-plus
 k_hit		= 1.2
-k_ap		= 0.1
+k_ap		= 0.11
+impair      = 1.3
 cost        = 1125
 
 [ammo_9x19_fmj_bad]:ammo_9x19_fmj ; standard FMJ
 name		= ammo_new-9x19-fmj
-k_ap		= 0.075
+k_ap		= 0.08
 cost        = 645
 
 [ammo_9x19_pbp]:ammo_base; JSP +P
-handler		= arti_handlers.flinch_damage
 name		= ammo_new-9x19-pbps
 k_hit		= 1.2
 k_ap		= 0.099
-flinch      = 0.9
-hp_mult     = 1.4
+flinch      = 0.67
+k_hp        = 1.4
+impair      = 1.1
 cost        = 1759
+special     = flinch
 
 [ammo_9x19_pbp_bad]:ammo_9x19_pbp ; JHP
-handler		= arti_handlers.hp_damage
 name		= ammo_new-9x19-pbp
+k_ap		= 0.05
+k_hp        = 2
 cost        = 750
+special     = hp
 
 [ammo_9x19_ap]:ammo_base; 7N31 overpressure AP
 name		= ammo_new-9x19-7n31
 k_hit		= 0.8
 k_ap		= 0.225
+k_pen       = 0.8
+impair      = 1.3
 cost        = 1950
 
 [ammo_9x19_ap_bad]:ammo_9x19_ap ; 7N21 overpressure
 name		= ammo_new-9x19-ap
 k_hit		= 0.9
+k_pen       = 0.8
 k_ap		= 0.195
 cost        = 1350
 
 [ammo_11.43x23_fmj]:ammo_base; +P
 name		= ammo_new-11.43x23-fmjs
-k_hit		= 1
+k_hit		= 1.3
 k_ap		= 0.099
 flinch      = 0.9
-hp_mult     = 1.4
+impair      = 1.3
 cost        = 1300
 
 [ammo_11.43x23_fmj_bad]:ammo_11.43x23_fmj ; FMJ
 name        = ammo_new-11.43x23-fmj
+k_ap        = 0.05
 cost        = 990
 
 [ammo_11.43x23_hydro]:ammo_base; hydrashok HP
-handler		= arti_handlers.flinch_damage
 name		= ammo_new-11.43x23-hydro
 k_hit		= 1.1
-hp_mult     = 2
+k_ap        = 0.099
+k_hp	    = 1.3
+flinch      = 0.95
 cost        = 1669
+special     = flinch,hp
 
 [ammo_11.43x23_hydro_bad]:ammo_11.43x23_hydro ; HP
 name		= ammo_new-11.43x23-hp
-k_hit		= 1.1
-hp_mult     = 1.5
+k_hit		= 1
+k_ap        = 0.049
+k_hp	    = 1.7
 cost        = 1000
+special     = hp
 
 ; deagle is kinda weak in base game
 [ammo_357_hp_mag]:ammo_base; handload JFP
+handler     = arti_handlers.headshot
 name		= ammo_new-357-jfp
 k_hit		= 1.4
 k_ap		= 0.199
 cost        = 2235
+special     = head
 
 [ammo_357_hp_mag_bad]:ammo_357_hp_mag ; standard HP
-handler		= arti_handlers.hp_damage
 name		= ammo_new-357-hp
 k_hit		= 1.2
-hp_mult     = 1.6
+k_hp	    = 1.6
 k_ap		= 0.099
 cost        = 1430
+special     = hp
 
 
 [ammo_7.62x25_p]:ammo_base; pst
 name		= ammo_new-7.62x25-ps
-k_hit		= 0.2
-k_ap		= 1
+k_hit		= 1
+k_ap		= 0.12
 cost        = 1120
 
 [ammo_7.62x25_p_bad]:ammo_7.62x25_p ; p
 name		= ammo_new-7.62x25-p
+k_ap		= 0.08
 cost        = 750
 
 [ammo_7.62x25_ps]:ammo_base; acid
+handler     = arti_handlers.acid_damage
 name		= ammo_new-7.62x25-cor
-k_hit		= 0.2
-k_ap		= 1
+k_hit		= 1
+k_ap		= 0.049
 cost        = 2700
+special     = acid
 
 [ammo_7.62x25_ps_bad]:ammo_7.62x25_ps ; hp
 name		= ammo_new-7.62x25-hp
+k_ap        = 0.06
+k_hp        = 1.6
 cost        = 940
+special     = hp
+
 
 [ammo_5.7x28_ss190]:ammo_base; ss190
 name		= ammo_new-5.7x28-ss190
-k_hit		= 1
-k_ap		= 0.1
+k_hit		= 0.7
+k_ap		= 0.21
+k_pen       = 0.7
 cost        = 1600
-
 
 [ammo_5.7x28_ss190_bad]:ammo_5.7x28_ss190 ; cheapshit
 name		= ammo_new-5.7x28-fmj
-k_hit		= 1
-k_ap		= 0.1
+k_hit		= 0.7
+k_ap		= 0.15
+k_pen       = 0.7
 cost        = 840
 
 [ammo_5.7x28_ss195]:ammo_base ; chaos
+handler     = arti_handlers.chaos_damage
 name		= ammo_new-5.7x28-chaos
+k_ap        = 0.199
 cost        = 3125
+special     = chaos
 
 [ammo_5.7x28_ss195_bad]:ammo_5.7x28_ss195 ; ss195 hp
 name		= ammo_new-5.7x28-ss195
+k_hit       = 1
+k_ap        = 0.1
+k_hp        = 1.5
 cost        = 1275
+special     = hp

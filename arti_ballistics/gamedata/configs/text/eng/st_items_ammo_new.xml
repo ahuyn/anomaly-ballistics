@@ -5,7 +5,71 @@
 -->
 
 <string_table>
-	
+	<!-- descriptors -->
+	<string id="st_dot">
+		<text>•</text>
+	</string>
+	<string id="st_ball_properties">
+		<text>PROPERTIES:</text>
+	</string>
+	<string id="st_prop_k_hit">
+		<text>damage multiplier:</text>
+	</string>
+	<string id="st_prop_k_ap">
+		<text>defeats armor level:</text>
+	</string>
+	<string id="st_prop_armor_0">
+		<text>none</text>
+	</string>
+	<string id="st_prop_armor_1">
+		<text>I</text>
+	</string>
+	<string id="st_prop_armor_2">
+		<text>IIA</text>
+	</string>
+	<string id="st_prop_armor_3">
+		<text>II</text>
+	</string>
+	<string id="st_prop_armor_4">
+		<text>III</text>
+	</string>
+	<string id="st_prop_armor_5">
+		<text>IV</text>
+	</string>
+	<string id="st_prop_armor_6">
+		<text>V</text>
+	</string>
+	<string id="st_prop_armor_7">
+		<text>VI+</text>
+	</string>
+	<string id="st_prop_impair">
+		<text>wear multiplier:</text>
+	</string>
+	<string id="st_ballistics_flinch">
+		<text>chance to stagger human enemies</text>
+	</string>
+	<string id="st_ballistics_hp">
+		<text>deals bonus damage if round penetrates fully</text>
+	</string>
+	<string id="st_ballistics_varma">
+		<text>deals extra damage to mutants</text>
+	</string>
+	<string id="st_ballistics_explodes">
+		<text>explodes on impacting target</text>
+	</string>
+	<string id="st_ballistics_chaos">
+		<text>60%-160% damage range</text>
+	</string>
+	<string id="st_ballistics_acid">
+		<text>no AP, melts armor</text>
+	</string>
+	<string id="st_ballistics_head">
+		<text>ignores armor on headshots</text>
+	</string>
+	<string id="st_ballistics_fire">
+		<text>high damage, melts armor</text>
+	</string>
+    
 <!-- shotgun -->
 	<string id="ammo_new-12x70-buck">
 		<text>12x70 buckshot shells</text>
@@ -132,20 +196,10 @@
 		<text>9x18 7N25 AP rounds</text>
 	</string>
 	<string id="ammo_new-9x18-7n25_descr">
-		<text>Modern 9x18 armor-piercing handgun round with a carbon steel core and increased powder load. This round is able to reliably defeat soft body armor and deal some damage to even rifle plates, but due to the powder charge and shape of the penetrator it suffers from reduced stopping power and increased wear on the weapon's internal components.</text>
+		<text>Modern 9x18 armor-piercing handgun round with a carbon steel core and increased powder load. Unlike its predecessor RG028, this round is able to reliably defeat soft body armor and deal some damage to even rifle plates, but due to the powder charge and shape of the penetrator it suffers from reduced stopping power and increased wear on the weapon's internal components.</text>
 	</string>
 	<string id="ammo_new-9x18-7n25_s">
 		<text>9x18 7N25</text>
-	</string>
-	
-	<string id="ammo_new-9x19-7n31">
-		<text>9x19mm 7N31 AP rounds</text>
-	</string>
-	<string id="ammo_new-9x19-7n31_descr">
-		<text>Enhanced Russian AP round with a stronger powder charge and lighter bullet. Provides much better peak performance and armor defeating capability than its predecessor, at the cost of higher wear. Extremely rare in the Zone and issued only to Spetsnaz or Russian Mercenaries.</text>
-	</string>
-	<string id="ammo_new-9x19-7n31_s">
-		<text>9x19 7N31 AP</text>
 	</string>
 	
 	<string id="ammo_new-9x19-ap">
@@ -156,6 +210,16 @@
 	</string>
 	<string id="ammo_new-9x19-ap_s">
 		<text>9x19 AP</text>
+	</string>
+	
+	<string id="ammo_new-9x19-7n31">
+		<text>9x19mm 7N31 AP rounds</text>
+	</string>
+	<string id="ammo_new-9x19-7n31_descr">
+		<text>Enhanced Russian AP round with a stronger powder charge and lighter bullet. Provides much better peak performance and armor defeating capability than its predecessor, at the cost of higher wear. Extremely rare in the Zone and issued only to Spetsnaz or Russian Mercenaries.</text>
+	</string>
+	<string id="ammo_new-9x19-7n31_s">
+		<text>9x19 7N31 AP</text>
 	</string>
 
 	<string id="ammo_new-9x19-fmj">
@@ -189,10 +253,10 @@
 	</string>
 	
 	<string id="ammo_new-9x19-pbps">
-		<text>9x19mm JSP Hand Loaded rounds</text>
+		<text>9x19mm JSP +P rounds</text>
 	</string>
 	<string id="ammo_new-9x19-pbps_descr">
-		<text>9mm hand loaded JSP rounds. Soft Point rounds are semi-jacketed and expose the lead tip, and expand like hollowpoint rounds while retaining better armor penetration properties. These are custom-order rounds from folk craftsmen that have earned the nickname of 'Man-Stopper' due to their purported ability to stop men dead in their tracks.</text>
+		<text>Match grade 9mm hand loaded JSP rounds. Soft Point rounds are semi-jacketed and expose the lead tip, and expand like hollowpoint rounds while retaining better armor penetration properties. These are custom-order rounds from folk craftsmen that have earned the nickname of 'Man-Stopper' due to their purported ability to stop men dead in their tracks.</text>
 	</string>
 	<string id="ammo_new-9x19-pbps_s">
 		<text>9x19 JSP</text>
@@ -241,13 +305,13 @@
 		<text>.357 HP rounds</text>
 	</string>
 	<string id="ammo_new-357-hp_descr">
-		<text>The .357 HP round is a hollow-point bullet. The purpose of the round is to slow down upon impact, which decreases its penetration, but at the same time causes larger internal tissue damage. \n \n%c[d_purple] • %c[ui_gray_2] Highest pierced armour class: %c[ui_gray_1]II\n%c[d_purple] • %c[ui_gray_2] Tissue damage rating: %c[ui_gray_1]high</text>
+		<text>The .357 HP round is a hollow-point bullet. The purpose of the round is to slow down upon impact, which decreases its penetration, but at the same time causes larger internal tissue damage. </text>
 	</string>
 	<string id="ammo_new-357-hp_s">
 		<text>.357 HP</text>
 	</string>
 	<string id="ammo_new-357-jfp">
-		<text>.357 JFP Handload rounds</text>
+		<text>.357 JFP Hand loaded rounds</text>
 	</string>
 	<string id="ammo_new-357-jfp_descr">
 		<text>Hand loaded .357 round designed for hunters and target shooters. While lacking the sheer stopping power of hollow-point rounds, they fly straighter and penetrate armor to a much more effective degree.</text>
