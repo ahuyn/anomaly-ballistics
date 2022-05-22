@@ -3,6 +3,8 @@ get_config          = ballistics_mcm.get_config
 print_dbg           = ballistics_mcm.print_dbg
 npc_bone_data       = ballistics_utils.npc_bone_data
 modify_velocity     = ballistics_utils.modify_velocity
+mutant_hp           = ballistics_utils.mutant_hp
+mutant_prot_values  = ballistics_utils.mutant_prot_values
 math_floor          = math.floor
 math_abs            = math.abs
 
@@ -14,7 +16,7 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     
     local base_power = ui_wpn_params.read_float(ctx.hit_data.wpn_sec, "", "hit_power")
     local base_hp = base_power
-    local bone_data = npc_bone_data(npc, ctx.bone_id)
+    local bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or mutant_prot_values(npc, ctx.bone_id)
     local k_ap = SYS_GetParam(2, ctx.hit_data.ammo, "k_ap") or 0
     local k_hit = SYS_GetParam(2, ctx.hit_data.ammo, "k_hit") or 1
 

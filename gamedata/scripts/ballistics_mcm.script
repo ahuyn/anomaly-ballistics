@@ -50,8 +50,8 @@ function on_before_hit(npc,s_hit,bone_id, is_npc)
     local sec = valid_hit_data.wpn_sec
     
     local func = get_handler(ammo)
-    if not func then return s_hit end
-    print_dbg("Applying custom hit for %s using function %s.%s. Prev hit power %s", ammo, func[1], func[2], s_hit.power)
+    if not func then return false end
+    print_dbg("Applying custom hit for %s on %s using function %s.%s. Prev hit power %s", ammo, bone_id, func[1], func[2], s_hit.power)
     local hit_ctx = {
         hit_data = valid_hit_data,
         bone_id = bone_id,
@@ -67,7 +67,7 @@ function on_before_hit(npc,s_hit,bone_id, is_npc)
     return {
         ["shit"] = s_hit,
         ["bone_id"] = bone_id
-    } -- just returning something for now
+    }
 end
 
 -- Overriding hit callbacks so our custom hits can communicate with other scripts
@@ -89,6 +89,7 @@ _G.CAI_Stalker__BeforeHitCallback = function(npc,shit,bone_id)
 	return flags.ret_value
 end
 
+-- bone mult is unknown for monster, so simply assume skin armor vs ap calcs
 _G.CBaseMonster__BeforeHitCallback = function(monster,shit,bone_id)
 	local s_hit = shit
     flags.ret_value = true
@@ -96,8 +97,10 @@ _G.CBaseMonster__BeforeHitCallback = function(monster,shit,bone_id)
     if custom_hit then
         SendScriptCallback("monster_on_before_hit",monster,custom_hit.shit,custom_hit.bone_id, flags)
         if flags.ret_value then
-            monster:set_health_ex(monster.health - custom_hit.shit.power)
-            shit.power = 0.0001
+            shit.power = custom_hit.shit.power
+            shit.ap = 0
+    --         monster:set_health_ex(monster.health - custom_hit.shit.power)
+    --         shit.power = 0.0001
         end
     else
         SendScriptCallback("monster_on_before_hit",monster,shit,bone_id,flags)
@@ -107,6 +110,7 @@ end
 
 -- If you don't use MCM, change your defaults from here.
 local defaults = {
+    ["enabled"] = true,
     ["debug"] = true
 }
 
@@ -117,6 +121,7 @@ end
 function on_mcm_load()
     op = { id= "ballistics",sh=true ,gr={
             { id= "title",type= "slide",link= "ui_options_slider_player",text="ui_mcm_ballistics_title",size= {512,50},spacing= 20 },
+            {id = "enabled", type = "check", val = 1, def=true},
             {id = "debug", type = "check", val = 1, def=true},
         }
     }

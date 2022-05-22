@@ -1,3 +1,4 @@
+Bone armors based on model captures
 0-0.011 (0.22)
     Armor: None (leather jacket, trenchcoat)
     Bullets: Handgun HP bullets, buckshot
@@ -22,26 +23,16 @@
 0.3 (6) Class V
     Armor: Exosuits
     Bullets: AP small rifle
-    Complete protection against FMJ rifle rounds
+    Complete protection againsdt FMJ rifle rounds
 0.45 (9, round down to 7) Class VI+
     Armor: Exoskeleton and Nosorog armor
     Bullets: AP large rifle rounds best, AP small rifle workable
     Should be killable with large rifle and AP small rifle, but at huge ammo cost. AP LR does full damage.
-    
-0.125 (2.5)
-    Not used much in practice
-0.35 (7)
-    Not used much, one stalker, some helmets
-0.4 (8)
-    Not used much, some specific npcs
 
 Bullet specific things:
 Smallbore AP rounds do way less damage if they overpenetrate (use a custom val)
 Large caliber rounds are pretty lethal regardless of how they hit, due to sheer force. Overpenetration should just be lethal regardless
 Buckshot should do a lot of impact damage IF they aren't wearing hard armor (e.g. lots of impact damage to Class II+)
-
-
-
 FMJ rounds do more consistent damage
 AP rounds are denser, don't break apart 
 Larger calibers do more catastrophic flesh damage, small rounds just punch nice clean holes
@@ -50,11 +41,11 @@ Need to factor in distance more heavily
 
 Generic damage formula
 
-Take bone armor/ap and multiply by 20. Should get a number with a whole digit and a decimal portion. Round down to 7
+Take bone armor/ap and multiply by 20. Should get a number with a whole digit and a decimal portion. Round down to 7 for bone armor.
 Bullets have a residual AP amount that is used for some calculations.
 Compare the difference between AP and Bone:
-3-7: Overpenetrate and lose damage
-1-2: Bullet defeats armor, deal full damage
+4-7: Overpenetrate and lose damage
+1-3: Bullet defeats armor, deal full damage
 0. Match. Modify based on the fractional armor pen (lose up to 30% dmg)
 -1-2: Armor slightly tougher - modify based on fractional armor pen (lose 40-80)
     - Practical example for the above. Say you have a bullet with 0.27 AP impacting armor with 0.25 bone armor.
@@ -62,45 +53,7 @@ Compare the difference between AP and Bone:
     - Tiers match, and the fractional AP is 0.4. Damage will be reduced by (1-0.4) = 60% of 40%, or 24%.
     - Assume the fractional AP is instead 0.8. Damage loss will be (1-0.8) * 0.4 = 8%.
     - This system mimics some power loss from the bullet needing to penetrate the plate.
--3: Deal only residual impact damage (starting at 10%, working down)
+-3-7: Deal only residual impact damage (starting at 10%, working down)
 
 AP scale generally increases with enemy tankiness. In vanilla it is used to reduce the overkill multiplier of AP. The lower it is, the more affected by AP enemies are.
 Hit fraction is the minimum % of damage a bullet does vs a given NPC. Assuming two infinite armor NPCs A with hit fraction 0.2 and B with hit fraction 0.5, if they are both shot by bullets with damage 1 A will take 5 hits to kill and B will take 2. Generally the beefier the dude the lower this is, and the less damage they take
-
-
-In order for a bullet to defeat an armor, the AP tier must match or exceed the bone armor tier.
-Within the tier, compare the fractional parts and reduce based on the difference.
-AP tier - bone tier is:
-4: Overpenetrate, -60% damage
-3: Overpenetrate, -30% damage
-2: Ignore fractional, always full damage
-1: Ignore fractional, always full damage
-0: Modify by difference in fractional (no increase)
--1: 50% damage flat modifier
--2: 100% Impact damage only
--3: 10% Impact 
--4: 1% impact
-
-For HP the impact damage for underperforming is increased, but it cannot overpenetrate.
-
-Legacy
-
-
-0.0-0.1 = no armor to basic
-    - 0.0075 is class 1
-    - can be defeated by most pistol rounds, hollowpoints, etc
-0.1-0.2 = kevlar armor to just below plate
-    - pistol rounds start to struggle
-    - 0.1 is class 2
-    - 0.125+ is class 2A
-    - 
-0.2-0.3 = basic metal plate
-    - smallbore rifle fmj, ap pistol
-    - 0.2 is class 3
-0.3-0.4 = advanced metal plate
-    - largebore rifle fmj, smallbore ap
-    - 0.3+ is class 4
-0.4+ = super strong armor, exosuit quality
-    - o.4 is exosuit, 0.45 is exoskeleton/nosorog
-    - largebore rifle ap
-    0.45 is class 6A

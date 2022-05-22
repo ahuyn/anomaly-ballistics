@@ -7,13 +7,16 @@ ini_ammo = ini_file("items\\ammo\\importer.ltx")
 ini_damage = ini_file("creatures\\damages.ltx")
 
 Bone_IDs = {
+	[1]  =  "bip01_pelvis", 
     [2]  =	"bip01_pelvis",
     [3]  =	"bip01_l_thigh",
     [4]  =	"bip01_l_calf",
     [5]  =	"bip01_l_foot",
+	[6]  =  "bip01_l_foot", 
     [7]  =	"bip01_r_thigh",
     [8]  =	"bip01_r_calf",
     [9]  =	"bip01_r_foot",
+	[10] =  "bip01_r_foot", 
     [11] =	"bip01_spine",
     [12] =	"bip01_spine1",
     [13] =	"bip01_spine2",
@@ -25,14 +28,33 @@ Bone_IDs = {
     [18] =	"eyelid_1",
     [19] =	"jaw_1",
     -- endhead
-    [20] =	"bip01_l_clavicle",
-    [21] =	"bip01_l_upperarm",
-    [22] =	"bip01_l_forearm",
-    [23] =	"bip01_l_forearm",
-    [33] =	"bip01_r_clavicle",
-    [34] =	"bip01_r_upperarm",
-    [35] =	"bip01_r_forearm",
-    [36] =	"bip01_r_forearm",
+	[20] = "bip01_l_clavicle", 
+	[21] = "bip01_l_upperarm", 
+	[22] = "bip01_l_forearm", 
+	[23] = "bip01_l_hand", 
+	[24] = "bip01_l_hand", 
+	[25] = "bip01_l_hand", 
+	[26] = "bip01_l_hand", 
+	[27] = "bip01_l_hand", 
+	[28] = "bip01_l_hand", 
+	[29] = "bip01_l_hand", 
+	[30] = "bip01_l_hand", 
+	[31] = "bip01_l_hand", 
+	[32] = "bip01_l_hand", 
+	[33] = "bip01_r_clavicle", 
+	[34] = "bip01_r_upperarm", 
+	[35] = "bip01_r_forearm", 
+	[36] = "bip01_r_hand", 
+	[37] = "bip01_r_hand", 
+	[38] = "bip01_r_hand", 
+	[39] = "bip01_r_hand", 
+	[40] = "bip01_r_hand", 
+	[41] = "bip01_r_hand", 
+	[42] = "bip01_r_hand", 
+	[43] = "bip01_r_hand", 
+	[44] = "bip01_r_hand", 
+	[45] = "bip01_r_hand", 
+	[46] = "bip01_pelvis", 
     }
 
 head_bones = {
@@ -44,6 +66,16 @@ head_bones = {
     [18] =	"eyelid_1",
     [19] =	"jaw_1",
 }
+
+-- play particle at npc bone
+function play_particle(npc, bone_id, name)
+    local particle = particles_object(name)
+    local bone_pos = utils_obj:safe_bone_pos(npc, Bone_IDs[bone_id])
+    
+    if particle and not particle:playing() then
+        particle:play_at_pos(bone_pos)
+    end
+end
 
 -- pull the bone_mult from [stalker_damage] section, cache the values to prevent excessive stringsplitting
 local stalker_damage = {}
@@ -96,6 +128,34 @@ function npc_bone_data(npc, bone_id)
         armor = armor,
         modified = modified,
         mult = npc_bone_mult(bone_id)
+    }
+end
+
+function npc_on_death_callback(npc, who)
+    if custom_bone_data[npc:id()] then
+        custom_bone_data[npc:id()] = nil
+    end
+end
+
+-- return fake multiplier to effectively get mutant hp
+function mutant_hp(mutant)
+    return SYS_GetParam(2, mutant:section(), "Health") or 100
+
+end
+
+function mutant_prot_values(mutant, id)
+    local sec = mutant:section()
+    local skin_armor = SYS_GetParam(2, sec, "skin_armor")
+    local prot_sec = SYS_GetParam(0, sec, "protections_sect")
+    if not skin_armor then
+        skin_armor = SYS_GetParam(2, prot_sec, "skin_armor")
+    end
+    local hit_frac = SYS_GetParam(2, prot_sec, "hit_fraction_monster")
+    return {
+        id = id,
+        hit_fraction = hit_frac,
+        armor = skin_armor,
+        mult = 1
     }
 end
 
@@ -206,5 +266,6 @@ function on_game_start()
     RegisterScriptCallback("actor_on_weapon_before_fire", actor_on_weapon_before_fire)
     RegisterScriptCallback("actor_on_weapon_fired", actor_on_weapon_fired)
     RegisterScriptCallback("on_get_item_cost", on_get_item_cost)
-    
+	RegisterScriptCallback("npc_on_death_callback",npc_on_death_callback)
+	RegisterScriptCallback("monster_on_hit_callback",npc_on_death_callback)
 end

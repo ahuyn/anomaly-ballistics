@@ -1,16 +1,13 @@
-GetFirstName = ui_item.build_name_first
 gc = game.translate_string
 local ini_ammo = ini_file("items\\ammo\\importer.ltx")
 
+GetFirstName = ui_item.build_name_first
 function ui_item.build_name_first(obj, sec, str)
-    str = str or gc(ini_sys:r_string_ex(sec,"inv_name"))
-    if not str then return "" end
     if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
         return gc(ini_ammo:r_string_ex(sec, "name"))
     else
         return GetFirstName(obj, sec, str)
     end
-    return str
 end
 
 ShortName = ui_item.build_short_name_first

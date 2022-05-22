@@ -3,12 +3,18 @@ print_dbg           = ballistics_mcm.print_dbg
 npc_bone_mult       = ballistics_utils.npc_bone_mult
 npc_bone_protection = ballistics_utils.npc_bone_protection
 npc_bone_data       = ballistics_utils.npc_bone_data
+play_particle       = ballistics_utils.play_particle
+mutant_hp           = ballistics_utils.mutant_hp
+mutant_prot_values  = ballistics_utils.mutant_prot_values
 modify_bone         = ballistics_utils.modify_bone
 modify_velocity     = ballistics_utils.modify_velocity
 get_cur_vel         = ballistics_utils.get_cur_vel
 math_floor          = math.floor
 math_abs            = math.abs
+math_random         = math.random
 
+Bone_IDs            = ballistics_utils.Bone_IDs
+head_bones          = ballistics_utils.head_bones
 ini_ammo            = ballistics_utils.ini_ammo
 
 local anims = {
@@ -23,7 +29,7 @@ function get_ammo_data(ammo_sec)
             sec     = ammo_sec,
             k_hit   = ini_ammo:r_float_ex(ammo_sec, "k_hit") or SYS_GetParam(2, ammo_sec, "k_hit") or 1,
             k_ap    = ini_ammo:r_float_ex(ammo_sec, "k_ap") or SYS_GetParam(2, ammo_sec, "k_ap") or 0,
-            k_pen   = ini_ammo:r_float_ex(ammo_sec, "k_pen") or 0.5,
+            k_pen   = ini_ammo:r_float_ex(ammo_sec, "k_pen") or 0,
         }
     end
 end
@@ -49,11 +55,11 @@ end
 
 -- overpenetrate and lose damage (based on diff and pen)
 -- default is reducing down to pen 
+-- only matters if diff > 3, or more than 0.2
 function penetrate(base_hp, diff, ap_frac, pen)
     printf("Overkill")
-    loss = 1 - pen
     adj = (diff - 3)/4
-    return base_hp * (1 - (loss * adj))
+    return base_hp * (1 - (pen * adj))
 end
 
 local damage_subcalcs = {
@@ -87,12 +93,12 @@ function prework(npc, s_hit, ctx)
     
     precalc.base_power = ui_wpn_params.read_float(ctx.hit_data.wpn_sec, "", "hit_power")
     precalc.ammo_data = get_ammo_data(ctx.hit_data.ammo)
-    precalc.bone_data = npc_bone_data(npc, ctx.bone_id)
+    precalc.bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or mutant_prot_values(npc, ctx.bone_id)
 
-    precalc.armor_tier = clamp(math_floor(bone_data.armor * 20), 0, 7)
+    precalc.armor_tier = clamp(math_floor(precalc.bone_data.armor * 20), 0, 7)
 
     precalc.ap = {}
-    local ap_rounded = ammo_data.k_ap * 20
+    local ap_rounded = precalc.ammo_data.k_ap * 20
     precalc.ap.ap_tier = math_floor(ap_rounded)
     local ap_frac = math.fmod(ap_rounded,1)
     if ap_frac > 0.9 then ap_frac = 1 end
@@ -101,8 +107,116 @@ function prework(npc, s_hit, ctx)
     return precalc
 end
 
+function apply_std_calcs(npc, s_hit, ammo_data, bone_data)
+    local mod = ammo_data.k_hit * modify_velocity(s_hit.draftsman, npc, ammo_data.sec) * bone_data.mult
+    print_dbg("Applying standard modifier %s", mod)
+    return mod
+end
+
 -- refer to ballistics_mcm.txt for logic details
+-- handles basic bullets, flinching and hollowpoint expansion
 function ballistic_handlers.default(npc, s_hit, ctx)
+
+    if not get_config("enabled") then return s_hit end
+    local precalc = prework(npc, s_hit, ctx)
+    ammo_data = precalc.ammo_data
+    bone_data = precalc.bone_data
+    print_dbg("Ammo %s: Hit %s, AP %s. Bone: ID %s, armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
+    ap = precalc.ap
+    
+    local base_hp = precalc.base_power
+
+    -- these work for mutant or man
+    base_hp = base_hp * apply_std_calcs(npc, s_hit, ammo_data, bone_data)
+    
+    local diff = ap.ap_tier - precalc.armor_tier
+    print_dbg("Interim hit power %s", base_hp)
+    if not ctx.is_npc then
+        -- use existing formula, double base ap
+        local ap = ammo_data.k_ap * 1.5
+        if ap > bone_data.armor then
+            local mod = clamp((ap - bone_data.armor)/ap, bone_data.hit_fraction, 1)
+            base_hp = base_hp * mod
+        else
+            base_hp = base_hp * bone_data.hit_fraction
+        end
+    else
+        -- tier based formula with overpen, and flinch
+        printf("Difference of %s, AP fraction of %s", diff, ap.ap_frac)
+        base_hp = damage_subcalcs[diff](base_hp, math_abs(diff), ap.ap_frac, ammo_data.k_pen)
+        
+        local flinch_chance = ini_ammo:r_float_ex(ctx.hit_data.ammo, "flinch") or 0
+        -- softpoint bullets only 
+        if flinch_chance > 0 and diff >= 0 and math_random() < flinch_chance then
+            print_dbg("Staggering NPC")
+            if npc:movement_type() == move.walk or npc:movement_type() == move.run then
+                npc:set_movement_type(move.stand)
+            end
+            npc:play_cycle(anims[math_random(#anims)], true)
+        end
+    end
+
+    -- hollowpoints (we only deal expansive bonus dmg on penetration)
+    local hp_mult = ini_ammo:r_float_ex(ctx.hit_data.ammo, "k_hp") or 1
+    if hp_mult > 1  then
+        if (ctx.is_npc and diff >= 0) or (not ctx.is_npc and ammo_data.k_ap > (bone_data.armor - 0.25)) then
+            print_dbg("Applying HP multiplier of %s", hp_mult)
+            base_hp = base_hp * hp_mult
+        end
+    end
+
+    print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, precalc.base_power, base_hp)
+    s_hit.power = base_hp
+    return s_hit
+end
+
+local limbs = {
+    [3]  =	"bip01_l_thigh",
+    [4]  =	"bip01_l_calf",
+    [5]  =	"bip01_l_foot",
+	[6]  = "bip01_l_toe0", 
+    [7]  =	"bip01_r_thigh",
+    [8]  =	"bip01_r_calf",
+    [9]  =	"bip01_r_foot",
+	[10] = "bip01_r_toe0", 
+	[21] = "bip01_l_upperarm", 
+	[22] = "bip01_l_forearm", 
+	[23] = "bip01_l_hand", 
+	[24] = "bip01_l_finger0", 
+	[25] = "bip01_l_finger01", 
+	[26] = "bip01_l_finger02", 
+	[27] = "bip01_l_finger1", 
+	[28] = "bip01_l_finger11", 
+	[29] = "bip01_l_finger12", 
+	[30] = "bip01_l_finger2", 
+	[31] = "bip01_l_finger21", 
+	[32] = "bip01_l_finger22", 
+	[34] = "bip01_r_upperarm", 
+	[35] = "bip01_r_forearm", 
+	[36] = "bip01_r_hand", 
+	[37] = "bip01_r_finger0", 
+	[38] = "bip01_r_finger01", 
+	[39] = "bip01_r_finger02", 
+	[40] = "bip01_r_finger1", 
+	[41] = "bip01_r_finger11", 
+	[42] = "bip01_r_finger12", 
+	[43] = "bip01_r_finger2", 
+	[44] = "bip01_r_finger21", 
+	[45] = "bip01_r_finger22", 
+}
+
+-- buckshot has slightly different impact calculations
+function buckshot_damage(npc, s_hit, ctx)
+    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
+    -- deal extra damage to limbs if applicable
+    if limbs[ctx.bone_id] then
+        s_hit.power = s_hit.power * 1.5
+    end
+    return s_hit
+end
+
+-- buckshot has slightly different impact calculations
+function headshot(npc, s_hit, ctx)
     if not ctx.is_npc then return s_hit end
 
     local precalc = prework(npc, s_hit, ctx)
@@ -113,30 +227,18 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     local base_hp = precalc.base_power
 
     base_hp = base_hp * ammo_data.k_hit
+    
     -- modify by velocity
     base_hp = base_hp * modify_velocity(s_hit.draftsman, npc, ammo_data.sec)
 
     local diff = ap.ap_tier - precalc.armor_tier
-    printf("Difference of %s, AP fraction of %s", diff, ap.ap_frac)
-    base_hp = damage_subcalcs[diff](base_hp, math_abs(diff), ap.ap_frac, ammo_data.k_pen)
 
-    -- hollowpoints (we only deal expansive bonus dmg on penetration)
-    local hp_mult = ini_ammo:r_float_ex(hit_data.ammo, "k_hp") or 1
-    if hp_mult > 1 and diff >= 0 then
-        print_dbg("Applying HP multiplier of %s", hp_mult)
-        base_hp = base_hp * hp_mult
+    -- ignore armor on headshot
+    if head_bones[ctx.bone_id] then
+        base_hp = full(base_hp, math_abs(diff), ap.ap_frac, ammo_data.k_pen)
+    else
+        base_hp = damage_subcalcs[diff](base_hp, math_abs(diff), ap.ap_frac, ammo_data.k_pen)
     end
-
-    local flinch_chance = ini_ammo:r_float_ex(hit_data.ammo, "flinch") or 0
-    -- softpoint bullets only 
-    if flinch_chance > 0 and diff >= 0 and math.random() < flinch_chance then
-        print_dbg("Staggering NPC")
-        if npc:movement_type() == move.walk or npc:movement_type() == move.run then
-            npc:set_movement_type(move.stand)
-        end
-        npc:play_cycle(anims[math.random(#anims)], true)
-    end
-
     -- Apply bone mult
     base_hp = base_hp * bone_data.mult
 
@@ -145,57 +247,112 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     return s_hit
 end
 
-local limbs = {
-    [3]  =	"bip01_l_thigh",
-    [4]  =	"bip01_l_calf",
-    [5]  =	"bip01_l_foot",
-    [7]  =	"bip01_r_thigh",
-    [8]  =	"bip01_r_calf",
-    [9]  =	"bip01_r_foot",
-    [21] =	"bip01_l_upperarm",
-    [22] =	"bip01_l_forearm",
-    [23] =	"bip01_l_forearm",
-    [34] =	"bip01_r_upperarm",
-    [35] =	"bip01_r_forearm",
-    [36] =	"bip01_r_forearm",
-}
-
--- buckshot has slightly different impact calculations
-function buckshot_damage(npc, s_hit, ctx)
-    s_hit = ballistic_handlers.default(npc, s_hit, bone_id, hit_data, is_human)
-    -- deal extra damage to limbs if applicable
-    if limbs[ctx.bone_id] then
-        s_hit.power = s_hit.power * 1.5
-    end
-    return s_hit
-end
-
 -- for shit that shreds armor
-function shred_damage(npc, s_hit, ctx)
-    s_hit = ballistic_handlers.default(npc, s_hit, bone_id, hit_data, is_human)
+function fire_damage(npc, s_hit, ctx)
+    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     -- shred 0.01 off each hit
-    local bone_data = npc_bone_data(npc, bone_id)
-    modify_bone(npc, bone_id, clamp(bone_data.armor - 0.01, 0, 1))
+    local bone_data = npc_bone_data(npc, ctx.bone_id)
+    if ctx.is_npc then
+        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.01, 0, 1))
+        play_particle(npc, "artefact\\artefact_zharka")
+    end
     -- play something?
     return s_hit
 end
 
+function fire_cosmetic(npc, s_hit, ctx)
+    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
+    play_particle(npc, "damage_fx\\burn_creatures")
+end
+
 -- for corrosive ammo
 function acid_damage(npc, s_hit, ctx)
-    s_hit = ballistic_handlers.default(npc, s_hit, bone_id, hit_data, is_human)
+    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     -- shred 0.1 ONCE per bone
-    local bone_data = npc_bone_data(npc, bone_id)
+    local bone_data = npc_bone_data(npc, ctx.bone_id)
     if not bone_data.modified then
-        modify_bone(npc, bone_id, clamp(bone_data.armor - 0.1, 0, 1))
-        -- play something?
+        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.1, 0, 1))
+        play_particle(npc, "artefact\\af_acidic_show")
     end
     return s_hit
 end
 
+-- for 5.7 chaos sx
 function chaos_damage(npc, s_hit, ctx)
-    s_hit = ballistic_handlers.default(npc, s_hit, bone_id, hit_data, is_human)
-    s_hit = s_hit * (0.6 + math.random())
+    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
+    s_hit = s_hit * (0.6 + math_random())
+    play_particle(npc, "artefact\\effects\\af_idle_dist")
     return s_hit
+end
+
+-- for 5.56 varmageddon
+function varmageddon(npc, s_hit, ctx)
+    if ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx)
+    else
+        local precalc = prework(npc, s_hit, ctx)
+        ammo_data = precalc.ammo_data
+        bone_data = precalc.bone_data
+        print_dbg("Ammo %s: Hit %s, AP %s. Bone: ID %s, armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
+        ap = precalc.ap
+        local base_hp = precalc.base_power
+        base_hp = base_hp * apply_std_calcs(npc, s_hit, ammo_data, bone_data)
+        -- use existing formula, double base ap
+        local ap = ammo_data.k_ap * 1.5
+        if ap > bone_data.armor then
+            local mod = clamp((ap - bone_data.armor)/ap, bone_data.hit_fraction, 1)
+            base_hp = base_hp * mod
+        else
+            base_hp = base_hp * bone_data.hit_fraction
+        end
+        if ammo_data.k_ap > (bone_data.armor - 0.25) then
+            print_dbg("Applying Varma multiplier")
+            base_hp = base_hp * ini_ammo:r_float_ex(ammo_data.sec, "v_mult") or 2
+        end
+        s_hit.power = base_hp
+        return s_hit
+    end
+end
+
+function explosion(npc, s_hit, ctx)
+    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
+    local npc_pos = npc:position()
+    npc_pos.y = npc_pos.y + 0.5
+
+    local explode_obj = alife_create_item("bullet_blow", {npc_pos, npc:level_vertex_id(), npc:game_vertex_id(), nil})
+    CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
+    function(id)
+        local explode_obj = get_object_by_id(id)
+        if explode_obj then
+            explode_obj:explode(0)
+            return true
+        end
+        return false
+    end, explode_obj.id)
+end
+
+
+-- perform one time random rolls of ammo downgrade
+function server_entity_on_register(se)
+    -- local sec = se:section_name()
+    -- if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "dg_ammo") then
+    --     if math_random() < (ini_ammo:r_float_ex(sec, "dg_chance") or 0.5) then
+    --         -- replace
+    --         CreateTimeEvent("ammo_replace", "replace_"..se.id, 0, 
+    --         function(id, sec)        
+    --             local ammo = get_object_by_id(id)
+    --             if ammo then
+    --                 local se_ammo = alife_create(sec, ammo:position(), ammo:level_vertex_id(), ammo:game_vertex_id(), ammo:id(), false)
+    --                 local data = utils_stpk.get_item_data(se_ammo)
+    --                 data.ammo = ammo:ammo_get_count()
+    --                 alife():register(se_ammo)
+    --                 alife_release_id(id)
+    --                 print_dbg("Replacing %s with %s", sec, se_ammo:section_name())
+    --             end
+    --             print_dbg("ammo not spawned yet")
+    --             return false
+    --         end, se.id, ini_ammo:r_string_ex(sec, "dg_ammo"))
+    --     end
+    -- end
 end
 
 -- loadout stuff
@@ -226,4 +383,8 @@ function ui_item.build_desc_footer(obj, sec, str)
         end
     end
     return _str
+end
+
+function on_game_start()
+    RegisterScriptCallback("server_entity_on_register", server_entity_on_register)
 end
