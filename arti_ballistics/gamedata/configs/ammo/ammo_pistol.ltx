@@ -1,0 +1,241 @@
+; 9x18
+[ammo_9x18_fmj]:ammo_base ; surplus PST
+name		= ammo_new_9x18_fmj
+k_hit		= 1
+k_ap		= 0.05
+cost        = 500
+
+[ammo_9x18_fmj_bad]:ammo_9x18_fmj; +P
+name		= ammo_new_9x18_plus
+k_hit		= 1.3
+k_ap		= 0.0625
+impair      = 1.3
+cost        = 900
+dg_ammo     = ammo_9x18_fmj
+dg_chance   = 0.4
+
+[ammo_9x18_pmm]:ammo_base ; HP hunting
+name		= ammo_new_9x18_hp
+k_hit		= 1
+k_ap		= 0.049
+k_hp        = 1.5
+cost        = 950
+
+[ammo_9x18_pmm_bad]:ammo_9x18_pmm; SP7 JHP
+name		= ammo_new_9x18_sp7
+k_hit		= 1.1
+k_ap		= 0.069
+k_hp        = 1.8
+impair      = 1.3
+cost        = 1216
+special     = hp
+dg_ammo     = ammo_9x18_pmm
+dg_chance   = 0.5
+
+[ammo_9x18_ap]:ammo_base ; 7N15 AP
+name		= ammo_new_9x18_ap
+k_hit		= 0.95
+k_ap		= 0.135
+cost        = 840
+
+[ammo_9x18_ap_bad]:ammo_9x18_ap; 7N16 PMM, modern AP
+name		= ammo_new_9x18_7n25
+k_hit		= 0.8
+k_ap		= 0.2
+k_pen		= 0.7
+impair      = 1.3
+cost        = 1450
+dg_ammo     = ammo_9x18_ap
+dg_chance   = 0.6
+
+; 9x19
+[ammo_9x19_fmj]:ammo_base ; standard FMJ
+name		= ammo_new_9x19_fmj
+k_hit       = 1
+k_ap		= 0.08
+cost        = 645
+
+[ammo_9x19_fmj_bad]:ammo_9x19_fmj; +P+
+name		= ammo_new_9x19_plus
+k_hit		= 1.2
+k_ap		= 0.1
+impair      = 1.3
+cost        = 1125
+dg_ammo     = ammo_9x19_fmj_bad
+dg_chance   = 0.4
+
+[ammo_9x19_pbp]:ammo_base ; JHP
+name		= ammo_new_9x19_pbp
+k_hit       = 1
+k_ap		= 0.05
+k_hp        = 2
+cost        = 750
+special     = hp
+
+[ammo_9x19_pbp_bad]:ammo_9x19_pbp; JSP +P
+name		= ammo_new_9x19_pbps
+k_hit		= 1.2
+k_ap		= 0.099
+flinch      = 0.67
+k_hp        = 1.4
+impair      = 1.1
+cost        = 1759
+special     = flinch
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.5
+
+[ammo_9x19_ap]:ammo_base ; 7N21 overpressure
+name		= ammo_new_9x19_ap
+k_hit		= 0.9
+k_pen       = 0.75
+k_ap		= 0.195
+cost        = 1350
+
+[ammo_9x19_ap_bad]:ammo_9x19_ap ; 7N31 overpressure AP
+name		= ammo_new_9x19_7n31
+k_hit		= 0.8
+k_ap		= 0.225
+k_pen       = 0.8
+impair      = 1.3
+cost        = 1950
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+[ammo_11.43x23_fmj]:ammo_base ; FMJ
+name        = ammo_new_11.43x23_fmj
+k_ap        = 0.05
+cost        = 990
+
+[ammo_11.43x23_fmj_bad]:ammo_11.43x23_fmj; +P
+name		= ammo_new_11.43x23_fmjs
+k_hit		= 1.3
+k_ap		= 0.099
+flinch      = 0.9
+impair      = 1.3
+cost        = 1300
+dg_ammo     = ammo_11.43x23_fmj
+dg_chance   = 0.4
+
+[ammo_11.43x23_hydro]:ammo_base ; HP
+name		= ammo_new_11.43x23_hp
+k_hit		= 1
+k_ap        = 0.049
+k_hp	    = 1.7
+cost        = 1000
+special     = hp
+
+[ammo_11.43x23_hydro_bad]:ammo_11.43x23_hydro; hydrashok HP
+name		= ammo_new_11.43x23_hydro
+k_hit		= 1.1
+k_ap        = 0.099
+k_hp	    = 1.3
+flinch      = 0.95
+impair      = 1.05
+cost        = 1669
+special     = flinch,hp
+dg_ammo     = ammo_11.43x23_hydro
+dg_chance   = 0.5
+
+
+; deagle is kinda weak in base game
+
+[ammo_357_hp_mag]:ammo_base ; standard HP
+name		= ammo_new_357_hp
+k_hit		= 1.2
+k_hp	    = 1.6
+k_ap		= 0.099
+cost        = 1430
+special     = hp
+
+[ammo_357_hp_mag_bad]:ammo_357_hp_mag; handload JFP
+handler     = arti_handlers.headshot
+name		= ammo_new_357_jfp
+k_hit		= 1.4
+k_ap		= 0.199
+cost        = 2235
+special     = head
+dg_ammo     = ammo_357_hp_mag
+dg_chance   = 0.4
+
+[ammo_7.62x25_p]:ammo_base ; p
+name		= ammo_new_7.62x25_p
+k_hit		= 1
+k_ap		= 0.08
+cost        = 750
+
+[ammo_7.62x25_p_bad]:ammo_7.62x25_p; pst
+name		= ammo_new_7.62x25_ps
+k_hit		= 1
+k_ap		= 0.12
+cost        = 1120
+dg_ammo     = ammo_7.62x25_p
+dg_chance   = 0.3
+
+[ammo_7.62x25_ps]:ammo_base ; hp
+name		= ammo_new_7.62x25_hp
+k_ap        = 0.06
+k_hp        = 1.6
+cost        = 940
+special     = hp
+
+[ammo_7.62x25_ps_bad]:ammo_7.62x25_ps; acid
+handler     = arti_handlers.acid_damage
+name		= ammo_new_7.62x25_cor
+k_hit		= 1
+k_ap		= 0.049
+impair      = 1.3
+cost        = 2700
+special     = acid
+dg_ammo     = ammo_7.62x25_ps
+dg_chance   = 0.7
+
+
+[ammo_5.7x28_ss190]:ammo_base ; cheapshit
+name		= ammo_new_5.7x28_fmj
+k_hit		= 0.8
+k_ap		= 0.15
+k_pen       = 0.7
+cost        = 840
+
+[ammo_5.7x28_ss190_bad]:ammo_5.7x28_ss190; ss190
+name		= ammo_new_5.7x28_ss190
+k_hit		= 0.7
+k_ap		= 0.21
+k_pen       = 0.7
+cost        = 1600
+dg_ammo     = ammo_5.7x28_ss190
+dg_chance   = 0.5
+
+
+[ammo_5.7x28_ss195]:ammo_base ; ss195 hp
+name		= ammo_new_5.7x28_ss195
+k_hit       = 1
+k_ap        = 0.1
+k_hp        = 1.5
+cost        = 1275
+special     = hp
+
+[ammo_5.7x28_ss195_bad]:ammo_5.7x28_ss195 ; chaos
+handler     = arti_handlers.chaos_damage
+name		= ammo_new_5.7x28_chaos
+k_hit       = 1
+k_ap        = 0.199
+k_pen       = 0.7
+cost        = 3125
+special     = chaos
+dg_ammo     = ammo_5.7x28_ss195
+dg_chance   = 0.7
+
+[ammo_9x18_fmj_verybad]:ammo_9x18_fmj_bad
+[ammo_9x18_pmm_verybad]:ammo_9x18_pmm_bad
+[ammo_9x18_ap_verybad]:ammo_9x18_ap_bad
+[ammo_9x19_fmj_verybad]:ammo_9x19_fmj_bad
+[ammo_9x19_pbp_verybad]:ammo_9x19_pbp_bad
+[ammo_9x19_ap_verybad]:ammo_9x19_ap_bad
+[ammo_5.7x28_ss190_verybad]:ammo_5.7x28_ss190_bad
+[ammo_5.7x28_ss195_verybad]:ammo_5.7x28_ss195_bad
+[ammo_7.62x25_p_verybad]:ammo_7.62x25_p_bad
+[ammo_7.62x25_ps_verybad]:ammo_7.62x25_ps_bad
+[ammo_11.43x23_fmj_verybad]:ammo_11.43x23_fmj_bad
+[ammo_11.43x23_hydro_verybad]:ammo_11.43x23_hydro_bad
+[ammo_357_hp_mag_verybad]:ammo_357_hp_mag_bad

@@ -1,0 +1,179 @@
+[ammo_5.45x39_fmj]:ammo_base ; 7N6
+name		= ammo_new_5.45x39_fmj
+k_hit		= 1
+k_ap		= 0.175
+impair      = 1.1
+cost        = 1250
+
+[ammo_5.45x39_fmj_bad]:ammo_5.45x39_fmj ; 7N6M
+name		= ammo_new_5.45x39_fmjs
+k_hit		= 1.05
+k_ap		= 0.195
+cost        = 1650
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+
+[ammo_5.45x39_ep]:ammo_base ; hunting HP
+name		= ammo_new_5.45x39_hp
+k_hit		= 1
+k_ap		= 0.12
+k_hp        = 1.6
+impair      = 1
+special     = hp
+cost        = 1550
+
+[ammo_5.45x39_ep_bad]:ammo_5.45x39_ep ; soft point
+name		= ammo_new_5.45x39_sp
+k_hit		= 1.1
+k_ap		= 0.133
+k_hp        = 1.3
+flinch      = 0.67
+impair      = 1.05
+special     = flinch
+cost        = 1750
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+
+[ammo_5.45x39_ap]:ammo_base ; 7N10 AP
+name		= ammo_new_5.45x39_ap
+k_hit		= 1
+k_ap		= 0.225
+k_pen       = 0.75
+cost        = 1950
+
+[ammo_5.45x39_ap_bad]:ammo_5.45x39_ap ; 7N22 AP
+name		= ammo_new_5.45x39_aps
+k_hit		= 1
+k_ap		= 0.255
+k_pen       = 0.85
+impair      = 1.1
+cost        = 2350
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+
+[ammo_5.56x45_fmj]:ammo_base ; M193
+name		= ammo_new_5.56x45_fmj
+k_hit		= 1.2
+k_ap		= 0.155
+cost        = 1500
+
+[ammo_5.56x45_fmj_bad]:ammo_5.56x45_fmj ; MK318
+name		= ammo_new_5.56x45_fmjs
+k_hit		= 1.2
+k_ap		= 0.175
+cost        = 2000
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+[ammo_5.56x45_ss190]:ammo_base ; civ hunting
+name		= ammo_new_5.56x45_hp
+k_hit		= 1
+k_ap		= 0.105
+k_hp        = 1.7
+cost        = 1600
+
+[ammo_5.56x45_ss190_bad]:ammo_5.56x45_ss190 ; varmageddon
+handler     = arti_handlers.varmageddon
+name		= ammo_new_5.56x45_varma
+k_hit		= 1.1
+k_ap		= 0.105
+k_hp        = 1.4
+varma       = 2
+impair      = 1.1
+cost        = 1900
+special     = varma
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+
+[ammo_5.56x45_ap]:ammo_base ; M855
+name		= ammo_new_5.56x45_ss190
+k_hit		= 0.8
+k_ap		= 0.235
+k_pen       = 0.8
+cost        = 1800
+
+[ammo_5.56x45_ap_bad]:ammo_5.56x45_ap ; M855A1
+name		= ammo_new_5.56x45_ap
+k_hit		= 0.95
+k_ap		= 0.255
+k_pen       = 0.7
+cost        = 2500
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+
+[ammo_7.62x39_fmj]:ammo_base ; 57_N_231
+name		= ammo_new_7.62x39_fmj
+k_hit		= 1
+k_ap		= 0.185
+cost		= 1530
+
+[ammo_7.62x39_fmj_bad]:ammo_7.62x39_fmj ; M67
+name		= ammo_new_7.62x39_fmjs
+k_hit		= 1.05
+k_ap		= 0.205
+cost		= 1730
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+[ammo_7.62x39_ap]:ammo_base ; AP
+name		= ammo_new_7.62x39_ap
+k_hit		= 1
+k_ap		= 0.265
+cost		= 2530
+
+[ammo_7.62x39_ap_bad]:ammo_7.62x39_ap ; API
+handler     = arti_handlers.fire_cosmetic
+name		= ammo_new_7.62x39_api
+k_hit		= 1.25
+k_ap		= 0.295
+impair      = 2
+cost		= 3330
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+
+[ammo_9x39_pab9]:ammo_base ; SP5
+name		= ammo_new_9x39_sp5
+k_hit		= 1
+k_ap		= 0.245
+impair      = 1
+cost		= 2600
+
+[ammo_9x39_pab9_bad] ; SPP
+name		= ammo_new_9x39_spp
+k_hit		= 1.05
+k_ap		= 0.265
+cost		= 3400
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+[ammo_9x39_ap]:ammo_base ; PAB9, severe dura loss
+name		= ammo_new_9x39_pab9
+k_hit		= 1.04
+k_ap		= 0.33
+impair      = 2.5
+cost		= 2500
+
+[ammo_9x39_ap_bad]:ammo_9x39_ap ; SP6
+name		= ammo_new_9x39_ap
+k_ap		= 0.325
+cost		= 3500
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 0.6
+
+
+[ammo_5.45x39_fmj_verybad]:ammo_5.45x39_fmj_bad
+[ammo_5.45x39_ep_verybad]:ammo_5.45x39_ep_bad
+[ammo_5.45x39_ap_verybad]:ammo_5.45x39_ap_bad
+[ammo_5.56x45_fmj_verybad]:ammo_5.56x45_fmj_bad
+[ammo_5.56x45_ss190_verybad]:ammo_5.56x45_ss190_bad
+[ammo_5.56x45_ap_verybad]:ammo_5.56x45_ap_bad
+[ammo_9x39_pab9_verybad]:ammo_9x39_pab9_bad
+[ammo_9x39_ap_verybad]:ammo_9x39_ap_bad
+[ammo_7.62x39_fmj_verybad]:ammo_7.62x39_fmj_bad
+[ammo_7.62x39_ap_verybad]:ammo_7.62x39_ap_bad

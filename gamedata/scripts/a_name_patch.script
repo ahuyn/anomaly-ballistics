@@ -1,5 +1,5 @@
 gc = game.translate_string
-local ini_ammo = ini_file("items\\ammo\\importer.ltx")
+local ini_ammo = ini_file("ammo\\importer.ltx")
 
 GetFirstName = ui_item.build_name_first
 function ui_item.build_name_first(obj, sec, str)

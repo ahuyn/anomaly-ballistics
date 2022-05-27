@@ -1,6 +1,6 @@
 -- Core file for ballistics. When someone is shot, the hit will be intercepted and deferred to a custom config defined in ammo importer based on bullet type.
 
-ini_ammo = ini_file("items\\ammo\\importer.ltx")
+ini_ammo = ini_file("ammo\\importer.ltx")
 
 function print_dbg(text, ...) 
 	if get_config("debug") then

@@ -3,7 +3,7 @@
 get_config = ballistics_mcm.get_config
 print_dbg = ballistics_mcm.print_dbg
 
-ini_ammo = ini_file("items\\ammo\\importer.ltx")
+ini_ammo = ini_file("ammo\\importer.ltx")
 ini_damage = ini_file("creatures\\damages.ltx")
 
 Bone_IDs = {
@@ -69,8 +69,9 @@ head_bones = {
 
 -- play particle at npc bone
 function play_particle(npc, bone_id, name)
+    bone_id = bone_id == 65535 and 1 or bone_id
     local particle = particles_object(name)
-    local bone_pos = utils_obj:safe_bone_pos(npc, Bone_IDs[bone_id])
+    local bone_pos = npc:bone_position(Bone_IDs[bone_id])
     
     if particle and not particle:playing() then
         particle:play_at_pos(bone_pos)

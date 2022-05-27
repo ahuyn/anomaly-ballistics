@@ -1,0 +1,195 @@
+[ammo_7.62x54_7h1]:ammo_base; 57_N_323S
+name		= ammo_new_7.62x54r
+k_hit		= 1
+k_ap		= 0.2
+cost        = 800
+
+[ammo_7.62x54_7h1_bad]:ammo_7.62x54_7h1 ; 7N1
+name		= ammo_new_7.62x54_7n1
+k_hit		= 1.1
+k_ap		= 0.249
+cost        = 1400
+dg_ammo     = ammo_new_7.62x54r
+dg_chance   = 0.5
+
+
+[ammo_7.62x54_7h14]:ammo_base; hunting
+name		= ammo_new_7.62x54_hp
+k_hit		= 1
+k_ap		= 0.125
+k_hp        = 2
+cost        = 1000
+
+[ammo_7.62x54_7h14_bad]:ammo_7.62x54_7h14; competition
+handler     = arti_handlers.headshot
+name		= ammo_new_7.62x54_fp
+k_hit		= 1.1
+k_ap		= 0.199
+k_hp        = 1.2
+cost        = 1450
+dg_ammo     = ammo_7.62x54_7h14
+dg_chance   = 0.5
+
+
+[ammo_7.62x54_ap]:ammo_base; 7N13
+name		= ammo_new_7.62x54_ap
+k_hit		= 0.95
+k_ap		= 0.305
+k_pen		= 0.6
+cost        = 1500
+
+[ammo_7.62x54_ap_bad]:ammo_7.62x54_ap; BZ API
+handler     = arti_handlers.fire_cosmetic
+name		= ammo_new_7.62x54_api
+k_hit		= 1.4
+k_ap		= 0.335
+k_pen       = 0.4
+impair      = 1.5
+cost        = 2700
+dg_ammo     = ammo_7.62x54_ap
+dg_chance   = 0.7
+
+
+[ammo_pkm_100]:ammo_base ;57_N_323S belt
+name		= ammo_new_7.62x54_ppr
+k_hit		= 1
+k_ap		= 0.2
+impair      = 1
+cost        = 4000
+
+[ammo_pkm_100_bad]:ammo_pkm_100 ; splitshot
+name		= ammo_new_7.62x54_split
+k_hit		= 0.45
+k_ap		= 0.12
+impair      = 1.5
+cost        = 6500
+dg_ammo     = ammo_pkm_100
+dg_chance   = 0.7
+
+
+[ammo_7.62x51_fmj]:ammo_base; ball
+name		= ammo_new_7.62x51_fmj
+k_hit		= 1
+k_ap		= 0.225
+cost        = 1800
+
+[ammo_7.62x51_fmj_bad]:ammo_7.62x51_fmj; mk316?
+name		= ammo_new_7.62x51_fmjs
+k_hit		= 1.05
+k_ap		= 0.275
+cost        = 2600
+dg_ammo     = ammo_7.62x51_fmj
+dg_chance   = 0.4
+
+
+[ammo_7.62x51_ap]:ammo_base ; ap
+name		= ammo_new_7.62x51_ap
+k_hit		= 0.9
+k_ap		= 0.335
+k_pen       = 0.5
+cost        = 2500
+
+[ammo_7.62x51_ap_bad]:ammo_7.62x51_ap ; slap
+name		= ammo_new_7.62x51_slap
+k_hit		= 0.8
+k_ap		= 0.375
+k_pen       = 0.8
+cost        = 3750
+dg_ammo     = ammo_7.62x51_ap
+dg_chance   = 0.6
+
+
+[ammo_7.92x33_fmj]:ammo_base ;fmj
+name		= ammo_new_7.92x33_fmj
+k_hit		= 1
+k_ap		= 0.195
+cost        = 900
+
+[ammo_7.92x33_fmj_bad]:ammo_7.92x33_fmj ;match
+name		= ammo_new_7.92x33_match
+k_hit		= 1
+k_ap		= 0.215
+cost        = 1500
+dg_ammo     = ammo_7.92x33_fmj
+dg_chance   = 0.4
+
+[ammo_7.92x33_ap]:ammo_base ; ap
+name		= ammo_new_7.92x33_ap
+k_hit		= 1
+k_ap		= 0.305
+k_pen       = 0.4
+cost        = 2100
+
+[ammo_7.92x33_ap_bad]:ammo_7.92x33_ap ; ION
+handler     = arti_handlers.ion_damage
+name		= ammo_new_7.92x33_ion
+k_hit		= 0.2
+k_ap		= 0.399
+impair      = 1.5
+cost        = 3400
+dg_ammo     = ammo_7.92x33_fmj
+dg_chance   = 0.7
+
+
+[ammo_12.7x55_fmj]:ammo_base; normal
+name		= ammo_new_12.7x55_fmj
+k_hit		= 1
+k_ap		= 0.305
+impair      = 1
+cost        = 4000
+
+[ammo_12.7x55_fmj_bad]:ammo_12.7x55_fmj; pt2
+name		= ammo_new_12.7x55_fmjs
+k_hit		= 1.1
+k_ap		= 0.335
+cost        = 6000
+dg_ammo     = ammo_12.7x55_fmj
+dg_chance   = 0.4
+
+[ammo_12.7x55_ap]:ammo_base; ap
+name		= ammo_new_9x18_plus
+k_hit		= 1
+k_ap		= 0.375
+impair      = 1
+cost        = 6500
+
+[ammo_12.7x55_ap_bad]:ammo_12.7x55_ap; explosive
+handler     = arti_handlers.explosion
+name		= ammo_new_12.7x55_exp
+k_hit		= 0.3
+k_ap		= 0.049
+impair      = 1.3
+cost        = 11000
+special     = explodes
+dg_ammo     = ammo_12.7x55_ap
+dg_chance   = 0.6
+
+
+[ammo_magnum_300]:ammo_base; fmj
+name		= ammo_new_338_lapua
+k_hit		= 1
+k_ap		= 0.335
+impair      = 1
+cost        = 5500
+
+[ammo_magnum_300_bad]:ammo_magnum_300; saboted DU 
+name		= ammo_new_338_ap
+k_hit		= 1.3
+k_ap		= 0.399
+k_pen       = 0.5
+impair      = 1.5
+cost        = 8500
+dg_ammo     = ammo_magnum_300
+dg_chance   = 0.7
+
+[ammo_7.92x33_fmj_verybad]:ammo_7.92x33_fmj_bad
+[ammo_7.92x33_ap_verybad]:ammo_7.92x33_ap_bad
+[ammo_7.62x51_fmj_verybad]:ammo_7.62x51_fmj_bad
+[ammo_7.62x51_ap_verybad]:ammo_7.62x51_ap_bad
+[ammo_pkm_100_verybad]:ammo_pkm_100_bad
+[ammo_7.62x54_7h1_verybad]:ammo_7.62x54_7h1_bad
+[ammo_7.62x54_ap_verybad]:ammo_7.62x54_ap_bad
+[ammo_7.62x54_7h14_verybad]:ammo_7.62x54_7h14_bad
+[ammo_12.7x55_fmj_verybad]:ammo_12.7x55_fmj_bad
+[ammo_12.7x55_ap_verybad]:ammo_12.7x55_ap_bad
+[ammo_magnum_300_verybad]:ammo_magnum_300_bad
