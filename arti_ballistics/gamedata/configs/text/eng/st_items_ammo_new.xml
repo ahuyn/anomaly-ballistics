@@ -45,6 +45,7 @@
 	<string id="st_prop_impair">
 		<text>wear multiplier:</text>
 	</string>
+
 	<string id="st_ballistics_flinch">
 		<text>chance to stagger human enemies</text>
 	</string>
@@ -61,33 +62,50 @@
 		<text>60%-160% damage/ap range</text>
 	</string>
 	<string id="st_ballistics_acid">
-		<text>no AP, melts armor</text>
+		<text>reduces armor on hit</text>
 	</string>
 	<string id="st_ballistics_head">
 		<text>headshots ignore armor</text>
 	</string>
+	<string id="st_ballistics_fire_melt">
+		<text>ignites targets, reduces armor</text>
+	</string>
 	<string id="st_ballistics_fire">
-		<text>high damage, melts armor</text>
+		<text>chance to ignite targets</text>
 	</string>
 	<string id="st_ballistics_split">
 		<text>fires three projectiles</text>
 	</string>
-	<string id="st_ballistics_icon">
-		<text>damage increases with target armor</text>
+	<string id="st_ballistics_shock">
+		<text>damage and aoe increases with target armor</text>
 	</string>
+	<string id="st_ballistics_pierce">
+		<text>limited target piercing</text>
+	</string>
+	<string id="st_ballistics_soulripper">
+		<text>exponential ultra piercing</text>
+	</string>
+
 	<string id="st_link">
 		<text>link to belt</text>
 	</string>
 	<string id="st_unlink">
 		<text>unlink belt</text>
 	</string>
+
 	
+	<string id="st_powder_ignite">
+		<text>Incendiary powder</text>
+	</string>
+	<string id="st_powder_ignite_descr">
+		<text>.</text>
+	</string>
 	<!-- handgun -->
 	<string id="ammo_new_9x18_fmj">
 		<text>9x18mm FMJ rounds</text>
 	</string>
 	<string id="ammo_new_9x18_fmj_descr">
-		<text>A full metal jacket round with a steel penetrator and a lead core under a metal jacket. Such rounds are the most common type of handgun round throughout the former Soviet Union. Provides good stopping power but is ineffective against body armour.</text>
+		<text>A full metal jacket round with a steel penetrator and a lead core under a metal jacket. Such rounds are the most common type of handgun round throughout the former Soviet Union. Provides good stopping power but is ineffective against heavy body armour.</text>
 	</string>
 	<string id="ammo_new_9x18_fmj_s">
 		<text>9x18 FMJ</text>
@@ -117,7 +135,7 @@
 		<text>9x18mm SP-7 rounds</text>
 	</string>
 	<string id="ammo_new_9x18_sp7_descr">
-		<text>Military_spec jacketed hollowpoint bullet with a plastic plug and increased powder charge. Quite effective at stopping man and mutant alike, and as such is commonly used by the SSU in their sidearms and submachine guns.</text>
+		<text>Military_spec jacketed hollowpoint bullet with a plastic plug and increased powder charge. Offers superior ballistics and remarkably flat shooting, making it popular amongst backline troops. Quite effective at stopping man and mutant alike, and as such is commonly used by the SSU in their sidearms and submachine guns.</text>
 	</string>
 	<string id="ammo_new_9x18_sp7_s">
 		<text>9x18 SP-7</text>
@@ -167,7 +185,7 @@
 		<text>9x19mm JHP rounds</text>
 	</string>
 	<string id="ammo_new_9x19_pbp_descr">
-		<text>This 9x19 calibre jacketed hollow-point bullet with an expanding hollow has high stopping power and low ricochet propensity. Popular amongst police officers and with concealed carry for its high stopping power. Ineffective against body armour due to its low penetration potential.</text>
+		<text>This 9x19 calibre jacketed hollow-point bullet with an expanding hollow has high stopping power and low ricochet propensity. Popular amongst police officers and concealed carry for its high stopping power. Ineffective against body armour due to its low penetration potential.</text>
 	</string>
 	<string id="ammo_new_9x19_pbp_s">
 		<text>9x19 JHP</text>
@@ -177,7 +195,7 @@
 		<text>9x19mm JSP +P rounds</text>
 	</string>
 	<string id="ammo_new_9x19_pbps_descr">
-		<text>Match grade 9mm hand loaded JSP rounds. Soft Point rounds are semi-jacketed and expose the lead tip, and expand like hollowpoint rounds while retaining better armor penetration properties. These are custom-order rounds from folk craftsmen that have earned the nickname of 'Man_stopper' due to their purported ability to stop men dead in their tracks.</text>
+		<text>Match grade 9mm hand loaded JSP rounds. Soft Point rounds are semi-jacketed and expose the lead tip, and expand like hollowpoint rounds while retaining better armor penetration properties. These are custom-order rounds from folk craftsmen that have earned the nickname of 'Man stopper' due to their purported ability to stop men dead in their tracks.</text>
 	</string>
 	<string id="ammo_new_9x19_pbps_s">
 		<text>9x19 JSP</text>
@@ -232,10 +250,10 @@
 	</string>
 
 	<string id="ammo_new_11.43x23_hydro">
-		<text>.45 ACP Hydra_shock rounds</text>
+		<text>.45 ACP Hydra-shock rounds</text>
 	</string>
 	<string id="ammo_new_11.43x23_hydro_descr">
-		<text>This unusual .45 ACP calibre round consists of a jacketed soft point bullet with a hollow steel core, possessing both their advantages and disadvantages. The force of the round is enough to stop people in their tracks.</text>
+		<text>This unusual .45 ACP calibre round consists of a jacketed soft point bullet with a hollow steel core. Provides limited armor defeating properties and hollow point stopping power, but the odd combination of both negates their useful properties in practice. However, the force of the round is enough to physically stop people in their tracks, if it doesn't put them down.</text>
 	</string>
 	<string id="ammo_new_11.43x23_hydro_s">
 		<text>.45 HS</text>
@@ -245,7 +263,7 @@
 		<text>.357 HP rounds</text>
 	</string>
 	<string id="ammo_new_357_hp_descr">
-		<text>The .357 HP round is a hollow-point bullet. The purpose of the round is to slow down upon impact, which decreases its penetration, but at the same time causes larger internal tissue damage. </text>
+		<text>The .357 HP round is a hollow-point bullet. The purpose of the round is to slow down upon impact, which decreases its penetration, but at the same time causes larger internal tissue damage. The high stopping power afforded by this round makes it extremely popular amongst Dutyers, especially to stop heavier mutants like boars.</text>
 	</string>
 	<string id="ammo_new_357_hp_s">
 		<text>.357 HP</text>
@@ -293,7 +311,7 @@
 		<text>7.62x25mm Acid rounds</text>
 	</string>
 	<string id="ammo_new_7.62x25_cor_descr">
-		<text>Experimental rounds developed by a secret joint effort between elements of the Ukrainian Ministry of Science and members of the Clear Sky faction. These hollowpoint rounds are filled with a turquoise plug that feels like plastic to the touch. A certain treatment involving the use of Stone Flower artifacts and catalysis in the presence of aerosolized ammonia has resulted in the production of corrosive tips that, when exposed to the heat of a gunpowder explosion, reacts to form a substance that violently melts and consumes metal, fabric, wood, plastic, or stone. The material is safe to handle in its inert state and only reacts when fired out of a weapon.</text>
+		<text>Experimental rounds developed by a secret joint effort between elements of the Ukrainian Ministry of Science and members of the Clear Sky faction. These hollowpoint rounds are filled with a turquoise plug that feels like plastic to the touch. A certain treatment involving the use of Stone Blood artifacts and catalysis in the presence of aerosolized ammonia has resulted in the production of corrosive tips that, when exposed to the heat of a gunpowder explosion, reacts to form a substance that violently melts and consumes metal, fabric, wood, plastic, or stone. The material is safe to handle in its inert state and only reacts when fired out of a weapon.</text>
 	</string>
 	<string id="ammo_new_7.62x25_cor_s">
 		<text>7.62x25 Acid</text>
@@ -302,8 +320,8 @@
 	<string id="ammo_new_5.7x28_fmj">
 		<text>5.7x28 FMJ rounds</text>
 	</string>
-	<string id="ammo_new_5.7x28_fmj">
-		<text>Outdated 5.7x28 FMJ round. This round was quickly superseded by the SS190, and as such large quantities of the round found their way to the Zone. Performance is overall inferior to the SS190, but makes up in price and commonality.</text>
+	<string id="ammo_new_5.7x28_fmj_descr">
+		<text>Civilian-grade SS196SR 5.7x28 FMJ round. Unlike the SS190, this round is not rated to defeat body armor. However, in practice this round is still capable of defeating light kevlar and thus is still used fairly commonly for that reason. Much cheaper and easier to acquire than its military armor-piercing brother, and is a good choice for the budget-conscious black operator looking to terrorize Loners.</text>
 	</string>
 	<string id="ammo_new_5.7x28_fmj_s">
 		<text>5.7x28 AP</text>
@@ -312,7 +330,7 @@
 		<text>5.7x28 SS190 rounds</text>
 	</string>
 	<string id="ammo_new_5.7x28_ss190_descr">
-		<text>The FN 5.7x28mm is a high velocity cartridge designed and manufactured by FN Herstal. It is a bottlenecked centrefire cartridge that is somewhat similar to the .22 Hornet or .22 K-Hornet. The 5.7x28mm was developed in conjunction with the FN P90 personal defense weapon (PDW) and FN Five_seven pistol, in response to NATO requests for a replacement for the 9x19mm Parabellum cartridge.</text>
+		<text>The FN 5.7x28mm is a high velocity cartridge designed and manufactured by FN Herstal. It is a bottlenecked centrefire cartridge that is somewhat similar to the .22 Hornet or .22 K-Hornet. The 5.7x28mm was developed in conjunction with the FN P90 personal defense weapon (PDW) and FN Five_seven pistol, in response to perceived threats of body armor. As such, this type of projectile is capable of defeating rifle plates handedly, but its small size reduces its damage potential greatly.</text>
 	</string>
 	<string id="ammo_new_5.7x28_ss190_s">
 		<text>5.7x28 AP</text>
@@ -322,7 +340,7 @@
 		<text>5.7x28 CHAOS rounds</text>
 	</string>
 	<string id="ammo_new_5.7x28_chaos_descr">
-		<text>5.7x28mm SS190 rounds with signs of unknown anomalous tampering. These are rarely found in the employ of Monolith and Sinners, and possess markers of treatment in the same vein as other experimental ammo types. These in particular have a bullet that destabilizes in the metaphysical sense, causing randomized fluctuations of force on impact. The performance of the round is highly irregular and ranges from stinging like a mere airsoft pellet to hitting as hard as a full_size rifle round.</text>
+		<text>5.7x28mm SS190 rounds with signs of unknown anomalous tampering. These are rarely found in the employ of Monolith and Sinners, and possess markers of treatment in the same vein as other experimental ammo types. These in particular have a bullet whose existence destabilizes in flight, randomly losing and gaining velocity, mass, and kinetic potential. Performance is thus highly erratic, though if fired at high enough volume the overall potential seems to be higher than standard rounds. The exact nature and purpose of these rounds are unknown.</text>
 	</string>
 	<string id="ammo_new_5.7x28_chaos_s">
 		<text>5.7x28 CHAOS</text>
@@ -331,7 +349,7 @@
 		<text>5.7x28 mm SS195 rounds</text>
 	</string>
 	<string id="ammo_new_5.7x28_ss195_descr">
-		<text>The SS195 FN 5.7x28mm is an expansive cartridge designed and manufactured by FN Herstal. It is a bottlenecked centrefire cartridge that is somewhat similar to the .22 Hornet or .22 K-Hornet.</text>
+		<text>The SS195 FN 5.7x28mm is an expansive cartridge designed and manufactured by FN Herstal. It is a bottlenecked centrefire cartridge that is somewhat similar to the .22 Hornet or .22 K-Hornet. Popular sporting and hunting cartridge in the West that has made its way to the Zone for certain enthusiasts of the Five-seveN as a mutant defense handgun.</text>
 	</string>
 	<string id="ammo_new_5.7x28_ss195_s">
 		<text>5.7x28 HP</text>
@@ -343,7 +361,7 @@
 		<text>12x70 #00 Buckshot</text>
 	</string>
 	<string id="ammo_new_12x70_buck_descr">
-		<text>Standard 12 gauge shell filled with 8mm shot. Highly lethal at close range but effectiveness drops quickly. Only suitable for use with smoothbore weapons.</text>
+		<text>Standard 12 gauge shell filled with 8mm #00 sized shot. Highly lethal at close range but effectiveness drops quickly. Only suitable for use with smoothbore weapons.</text>
 	</string>
 	<string id="ammo_new_12x70_buck_s">
 		<text>12x70 shot</text>
@@ -363,7 +381,7 @@
 		<text>12x76 slug shells</text>
 	</string>
 	<string id="ammo_new_12x70_zhekan_descr">
-		<text>This heavy 12 gauge slug round is normally used for hunting big game, but is also good for other purposes. Instead of piercing, this hefty slug simply crushes through armour.</text>
+		<text>This heavy 12 gauge slug round is normally used for hunting big game, but is also good for hunting men on a budget. Instead of piercing, this hefty slug is capable of crushing armor like a mace. Sheer concussive force makes this type of round extremely good at stopping people in their tracks.</text>
 	</string>
 	<string id="ammo_new_12x70_zhekan_s">
 		<text>12x76 slug</text>
@@ -372,7 +390,7 @@
 		<text>12x76 AP Dart shells</text>
 	</string>
 	<string id="ammo_new_12x70_dart_descr">
-		<text>12 gauge armor-piercing dart round capable of providing equivalent armor penetration of rifle rounds with a considerable increase in stopping power. .</text>
+		<text>12 gauge hardened steel armor-piercing dart round. Capable of providing equivalent armor penetration of rifle rounds with a considerable increase in stopping power. Extra powder load is used to propel the projectile to maximize damage to armor. </text>
 	</string>
 	<string id="ammo_new_12x70_dart_s">
 		<text>12x76 Dart</text>
@@ -382,7 +400,7 @@
 		<text>12x70 Flechette Rounds</text>
 	</string>
 	<string id="ammo_new_12x70_flechette_descr">
-		<text>12 gauge shotgun shell filled with hardened steel spikes. Provides tight groupings and good armor penetration compared to buckshot, but lacks sheer stopping power.</text>
+		<text>12 gauge shotgun shell filled with 9 hardened steel spikes. Provides tight groupings, increased effective range and good armor penetration compared to buckshot, but lacks sheer stopping power. Suitable for defeating light body armor but ineffective against heavier armor, unless shots to the limbs are prioritized.</text>
 	</string>
 	<string id="ammo_new_12x70_flechette_s">
 		<text>12x70 Flechette</text>
@@ -391,7 +409,7 @@
 		<text>12x70 'Dragon's Breath' Rounds</text>
 	</string>
 	<string id="ammo_new_12x70_dragon_descr">
-		<text>12 gauge shotgun shell loaded with small fragments of Fireball and Night Star artifacts. When fired, the gunpowder explosion sets off a runaway anomalous interaction that superheats the artifact pieces to temperatures equivalent to that of ignited thermite. The impact is devastating to flesh and melts most armors, but the extreme heat generated is hugely damaging to the weapon it is shot out of.</text>
+		<text>12 gauge shotgun shell loaded with small fragments of Fireball and Night Star artifacts. When fired, the gunpowder explosion sets off a runaway anomalous interaction that superheats the artifact pieces to temperatures equivalent to that of ignited thermite. The impact is devastating to flesh and melts most armors, but the extreme heat generated is hugely damaging to the weapon it is shot out of. Artifact fragments regrettably do not provide much armor defeating potential, so the primary source of damage comes from the ammo's ability to ignite targets.</text>
 	</string>
 	<string id="ammo_new_12x70_dragon_s">
 		<text>12x70 Dragonsbreath</text>
@@ -442,7 +460,7 @@
 		<text>5.45x39mm AP rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_ap_descr">
-		<text>Military 5.45x39 calibre 7N10 is an enhanced penetration round for automatic rifles of Warsaw Pact countries. A harder and sleeker steel core is used to improve penetration.</text>
+		<text>Military 5.45x39 calibre 7N10 is an enhanced penetration round for automatic rifles of Warsaw Pact countries. A harder and sleeker steel core is used to improve penetration. Standard issue round with modern SSU infantry, which is to say, definitely not the personnel found guarding checkpoints in the Zone.</text>
 	</string>
 	<string id="ammo_new_5.45x39-ep_s">
 		<text>5.45x39 AP</text>
@@ -592,7 +610,7 @@
 		<text>9x39mm SP-6 rounds</text>
 	</string>
 	<string id="ammo_new_9x39_ap_descr">
-		<text>The SP-6 is a subsonic armour-piercing round with a jacketed soft point bullet with a hard steel core that protrudes from the casing. Requires a suppressor for stealth firing. Used by special services of Warsaw Pact countries. Effective against light body armour.</text>
+		<text>The SP-6 is a subsonic armour-piercing round with a jacketed soft point bullet with a hard steel core that protrudes from the casing. Requires a suppressor for stealth firing. Used by special services of Warsaw Pact countries. Effective against body armour.</text>
 	</string>
 	<string id="ammo_new_9x39_ap_s">
 		<text>9x39 SP-6</text>
@@ -634,7 +652,7 @@
 		<text>7.62x54mm 'Headhunter' match rounds</text>
 	</string>
 	<string id="ammo_new_7.62x54-fp_descr">
-		<text>High-precision variant of the 7.62x54mm round, with a flat nose that provides very high accuracy at medium to long ranges. These rounds are used for competition shooting where accuracy and precision are key, and thus these rounds are all carefully built to be exactly the same. The flat nosed round is designed for superior weight distribution and to punch clean holes through targets, and is tipped with a plastic plug to retain maximal aerodynamic performance. While the armor penetrating capabilities are lacking, the sheer force of impact due to the flat nose is enough to cause deadly concussions. As such, while shooting center mass is ill advised, the trauma caused by a shot to the head, no matter the armor, is enough to kill in nearly 100% of cases. Proper use of such rounds demands high skill.</text>
+		<text>High-precision variant of the 7.62x54mm round, with a flat nose that provides very high accuracy at medium to long ranges. These rounds are used for competition shooting where accuracy and precision are key, and thus these rounds are all carefully built to be exactly the same. The flat nosed round is designed for superior weight distribution and to punch clean holes through targets, and is tipped with a plastic plug to retain maximal aerodynamic performance. While the armor penetrating capabilities are lacking, the sheer force of impact due to the flat nose is enough to cause deadly concussions. In practice, snipers report that headshots with these rounds will lethally concuss targets, almost always guaranteeing a kill. Proper use of such rounds demands high skill.</text>
 	</string>
 	<string id="ammo_new_7.62x54-fp_s">
 		<text>7.62x54 FP</text>
@@ -715,7 +733,7 @@
 		<text>7.62x51mm M948 SLAP rounds</text>
 	</string>
 	<string id="ammo_new_7.62x51_slap_descr">
-		<text>Special-issue 7.62x51 round consisting of a 5.5mm tungsten dart encased in a plastic sabot. The plastic plug retains the shape of a normal FMJ round, making for easy feeding, and when fired the dense tungsten dart punches clean through light and medium vehicle armor, or any body armor. Due to the small size of the projectile, wounding effects are minimized. Imported in limited quantities by Mercenaries to counter armored SSU divisions and to neutralize heavily armored Monolith threats.</text>
+		<text>Special-issue 7.62x51 round consisting of a 5.5mm tungsten dart encased in a plastic sabot. The plastic plug retains the shape of a normal FMJ round, making for easy feeding, and when fired the dense tungsten dart punches clean through light and medium vehicle armor, or any body armor. Due to the small size of the projectile, wounding effects are minimized. However, the penetrating capability makes it possible to shoot through cover or attack multiple targets in a row. Imported in limited quantities by Mercenaries to counter armored SSU divisions and to neutralize heavily armored Monolith threats.</text>
 	</string>
 	<string id="ammo_new_7.62x51_slap_s">
 		<text>7.62x51 SLAP</text>
@@ -753,17 +771,16 @@
 	</string>
 	
 
-	<string id="ammo_new_7.92x33_ion">
-		<text>7.92x57mm ION rounds</text>
+	<string id="ammo_new_7.92x33_shock">
+		<text>7.92x57mm Lightning rounds</text>
 	</string>
-	<string id="ammo_new_7.92x33_ion_descr">
-		<text>7.92x57 round with a bullet made from reactive metal alloy derived from synthesis of various materials derived from artifacts. Considered to be the magnum opus of eminent Ecologist N. Goldstein, this round reacts with heat from the propellant to kick off a runaway reaction that annihilates metal and converts it into energy. On impact with hard surfaces like body armor, the reaction continues to consume any nonorganic material, increasing in energy. The kinetic energy of the round is relatively low as up to ~60% of the mass is consumed, but the more thickly armored the target, the more energy is released by consumption of the material, vastly increasing stopping power. </text>
+	<string id="ammo_new_7.92x33_shock_descr">
+		<text>7.92x57 round with a bullet made from a reactive alloy of electrical artifacts. Similar to the Flash artifact, this projectile contains a tremendous amount of energy. However, the bullet is propelled by conventional means, with the high pressure and temperature of the gunpowder setting off a reaction with the artifact. On contact with a target, electrical energy is transferred. While this has limited stopping power against lightly armored targets, on heavily armored targets and powered armor the effect is devastating to both the target and the area around the target. Deals minimal damage to mutants. </text>
 	</string>
 	<string id="ammo_new_7.92x33_ion_s">
-		<text>7.92x57 ION</text>
+		<text>7.92x57 Shock</text>
 	</string>
 	
-
 	<string id="ammo_new_12.7x55_fmj">
 		<text>12.7x55mm STs-130 rounds</text>
 	</string>
@@ -814,12 +831,11 @@
 		<text>.338 Lapua Magnum</text>
 	</string>
 	
-	
 	<string id="ammo_new_338_ap">
 		<text>.338 'Soulripper' Sabot rounds</text>
 	</string>
 	<string id="ammo_new_338_ap_descr">
-		<text>.338 round consisting of a depleted uranium penetrator wrapped in a sabot and propelled with a very heavy charge. The uranium penetrator cuts through any and all body armor like nothing, and the thin round and strong propellant ensure extremely flat, long range ballistic performance. Extremely powerful and effective against all human targets - if the bullet does not kill them, the sheer force of impact will. This bullet is the pinnacle of conventional small arms technology.</text>
+		<text>.338 round consisting of a depleted uranium penetrator wrapped in a sabot and propelled with an anomalously powerful charge. Exhibits signs of anomalous tampering, as it is not physically possible for a projectile of this mass to fly with such velocity and deal as much damage as it does. Extremely rare, powerful, and dangerous to handle.</text>
 	</string>
 	<string id="ammo_new_338_ap_s">
 		<text>.338 DU AP</text>

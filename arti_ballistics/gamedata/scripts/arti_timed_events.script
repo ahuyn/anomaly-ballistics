@@ -1,0 +1,43 @@
+-- simple stateless timed events
+timed_effects = {}
+
+function add_effect(key, duration, effect_function)
+	local effect = {
+		duration = duration,
+		effect = effect_function
+	}
+
+	if key then
+		timed_effects[key] = effect
+	else
+		table_insert(timed_effects, effect)
+	end
+end
+
+-- Processing the effects
+-- Whatever lowest time is set for effect, it will be processed at least once on process cycle
+local function process_timed_effects()
+	for key, props in pairs(timed_effects) do
+		if props.effect then
+			props.effect()
+            props.duration = clamp(props.duration - 1, 0, 999)
+		end
+		if props.duration == 0 then
+			timed_effects[key] = nil
+		end
+	end
+end
+
+local interval = 1000
+local time = 0
+function actor_on_update()
+	tg = time_global()
+	--trace("current tg %s", tg)
+	if tg < time + interval then return end
+	time = tg
+	process_timed_effects()
+end
+
+function on_game_start()
+    RegisterScriptCallback("actor_on_update", actor_on_update)
+end

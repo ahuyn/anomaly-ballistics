@@ -13,7 +13,7 @@ end
 ShortName = ui_item.build_short_name_first
 function ui_item.build_short_name_first(obj, sec, str)
     if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
-        return gc(ini_ammo:r_string_ex(sec, "name").."_s")
+        return gc(ini_ammo:r_string_ex(sec, "name") .. "_s")
     else
         return ShortName(obj, sec, str)
     end
@@ -23,7 +23,7 @@ end
 BuildFooter = ui_item.build_desc_footer
 function ui_item.build_desc_footer(obj, sec, str)
     if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
-        return gc(ini_ammo:r_string_ex(sec, "name").."_descr")
+        return gc(ini_ammo:r_string_ex(sec, "name") .. "_descr")
     else
         return BuildFooter(obj, sec, str)
     end

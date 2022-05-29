@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="st_windows-1251"?>
+<string_table>
+
+	<!-- Jammin -->
+	<string id="st_casing_pistol">
+		<text>Casing, handgun</text>
+	</string>
+	<string id="st_casing_pistol_desc">
+		<text>Small brass casings with primers for handgun ammunition. These cartridges can be reformed into any size from 7.62x25 up to .357 Magnum.</text>
+	</string>
+	<string id="st_casing_shotgun">
+		<text>Casing, shotgun</text>
+	</string>
+	<string id="st_casing_shotgun_desc">
+		<text>Plastic shells with brass primers used to make shotgun ammunition.</text>
+	</string>
+	<string id="st_casing_r5">
+		<text>Casing, small rifle</text>
+	</string>
+	<string id="st_casing_r5_desc">
+		<text>Medium-sized brass casings with primers for rifle ammunition. These cartridges can be reformed into any size to accommodate 39mm or 45mm length bullets.</text>
+	</string>
+	<string id="st_casing_r7">
+		<text>Casing, large rifle</text>
+	</string>
+	<string id="st_casing_r7_desc">
+		<text>Large brass casings with primers for full-sized rifle ammunition.</text>
+	</string>
+	<string id="st_powder_pistol">
+		<text>Propellant, pistol/shotgun</text>
+	</string>
+	<string id="st_powder_pistol_desc">
+		<text>Fast burning double-base propellant for use in shotguns and small handgun rounds. This variant of smokeless powder produces less overall energy than slower powders but burns more cleanly and quickly.</text>
+	</string>
+	<string id="st_powder_rifle">
+		<text>Propellant, small rifle</text>
+	</string>
+	<string id="st_powder_rifle_desc">
+		<text>IMR propellant for light rifle catridges and some heavy handgun cartridges. This powder burns at a medium rate and produces a good amount of energy. Cannot be used in blowback handguns and shotguns as insufficient pressures will lead to incomplete burning, causing fouling.</text>
+	</string>
+	<string id="st_powder_mag">
+		<text>Propellant, rifle</text>
+	</string>
+	<string id="st_powder_mag_desc">
+		<text>High-yield, slow burning ball propellant for large rifle rounds. This powder yields the most energy and burns the slowest, thus it is only suitable for use in large caliber rifle ammunition fired from long-barrel weapons.</text>
+	</string>
+	<string id="st_handgun_rounds">
+		<text>Handgun bullets</text>
+	</string>
+	<string id="st_handgun_rounds_desc">
+		<text>Variously sized handgun rounds salvaged from ammunition. These will be useful in crafting new ammunition.</text>
+	</string>
+	<string id="st_handgun_ap_rounds">
+		<text>Handgun bullets, Armor piercing</text>
+	</string>
+	<string id="st_handgun_ap_rounds_desc">
+		<text>Variously sized handgun rounds salvaged from ammunition. These have alloy penetrators embedded in the bullet. Handgun rounds are usually too slow to penetrate armor, even with penetrators, unless an overpressure powder charge is used or the bullet is designed specially for penetrating armor, like the 5.7x28 round.</text>
+	</string>
+	<string id="st_shotgun_rounds">
+		<text>Lead shot</text>
+	</string>
+	<string id="st_shotgun_rounds_desc">
+		<text>Small lead buckshot pellets used in hunting shotguns. These can also be melted down and cast into large slugs.</text>
+	</string>
+	<string id="st_shotgun_ap_rounds">
+		<text>Saboted dart</text>
+	</string>
+	<string id="st_shotgun_ap_rounds_desc">
+		<text>Hardened steel dart round encased in a sabot. These are designed to be fired out of police shotguns to disable engine blocks, but do decently well against body armor.</text>
+	</string>
+	<string id="st_rifle5_rounds">
+		<text>Smallbore rifle bullets</text>
+	</string>
+	<string id="st_rifle5_rounds_desc">
+		<text>Variously sized smallbore rifle bullets used in assault rifles. Military-manufactured and covered in a full metal jacket, optimized for accuracy.</text>
+	</string>
+	<string id="st_rifle5_ap_rounds">
+		<text>Smallbore rifle bullets, Armor piercing</text>
+	</string>
+	<string id="st_rifle5_ap_rounds_desc">
+		<text>Variously sized smallbore rifle bullets with alloy penetrators used in assault rifles. These are special-issue rounds designed to defeat armor at standard engagement ranges, at the cost of effectiveness against flesh.</text>
+	</string>
+
+	<string id="st_rifle7_rounds">
+		<text>Rifle bullets</text>
+	</string>
+	<string id="st_rifle7_rounds_desc">
+		<text>Full-size rifle bullets covered in a metal jacket. These are commonly used to load cartridges for hunting and military sniping use.</text>
+	</string>
+	<string id="st_rifle7_ap_rounds">
+		<text>Rifle bullets, Armor piercing</text>
+	</string>
+	<string id="st_rifle7_ap_rounds_desc">
+		<text>Full-size rifle bullets with embedded alloy penetrators. These are found in special-issue cartridges used by military and special forces to defeat body armor from long range.</text>
+	</string>
+
+	
+	<!-- new mats -->
+	
+	<string id="st_powder_fireball">
+		<text>Fireball (crushed)</text>
+	</string>
+	<string id="st_powder_fireball_desc">
+		<text>Pulverized remains of a Fireball artifact, for use in crafting certain types of ammo. Still warm to the touch.</text>
+	</string>
+	<string id="st_powder_nightstar">
+		<text>Night Star (crushed)</text>
+	</string>
+	<string id="st_powder_nightstar_desc">
+		<text>Pulverized remains of a Night Star artifact, for use in crafting certain types of ammo. Still glows faintly.</text>
+	</string>
+	<string id="st_powder_blood">
+		<text>Stone Blood (crushed)</text>
+	</string>
+	<string id="st_powder_blood_desc">
+		<text>Pulverized remains of a Stone Blood artifact, for use in crafting certain types of ammo. The toxic chemicals inside have been released, so this is hazardous to handle.</text>
+	</string>
+	<string id="st_powder_gravi">
+		<text>Gravi (crushed)</text>
+	</string>
+	<string id="st_powder_gravi_desc">
+		<text>Pulverized remains of a Gravi artifact, for use in crafting certain types of ammo. Constantly rattles in the container.</text>
+	</string>
+	<string id="st_powder_medusa">
+		<text>Jellyfish (crushed)</text>
+	</string>
+	<string id="st_powder_medusa_desc">
+		<text>Pulverized remains of a Jellyfish artifact, for use in crafting certain types of ammo. Container feels lighter than its size suggests.</text>
+	</string>
+	<string id="st_powder_battery">
+		<text>Battery (crushed)</text>
+	</string>
+	<string id="st_powder_battery_desc">
+		<text>Pulverized remains of a Battery artifact, for use in crafting certain types of ammo. The shards crackle with energy.</text>
+	</string>
+
+	<string id="st_powder_fire">
+		<text>Incendiary powder</text>
+	</string>
+	<string id="st_powder_fire_desc">
+		<text>Can of powder containing an incendiary mixture composed of magnesium, aluminum and barium nitrate. Usually purchased wholesale, this powder is found in small quantities in certain types of armor-piercing incendiary ammunition. </text>
+	</string>
+
+	
+	<string id="st_batch_breakdown">
+		<text>batch disassemble [!]</text>
+	</string>
+</string_table>

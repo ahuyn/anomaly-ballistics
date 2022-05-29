@@ -10,7 +10,7 @@ name		= ammo_new_5.45x39_fmjs
 k_hit		= 1.05
 k_ap		= 0.195
 cost        = 1650
-dg_ammo     = ammo_9x19_pbp
+dg_ammo     = ammo_5.45x39_fmj
 dg_chance   = 0.6
 
 
@@ -32,7 +32,7 @@ flinch      = 0.67
 impair      = 1.05
 special     = flinch
 cost        = 1750
-dg_ammo     = ammo_9x19_pbp
+dg_ammo     = ammo_5.45x39_ep
 dg_chance   = 0.6
 
 
@@ -50,7 +50,7 @@ k_ap		= 0.255
 k_pen       = 0.85
 impair      = 1.1
 cost        = 2350
-dg_ammo     = ammo_9x19_pbp
+dg_ammo     = ammo_5.45x39_ap
 dg_chance   = 0.6
 
 
@@ -65,7 +65,7 @@ name		= ammo_new_5.56x45_fmjs
 k_hit		= 1.2
 k_ap		= 0.175
 cost        = 2000
-dg_ammo     = ammo_9x19_pbp
+dg_ammo     = ammo_5.56x45_fmj
 dg_chance   = 0.6
 
 [ammo_5.56x45_ss190]:ammo_base ; civ hunting
@@ -85,7 +85,7 @@ varma       = 2
 impair      = 1.1
 cost        = 1900
 special     = varma
-dg_ammo     = ammo_9x19_pbp
+dg_ammo     = ammo_5.56x45_ss190
 dg_chance   = 0.6
 
 
@@ -102,7 +102,7 @@ k_hit		= 0.95
 k_ap		= 0.255
 k_pen       = 0.7
 cost        = 2500
-dg_ammo     = ammo_9x19_pbp
+dg_ammo     = ammo_5.56x45_ap
 dg_chance   = 0.6
 
 
@@ -117,7 +117,8 @@ name		= ammo_new_7.62x39_fmjs
 k_hit		= 1.05
 k_ap		= 0.205
 cost		= 1730
-dg_ammo     = ammo_9x19_pbp
+impair      = 0.9
+dg_ammo     = ammo_7.62x39_fmj
 dg_chance   = 0.6
 
 [ammo_7.62x39_ap]:ammo_base ; AP
@@ -127,13 +128,14 @@ k_ap		= 0.265
 cost		= 2530
 
 [ammo_7.62x39_ap_bad]:ammo_7.62x39_ap ; API
-handler     = arti_handlers.fire_cosmetic
+handler     = arti_handlers.fire_dot
 name		= ammo_new_7.62x39_api
 k_hit		= 1.25
 k_ap		= 0.295
+ignite      = 0.6
 impair      = 2
 cost		= 3330
-dg_ammo     = ammo_9x19_pbp
+dg_ammo     = ammo_7.62x39_ap
 dg_chance   = 0.6
 
 
@@ -149,7 +151,7 @@ name		= ammo_new_9x39_spp
 k_hit		= 1.05
 k_ap		= 0.265
 cost		= 3400
-dg_ammo     = ammo_9x19_pbp
+dg_ammo     = ammo_9x39_pab9
 dg_chance   = 0.6
 
 [ammo_9x39_ap]:ammo_base ; PAB9, severe dura loss
@@ -163,7 +165,7 @@ cost		= 2500
 name		= ammo_new_9x39_ap
 k_ap		= 0.325
 cost		= 3500
-dg_ammo     = ammo_9x19_pbp
+dg_ammo     = ammo_9x39_ap
 dg_chance   = 0.6
 
 

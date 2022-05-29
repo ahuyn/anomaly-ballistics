@@ -1,4 +1,5 @@
 [ammo_12x70_buck]:ammo_base ; ordinary buckshot
+handler     = arti_handlers.buckshot_damage
 name		= ammo_new_12x70_buck
 k_hit		= 0.3
 k_ap		= 0.025
@@ -33,9 +34,10 @@ dg_ammo     = ammo_12x76_zhekan
 
 
 [ammo_12x76_dart]:ammo_base ; flechette
+handler     = arti_handlers.buckshot_damage
 name		= ammo_new_12x70_flechette
-k_hit		= 0.25
-k_ap		= 0.075
+k_hit		= 0.2
+k_ap		= 0.1
 impair      = 1
 cost        = 1000
 
@@ -43,8 +45,9 @@ cost        = 1000
 handler     = arti_handlers.fire_damage
 name		= ammo_new_12x70_dragon
 k_hit		= 0.5
-k_ap		= 0.075
+k_ap		= 0.1
 impair      = 1.8
+ignite      = 1
 cost        = 3300
 dg_ammo     = ammo_12x76_dart
 dg_chance   = 0.8

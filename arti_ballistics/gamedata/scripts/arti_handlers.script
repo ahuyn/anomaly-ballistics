@@ -9,6 +9,7 @@ mutant_prot_values  = ballistics_utils.mutant_prot_values
 modify_bone         = ballistics_utils.modify_bone
 modify_velocity     = ballistics_utils.modify_velocity
 get_cur_vel         = ballistics_utils.get_cur_vel
+add_effect          = arti_timed_events.add_effect
 math_floor          = math.floor
 math_abs            = math.abs
 math_random         = math.random
@@ -116,7 +117,6 @@ end
 -- refer to ballistics_mcm.txt for logic details
 -- handles basic bullets, flinching and hollowpoint expansion
 function ballistic_handlers.default(npc, s_hit, ctx)
-
     if not get_config("enabled") then return s_hit end
     local precalc = prework(npc, s_hit, ctx)
     ammo_data = precalc.ammo_data
@@ -138,9 +138,9 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     print_dbg("Interim hit power %s", base_hp)
     if not ctx.is_npc then
         -- use existing formula, double base ap
-        local ap = ammo_data.k_ap * 2
-        if ap > bone_data.armor then
-            local mod = clamp((ap - bone_data.armor)/ap, bone_data.hit_fraction, 1)
+        local ap_val = ammo_data.k_ap * 2
+        if ap_val > bone_data.armor then
+            local mod = clamp((ap_val - bone_data.armor)/ap_val, bone_data.hit_fraction, 1)
             base_hp = base_hp * mod
         else
             base_hp = base_hp * bone_data.hit_fraction
@@ -260,46 +260,100 @@ function headshot(npc, s_hit, ctx)
     return s_hit
 end
 
--- for shit that shreds armor
+local fire_eff = particles_obj("artefact\\artefact_zharka")
+
+-- ignite + reduce armor
 function fire_damage(npc, s_hit, ctx)
-    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
+    s_hit = fire_dot(npc, s_hit, ctx)
     -- shred 0.01 off each hit
     local bone_data = npc_bone_data(npc, ctx.bone_id)
     if ctx.is_npc then
-        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.01, 0, 1))
-        play_particle(npc, ctx.bone_id, "artefact\\af_thermal_idle")
+        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
     end
     -- play something?
     return s_hit
 end
 
-function fire_cosmetic(npc, s_hit, ctx)
+-- ignite
+function fire_dot(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
-    play_particle(npc, ctx.bone_id, "artefact\\af_thermal_idle")
+    local ignite_chance = ini_ammo:r_float_ex(ctx.hit_data.ammo, "ignite") or 0
+    if math_random() < ignite_chance then
+        play_particle(npc, ctx.bone_id, "artefact\\af_thermal_idle")
+        print_dbg("Ignited %s", npc:id())
+        add_effect("ignite"..npc:id(), 5, 
+        function()
+            print_dbg("Burning %s", npc:id())
+            fire_eff:play_at_pos(npc:position())
+            if not npc:alive() then return end
+            local h = hit()
+            h.type = hit.fire
+            h.draftsman = db.actor
+            h.power = math.random(5, 10) / 100
+            h.bone = "bip01_spine"
+            npc:hit(h)
+        end)
+    end
+    return s_hit
 end
 
 -- for corrosive ammo
 function acid_damage(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
-    -- shred 0.1 ONCE per bone
+    -- shred ONCE per bone
     local bone_data = npc_bone_data(npc, ctx.bone_id)
+    play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
     if not bone_data.modified then
-        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.1, 0, 1))
-        play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
+        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.6, 0, 1))
     end
     return s_hit
 end
 
 -- for 5.7 chaos sx
 function chaos_damage(npc, s_hit, ctx)
-    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
-    s_hit = s_hit * (0.6 + math_random())
+    if not get_config("enabled") then return s_hit end
+    local precalc = prework(npc, s_hit, ctx)
+    ammo_data = precalc.ammo_data
+    bone_data = precalc.bone_data
+    ap = precalc.ap
+
+    local base_hp = precalc.base_power
+
+    -- these work for mutant or man
+    base_hp = base_hp * apply_std_calcs(npc, s_hit, ammo_data, bone_data)
+    
+    -- ap +/- 2 tiers randomly
+    local diff = ap.ap_tier - precalc.armor_tier + (math_random(5) - 3)
+    local hp_mult = ini_ammo:r_float_ex(ctx.hit_data.ammo, "k_hp") or 1
+    print_dbg("Interim hit power %s", base_hp)
+    if not ctx.is_npc then
+        -- use existing formula, double base ap
+        local ap_val = ammo_data.k_ap * 2 * (0.6 + math_random())
+        if ap_val > bone_data.armor then
+            local mod = clamp((ap_val - bone_data.armor)/ap_val, bone_data.hit_fraction, 1)
+            base_hp = base_hp * mod
+        else
+            base_hp = base_hp * bone_data.hit_fraction
+        end
+    else
+        -- tier based formula with overpen, and flinch
+        printf("Difference of %s, AP fraction of %s", diff, ap.ap_frac)
+        base_hp = damage_subcalcs[diff](base_hp, math_abs(diff), ap.ap_frac, ammo_data.k_pen)
+        
+    end
+
+    s_hit.power = base_hp
+    s_hit.power = s_hit.power * (0.6 + math_random())
     play_particle(npc, ctx.bone_id, "artefact\\artefact_gravi")
     return s_hit
 end
 
--- for ion armor consuming
-function ion_damage(npc, s_hit, ctx)
+local effect = particles_object("artefact\\effects\\af_electra_show_flash_00")
+-- for shock anti armor
+function shock_damage(npc, s_hit, ctx)
+    play_particle(npc, ctx.bone_id, "amik\\anomaly\\electra\\electra_dust_distort")
+    if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx)
+    end
     local precalc = prework(npc, s_hit, ctx)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
@@ -308,8 +362,23 @@ function ion_damage(npc, s_hit, ctx)
     local base_hp = precalc.base_power
 
     base_hp = base_hp * apply_std_calcs(npc, s_hit, ammo_data, bone_data)
-    base_hp = base_hp * (1 + ap.ap_tier)
+    base_hp = base_hp + (precalc.base_power * precalc.armor_tier * 0.15)
     
+    if precalc.armor_tier > 3 then
+        local h = hit()
+        h.type = hit.shock
+        h.draftsman = db.actor
+        h.power = precalc.armor_tier * 0.3
+        h.bone = "bip01_spine"
+        radius = precalc.armor_tier / 2
+
+        level.iterate_nearest(npc:position(), radius, function(obj)
+            if obj and obj:alive() and obj:id() ~= AC_ID then
+                obj:hit(h)
+                effect:play_at_pos(obj:position())
+            end
+        end)
+    end
     s_hit.power = base_hp
     return s_hit
 end
@@ -326,9 +395,9 @@ function varmageddon(npc, s_hit, ctx)
         local base_hp = precalc.base_power
         base_hp = base_hp * apply_std_calcs(npc, s_hit, ammo_data, bone_data)
         -- use existing formula, double base ap
-        local ap = ammo_data.k_ap * 1.5
-        if ap > bone_data.armor then
-            local mod = clamp((ap - bone_data.armor)/ap, bone_data.hit_fraction, 1)
+        local ap_val = ammo_data.k_ap * 2
+        if ap_val > bone_data.armor then
+            local mod = clamp((ap_val - bone_data.armor)/ap_val, bone_data.hit_fraction, 1)
             base_hp = base_hp * mod
         else
             base_hp = base_hp * bone_data.hit_fraction
@@ -358,5 +427,4 @@ function explosion(npc, s_hit, ctx)
         return false
     end, explode_obj.id)
 end
-
 

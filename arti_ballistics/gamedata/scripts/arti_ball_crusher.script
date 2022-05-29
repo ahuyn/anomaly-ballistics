@@ -1,0 +1,19 @@
+arti_crusher = {
+    af_night_star = "powder_nightstar",
+    af_medusa = "powder_medusa",
+    af_gravi = "powder_gravi",
+    af_fireball = "powder_fireball",
+    af_blood = "powder_blood"
+}
+
+
+function try_crush(obj, bag, mode)
+
+end
+
+function crush(obj, bag, mode)
+end
+
+function on_game_start()
+    custom_functor_autoinject.add_functor("arti_crush", try_crush, try_crush, nil, crush, true)
+end
