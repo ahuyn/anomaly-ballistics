@@ -15,4 +15,8 @@ Properties passed on hit such as k_hit and k_ap can be overridden at your discre
 
 Other properties such as air_resistance, bullet_speed and k_disp must be changed manually, but are of relatively little importance.
 
+Some notes on integration:
+- NPC hits do not account for implicit bone armor. Bone multiplier is applied manually and then damage is done via health removal.
+- Monster hits do not take into account bone armor and relies on engine to apply damage. Only AP calcs are done.
+
 Requires 1.5.2 RC4 or later.

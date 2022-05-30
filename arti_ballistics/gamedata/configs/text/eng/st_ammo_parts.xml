@@ -141,6 +141,9 @@
 		<text>Can of powder containing an incendiary mixture composed of magnesium, aluminum and barium nitrate. Usually purchased wholesale, this powder is found in small quantities in certain types of armor-piercing incendiary ammunition. </text>
 	</string>
 
+	<string id="st_crush">
+		<text>crush into fragments</text>
+	</string>
 	
 	<string id="st_batch_breakdown">
 		<text>batch disassemble [!]</text>

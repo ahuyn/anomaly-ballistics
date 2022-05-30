@@ -52,6 +52,9 @@
 	<string id="st_ballistics_hp">
 		<text>deals bonus damage on full penetration</text>
 	</string>
+	<string id="st_ballistics_rip">
+		<text>extreme expansion damage</text>
+	</string>
 	<string id="st_ballistics_varma">
 		<text>deals bonus damage to mutants</text>
 	</string>
@@ -250,13 +253,13 @@
 	</string>
 
 	<string id="ammo_new_11.43x23_hydro">
-		<text>.45 ACP Hydra-shock rounds</text>
+		<text>.45 ACP 'RIP' rounds</text>
 	</string>
 	<string id="ammo_new_11.43x23_hydro_descr">
-		<text>This unusual .45 ACP calibre round consists of a jacketed soft point bullet with a hollow steel core. Provides limited armor defeating properties and hollow point stopping power, but the odd combination of both negates their useful properties in practice. However, the force of the round is enough to physically stop people in their tracks, if it doesn't put them down.</text>
+		<text>This novel .45 ACP calibre round consists of a jacketed bullet sliced into 9 thin 'petals'. Designated the 'Radically Invasive Projectile', this bullet is designed to break into nine fragments after penetrating a target. The fragments create multiple wound channels, causing catastrophic damage. Originally designed on the basis of 'Black Talon' expanding projectiles, the RIP round improves on the design by having the petals break off as they travel through the target. Due to the fragile shape of the bullet, this round is easily defeated by armor or by sufficiently tough mutant hide. Imported in limited quantities.</text>
 	</string>
 	<string id="ammo_new_11.43x23_hydro_s">
-		<text>.45 HS</text>
+		<text>.45 RIP</text>
 	</string>
 
 	<string id="ammo_new_357_hp">

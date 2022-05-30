@@ -3,6 +3,7 @@ get_config          = ballistics_mcm.get_config
 print_dbg           = ballistics_mcm.print_dbg
 npc_bone_data       = ballistics_utils.npc_bone_data
 modify_velocity     = ballistics_utils.modify_velocity
+modify_distance     = ballistics_utils.modify_distance
 mutant_hp           = ballistics_utils.mutant_hp
 mutant_prot_values  = ballistics_utils.mutant_prot_values
 math_floor          = math.floor
@@ -37,7 +38,7 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     base_hp = weight_1 * (k_ap - bone_data.armor) + weight_2 * (base_hp - bone_data.armor)
     print_dbg("[JURKO] Interim calc is %s", base_hp)
     base_hp = base_hp * k_hit
-    base_hp = base_hp * modify_velocity(s_hit.draftsman, npc, ctx.hit_data.ammo)
+    base_hp = base_hp * modify_velocity() * modify_distance(s_hit.draftsman, npc, ctx.hit_data.ammo)
     base_hp = base_hp * bone_data.mult
     print_dbg("[JURKO] Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, k_ap, npc:get_visual_name(), s_hit.power, base_power, base_hp)
     s_hit.power = base_hp

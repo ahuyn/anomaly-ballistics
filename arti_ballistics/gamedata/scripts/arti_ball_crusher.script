@@ -6,12 +6,31 @@ arti_crusher = {
     af_blood = "powder_blood"
 }
 
+gc = game.translate_string
+-- to powderize artifacts into crafting material
 
+local modes = {
+	["inventory"] = true,
+}
+local bags = {
+	["actor_bag"] = true,
+	["actor_equ"] = true,
+	["actor_belt"] = true,
+}
 function try_crush(obj, bag, mode)
-
+    if obj and bags[bag] and modes[mode] then
+        return gc("st_crush")
+    end
 end
 
 function crush(obj, bag, mode)
+    local to_create = arti_crusher[obj:section()]
+    if to_create then
+        alife_release(obj)
+        for i=1,5 do
+            alife_create_item(to_create, db.actor)
+        end
+    end
 end
 
 function on_game_start()

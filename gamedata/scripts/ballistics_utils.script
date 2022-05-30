@@ -69,7 +69,7 @@ head_bones = {
 
 -- play particle at npc bone
 function play_particle(npc, bone_id, name)
-    bone_id = bone_id == 65535 and 1 or bone_id
+    bone_id = (not bone_id or bone_id == 65535) and 1 or bone_id
     local particle = particles_object(name)
     local bone_pos = npc:bone_position(Bone_IDs[bone_id])
     
@@ -144,19 +144,30 @@ function mutant_hp(mutant)
 
 end
 
+-- zombies have an inexplicable 0.1x damage multiplier that isn't reflected anywhere, so I added it here
+local undead_clsid = {
+    [clsid.fracture] 				= true,
+    [clsid.fracture_s] 				= true,
+    [clsid.zombie] 					= true,
+    [clsid.zombie_s] 				= true,
+}
 function mutant_prot_values(mutant, id)
+    
     local sec = mutant:section()
     local skin_armor = SYS_GetParam(2, sec, "skin_armor")
     local prot_sec = SYS_GetParam(0, sec, "protections_sect")
     if not skin_armor then
-        skin_armor = SYS_GetParam(2, prot_sec, "skin_armor")
+        if prot_sec then
+            skin_armor = SYS_GetParam(2, prot_sec, "skin_armor") or 0
+        else skin_armor = 0 end
     end
-    local hit_frac = SYS_GetParam(2, prot_sec, "hit_fraction_monster")
+    local hit_frac = SYS_GetParam(2, sec, "hit_fraction_monster") or SYS_GetParam(2, prot_sec, "hit_fraction_monster") or 0.5 
+    local mult = undead_clsid[get_clsid(mutant)] and 0.1 or 1
     return {
         id = id,
         hit_fraction = hit_frac,
         armor = skin_armor,
-        mult = 1
+        mult = mult
     }
 end
 
@@ -214,21 +225,20 @@ end
 
 
 -- Provide a damage modifier based on distance, adjusted by bullet velocity and flatness
-function modify_distance(shooter, npc, air_res)
+function modify_distance(shooter, npc, ammo)
     local npc_pos = npc:position()
 	local shooter_pos = shooter:position()
 	local dist = npc_pos:distance_to(shooter_pos)
-
+    local air_res = SYS_GetParam(2, ammo, "k_air_resistance") or 0.05
     return clamp(1 / ( 1 + dist / 200 * ( air_res * 0.5 / ( 1 - air_res + 0.1 )))
     , 0, 1)
 end
 
 -- One way to modify damage based on velocity. 20% of bonus velocity (e.g. taken from flatness upgrades) is added as hit damage.
 -- Of course, you don't need to use this
-function modify_velocity(shooter, npc, ammo)
-    local air_res = SYS_GetParam(2, ammo, "k_air_resistance") or 0.05
+function modify_velocity()
     -- 20% of velocity bonus becomes damage
-    local velocity_mod = (1 + (get_cur_vel() / 5)) * modify_distance(shooter, npc, air_res)
+    local velocity_mod = (1 + (get_cur_vel() / 5))
     print_dbg("Applying velocity damage multiplier of %s", velocity_mod)
     return velocity_mod
 end
@@ -237,6 +247,7 @@ end
 -- eg. if ammo degrade in custom config is 1.5 and is 1 in weapon_ammo, reduce weapon dura by 0.5 x condition_shot_dec
 function actor_on_weapon_fired(obj, weapon, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
     if weapon:id() ~= cur_wep_data.id then return end
+    if not get_config("impair") then return end
     local sec = weapon:section()
     ammo_map = utils_item.get_ammo(nil, cur_wep_data.id)
     local ammo = ammo_map[weapon:get_ammo_type() + 1]
@@ -253,6 +264,8 @@ function on_get_item_cost(kind, obj, profile, calculated_cost, ret)
 	if not (obj and profile) then
 		return nil
 	end
+
+    if not get_config("cost") then return end
 
 	local sec = obj:section()
 	local discount = profile.discount

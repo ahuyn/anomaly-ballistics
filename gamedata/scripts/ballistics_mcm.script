@@ -110,8 +110,9 @@ end
 
 -- If you don't use MCM, change your defaults from here.
 local defaults = {
-    ["enabled"] = true,
-    ["debug"] = true
+    ["debug"] = true,
+    ["cost"] = true,
+    ["impair"] = true,
 }
 
 function get_config(key)
@@ -121,8 +122,9 @@ end
 function on_mcm_load()
     op = { id= "ballistics",sh=true ,gr={
             { id= "title",type= "slide",link= "ui_options_slider_player",text="ui_mcm_ballistics_title",size= {512,50},spacing= 20 },
-            {id = "enabled", type = "check", val = 1, def=true},
             {id = "debug", type = "check", val = 1, def=true},
+            {id = "cost", type = "check", val = 1, def=true},
+            {id = "impair", type = "check", val = 1, def=true},
         }
     }
     return op

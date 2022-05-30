@@ -1,6 +1,6 @@
 # Introduction
 
-Overhauls ammo to convert bad ammo into cooler, fancier ammo. Reworks ballistic damage to curb the strength of smallbore AP ammo and makes ammo strength strongly relative to armor.
+Reworks ballistic damage to curb the strength of smallbore AP ammo and makes ammo strength strongly relative to armor. Overhauls ammo to convert bad ammo into cooler, fancier ammo.
 
 # Ballistic Damage Overhaul
 - Reworked ballistic system based on tiers of armor.
@@ -8,6 +8,9 @@ Overhauls ammo to convert bad ammo into cooler, fancier ammo. Reworks ballistic 
 - Script-based support for complex damage interactions between bullets and NPCs/mutants (e.g. buckshot dealing more damage to limbs, HP rounds only dealing expansion damage on penetration)
 
 ## Details
+
+Do note that mutant damage formula is more or less unchanged. There are a few edge cases but the majority of the work focuses on NPC interaction.
+
 Armor classes are broken down roughly into the following:
 | Class | Bone Armor | Armors      |
 | ------|------------| ----------- |
@@ -24,14 +27,15 @@ More granularity would have been nice but this based on the model capture, which
 
 Each ammo type has a corresponding AP amount that also falls into one of these classes. Ammo performance is evaluated based on the difference in tier between the armor and the ammo, as follows:
 
-| Difference | Effects
+| Difference | Effects    |
 | -----------|------------|
-| -3-7       | Deflection. Deal fractional impact damage |
-| -2-0       | Partial penetration, damage reduction up to 90% |
-|  1-3       | Full penetration, full damage |
-|  4-7       | Overkill penetration, reduced damage |
+| -3 to -7   | Deflection. Deal fractional impact damage |
+| -2 to 0    | Partial penetration, damage reduction up to 90% |
+| 1 to 3     | Full penetration, full damage |
+| 4 to 7     | Overkill penetration, reduced damage |
 
 The aim of this system is to provide a semi-realistic and balanced system for ballistic damage vs. armor while providing for fun gameplay.
+
 
 # Ammo Overhaul
 
@@ -39,23 +43,24 @@ The aim of this system is to provide a semi-realistic and balanced system for ba
 - Ammo types are BROADLY subdivided into FMJ/HP/AP variants (like in GBO)
 - Bad ammo is converted into stronger 'very good' ammo roughly aligned with their parent type.
 - The 'very good' ammo generally trades off faster damage wear with more damage, AP, etc. within reason. 
-- Some 'very good' ammo is extremely exotic. Explore!
+- Some 'very good' ammo is extremely exotic and has cool effects. Explore!
+- Drop percentage of the new ammo types is controlled via auto-replacement at traders and NPC ammo drops.
+- You can acquire most of this ammo through crafting. There is a mechanism to 'crush' some artifacts into fragments to use them in bullets.
+- 7.62x54 PP rounds can be linked and unlinked to be used in the PKM or in sniper rifles.
 
 General properties of new ammo:
 
 | Ammo       | Effects
 | -----------|------------|
 | FMJ        | Plain jane ammo, good damage, dispersion and penetration. |
-| HP         | Expansive ammo with a high multiplier IF it penetrates fully. |
+| HP         | Expansive ammo with a damage multiplier IF it penetrates fully. |
 | AP         | Armor piercing rounds that deal reduced damage to NPCs with light armor. | 
 | Soft Point | Chance to stumble enemies on impact. Reduced HP performance. |
 | Flat Point | Ignores armor on headshots. |
 | Corrosive  | ???? |
 | Incendiary | ???? |
-| Varmageddon HP | ???? |
+| Varmageddon| ???? |
 | Saboted AP | ???? |
 | CHAOS      | ???? |
 | Explosive  | ???? |
-| Ionic      D| ???? |
-
-Autoinjector scripts ensure that the distribution of very good ammo is appropriately rare.
+| Lightning  | ???? |
