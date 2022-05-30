@@ -141,7 +141,7 @@ function npc_standard(base_hp, ammo, precalc)
     ap = precalc.ap
     local diff = ap.ap_tier - precalc.armor_tier
     -- ensure hp rounds dont overpen
-    local hp_mult = ini_ammo:r_float_ex(ctx.hit_data.ammo, "k_hp") or 1
+    local hp_mult = ini_ammo:r_float_ex(ammo, "k_hp") or 1
     if hp_mult > 1 then diff = clamp(diff, -7, 3) end
     printf("Difference of %s, AP fraction of %s", diff, ap.ap_frac)
     return damage_subcalcs[diff](base_hp, math_abs(diff), ap.ap_frac, ammo_data.k_pen)
@@ -160,12 +160,12 @@ function mutant_standard(base_hp, ammo, precalc)
     end
 end
 
+-- flinch applies up to 3 levels above the tier
 function process_flinch(npc, hit_data, ap_tier, armor_tier)
-    local flinch_chance = ini_ammo:r_float_ex(hit_data.ammo, "flinch") or 0
-    local diff = clamp(ap_tier - armor_tier, -2, 2)
-    -- adjust based on diff
-    flinch_chance = clamp(flinch_chance * (1 + (0.15 * diff)), 0, 1)
-    -- softpoint bullets only 
+    if not ini_ammo:r_bool_ex(hit_data.ammo, "flinch") then return end
+    local flinch_adj = (ap_tier - armor_tier) * 0.3
+    local flinch_chance = clamp(0.9 - flinch_adj, 0, 1)
+    print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
     if flinch_chance > 0 and math_random() < flinch_chance then
         print_dbg("Staggering NPC")
         if npc:movement_type() == move.walk or npc:movement_type() == move.run then

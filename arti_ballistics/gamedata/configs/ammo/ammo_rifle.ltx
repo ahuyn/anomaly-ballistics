@@ -25,9 +25,9 @@ cost        = 1550
 
 [ammo_5.45x39_ep_bad]:ammo_5.45x39_ep ; soft point
 name		= ammo_new_5.45x39_sp
-k_hit		= 1.1
+k_hit		= 1.05
 k_ap		= 0.15
-flinch      = 0.7
+flinch      = true
 impair      = 1.05
 special     = flinch
 cost        = 1750
@@ -77,7 +77,7 @@ cost        = 1600
 [ammo_5.56x45_ss190_bad]:ammo_5.56x45_ss190 ; varmageddon
 handler     = arti_handlers.varmageddon
 name		= ammo_new_5.56x45_varma
-k_hit		= 1.1
+k_hit		= 1..05
 k_ap		= 0.105
 k_hp        = 1.4
 varma       = 1.5
@@ -129,11 +129,12 @@ cost		= 2530
 [ammo_7.62x39_ap_bad]:ammo_7.62x39_ap ; API
 handler     = arti_handlers.fire_dot
 name		= ammo_new_7.62x39_api
-k_hit		= 1.25
+k_hit		= 1.1
 k_ap		= 0.295
 ignite      = 0.6
 impair      = 2
 cost		= 3330
+special     = fire
 dg_ammo     = ammo_7.62x39_ap
 dg_chance   = 0.6
 

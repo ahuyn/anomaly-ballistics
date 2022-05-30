@@ -50,7 +50,7 @@
 		<text>chance to stagger human enemies</text>
 	</string>
 	<string id="st_ballistics_hp">
-		<text>deals bonus damage on full penetration</text>
+		<text>expansion damage on full penetration</text>
 	</string>
 	<string id="st_ballistics_rip">
 		<text>extreme expansion damage</text>
@@ -340,10 +340,10 @@
 	</string>
 
 	<string id="ammo_new_5.7x28_chaos">
-		<text>5.7x28 CHAOS rounds</text>
+		<text>5.7x28 Unstable Core</text>
 	</string>
 	<string id="ammo_new_5.7x28_chaos_descr">
-		<text>5.7x28mm SS190 rounds with signs of unknown anomalous tampering. These are rarely found in the employ of Monolith and Sinners, and possess markers of treatment in the same vein as other experimental ammo types. These in particular have a bullet whose existence destabilizes in flight, randomly losing and gaining velocity, mass, and kinetic potential. Performance is thus highly erratic, though if fired at high enough volume the overall potential seems to be higher than standard rounds. The exact nature and purpose of these rounds are unknown.</text>
+		<text>5.7x28mm SS190 rounds with signs of unknown anomalous tampering. These are rarely found in the employ of Monolith and Sinners, and possess markers of treatment in the same vein as other experimental ammo types. These in particular have a bullet that destabilizes its presence in reality, randomly losing and gaining velocity, mass, and kinetic potential during flight. Performance is thus highly erratic, though if fired at high enough volume the overall potential seems to be higher than standard rounds. The exact nature and purpose of these rounds are unknown.</text>
 	</string>
 	<string id="ammo_new_5.7x28_chaos_s">
 		<text>5.7x28 CHAOS</text>
