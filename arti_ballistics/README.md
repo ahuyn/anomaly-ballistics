@@ -55,6 +55,7 @@ General properties of new ammo:
 | FMJ        | Plain jane ammo, good damage, dispersion and penetration. |
 | HP         | Expansive ammo with a damage multiplier IF it penetrates fully. |
 | AP         | Armor piercing rounds that deal reduced damage to NPCs with light armor. | 
+| Buckshot   | Low AP. Ignores some armor on limb shots. | 
 | Soft Point | Chance to stumble enemies on impact. Reduced HP performance. |
 | Flat Point | Ignores armor on headshots. |
 | Corrosive  | ???? |

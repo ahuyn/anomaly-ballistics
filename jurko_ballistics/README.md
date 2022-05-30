@@ -1,0 +1,1 @@
+This is a partial implementation based on damage formulas Jurkonov has provided.
