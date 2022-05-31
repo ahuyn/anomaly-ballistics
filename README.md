@@ -1,4 +1,6 @@
-# Introduction
+# Modular Ballistic Framework
+
+## Introduction
 Base framework for playing with ballistic damage in Anomaly.
 
 This framework maps ammo types to custom damage functions, allowing a user to pass cutsom calculations for damage on a per-bullet, per-npc or per-mutant basis. Additional utilities are provided to overwrite many properties of weapon_ammo, reducing the dependency on the file as much as possible.
@@ -8,7 +10,7 @@ This framework maps ammo types to custom damage functions, allowing a user to pa
 
 ## Detail
 
-This addon does nothing by itself. However, two addons are provided to give an idea of how to use this framework.
+This addon does nothing by itself. However, two addons are provided to give an idea of how to use this framework. In theory it is possible to port other damage systems to this framework as desired.
 
 Properties that may be overridden by default include:
 - `inv_name`
@@ -26,10 +28,10 @@ Consult the Contribution Guide for an idea of how to add your own ammo types.
 ## Integration Notes:
 - NPC hits do not account for implicit bone armor. Bone multiplier is applied manually and then damage is done via health removal.
 - Monster hits do not take into account bone armor and relies on engine to apply damage. Only AP calcs are done.
+- Zombies have an inexplicable 0.1x damage multiplier applied before engine. I have not been able to find out where it is so I reapplied it at the framework level.
 
 ## Credit
 - HarukaSai - Provided code, balancing
 - themrdemonized - Borrowed code from PBA
 - Lucy - Providing functions that made this addon possible
-- Grok - Borrowed formulas from GBO
 - Maid - Icons

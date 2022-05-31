@@ -7,6 +7,9 @@ Reworks ballistic damage to curb the strength of smallbore AP ammo and makes amm
 - Ammo properties (hit, ap) are almost completely script driven.
 - Script-based support for complex damage interactions between bullets and NPCs/mutants (e.g. buckshot dealing more damage to limbs, HP rounds only dealing expansion damage on penetration)
 
+## Disclaimer
+ This is a huge system and I have not exhaustively tested every potential edge case. Please raise any issues you find.
+
 ## Details
 
 Do note that mutant damage formula is more or less unchanged. There are a few edge cases but the majority of the work focuses on NPC interaction.
@@ -15,8 +18,8 @@ Armor classes are broken down roughly into the following:
 | Class | Bone Armor | Armors      |
 | ------|------------| ----------- |
 | None  | 0          | Leather jackets, trenchcoats |
-| I     | 0.05       | SSP suits |
-| IIA   | 0.1        | Stalker Suits |
+| I     | 0.05       | SSP suits | 
+| IIA   | 0.1        | Stalker Suits | 
 | II    | 0.15       | PS5 suits, heavier stalker suits |
 | III   | 0.2        | Berill-5M |
 | IV    | 0.25       | SKAT-9 |
