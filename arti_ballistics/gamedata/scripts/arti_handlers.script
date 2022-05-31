@@ -97,16 +97,17 @@ function prework(npc, s_hit, ctx)
     precalc.ammo_data = get_ammo_data(ctx.hit_data.ammo)
     precalc.bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or mutant_prot_values(npc, ctx.bone_id)
 
-    precalc.armor_tier = clamp(math_floor(precalc.bone_data.armor * 20), 0, 7)
-
-    precalc.ap = {}
-    local ap_rounded = precalc.ammo_data.k_ap * 20
-    precalc.ap.ap_tier = math_floor(ap_rounded)
-    local ap_frac = math.fmod(ap_rounded,1)
-    if ap_frac > 0.9 then ap_frac = 1 end
-    precalc.ap.ap_frac = ap_frac
-
     return precalc
+end
+
+function get_tier(val)
+    return clamp(math_floor(val * 20), 0, 7)
+end
+
+function get_frac(val)
+    frac = math.fmod(val * 20, 1)
+    if frac > 0.9 then frac = 1 end
+    return frac
 end
 
 function apply_std_calcs(npc, s_hit, ammo_data, bone_data)
@@ -118,6 +119,7 @@ end
 function process_hp(ammo, ap, armor, is_npc)
     local hp_mult = ini_ammo:r_float_ex(ammo, "k_hp") 
     if not hp_mult then return 1 end
+    -- mutants get partial hp expansion
     if not is_npc then
         ap = ap * 2
         armor = clamp(armor - 0.25, 0, 1)
@@ -138,13 +140,16 @@ function npc_standard(base_hp, ammo, precalc)
     bone_data = precalc.bone_data
     print_dbg("Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
     
-    ap = precalc.ap
-    local diff = ap.ap_tier - precalc.armor_tier
+    local armor_tier = get_tier(precalc.bone_data.armor)
+    local ap_tier = get_tier(precalc.ammo_data.k_ap)
+    local ap_frac = get_frac(precalc.ammo_data.k_ap)
+
+    local diff = ap_tier - armor_tier
     -- ensure hp rounds dont overpen
     local hp_mult = ini_ammo:r_float_ex(ammo, "k_hp") or 1
     if hp_mult > 1 then diff = clamp(diff, -7, 3) end
-    printf("Difference of %s, AP fraction of %s", diff, ap.ap_frac)
-    return damage_subcalcs[diff](base_hp, math_abs(diff), ap.ap_frac, ammo_data.k_pen)
+    printf("Difference of %s, AP fraction of %s", diff, ap_frac)
+    return damage_subcalcs[diff](base_hp, math_abs(diff), ap_frac, ammo_data.k_pen)
 end
 
 function mutant_standard(base_hp, ammo, precalc)
@@ -161,18 +166,22 @@ function mutant_standard(base_hp, ammo, precalc)
 end
 
 -- flinch applies up to 3 levels above the tier
-function process_flinch(npc, hit_data, ap_tier, armor_tier)
-    if not ini_ammo:r_bool_ex(hit_data.ammo, "flinch") then return end
+function process_flinch(npc, ammo, ap_tier, armor_tier, bypass)
+    if not ini_ammo:r_bool_ex(ammo, "flinch") then return end
     local flinch_adj = (ap_tier - armor_tier) * 0.3
-    local flinch_chance = clamp(0.9 - flinch_adj, 0, 1)
+    local flinch_chance =  clamp(0.9 - flinch_adj, 0, 1)
     print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
     if flinch_chance > 0 and math_random() < flinch_chance then
         print_dbg("Staggering NPC")
-        if npc:movement_type() == move.walk or npc:movement_type() == move.run then
-            npc:set_movement_type(move.stand)
-        end
-        npc:play_cycle(anims[math_random(#anims)], true)
+        play_anim(npc)
     end
+end
+
+function play_anim(npc)
+    if npc:movement_type() == move.walk or npc:movement_type() == move.run then
+        npc:set_movement_type(move.stand)
+    end
+    npc:play_cycle(anims[math_random(#anims)], true)
 end
 
 -- refer to ballistics_mcm.txt for logic details
@@ -182,7 +191,6 @@ function ballistic_handlers.default(npc, s_hit, ctx)
 
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
-    ap = precalc.ap
     
     local base_hp = precalc.base_power
     -- these work for mutant or man
@@ -193,7 +201,7 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     else
         -- tier based formula with overpen, and flinch
         base_hp = npc_standard(base_hp, ctx.hit_data.ammo, precalc)
-        process_flinch(npc, ctx.hit_data, ap.ap_tier, precalc.armor_tier)
+        process_flinch(npc, ctx.hit_data, get_tier(ammo_data.k_ap), get_data(bone_data.armor))
     end
 
     base_hp = base_hp * process_hp(ctx.hit_data.ammo, ammo_data.k_ap, bone_data.armor, ctx.is_npc)
@@ -244,8 +252,10 @@ function buckshot_damage(npc, s_hit, ctx)
         s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     else
         local precalc = prework(npc, s_hit, ctx)
+        bone_data = precalc.bone_data
+        ammo_data = precalc.ammo_data
         -- reduce armor
-        precalc.ap.ap_tier = clamp(ap.ap_tier - 4, 0, 7)
+        bone_data.armor = clamp(bone_data.armor - 0.2, 0, 1)
         
         local base_hp = precalc.base_power
     
@@ -258,27 +268,51 @@ function buckshot_damage(npc, s_hit, ctx)
     return s_hit
 end
 
--- jfp headshots
-function headshot(npc, s_hit, ctx)
+-- slugs ignore up to 20 armor on headshot
+function slug(npc, s_hit, ctx)
     if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx) end
 
     local precalc = prework(npc, s_hit, ctx)
     ammo_data = precalc.ammo_data
-    bone_data = precalc.bone_data_data
+    bone_data = precalc.bone_data
     local base_hp = precalc.base_power
 
     base_hp = base_hp * apply_std_calcs(npc, s_hit, ammo_data, bone_data)
 
     -- ignore armor on headshot
     if head_bones[ctx.bone_id] then
-        base_hp = full(base_hp, math_abs(diff), ap.ap_frac, ammo_data.k_pen)
-    else
-        base_hp = npc_standard(base_hp, ctx.hit_data.ammo, precalc)
+        print_dbg("Stunning on headshot")
+        bone_data.armor = clamp(bone_data.armor - 0.05, 0, 1)
+        play_anim(npc)
     end
+
+    base_hp = npc_standard(base_hp, ctx.hit_data.ammo, precalc)
+
+    print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, precalc.base_power, base_hp)
+    s_hit.power = base_hp
+    return s_hit
+end
+-- jfp headshots
+function headshot(npc, s_hit, ctx)
+    if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx) end
+
+    local precalc = prework(npc, s_hit, ctx)
+    ammo_data = precalc.ammo_data
+    bone_data = precalc.bone_data
+    local base_hp = precalc.base_power
+
+    base_hp = base_hp * apply_std_calcs(npc, s_hit, ammo_data, bone_data)
+
+    -- ignore armor on headshot
+    if head_bones[ctx.bone_id] then
+        print_dbg("Ignoring armor on headshot")
+        bone_data.armor = clamp(ammo_data.k_ap - 0.05, 0, 1)
+    end
+    base_hp = npc_standard(base_hp, ctx.hit_data.ammo, precalc)
 
     base_hp = base_hp * process_hp(ctx.hit_data.ammo, ammo_data.k_ap, bone_data.armor, ctx.is_npc)
 
-    print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, base_power, base_hp)
+    print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, precalc.base_power, base_hp)
     s_hit.power = base_hp
     return s_hit
 end
@@ -349,7 +383,6 @@ function chaos_damage(npc, s_hit, ctx)
     local precalc = prework(npc, s_hit, ctx)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
-    ap = precalc.ap
 
     local base_hp = precalc.base_power
 
@@ -357,27 +390,17 @@ function chaos_damage(npc, s_hit, ctx)
     base_hp = base_hp * apply_std_calcs(npc, s_hit, ammo_data, bone_data)
     
     -- ap +/- 2 tiers randomly
-    local diff = ap.ap_tier - precalc.armor_tier + (math_random(5) - 3)
-    local hp_mult = ini_ammo:r_float_ex(ctx.hit_data.ammo, "k_hp") or 1
-    print_dbg("Interim hit power %s", base_hp)
+    ammo_data.k_ap = clamp(ammo_data.k_ap + math_random()/9, 0, 1)
     if not ctx.is_npc then
-        -- use existing formula, double base ap
-        local ap_val = ammo_data.k_ap * 2 * (0.6 + math_random())
-        if ap_val > bone_data.armor then
-            local mod = clamp((ap_val - bone_data.armor)/ap_val, bone_data.hit_fraction, 1)
-            base_hp = base_hp * mod
-        else
-            base_hp = base_hp * bone_data.hit_fraction
-        end
+        base_hp = mutant_standard(base_hp, ctx.hit_data.ammo, precalc)
     else
         -- tier based formula with overpen, and flinch
-        printf("Difference of %s, AP fraction of %s", diff, ap.ap_frac)
-        base_hp = damage_subcalcs[diff](base_hp, math_abs(diff), ap.ap_frac, ammo_data.k_pen)
-        
+        base_hp = npc_standard(base_hp, ctx.hit_data.ammo, precalc)
     end
 
+    base_hp = base_hp * (0.6 + math_random())
+    print_dbg("Chaos AP %s, final hit %s", ammo_data.k_ap, base_hp)
     s_hit.power = base_hp
-    s_hit.power = s_hit.power * (0.6 + math_random())
     play_particle(npc, ctx.bone_id, "artefact\\artefact_gravi")
     return s_hit
 end
@@ -385,26 +408,25 @@ end
 local effect = particles_object("artefact\\effects\\af_electra_show_flash_00")
 -- for shock anti armor
 function shock_damage(npc, s_hit, ctx)
-    play_particle(npc, ctx.bone_id, "amik\\anomaly\\electra\\electra_dust_distort")
     if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx)
     end
     local precalc = prework(npc, s_hit, ctx)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
-    ap = precalc.ap
     
     local base_hp = precalc.base_power
 
+    local armor_tier = get_tier(bone_data.armor)
     base_hp = base_hp * apply_std_calcs(npc, s_hit, ammo_data, bone_data)
-    base_hp = base_hp + (precalc.base_power * precalc.armor_tier * 0.15)
-    
-    if precalc.armor_tier > 3 then
+    base_hp = base_hp + (precalc.base_power * armor_tier * 0.1)
+    if armor_tier > 3 then
+        play_particle(npc, ctx.bone_id, "amik\\anomaly\\electra\\electra_dust_distort")
         local h = hit()
         h.type = hit.shock
         h.draftsman = db.actor
-        h.power = precalc.armor_tier * 0.3
+        h.power = armor_tier * 0.3
         h.bone = "bip01_spine"
-        radius = precalc.armor_tier / 2
+        radius = armor_tier / 2
 
         level.iterate_nearest(npc:position(), radius, function(obj)
             if obj and obj:alive() and obj:id() ~= AC_ID then

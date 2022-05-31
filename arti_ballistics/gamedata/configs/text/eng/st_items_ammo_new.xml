@@ -52,6 +52,9 @@
 	<string id="st_ballistics_hp">
 		<text>expansion damage on full penetration</text>
 	</string>
+	<string id="st_ballistics_slug">
+		<text>headshots stun, ignore some armor</text>
+	</string>
 	<string id="st_ballistics_rip">
 		<text>extreme expansion damage</text>
 	</string>
@@ -381,13 +384,13 @@
 	</string>
 
 	<string id="ammo_new_12x70_zhekan">
-		<text>12x76 slug shells</text>
+		<text>12x76 Slug shells</text>
 	</string>
 	<string id="ammo_new_12x70_zhekan_descr">
 		<text>This heavy 12 gauge slug round is normally used for hunting big game, but is also good for hunting men on a budget. Instead of piercing, this hefty slug is capable of crushing armor like a mace. Sheer concussive force makes this type of round extremely good at stopping people in their tracks.</text>
 	</string>
 	<string id="ammo_new_12x70_zhekan_s">
-		<text>12x76 slug</text>
+		<text>12x76 Slug</text>
 	</string>
 	<string id="ammo_new_12x70_dart">
 		<text>12x76 AP Dart shells</text>

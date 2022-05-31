@@ -236,7 +236,9 @@ function modify_distance(shooter, npc, ammo)
 	local dist = npc_pos:distance_to(shooter_pos)
     local air_res = SYS_GetParam(2, ammo, "k_air_resistance") or 0.05
     air_res = clamp(air_res, 0, 1.1)
-    return clamp(  1 / ( 1 + (dist / 600) * air_res / ( 1.3 - air_res)), 0.02, 1)
+    local mod = clamp( 1 / ( 1 + (dist / 600) * air_res / ( 1.3 - air_res)), 0.02, 1)
+    print_dbg("applying distance modifier %s", mod)
+    return mod
 end
 
 -- One way to modify damage based on velocity. 20% of bonus velocity (e.g. taken from flatness upgrades) is added as hit damage.
