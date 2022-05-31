@@ -201,9 +201,9 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     else
         -- tier based formula with overpen, and flinch
         base_hp = npc_standard(base_hp, ctx.hit_data.ammo, precalc)
-        process_flinch(npc, ctx.hit_data, get_tier(ammo_data.k_ap), get_data(bone_data.armor))
+        process_flinch(npc, ctx.hit_data.ammo, get_tier(ammo_data.k_ap), get_tier(bone_data.armor))
     end
-
+    print_dbg("Interim hit power %s", base_hp)
     base_hp = base_hp * process_hp(ctx.hit_data.ammo, ammo_data.k_ap, bone_data.armor, ctx.is_npc)
 
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, precalc.base_power, base_hp)
