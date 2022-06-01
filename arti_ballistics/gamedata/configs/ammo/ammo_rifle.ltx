@@ -2,7 +2,7 @@
 name		= ammo_new_5.45x39_fmj
 k_hit		= 1
 k_ap		= 0.175
-impair      = 1.1
+impair      = 1.05
 cost        = 1250
 
 [ammo_5.45x39_fmj_bad]:ammo_5.45x39_fmj ; 7N6M
@@ -11,7 +11,7 @@ k_hit		= 1.05
 k_ap		= 0.195
 cost        = 1650
 dg_ammo     = ammo_5.45x39_fmj
-dg_chance   = 0.6
+dg_chance   = 0.4
 
 
 [ammo_5.45x39_ep]:ammo_base ; hunting HP
@@ -27,12 +27,13 @@ cost        = 1550
 name		= ammo_new_5.45x39_sp
 k_hit		= 1.05
 k_ap		= 0.15
+k_hp        = 1.1
 flinch      = true
 impair      = 1.05
 special     = flinch
 cost        = 1750
 dg_ammo     = ammo_5.45x39_ep
-dg_chance   = 0.6
+dg_chance   = 0.4
 
 
 [ammo_5.45x39_ap]:ammo_base ; 7N10 AP
@@ -55,17 +56,17 @@ dg_chance   = 0.6
 
 [ammo_5.56x45_fmj]:ammo_base ; M193
 name		= ammo_new_5.56x45_fmj
-k_hit		= 1.2
+k_hit		= 1
 k_ap		= 0.155
 cost        = 1500
 
 [ammo_5.56x45_fmj_bad]:ammo_5.56x45_fmj ; MK318
 name		= ammo_new_5.56x45_fmjs
-k_hit		= 1.2
-k_ap		= 0.175
+k_hit		= 1.05
+k_ap		= 0.205
 cost        = 2000
 dg_ammo     = ammo_5.56x45_fmj
-dg_chance   = 0.6
+dg_chance   = 0.5
 
 [ammo_5.56x45_ss190]:ammo_base ; civ hunting
 name		= ammo_new_5.56x45_hp
@@ -85,7 +86,7 @@ impair      = 1.1
 cost        = 1900
 special     = varma
 dg_ammo     = ammo_5.56x45_ss190
-dg_chance   = 0.6
+dg_chance   = 0.5
 
 
 [ammo_5.56x45_ap]:ammo_base ; M855
@@ -118,7 +119,7 @@ k_ap		= 0.205
 cost		= 1730
 impair      = 0.9
 dg_ammo     = ammo_7.62x39_fmj
-dg_chance   = 0.6
+dg_chance   = 0.4
 
 [ammo_7.62x39_ap]:ammo_base ; AP
 name		= ammo_new_7.62x39_ap
@@ -152,7 +153,7 @@ k_hit		= 1.05
 k_ap		= 0.265
 cost		= 3400
 dg_ammo     = ammo_9x39_pab9
-dg_chance   = 0.6
+dg_chance   = 0.5
 
 [ammo_9x39_ap]:ammo_base ; PAB9, severe dura loss
 name		= ammo_new_9x39_pab9

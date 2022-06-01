@@ -32,8 +32,8 @@ snd_on_take								 = ammo
 
 
 
-;;---------------------PISTOL ammo_new----------------------
-[ammo_9x18_fmj]:ammo_base ; +P+ FMJ
+;;---------------------PISTOL AMMO----------------------
+[ammo_9x18_fmj]:ammo_base ; Pst
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x18_fmj" ; option for Level Editor
@@ -59,9 +59,7 @@ k_ap			= 0.15
 tracer_color_ID	= 1
 wm_size			= 0.042
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_9x18_fmj_bad]:ammo_9x18_fmj ; PST
+[ammo_9x18_fmj_bad]:ammo_9x18_fmj ; +P+ FMJ
 
 inv_weight		= .16
 
@@ -78,11 +76,9 @@ k_ap			= 0.14
 tracer_color_ID	= 1
 wm_size			= 0.042
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_9x18_pmm]:ammo_base ; SP-7
+[ammo_9x18_pmm]:ammo_base ; HP
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x18_pmm" ; option for Level Editor
@@ -99,7 +95,7 @@ inv_grid_x			= 55
 inv_grid_y			= 1
 inv_name_short		                     = ammo_new_9x18_hp_s
 
-k_disp			= 0.5
+k_disp			= 0.7
 k_impulse		= 0.7
 k_bullet_speed	= 1
 k_ap			= 0.15
@@ -109,15 +105,13 @@ wm_size         = 0.062
 k_air_resistance = 0.8
 k_cam_dispersion = 1.0 ;  1.1
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_9x18_pmm_bad]:ammo_9x18_pmm ; HP
+[ammo_9x18_pmm_bad]:ammo_9x18_pmm ; SP-7
 
 inv_grid_x			= 56
 inv_grid_y			= 1
 inv_name_short		                     = ammo_new_9x18_sp7_s
 
-k_disp			= 0.7
+k_disp			= 0.6
 k_impulse		= 0.66
 k_air_resistance = 0.8
 k_bullet_speed	= 1.2
@@ -129,7 +123,7 @@ k_cam_dispersion = 1.0 ;  1.1
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_9x18_ap]:ammo_base ; 7N25
+[ammo_9x18_ap]:ammo_base ; RGO
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x18_fmj" ; option for Level Editor
@@ -154,9 +148,7 @@ k_ap			= 0.2
 tracer_color_ID	= 1
 wm_size			= 0.028
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_9x18_ap_bad]:ammo_9x18_ap ; RGO
+[ammo_9x18_ap_bad]:ammo_9x18_ap ; 7N25
 inv_grid_x         = 56
 inv_grid_y         = 2
 inv_name_short		                     = ammo_new_9x18_7n25
@@ -173,7 +165,7 @@ wm_size			= 0.028
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_9x19_fmj]:ammo_base ; +P
+[ammo_9x19_fmj]:ammo_base ; FMJ
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x19_fmj" ; option for Level Editor
@@ -198,9 +190,7 @@ k_ap			= 0.15
 tracer_color_ID	= 2
 wm_size         = 0.048
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_9x19_fmj_bad]:ammo_9x19_fmj ; plain jane fmj
+[ammo_9x19_fmj_bad]:ammo_9x19_fmj ; +P+
 inv_grid_x			= 56
 inv_grid_y			= 3
 inv_name_short		                     = ammo_new_9x19_plus_s
@@ -216,10 +206,7 @@ wm_size         = 0.048
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_9x19_pbp]:ammo_base ; JSP
+[ammo_9x19_pbp]:ammo_base ; JHP
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x19_pbp" ; option for Level Editor
@@ -246,9 +233,8 @@ tracer_color_ID	= 2
 wm_size         = 0.068
 k_cam_dispersion = 1.0 ;  1.1
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_9x19_pbp_bad]:ammo_9x19_pbp ; JHP
+[ammo_9x19_pbp_bad]:ammo_9x19_pbp ; JSP +P
 inv_grid_x		= 56
 inv_grid_y		= 4
 inv_name_short		                     = ammo_new_9x19_pbps_s
@@ -263,6 +249,7 @@ tracer_color_ID	= 2
 wm_size         = 0.068
 k_cam_dispersion = 1.0 ;  1.1
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_9x19_ap]:ammo_base ; 7N21
 GroupControlSection	= spawn_group
@@ -284,7 +271,7 @@ inv_name_short		                     = ammo_new_9x19_ap_s
 k_disp			= 0.75
 k_impulse		= 0.36
 k_air_resistance = 0.7
-k_bullet_speed	= 1.3
+k_bullet_speed	= 1.2
 k_ap			= 0.3
 
 tracer_color_ID	= 1
@@ -292,8 +279,6 @@ wm_size         = 0.033
 k_cam_dispersion = 1.0 ;  1.1
 
 tier                                     = 2
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_9x19_ap_bad]:ammo_9x19_ap
 inv_grid_x         = 56
@@ -303,7 +288,7 @@ inv_name_short		                     = ammo_new_9x19_7n31_s
 k_disp			= 0.75
 k_impulse		= 0.36
 k_air_resistance = 0.75
-k_bullet_speed	= 1.2
+k_bullet_speed	= 1.3
 k_ap			= 0.28
 
 
@@ -313,7 +298,7 @@ k_cam_dispersion = 1.0 ;  1.1
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_5.7x28_ss190]:ammo_base
+[ammo_5.7x28_ss190]:ammo_base ; civ fmj
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x19_fmj" ; option for Level Editor
@@ -342,9 +327,7 @@ wm_size         = 0.017
 
 tier                                     = 2
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_5.7x28_ss190_bad]:ammo_5.7x28_ss190
+[ammo_5.7x28_ss190_bad]:ammo_5.7x28_ss190 ; ss190 ap
 
 inv_grid_x			= 57
 inv_grid_y			= 7
@@ -361,9 +344,8 @@ wm_size         = 0.017
 tier                                     = 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_5.7x28_ss195]:ammo_base
+[ammo_5.7x28_ss195]:ammo_base ; hp
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x19_fmj" ; option for Level Editor
@@ -392,9 +374,7 @@ wm_size         = 0.019
 
 tier                                     = 2
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_5.7x28_ss195_bad]:ammo_5.7x28_ss195
+[ammo_5.7x28_ss195_bad]:ammo_5.7x28_ss195 ; chaos
 inv_grid_x         = 57
 inv_grid_y         = 6
 inv_name_short		                     = ammo_new_5.7x28_chaos_s
@@ -411,7 +391,7 @@ tier                                     = 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_7.62x25_p]:ammo_base ;pst
+[ammo_7.62x25_p]:ammo_base ;p
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x19_fmj" ; option for Level Editor
@@ -439,9 +419,7 @@ wm_size        	= 0.033
 
 tier                                     = 3
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_7.62x25_p_bad]:ammo_7.62x25_p ; p
+[ammo_7.62x25_p_bad]:ammo_7.62x25_p ; pst
 
 inv_grid_x		= 56
 inv_grid_y		= 8
@@ -450,16 +428,16 @@ inv_name_short		                     = ammo_new_7.62x25_ps_s
 k_disp			= 0.66
 k_impulse		= 0.7
 k_ap			= 0.14
+k_air_resistance = 0.8
 
 tracer_color_ID	= 1
 wm_size        	= 0.033
-k_air_resistance = 0.8
 
 tier                                     = 3
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  
-[ammo_7.62x25_ps]:ammo_base ; acid
+[ammo_7.62x25_ps]:ammo_base ; hp
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x19_pbp" ; option for Level Editor
@@ -486,9 +464,7 @@ wm_size        	= 0.036
 
 tier                                     = 3
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_7.62x25_ps_bad]:ammo_7.62x25_ps ; hp
+[ammo_7.62x25_ps_bad]:ammo_7.62x25_ps ; acid
 
 inv_grid_width	= 1
 inv_grid_height	= 1
@@ -508,7 +484,7 @@ tier                                     = 3
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_11.43x23_fmj]:ammo_base ; +P
+[ammo_11.43x23_fmj]:ammo_base
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_11.43x23_fmj" ; option for Level Editor
@@ -538,7 +514,7 @@ wm_size         = 0.072
 tier                                     = 2
 
 
-[ammo_11.43x23_fmj_bad]:ammo_11.43x23_fmj
+[ammo_11.43x23_fmj_bad]:ammo_11.43x23_fmj ; +P
 
 inv_grid_width	= 2
 inv_grid_height	= 1
@@ -546,10 +522,11 @@ inv_grid_x		= 57
 inv_grid_y		= 11
 inv_name_short		                     = ammo_new_11.43x23_fmjs_s
 
-k_disp			= 0.7
+k_disp			= 0.66
 k_impulse		= 0.50
 k_air_resistance = 0.8
 k_ap			= 0.09
+k_bullet_speed	= 1.2
 
 tracer_color_ID	= 2
 wm_size         = 0.072
@@ -557,7 +534,7 @@ wm_size         = 0.072
 tier                                     = 2
 
 
-[ammo_11.43x23_hydro]:ammo_base ; hydra
+[ammo_11.43x23_hydro]:ammo_base ; hp
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_11.43x23_hydro" ; option for Level Editor
@@ -584,14 +561,11 @@ k_ap			= 0.2
 tracer_color_ID	= 2
 wm_size         = 0.088
 k_air_resistance = 0.8
-k_bullet_speed	= 1.25
 k_cam_dispersion = 1.0 ;  1.1
 
 tier                                     = 2
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_11.43x23_hydro_bad]:ammo_11.43x23_hydro ;hp
+[ammo_11.43x23_hydro_bad]:ammo_11.43x23_hydro ;rip
 
 inv_grid_width		= 2
 inv_grid_height		= 1
@@ -600,21 +574,21 @@ inv_grid_y			= 12
 inv_name_short		                     = ammo_new_11.43x23_hydro_s
 
 k_disp			= 0.7
- ;  1.19
 k_impulse		= 0.68
 k_ap			= 0.18
+k_bullet_speed	= 1.2
 
 
 tracer_color_ID	= 2
 wm_size         = 0.088
 k_air_resistance = 0.8
-k_bullet_speed	= 1.2
 k_cam_dispersion = 1.0 ;  1.1
 
 tier                                     = 2
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_357_hp_mag]:identity_immunities,default_weapon_params,ammo_base ; JFP
+[ammo_357_hp_mag]:identity_immunities,default_weapon_params,ammo_base ; HP
 GroupControlSection	= spawn_group
 discovery_dependency = 
 $spawn			= "weapons\wpn_ammo\ammo_357_hp_mag" ; option for Level Editor
@@ -633,7 +607,7 @@ inv_grid_x         = 55
 inv_grid_y         = 37
 inv_name_short		                     = ammo_new_357_hp_s
 
-k_disp			= 0.4
+k_disp			= 0.5
 k_impulse		= 0.75
 k_ap			= 0.25
 k_air_resistance = 0.8
@@ -642,9 +616,7 @@ wm_size        	= 0.048
 
 tier                                     = 1
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_357_hp_mag_bad]:ammo_357_hp_mag
+[ammo_357_hp_mag_bad]:ammo_357_hp_mag ; JFP
 
 inv_grid_width     = 2
 inv_grid_height    = 1
@@ -652,7 +624,7 @@ inv_grid_x         = 57
 inv_grid_y         = 37
 inv_name_short		                     = ammo_new_357_jfp_s
 
-k_disp			= 0.5
+k_disp			= 0.4
 k_impulse		= 0.72
 k_ap			= 0.23
 k_bullet_speed  = 1.1
@@ -665,7 +637,7 @@ tier                                     = 1
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_5.45x39_fmj]:ammo_base ; 7N6M
+[ammo_5.45x39_fmj]:ammo_base ; 7N6
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_5.45x39_fmj" ; option for Level Editor
@@ -694,16 +666,14 @@ wm_size         = 0.034
 
 tier                                     = 2
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_5.45x39_fmj_bad]:ammo_5.45x39_fmj
+[ammo_5.45x39_fmj_bad]:ammo_5.45x39_fmj ; 7N6M
 inv_grid_width		= 2
 inv_grid_height		= 1
 inv_grid_x			= 57
 inv_grid_y			= 14
 inv_name_short		                     = ammo_new_5.45x39_fmjs_s
 
-k_disp			= 0.66
+k_disp			= 0.6
 k_impulse		= 0.58
 k_ap			= 0.38
 
@@ -716,7 +686,7 @@ tier                                     = 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_5.45x39_ep]:ammo_base ; JSP
+[ammo_5.45x39_ep]:ammo_base ; HP
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_5.45x39_fmj" ; option for Level Editor
@@ -745,19 +715,18 @@ k_air_resistance = 0.25
 
 tier                                     = 2
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_5.45x39_ep_bad]:ammo_5.45x39_ep ; HP
+[ammo_5.45x39_ep_bad]:ammo_5.45x39_ep ; JSP
 inv_grid_width		= 2
 inv_grid_height		= 1
 inv_grid_x			= 63
 inv_grid_y			= 14
 inv_name_short		                     = ammo_new_5.45x39_sp_s
 
-k_disp			= 0.7
+k_disp			= 0.6
 k_impulse		= 0.42
 k_ap			= 0.48
 k_air_resistance = 0.25
+k_bullet_speed	= 1.05
 
 
 tracer_color_ID	= 1
@@ -767,10 +736,7 @@ tier                                     = 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_5.45x39_ap]:ammo_base ; 7N22
+[ammo_5.45x39_ap]:ammo_base ; 7N10
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_5.45x39_ap" ; option for Level Editor
@@ -799,9 +765,7 @@ k_air_resistance = 0.25
 
 tier                                     = 3
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_5.45x39_ap_bad]:ammo_5.45x39_ap
+[ammo_5.45x39_ap_bad]:ammo_5.45x39_ap ; 7N22
 inv_grid_width		= 2
 inv_grid_height		= 1
 inv_grid_x			= 57
@@ -839,7 +803,7 @@ inv_grid_x			= 55
 inv_grid_y			= 16
 inv_name_short		                     = ammo_new_5.56x45_fmj_s
 
-k_disp			= 0.4
+k_disp			= 0.66
 k_impulse		= 0.58
 k_ap			= 0.33
 
@@ -848,8 +812,6 @@ wm_size         = 0.058
 k_air_resistance = 0.25
 
 tier                                     = 3
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_5.56x45_fmj_bad]:ammo_5.56x45_fmj
 
@@ -861,7 +823,7 @@ inv_grid_x			= 57
 inv_grid_y			= 16
 inv_name_short		                     = ammo_new_5.56x45_fmjs_s
 
-k_disp			= 0.6
+k_disp			= 0.4
 k_impulse		= 0.56
 k_ap			= 0.31
 k_bullet_speed	= 1.05
@@ -875,10 +837,7 @@ tier                                     = 3
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_5.56x45_ss190]:ammo_base ; M855
+[ammo_5.56x45_ss190]:ammo_base ; HP
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_5.56x45_ss190" ; option for Level Editor
@@ -907,9 +866,7 @@ wm_size         = 0.058
 
 tier                                     = 3
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_5.56x45_ss190_bad]:ammo_5.56x45_ss190
+[ammo_5.56x45_ss190_bad]:ammo_5.56x45_ss190 ; Varmageddon
 
 inv_grid_width		= 2
 inv_grid_height		= 1
@@ -917,7 +874,7 @@ inv_grid_x			= 63
 inv_grid_y			= 17
 inv_name_short		                     = ammo_new_5.56x45_varma_s
 
-k_disp			= 0.7
+k_disp			= 0.66
 k_ap			= 0.38
 k_impulse		= 0.56
 k_air_resistance = 0.25
@@ -928,9 +885,6 @@ wm_size         = 0.058
 
 tier                                     = 3
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_5.56x45_ap]:ammo_base ; M855A1
@@ -963,7 +917,6 @@ k_cam_dispersion = 1.0 ;  1.05
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_5.56x45_ap_bad]:ammo_5.56x45_ap
 
@@ -973,7 +926,7 @@ inv_grid_x			= 57
 inv_grid_y			= 17
 inv_name_short		                     = ammo_new_5.56x45_ap_s
 
-k_disp			= 0.75
+k_disp			= 0.7
 k_ap			= 0.53
 k_impulse		= 0.52
 k_air_resistance = 0.25
@@ -985,6 +938,7 @@ k_cam_dispersion = 1.0 ;  1.05
 
 tier                                     = 3
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_7.62x39_fmj]:ammo_base ; 57-N-231
 GroupControlSection	= spawn_group
@@ -1014,16 +968,14 @@ wm_size         = 0.062
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_7.62x39_fmj_bad]:ammo_7.62x39_fmj
+[ammo_7.62x39_fmj_bad]:ammo_7.62x39_fmj ; M67
 inv_grid_width     = 2
 inv_grid_height    = 1
 inv_grid_x         = 57
 inv_grid_y         = 25
 inv_name_short		                     = ammo_new_7.62x39_fmjs_s
 
-k_disp			= 0.7
+k_disp			= 0.6
 k_ap		    = 0.43
 k_impulse		= 0.62
 k_air_resistance = 0.25
@@ -1034,9 +986,6 @@ wm_size         = 0.062
 
 tier                                     = 3
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_7.62x39_ap]:ammo_base
@@ -1069,8 +1018,6 @@ wm_size         = 0.054
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 [ammo_7.62x39_ap_bad]:ammo_7.62x39_ap
 
 inv_grid_width     = 2
@@ -1079,7 +1026,7 @@ inv_grid_x         = 57
 inv_grid_y         = 26
 inv_name_short		                     = ammo_new_7.62x39_api_s
 
-k_disp			= 0.8
+k_disp			= 0.85
 k_air_resistance = 0.25
 k_impulse		= 0.56
 k_ap		    = 0.54
@@ -1092,7 +1039,7 @@ tier                                     = 3
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_9x39_pab9]:ammo_base ; SP-5
+[ammo_9x39_pab9]:ammo_base ; SPP
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x39_pab9" ; option for Level Editor
@@ -1111,7 +1058,7 @@ inv_grid_x		= 55
 inv_grid_y		= 20
 inv_name_short		                     = ammo_new_9x39_sp5_s
 
-k_disp			= 0.45
+k_disp			= 0.5
 k_impulse		= 0.55
 k_ap			= 0.35
 k_air_resistance = 0.13
@@ -1121,15 +1068,13 @@ wm_size         = 0.048
 
 tier                                     = 3
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_9x39_pab9_bad]:ammo_9x39_pab9
+[ammo_9x39_pab9_bad]:ammo_9x39_pab9 ; SP-5
 
 inv_grid_x		= 57
 inv_grid_y		= 20
 inv_name_short		                     = ammo_new_9x39_spp_s
 
-k_disp			= 0.5
+k_disp			= 0.44
 k_ap			= 0.33
 k_impulse		= 0.53
 k_air_resistance = 0.15
@@ -1142,10 +1087,7 @@ tier                                     = 3
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_9x39_ap]:ammo_base ; SP-6
+[ammo_9x39_ap]:ammo_base ; PAB-9
 GroupControlSection	= spawn_group
 discovery_dependency =
 $spawn			= "weapons\ammo\ammo_9x39_ap" ; option for Level Editor
@@ -1174,9 +1116,7 @@ wm_size         = 0.042
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_9x39_ap_bad]:ammo_9x39_ap
+[ammo_9x39_ap_bad]:ammo_9x39_ap ; SP-6
 
 inv_grid_width		= 2
 inv_grid_height		= 1
@@ -1230,9 +1170,7 @@ wm_size         = 0.022
 
 tier                                     = 2
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_12x70_buck_bad]:ammo_12x70_buck
+[ammo_12x70_buck_bad]:ammo_12x70_buck ; Magnum
 
 box_size		= 10
 cost = 2
@@ -1258,10 +1196,6 @@ wm_size         = 0.022
 
 tier                                     = 2
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_12x76_zhekan]:ammo_base
@@ -1414,13 +1348,6 @@ wm_size         = 0.06
 explosive		= off
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_7.92x33_fmj]:ammo_base ; 7.92x57 German with mild steel
 GroupControlSection	= spawn_group
@@ -1450,9 +1377,7 @@ k_air_resistance = 0.25
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_7.92x33_fmj_bad]:ammo_7.92x33_fmj
+[ammo_7.92x33_fmj_bad]:ammo_7.92x33_fmj ; match
 
 inv_grid_width     = 2
 inv_grid_height    = 1
@@ -1460,7 +1385,8 @@ inv_grid_x         = 57
 inv_grid_y         = 27
 inv_name_short		                     = ammo_new_7.92x33_match
 
-k_disp			= 0.68
+k_dist          = 1.2
+k_disp			= 0.5
 k_hit			= 1.0 ;  0.95
 k_impulse		= 0.66
 k_ap		    = 0.43
@@ -1470,10 +1396,6 @@ k_bullet_speed	= 1.1
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_7.92x33_ap]:ammo_base ; 7.92x57 SA AP
@@ -1503,15 +1425,13 @@ k_air_resistance = 0.25
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 [ammo_7.92x33_ap_bad]:ammo_7.92x33_ap
 
 inv_grid_width     = 2
 inv_grid_height    = 1
 inv_grid_x         = 57
 inv_grid_y         = 28
-inv_name_short		                     = ammo_new_7.92x33_ion_s
+inv_name_short		                     = ammo_new_7.92x33_shock_s
 
 k_disp			= 0.9
 k_hit			= 1.0 ;  0.95
@@ -1523,10 +1443,6 @@ k_bullet_speed	= 0.9
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_7.62x51_fmj]:ammo_base ; M80
@@ -1572,6 +1488,7 @@ inv_grid_x         = 57
 inv_grid_y         = 29
 inv_name_short		                     = ammo_new_7.62x51_fmjs_s
 
+k_dist          = 1.5
 k_disp			= 0.3
 k_hit			= 1.0 ;  1.05
 k_impulse		= 0.63
@@ -1613,9 +1530,7 @@ k_air_resistance = 0.1
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-[ammo_7.62x51_ap_bad]:ammo_7.62x51_ap
+[ammo_7.62x51_ap_bad]:ammo_7.62x51_ap ; slap
 box_size		= 15
 cost = 2
 inv_weight		= .38
@@ -1636,9 +1551,6 @@ k_air_resistance = 0.1
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_pkm_100]:ammo_base ; 57-N-323S belt
@@ -1671,8 +1583,6 @@ tracer_color_ID	= 1
 wm_size         = 0.058
 
 tier                                     = 4
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_pkm_100_bad]:ammo_pkm_100
 
@@ -1731,8 +1641,6 @@ wm_size         = 0.064
 
 tier                                     = 4
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 [ammo_7.62x54_7h1_bad]:ammo_7.62x54_7h1
 
 box_size		= 10
@@ -1745,6 +1653,7 @@ inv_grid_x         = 57
 inv_grid_y         = 19
 inv_name_short		                     = ammo_new_7.62x54_7n1_s
 
+k_dist          = 1.2
 k_disp			= 0.5
 k_impulse		= 0.76
 k_air_resistance = 0.04
@@ -1785,8 +1694,6 @@ tracer_color_ID	= 1
 wm_size         = 0.051
 
 tier                                     = 4
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [ammo_7.62x54_ap_bad]:ammo_7.62x54_ap
 
