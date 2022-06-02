@@ -86,7 +86,7 @@ local damage_subcalcs = {
 function tbl_reduce(x)
     local acc = 1
     for k,v in pairs(x) do
-        print_dbg("Applying key %s, val %s", k ,v)
+        -- print_dbg("Applying key %s, val %s", k ,v)
         acc = acc * v
     end
     return acc
@@ -165,7 +165,7 @@ function npc_standard(precalc)
     -- ensure hp rounds dont overpen
     local hp_mult = ini_ammo:r_float_ex(ammo_data.sec, "k_hp") or 1
     if hp_mult > 1 then diff = clamp(diff, -7, 3) end
-    print_dbg("Difference of %s, AP fraction of %s", diff, ap_frac)
+    -- print_dbg("Difference of %s, AP fraction of %s", diff, ap_frac)
     return damage_subcalcs[diff](math_abs(diff), ap_frac, ammo_data.k_pen)
 end
 
@@ -191,9 +191,9 @@ function process_flinch(npc, precalc)
     armor_tier = get_tier(bone_data.armor)
     local flinch_adj = (ap_tier - armor_tier) * 0.3
     local flinch_chance =  clamp(0.9 - flinch_adj, 0, 1)
-    print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
+    -- print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
     if flinch_chance > 0 and math_random() < flinch_chance then
-        print_dbg("Staggering NPC")
+        -- print_dbg("Staggering NPC")
         play_anim(npc)
     end
 end

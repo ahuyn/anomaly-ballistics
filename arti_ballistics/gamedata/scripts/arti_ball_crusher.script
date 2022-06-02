@@ -18,7 +18,7 @@ local bags = {
 	["actor_belt"] = true,
 }
 function try_crush(obj, bag, mode)
-    if obj and bags[bag] and modes[mode] then
+    if obj and bags[bag] and modes[mode] and arti_crusher[obj:section()] then
         return gc("st_crush")
     end
 end
