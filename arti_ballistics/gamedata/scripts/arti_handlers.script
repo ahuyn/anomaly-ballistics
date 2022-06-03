@@ -11,6 +11,7 @@ modify_velocity     = ballistics_utils.modify_velocity
 modify_distance     = ballistics_utils.modify_distance
 get_cur_vel         = ballistics_utils.get_cur_vel
 add_effect          = arti_timed_events.add_effect
+play_sound_on_actor = ballistics_utils.play_sound_on_actor
 math_floor          = math.floor
 math_abs            = math.abs
 math_random         = math.random
@@ -326,10 +327,11 @@ function headshot(npc, s_hit, ctx)
     if head_bones[ctx.bone_id] then
         print_dbg("Ignoring armor on headshot")
         bone_data.armor = clamp(ammo_data.k_ap - 0.05, 0, 1)
+        play_sound_on_actor("headshot", 2)
     end
     calcs.ap_calc = npc_standard(precalc)
 
-    calcs.hollowpoint = process_hp(ctx.hit_data.ammo, ammo_data.k_ap, bone_data.armor, ctx.is_npc)
+    calcs.hollowpoint = process_hp(precalc, ctx.is_npc)
 
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)

@@ -78,6 +78,19 @@ function play_particle(npc, bone_id, name)
     end
 end
 
+function play_sound_on_actor(snd, volume)
+	if not snd then
+		return
+	end
+	local actor = db.actor
+	local snd = xr_sound.get_safe_sound_object(snd)
+	if snd then
+		snd:play(actor, 0, sound_object.s2d)
+		snd.volume = volume or 1
+		return snd
+	end
+end
+
 -- pull the bone_mult from [stalker_damage] section, cache the values to prevent excessive stringsplitting
 local stalker_damage = {}
 function npc_bone_mult(bone_id)
