@@ -127,6 +127,7 @@ function npc_bone_protection(npc, bone_id)
             local bone_armor = str_explode(ini_damage:r_string_ex(bone_sec, bone_name), ",") 
             bone_cache[bone_sec][bone_name] = tonumber(bone_armor[2]) or 0
         end
+        visual_data:close()
         return bone_cache[bone_sec][bone_name], False
     end
 end
@@ -191,20 +192,22 @@ end
 
 -- Utils to handle storing velocity. Before weapon fired, compute and cache velocity modifier
 local cur_wep_data = {}
--- check and update current weapon to cache hit power and velocity
+-- check and update current weapon to cache hit power, velocity and recoil (for recoil module)
 function actor_on_weapon_before_fire(flags)
     local current_wpn = db.actor:active_item()
     if not current_wpn then return end
-    -- print_dbg("Before fire %s", current_wpn:section())
     -- cache
     local id = current_wpn:id()
     local sec = current_wpn:section()
+    print_dbg("Before fire %s", current_wpn:section())
     if not cur_wep_data.id or cur_wep_data.id ~= id then
         if IsWeapon(current_wpn) and not IsItem("fake_ammo_wpn",sec) then
             cur_wep_data.id = current_wpn:id()
             base_vel = SYS_GetParam(2, sec, "bullet_speed")
             base_degrade = SYS_GetParam(2, sec, "condition_shot_dec") or 0
+            base_recoil = SYS_GetParam(2, sec, "cam_step_angle_horz")
             local vel_add = 0
+            local recoil_add = 0
             local upgrades = utils_item.get_upgrades_installed(current_wpn)
             for _, upgrade in pairs(upgrades) do
                 local section = ini_sys:r_string_ex(upgrade, "section")
@@ -222,16 +225,25 @@ function actor_on_weapon_before_fire(flags)
 					local val = tonumber(string.sub(shot_dec, 2))
 					base_degrade = op == "+" and base_degrade + val or base_degrade - val
 				end
+
+                local recoil = ini_sys:r_string_ex(section,"cam_step_angle_horz")
+				if recoil then
+					local op = string.sub(recoil, 1, 1)
+					local val = tonumber(string.sub(recoil, 2))
+					recoil_add = op == "+" and recoil_add + val or recoil_add - val
+				end
             end
             cur_wep_data.vel_mod = vel_add/base_vel
             cur_wep_data.dec = base_degrade
-            -- print_dbg("Stored velocity mod %s, degradation %s for wpn %s", cur_wep_data.vel_mod, base_degrade, sec)
+            cur_wep_data.recoil = (base_recoil + recoil_add)/base_recoil
+            print_dbg("Stored velocity mod %s, recoil %s, degradation %s for wpn %s", cur_wep_data.vel_mod, cur_wep_data.recoil, base_degrade, sec)
         else
             -- clear
             print_dbg("Clearing cwd")
             cur_wep_data.id = 0
             cur_wep_data.vel_mod = 0
             cur_wep_data.dec = 0
+            cur_wep_data.recoil = 1
         end
     end
 end
@@ -241,6 +253,9 @@ function get_cur_vel(id)
     return cur_wep_data.id == id and cur_wep_data.vel_mod or 0
 end
 
+function get_recoil(id)
+    return cur_wep_data.id == id and cur_wep_data.recoil or 1
+end
 
 -- Provide a damage modifier based on distance, adjusted by bullet velocity and flatness
 function modify_distance(shooter, npc, ammo)

@@ -125,6 +125,7 @@ function on_mcm_load()
             {id = "debug", type = "check", val = 1, def=true},
             {id = "cost", type = "check", val = 1, def=true},
             {id = "impair", type = "check", val = 1, def=true},
+            {id = "recoil", type = "check", val = 1, def=true},
         }
     }
     return op

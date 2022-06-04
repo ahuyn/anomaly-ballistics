@@ -38,7 +38,7 @@ jobs:
           cp -r anomaly-demonized-scripts/custom_functor_autoinject/gamedata .
           
       - name: Zip folder
-        run: zip -r $RELEASE_NAME.zip gamedata arti_ballistics jurko_ballistics README.md "Contribution Guide.md" 
+        run: zip -r $RELEASE_NAME.zip gamedata arti_ballistics "recoil module" jurko_ballistics README.md "Contribution Guide.md" 
         env: 
           RELEASE_NAME: ${{ github.event.repository.name }}.${{ steps.date.outputs.today }}
       
