@@ -28,11 +28,13 @@ local anims = {
 -- pulls custom ap and hit power values from code
 function get_ammo_data(ammo_sec)
     if ini_ammo:section_exist(ammo_sec) then
+        local k_hp = ini_ammo:r_float_ex(precalc.ammo_data.sec, "k_hp")
+        pen = k_hp and 0 or 0.5 
         return {
             sec     = ammo_sec,
             k_hit   = ini_ammo:r_float_ex(ammo_sec, "k_hit") or SYS_GetParam(2, ammo_sec, "k_hit") or 1,
             k_ap    = ini_ammo:r_float_ex(ammo_sec, "k_ap") or SYS_GetParam(2, ammo_sec, "k_ap") or 0,
-            k_pen   = ini_ammo:r_float_ex(ammo_sec, "k_pen") or 0,
+            k_pen   = ini_ammo:r_float_ex(ammo_sec, "k_pen") or pen,
         }
     end
 end
@@ -45,7 +47,10 @@ end
 
 -- reduction based on AP frac and diff
 function reduce(diff, ap_frac, pen)
-    local modifier =  1 - (0.3 * (1 + diff - ap_frac))
+    local floor = diff == 0 and 0 or (2 * diff + 1) * 0.15
+    local range = (3 - diff) * 0.15 * (1 - ap_frac)
+
+    local modifier =  1 - (floor + range)
     print_dbg("Reduction of %s", modifier)
     return modifier
 end
@@ -60,7 +65,7 @@ end
 -- default is reducing down to pen 
 -- only matters if diff > 3, or more than 0.2
 function penetrate(diff, ap_frac, pen)
-    adj = pen * (diff - 3)/4
+    adj = clamp((diff - 3)/4, 0.05, pen) 
     print_dbg("Overkill, reduce by %s", adj)
     return 1 - adj
 end
@@ -99,7 +104,7 @@ end
 
 function get_frac(val)
     frac = math.fmod(val * 20, 1)
-    if frac > 0.9 then frac = 1 end
+    if frac > 0.95 then frac = 1 end
     return frac
 end
 
@@ -148,7 +153,7 @@ function process_hp(precalc, is_npc)
         if diff < 0 then hp_mult = 1 + (hp_frac * modifier) end
         return hp_mult
     else
-        if  precalc.ammo_data.k_ap >= precalc.bone_data.armor then return hp_mult end
+        if precalc.ammo_data.k_ap > precalc.bone_data.armor then return hp_mult end
     end
     return 1
 end
@@ -163,9 +168,6 @@ function npc_standard(precalc)
     local ap_frac = get_frac(precalc.ammo_data.k_ap)
 
     local diff = ap_tier - armor_tier
-    -- ensure hp rounds dont overpen
-    local hp_mult = ini_ammo:r_float_ex(ammo_data.sec, "k_hp") or 1
-    if hp_mult > 1 then diff = clamp(diff, -7, 3) end
     -- print_dbg("Difference of %s, AP fraction of %s", diff, ap_frac)
     return damage_subcalcs[diff](math_abs(diff), ap_frac, ammo_data.k_pen)
 end
