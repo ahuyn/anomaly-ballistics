@@ -28,7 +28,7 @@ local anims = {
 -- pulls custom ap and hit power values from code
 function get_ammo_data(ammo_sec)
     if ini_ammo:section_exist(ammo_sec) then
-        local k_hp = ini_ammo:r_float_ex(precalc.ammo_data.sec, "k_hp")
+        local k_hp = ini_ammo:r_float_ex(ammo_sec, "k_hp")
         pen = k_hp and 0 or 0.5 
         return {
             sec     = ammo_sec,

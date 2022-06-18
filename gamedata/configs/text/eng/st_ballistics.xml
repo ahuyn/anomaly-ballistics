@@ -29,4 +29,10 @@
 <string id="ui_mcm_ballistics_recoil_desc">
 	<text>Enables the modular enhanced recoil effects that also factor in ammo and weapon recoil stats.</text>
 </string>
+<string id="ui_mcm_ballistics_rungun">
+	<text>Run and Gun mode</text>
+</string>
+<string id="ui_mcm_ballistics_rungun_desc">
+	<text>Increases ammo drops, slightly reduces outgoing damage and reduces ammo sale cost.</text>
+</string>
 </string_table>

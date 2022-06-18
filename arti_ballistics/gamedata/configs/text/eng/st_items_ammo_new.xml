@@ -364,14 +364,14 @@
 		<text>Standard 12 gauge shell filled with 8mm #00 sized shot. Highly lethal at close range but effectiveness drops quickly. Very common in the Zone. Only suitable for use with smoothbore weapons.</text>
 	</string>
 	<string id="ammo_new_12x70_buck_s">
-		<text>12x70 shot</text>
+		<text>12x70 Buck</text>
 	</string>
 
 	<string id="ammo_new_12x70_magnum">
 		<text>12x70 Magnum Buckshot</text>
 	</string>
 	<string id="ammo_new_12x70_magnum_descr">
-		<text>#00 Buckshot loaded with an increased powder charge. Provides a huge increase in stopping power and slightly better armor penetration at the cost of increased wear on the weapon. Excellent for hunting and the sheer force of the shot can seriously injure even protected limbs. If you're hunting monstrous mutants, better use some magnum buck.</text>
+		<text>#00 Buckshot loaded with an increased powder charge. Provides a huge increase in stopping power and slightly better armor penetration at the cost of increased wear on the weapon. Excellent for hunting and the sheer force of the shot can seriously injure even protected limbs. If you're dropping monstrous mutants, better use some magnum buck.</text>
 	</string>
 	<string id="ammo_new_12x70_magnum_s">
 		<text>12x70 Magnum</text>

@@ -1,0 +1,16 @@
+ini_captures = ini_file("creatures\\hardcoded_models_capture.ltx")
+ini_damage = ballistics_utils.ini_damage
+
+ReadBone = ballistics_utils.read_npc_bone_sec
+function ballistics_utils.read_npc_bone_sec(npc, bone_id)
+    -- go with userdata approach if detected regardless
+    if game.get_visual_userdata then
+        return ReadBone(npc, bone_id)
+    end
+    local vis = npc:get_visual_name()
+    if not ini_captures:section_exist(vis) then
+        return "stalker_hero_1"
+    end
+    return ini_captures:r_string_ex(vis, "profile") or "stalker_hero_1"
+    
+end

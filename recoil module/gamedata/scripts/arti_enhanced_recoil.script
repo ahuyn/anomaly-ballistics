@@ -59,6 +59,7 @@ local function parse_anims(sec)
 	end
 end
 
+local DEGREE_COEF = 0.017453292519943295769236907684886
 
 local shotc = 1
 local shott = 0
@@ -126,19 +127,9 @@ function shoot_effect(obj, sect)
 			level.set_pp_effector_factor(eid,v)
 		end
 	end
-	shotc = shotc+1
+	
+    shotc = shotc+1
 	shott = time_global()+100
-	
-	-- local fov_before = get_console_cmd(2, "fov")
-	-- local weapon_shake_factor = s / 4 * 0.1 + 1
-	-- exec_console_cmd("fov " .. clamp(math.atan(math.tan(fov_before * (0.5 * math.pi / 180)) * (axr_main.weapon_is_zoomed and 1.02 or 1.00 * weapon_shake_factor )) / (0.5 * math.pi / 180), 5, 120))
-	
-	-- local function reset_fov_to_normal(fov_val)
-	-- 	exec_console_cmd("fov " .. fov_val)
-	-- 	return true
-	-- end
-	
-	-- CreateTimeEvent(0, "reset_fov_to_normal", 0.075, reset_fov_to_normal, fov_before)
 end
 
 

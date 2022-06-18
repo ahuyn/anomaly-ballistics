@@ -114,22 +114,26 @@ function npc_bone_protection(npc, bone_id)
     local id = npc:id()
     if custom_bone_data[id] and custom_bone_data[id][bone_id] then return custom_bone_data[id][bone_id], True
     else
-        local visual_data = game.get_visual_userdata(npc:get_visual_name())
-        -- should fall back somehow
-        if not visual_data then
-            print_dbg("!!! Visual %s is lacking data !!!", npc:get_visual_name())
-            return 0.15, True
-        end
-        local bone_sec = visual_data:r_string_ex("bone_protection", "bones_protection_sect", "stalker_hero_1") 
         local bone_name = Bone_IDs[bone_id] or "bip01_spine"
+        local bone_sec = read_npc_bone_sec(npc)
         if not bone_cache[bone_sec] then bone_cache[bone_sec] = {} end
         if not bone_cache[bone_sec][bone_name] then
             local bone_armor = str_explode(ini_damage:r_string_ex(bone_sec, bone_name), ",") 
-            bone_cache[bone_sec][bone_name] = tonumber(bone_armor[2]) or 0
+            bone_cache[bone_sec][bone_name] = tonumber(bone_armor[2]) or 0.15
         end
-        visual_data:close()
         return bone_cache[bone_sec][bone_name], False
     end
+end
+
+function read_npc_bone_sec(npc)
+    local visual_data = game.get_visual_userdata(npc:get_visual_name())
+    if not visual_data then
+        print_dbg("!!! Visual %s is lacking data !!!", npc:get_visual_name())
+        return "stalker_hero_1"
+    end
+    local bone_sec = visual_data:r_string_ex("bone_protection", "bones_protection_sect", "stalker_hero_1") 
+    visual_data:close()
+    return bone_sec
 end
 
 -- Used to modify the custom values of a stalker's bone armors (to account for reductions, etc)

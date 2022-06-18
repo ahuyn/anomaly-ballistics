@@ -113,6 +113,8 @@ local defaults = {
     ["debug"] = true,
     ["cost"] = true,
     ["impair"] = true,
+    ["recoil"] = true,
+    ["rungun"] = false,
 }
 
 function get_config(key)
@@ -126,6 +128,7 @@ function on_mcm_load()
             {id = "cost", type = "check", val = 1, def=true},
             {id = "impair", type = "check", val = 1, def=true},
             {id = "recoil", type = "check", val = 1, def=true},
+            -- {id = "rungun", type = "check", val = 1, def=false},
         }
     }
     return op
