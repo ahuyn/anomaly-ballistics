@@ -190,7 +190,6 @@ function on_game_start()
         local count = ini_ammo:line_count(ammo) or 0
         for i=0,count-1 do
             local result, id, value = ini_ammo:r_line(ammo , i , "", "")
-            print_dbg("assigning ammo %s recipe %s", id, value)
             workshop_autoinject.add_override_recipe(id, value, 6)
         end
     end)

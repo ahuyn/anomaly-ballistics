@@ -203,7 +203,6 @@ function actor_on_weapon_before_fire(flags)
     -- cache
     local id = current_wpn:id()
     local sec = current_wpn:section()
-    print_dbg("Before fire %s", current_wpn:section())
     if not cur_wep_data.id or cur_wep_data.id ~= id then
         if IsWeapon(current_wpn) and not IsItem("fake_ammo_wpn",sec) then
             cur_wep_data.id = current_wpn:id()
