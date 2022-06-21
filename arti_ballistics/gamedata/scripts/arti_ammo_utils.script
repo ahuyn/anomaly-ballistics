@@ -82,6 +82,13 @@ end
 TraderAuto = trader_autoinject.update
 function trader_autoinject.update(npc)
     TraderAuto(npc)
+    
+    if trader_autoinject.get_trader_type(npc) == 1 then
+        trader_autoinject.spawn_items(npc, {
+            powder_fire = 5
+        }, true)
+    end
+    
     to_create = {}
     npc:iterate_inventory(function(npc, item)
         if not IsAmmo(item) then return end
@@ -156,8 +163,6 @@ function ui_item.build_desc_footer(obj, sec, str)
     end
     return _str
 end
-
-
 
 function on_game_start()
 	custom_functor_autoinject.add_functor("mg_link", try_mg_link, try_mg_link, nil, mg_link, true)

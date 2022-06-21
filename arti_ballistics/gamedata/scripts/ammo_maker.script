@@ -4,8 +4,6 @@ local part_lookup
 local d_flag      = false
 local d_key       = "DIK_LSHIFT" -- Saftey key hold (Left Alt)
 
-print_dbg = ballistics_mcm.print_dbg
-
 -- break ammo down, returning an appropriate amount of items
 function breakdown(ammo, tool, batch)
     local sec = ammo and ammo:section() or nil
@@ -45,7 +43,7 @@ function do_breakdown(ammo_list, tool)
     local tbl = {}
     local sec = ammo_list[1]:section()
     
-    local salvage_coef = string.find(sec, "bad") and 0.9 or 0.5
+    local salvage_coef = part_lookup:r_float_ex(sec, "salvage") or 0.4
     local parts = part_lookup:r_value(sec, "parts")
     local parts_map = str_explode(parts, ",")
     local degrade = tonumber(part_lookup:r_value(sec, "degrade")) or 0.0001
@@ -58,19 +56,16 @@ function do_breakdown(ammo_list, tool)
         if not tool then return tbl end
         local box_size = v:ammo_get_count()
         local parts = part_lookup:r_value(sec, "parts")
-        print_dbg("Scrapping ammo %s with rounds %s", sec, box_size)
         for i=1,#parts_map,2 do
             local new_box_size = 0
             local box_to_make = parts_map[i]
             local base_amt = tonumber(parts_map[i+1])
-            print_dbg("Giving %s, base amount %s", box_to_make, base_amt)
             -- new 1 by 1 formula for consistency
             for i=1,box_size do 
                 if math.random() < salvage_coef then
                     new_box_size = new_box_size + base_amt
                 end
             end
-            print_dbg("Creating %s of %s", new_box_size, box_to_make)
             if new_box_size > 0 then
                 if tbl[box_to_make] then 
                     tbl[box_to_make] = tbl[box_to_make] + new_box_size
