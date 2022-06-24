@@ -204,7 +204,7 @@
 		<text>9x19mm AP rounds</text>
 	</string>
 	<string id="ammo_new_9x19_ap_descr">
-		<text>Russian-designed armor piercing pistol round designed to go in tandem with their newest suite of sidearms and submachine guns. Has a considerably higher muzzle velocity compared to other 9x19mm rounds and is much more effective at defeating armor. This is considered an 'overpressure' cartridge and thus caution must be used when firing this round. Relatively rare in the Zone and usually imported by mercenaries.</text>
+		<text>Russian-produced armor piercing pistol round designed to go in tandem with their newest suite of sidearms and submachine guns. Has a considerably higher muzzle velocity compared to other 9x19mm rounds and is much more effective at defeating armor. This is considered an 'overpressure' cartridge and thus caution must be used when firing this round. Relatively rare in the Zone and usually imported by mercenaries.</text>
 	</string>
 	<string id="ammo_new_9x19_ap_s">
 		<text>9x19 AP</text>
@@ -253,7 +253,7 @@
 		<text>.45 ACP 'RIP' rounds</text>
 	</string>
 	<string id="ammo_new_11.43x23_hydro_descr">
-		<text>This novel .45 ACP calibre round consists of a jacketed bullet sliced into 9 thin 'petals'. Designated the 'Radically Invasive Projectile', this bullet is designed to break into nine fragments after penetrating a target. The fragments create multiple wound channels, causing catastrophic damage. Originally designed on the basis of 'Black Talon' expanding projectiles, the RIP round improves on the design by having the petals break off as they travel through the target. Due to the fragile shape of the bullet, this round is easily defeated by armor or by sufficiently tough mutant hide. Imported in limited quantities.</text>
+		<text>This novel .45 ACP calibre round consists of a jacketed bullet sliced into 9 thin 'petals'. Designated as the 'Radically Invasive Projectile', this bullet splinters into nine fragments after penetrating a target. The fragments create multiple wound channels, causing catastrophic damage. Originally based on the infamous 'Black Talon' expanding projectiles, the RIP round improves on the design by having the petals break off as they travel through the target. Due to the fragile shape of the bullet, this round is easily defeated by armor or by sufficiently tough mutant hide. Imported in limited quantities.</text>
 	</string>
 	<string id="ammo_new_11.43x23_hydro_s">
 		<text>.45 RIP</text>
@@ -511,7 +511,7 @@
 		<text>5.56x45mm 'Varmageddon' rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_varma_descr">
-		<text>Imported 5.56x45 hunting cartridge specially designed to kill animals. The unique design of the bullet enables projectiles to expand greatly in thick muscle and flesh of animals, inflicting catastrophic damage. The wounding effects in human targets are acceptable in comparison, but not as pronounced. These rounds enable Freedom fighters to stand toe to toe with the nastier mutants that are more prevalent up north.</text>
+		<text>Imported 5.56x45 hunting cartridge specially designed to kill animals. The unique shape of the bullet enables projectiles to expand greatly in thick muscle and flesh of animals, inflicting catastrophic damage. The wounding effects in human targets are acceptable in comparison, but not as pronounced. These rounds enable Freedom fighters to stand toe to toe with the nastier mutants that are more prevalent up north.</text>
 	</string>
 	<string id="ammo_new_5.56x45_varma_s">
 		<text>5.56x45 Varma</text>
@@ -633,7 +633,7 @@
 		<text>7.62x54mm 7N1 rounds</text>
 	</string>
 	<string id="ammo_new_7.62x54_7n1_descr">
-		<text>A 7.62x54 FMJ round designed for precision shooting at range. Designed specially for and in tandem with the SVD sniper rifle. Provides extremely tight groupings and consistent stopping power against lightly armored targets, but suffers slightly when dealing with heavy body armor. Popular round with all marksmen.</text>
+		<text>A 7.62x54 sniper round for precision shooting at range. Designed specially for and in tandem with the SVD sniper rifle. Provides extremely tight groupings and consistent stopping power against lightly armored targets, but suffers slightly when dealing with heavy body armor. Popular round with all marksmen. Compatible with LMGs, but frankly using such a quality round in a machine gun is a complete waste.</text>
 	</string>
 	<string id="ammo_new_7.62x54_7n1_s">
 		<text>7.62x54 7N1</text>
@@ -662,7 +662,7 @@
 		<text>7.62x54mm AP rounds</text>
 	</string>
 	<string id="ammo_new_7.62x54_ap_descr">
-		<text>7.62x54 7N13 armor piercing round. Features a hardened steel core and strong propellant charge. This round is nomally designed for use in machine guns, especially those designed for light anti armor purposes, but they work acceptably enough in sniper rifles to defeat heavy body armor at medium range. Due to the sheer power of the round, damage on unarmored targets remains extremely high.</text>
+		<text>7.62x54 7N13 armor piercing round. Features a hardened steel core and strong propellant charge. This round is normally designed for use in machine guns, especially those deployed for light anti armor purposes, but they work acceptably enough in sniper rifles to defeat heavy body armor at medium range. Due to the sheer power of the round, damage on unarmored targets remains extremely high.</text>
 	</string>
 	<string id="ammo_new_7.62x54_ap_s">
 		<text>7.62x54 AP</text>
@@ -730,10 +730,10 @@
 	</string>
 
 	<string id="ammo_new_7.62x51_slap">
-		<text>7.62x51mm M948 SLAP rounds</text>
+		<text>7.62x51mm M69 SLAP rounds</text>
 	</string>
 	<string id="ammo_new_7.62x51_slap_descr">
-		<text>Special-issue 7.62x51 round consisting of a 5.5mm tungsten dart encased in a plastic sabot. The plastic plug retains the shape of a normal FMJ round, making for easy feeding, and when fired the dense tungsten dart punches clean through light and medium vehicle armor, or any body armor. Due to the small size of the projectile, wounding effects are minimized. However, the penetrating capability makes it possible to shoot through cover or attack multiple targets in a row. Imported in limited quantities by Mercenaries to counter armored SSU divisions and to neutralize heavily armored Monolith threats.</text>
+		<text>Special-issue 7.62x51 round consisting of a 4mm tungsten dart encased in a plastic plug and short metal sabot. The plastic plug retains the shape of a normal FMJ round, making for easy feeding, and when fired the dense tungsten dart punches clean through light and medium vehicle armor, or any body armor. Due to the small size of the projectile, wounding effects are minimized. However, the penetrating capability makes it possible to shoot through cover or attack multiple targets in a row. Imported in limited quantities by Mercenaries to counter armored SSU divisions and to neutralize heavily armored Monolith threats.</text>
 	</string>
 	<string id="ammo_new_7.62x51_slap_s">
 		<text>7.62x51 SLAP</text>
@@ -754,7 +754,7 @@
 		<text>7.92x57mm Match hand load rounds</text>
 	</string>
 	<string id="ammo_new_7.92x33_match_descr">
-		<text>Match grade 7.92x57 round with a hollow tip and boat-tail base bullet. Modern powder loads exert slight stress on historic rifles, but offer highly improved performance to compensate. Such rounds are popular with hunters and sport shooters for their flatness, tight groupings and reliable kill power for medium and large game.</text>
+		<text>Match grade 7.92x57 round with a hollow tip and boat-tail base bullet. Modern powder loads exert greater stress on historic rifles, but offer highly improved performance to compensate. Such rounds are popular with hunters and sport shooters for their flatness, tight groupings and reliable kill power for medium and large game.</text>
 	</string>
 	<string id="ammo_new_7.92x33_match_s">
 		<text>7.92x57 Match</text>

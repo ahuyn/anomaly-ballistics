@@ -1,6 +1,7 @@
 -- Rip of the enhanced recoil effects with wildcarding support and ammo support
 get_config = ballistics_mcm.get_config
 print_dbg = ballistics_mcm.print_dbg
+
 local ini_eff = ini_file("plugins\\recoil\\importer.ltx")
 local ini_ammo_eff = ini_file("plugins\\ammo_recoil\\importer.ltx")
 
@@ -65,8 +66,6 @@ local shotc = 1
 local shott = 0
 local fov_r = 1
 function shoot_effect(obj, sect)
-	--printf("-SHOOT")
-    if not get_config("recoil") then return end
 
 	if shott and (shott < time_global()) then
 		shotc = 1
@@ -162,6 +161,14 @@ function actor_effects.shoot_effect(sec)
     OriginalShoot(sec)
 end
 
+function update_settings()
+    if get_config("recoil") then
+		RegisterScriptCallback("actor_on_weapon_fired",Update_Shooting)
+	else
+		UnRegisterScriptCallback("actor_on_weapon_fired",Update_Shooting)
+	end
+end
+
 function on_game_start()
-	RegisterScriptCallback("actor_on_weapon_fired",Update_Shooting)
+	RegisterScriptCallback("on_option_change",update_settings)
 end

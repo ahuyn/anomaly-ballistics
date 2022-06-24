@@ -5,9 +5,6 @@ Base framework for playing with ballistic damage in Anomaly.
 
 This framework maps ammo types to custom damage functions, allowing a user to pass cutsom calculations for damage on a per-bullet, per-npc or per-mutant basis. Additional utilities are provided to overwrite many properties of weapon_ammo, reducing the dependency on the file as much as possible.
 
-## Requirements
-- Requires 1.5.2 RC4 or later.
-
 ## Detail
 
 This addon does nothing by itself. However, two addons are provided to give an idea of how to use this framework. In theory it is possible to port other damage systems to this framework as desired.
@@ -18,6 +15,10 @@ Properties that may be overridden by default include:
 - `description` (looks for `inv_name_descr`)
 - `cost`
 - `impair`
+
+`inv_name_short` needs to be specified in weapon_ammo to show on weapon tooltip.
+
+`inv_name` needs to be specified in weapon_ammo to show on world model mouse over.
 
 Properties passed on hit such as k_hit and k_ap can be overridden at your discretion. Do note that weapon_ammo provided k_ap also provides a level of cover and body penetration that this script does not mimic.
 
