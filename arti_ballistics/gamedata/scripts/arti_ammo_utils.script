@@ -73,7 +73,7 @@ function process_wpn(wpn, bypass)
         print_dbg("Downgrading ammo for weapon %s", wpn:section())
         local cnt = wpn:get_ammo_in_magazine()
         wpn:unload_magazine(true)
-        wpn:set_ammo_type(wpn:get_ammo_type() - 1)
+        wpn:set_ammo_type(ammo_data_key[dg_ammo] - 1)
         wpn:set_ammo_elapsed(cnt)
     end
 end
@@ -88,7 +88,7 @@ function trader_autoinject.update(npc)
             powder_fire = 5
         }, true)
     end
-    
+
     to_create = {}
     npc:iterate_inventory(function(npc, item)
         if not IsAmmo(item) then return end
