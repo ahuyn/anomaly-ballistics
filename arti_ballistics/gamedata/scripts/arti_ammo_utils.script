@@ -64,16 +64,16 @@ end
 
 function process_wpn(wpn, bypass)
     local ammo_data = utils_item.get_ammo(wpn:section(), wpn:id())
+    local ammo_data_inv = invert_table(ammo_data)
     if is_empty(ammo_data) then return end
-    local ammo_data_key = utils_item.get_ammo(wpn:section(), wpn:id(), true)
     local ammo_type = ammo_data[wpn:get_ammo_type() + 1]
     local dg_ammo = ini_ammo:r_string_ex(ammo_type, "dg_ammo") or ""
     local dg_chance = ini_ammo:r_float_ex(ammo_type, "dg_chance") or 0
-    if ammo_data_key[dg_ammo] and (bypass or math_random() < dg_chance) then
+    if ammo_data_inv[dg_ammo] and (bypass or math_random() < dg_chance) then
         print_dbg("Downgrading ammo for weapon %s", wpn:section())
         local cnt = wpn:get_ammo_in_magazine()
         wpn:unload_magazine(true)
-        wpn:set_ammo_type(ammo_data_key[dg_ammo] - 1)
+        wpn:set_ammo_type(ammo_data_inv[dg_ammo] - 1)
         wpn:set_ammo_elapsed(cnt)
     end
 end
