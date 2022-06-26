@@ -185,7 +185,11 @@ function mutant_prot_values(mutant, id)
             skin_armor = SYS_GetParam(2, prot_sec, "skin_armor") or 0
         else skin_armor = 0 end
     end
-    local hit_frac = SYS_GetParam(2, sec, "hit_fraction_monster") or SYS_GetParam(2, prot_sec, "hit_fraction_monster") or 0.5 
+    local hit_frac = SYS_GetParam(2, sec, "hit_fraction_monster") 
+    if not hit_frac and prot_sec then
+        hit_frac = SYS_GetParam(2, prot_sec, "hit_fraction_monster")
+    end
+    if not hit_frac then hit_frac = 0.5 end
     local mult = undead_clsid[get_clsid(mutant)] and 0.1 or 1
     return {
         id = id,

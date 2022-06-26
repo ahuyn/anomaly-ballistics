@@ -267,26 +267,36 @@ local limbs = {
 	[45] = "bip01_r_finger22", 
 }
 
+local boar_clsid = {
+    [clsid.boar] 				= true,
+    [clsid.boar_s] 				= true,
+}
+
 -- buckshot ignores up to 20 armor on limb hit
 function buckshot_damage(npc, s_hit, ctx)
-    if not ctx.is_npc or not limbs[ctx.bone_id] then 
-        s_hit = ballistic_handlers.default(npc, s_hit, ctx)
-    else
+    if boar_clsid[get_clsid(npc)] or (ctx.is_npc and limbs[ctx.bone_id]) then
         local calcs = {}
         local precalc = prework(npc, s_hit, ctx)
         bone_data = precalc.bone_data
         ammo_data = precalc.ammo_data
         -- reduce armor
-        bone_data.armor = clamp(bone_data.armor - 0.2, 0, 1)
+        
+        if boar_clsid[get_clsid(npc)] then
+            bone_data.mult = 1.3
+        else
+            bone_data.armor = clamp(bone_data.armor - 0.2, 0, 1)
+        end
         
         calcs.base_power = precalc.base_power
     
         apply_std_calcs(calcs, npc, s_hit, precalc)
-        calcs.ap_calc = npc_standard(precalc)
+        calcs.ap_calc = ctx.is_npc and npc_standard(precalc) or mutant_standard(precalc)
 
         local final_hit = tbl_reduce(calcs)
         print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
         s_hit.power = final_hit
+    else
+        s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     end
     return s_hit
 end
