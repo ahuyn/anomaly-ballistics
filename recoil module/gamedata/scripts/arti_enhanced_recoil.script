@@ -165,10 +165,11 @@ function update_settings()
     if get_config("recoil") then
 		RegisterScriptCallback("actor_on_weapon_fired",Update_Shooting)
 	else
-		UnRegisterScriptCallback("actor_on_weapon_fired",Update_Shooting)
+		UnregisterScriptCallback("actor_on_weapon_fired",Update_Shooting)
 	end
 end
 
 function on_game_start()
 	RegisterScriptCallback("on_option_change",update_settings)
+	update_settings()
 end
