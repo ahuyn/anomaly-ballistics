@@ -339,7 +339,10 @@ function headshot(npc, s_hit, ctx)
     if head_bones[ctx.bone_id] then
         print_dbg("Ignoring armor on headshot")
         bone_data.armor = clamp(ammo_data.k_ap - 0.05, 0, 1)
-        play_sound_on_actor("headshot", 2)
+        npc:set_bone_visible("bip01_head", false, true)
+        play_particle(npc, 15, "anomaly2\\effects\\body_tear_blood_05")
+        play_particle(npc, 15, "anomaly2\\effects\\body_tear_blood_01")
+        play_sound_on_actor("Head_Explode_"..math_random(3))
     end
     calcs.ap_calc = npc_standard(precalc)
 
@@ -382,6 +385,7 @@ function fire_dot(npc, s_hit, ctx)
     if math_random() < ignite_chance then
         play_particle(npc, ctx.bone_id, "artefact\\af_thermal_idle")
         print_dbg("Ignited %s", npc:id())
+        play_sound_on_actor("Incendiary_"..math_random(5))
         add_effect("ignite"..npc:id(), 5, 
         function()
             print_dbg("Burning %s", npc:id())
@@ -390,7 +394,7 @@ function fire_dot(npc, s_hit, ctx)
             local h = hit()
             h.type = hit.fire
             h.draftsman = db.actor
-            h.power = math.random(5, 10) / 100
+            h.power = math_random(5, 10) / 100
             h.bone = "bip01_spine"
             npc:hit(h)
         end)
@@ -407,6 +411,7 @@ function acid_damage(npc, s_hit, ctx)
     play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
     if not bone_data.modified then
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.6, 0, 1))
+        play_sound_on_actor("Acid_"..math_random(3))
     end
     return s_hit
 end
@@ -468,6 +473,14 @@ function shock_damage(npc, s_hit, ctx)
     s_hit.power = tbl_reduce(calcs)
     return s_hit
 end
+
+function soulripper(npc, s_hit, ctx)
+
+    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
+    play_sound_on_actor("Railgun_"..math_random(3))
+    return s_hit
+end
+
 -- spawn an explosive
 function explosion(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
