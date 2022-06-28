@@ -108,13 +108,44 @@ _G.CBaseMonster__BeforeHitCallback = function(monster,shit,bone_id)
 	return flags.ret_value
 end
 
+local ini_ammo = ini_file("ammo\\importer.ltx")
+gc = game.translate_string
+
+GetFirstName = ui_item.build_name_first
+function ui_item.build_name_first(obj, sec, str)
+    if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
+        return gc(ini_ammo:r_string_ex(sec, "name"))
+    else
+        return GetFirstName(obj, sec, str)
+    end
+end
+
+ShortName = ui_item.build_short_name_first
+function ui_item.build_short_name_first(obj, sec, str)
+    if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
+        return gc(ini_ammo:r_string_ex(sec, "name") .. "_s")
+    else
+        return ShortName(obj, sec, str)
+    end
+end
+-- custom ammo desc, inject descriptions later
+BuildFooter = ui_item.build_desc_footer
+function ui_item.build_desc_footer(obj, sec, str)
+    if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
+        return gc(ini_ammo:r_string_ex(sec, "name") .. "_descr")
+    else
+        return BuildFooter(obj, sec, str)
+    end
+end
+
+
 -- If you don't use MCM, change your defaults from here.
 local defaults = {
     ["debug"] = true,
     ["cost"] = true,
     ["impair"] = true,
     ["recoil"] = true,
-    ["rungun"] = false,
+    ["mutant"] = true,
 }
 
 function get_config(key)
@@ -128,6 +159,7 @@ function on_mcm_load()
             {id = "cost", type = "check", val = 1, def=true},
             {id = "impair", type = "check", val = 1, def=true},
             {id = "recoil", type = "check", val = 1, def=true},
+            {id = "mutant", type = "check", val = 1, def=true},
             -- {id = "rungun", type = "check", val = 1, def=false},
         }
     }

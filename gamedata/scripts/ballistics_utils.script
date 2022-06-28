@@ -175,6 +175,20 @@ local undead_clsid = {
     [clsid.zombie] 					= true,
     [clsid.zombie_s] 				= true,
 }
+
+local mutant_hp = {
+    
+		[clsid.bloodsucker] 			= 1.5,
+		[clsid.bloodsucker_s] 			= 1.5,
+		[clsid.chimera] 				= 3,
+		[clsid.chimera_s] 				= 3,
+		[clsid.controller] 				= 3,
+		[clsid.controller_s] 			= 3,
+        [clsid.fracture] 				= 10,
+        [clsid.fracture_s] 				= 10,
+        [clsid.zombie] 					= 10,
+        [clsid.zombie_s] 				= 10,
+}
 function mutant_prot_values(mutant, id)
     
     local sec = mutant:section()
@@ -190,7 +204,8 @@ function mutant_prot_values(mutant, id)
         hit_frac = SYS_GetParam(2, prot_sec, "hit_fraction_monster")
     end
     if not hit_frac then hit_frac = 0.5 end
-    local mult = undead_clsid[get_clsid(mutant)] and 0.1 or 1
+    local clsid = get_clsid(mutant)
+    local mult = mutant_hp[clsid] and (get_config("mutant") or undead_clsid[clsid]) and 1/mutant_hp[clsid] or 1
     return {
         id = id,
         hit_fraction = hit_frac,

@@ -36,3 +36,4 @@ Consult the Contribution Guide for an idea of how to add your own ammo types.
 - themrdemonized - Borrowed code from PBA
 - Lucy - Providing functions that made this addon possible
 - Maid - Icons
+- cakes - Sound assets

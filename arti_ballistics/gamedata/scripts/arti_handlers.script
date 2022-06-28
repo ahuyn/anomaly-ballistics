@@ -134,9 +134,6 @@ function apply_std_calcs(tbl, npc, s_hit, precalc)
     tbl.velocity = modify_velocity()
     tbl.distance = modify_distance(s_hit.draftsman, npc, ammo_data.sec)
     tbl.bone_mult = bone_data.mult
-    -- local mod = ammo_data.k_hit * modify_velocity() * modify_distance(s_hit.draftsman, npc, ammo_data.sec) * bone_data.mult
-    -- print_dbg("Applying standard modifier %s", mod)
-    -- return mod
 end
 
 function process_hp(precalc, is_npc)
@@ -144,13 +141,10 @@ function process_hp(precalc, is_npc)
     if not hp_mult then return 1 end
     -- mutants get partial hp expansion
     if not is_npc then
-        local ap = precalc.ammo_data.k_ap * 2
-        local armor = clamp(precalc.bone_data.armor - 0.25, 0, 1)
-        -- based on ap difference, reduce hp mult in 30% increments
-        diff = math_floor(20 * (ap - armor))
-        hp_frac = hp_mult - 1
-        modifier = 1 + (diff * 0.3)
-        if diff < 0 then hp_mult = 1 + (hp_frac * modifier) end
+        local hp_frac = hp_mult - 1
+        local modifier = 1 - clamp(2 * (precalc.bone_data.armor - precalc.ammo_data.k_ap), 0, 1)
+        
+        if modifier > 0 then hp_mult = 1 + (hp_frac * modifier) end
         return hp_mult
     else
         if precalc.ammo_data.k_ap > precalc.bone_data.armor then return hp_mult end
@@ -389,7 +383,7 @@ function fire_dot(npc, s_hit, ctx)
         add_effect("ignite"..npc:id(), 5, 
         function()
             print_dbg("Burning %s", npc:id())
-            fire_eff:play_at_pos(npc:position())
+            play_particle(npc, 11, "artefact\\artefact_zharka")
             if not npc:alive() then return end
             local h = hit()
             h.type = hit.fire
@@ -475,7 +469,6 @@ function shock_damage(npc, s_hit, ctx)
 end
 
 function soulripper(npc, s_hit, ctx)
-
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     play_sound_on_actor("Railgun_"..math_random(3))
     return s_hit
@@ -487,7 +480,7 @@ function explosion(npc, s_hit, ctx)
     local npc_pos = npc:position()
     npc_pos.y = npc_pos.y + 0.5
 
-    local explode_obj = alife_create_item("bullet_blow", {npc_pos, npc:level_vertex_id(), npc:game_vertex_id(), nil})
+    local explode_obj = alife_create_item("bullet_blow", npc)
     CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
     function(id)
         local explode_obj = get_object_by_id(id)

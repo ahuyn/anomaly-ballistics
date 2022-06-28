@@ -1,30 +1,20 @@
-gc = game.translate_string
-local ini_ammo = ini_file("ammo\\importer.ltx")
+-- gc = game.translate_string
+-- local ini_ammo = ini_file("ammo\\importer.ltx")
 
-GetFirstName = ui_item.build_name_first
-function ui_item.build_name_first(obj, sec, str)
-    if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
-        return gc(ini_ammo:r_string_ex(sec, "name"))
-    else
-        return GetFirstName(obj, sec, str)
-    end
-end
+-- GetFirstName = ui_item.build_name_first
+-- function ui_item.build_name_first(obj, sec, str)
+--     if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
+--         return gc(ini_ammo:r_string_ex(sec, "name"))
+--     else
+--         return GetFirstName(obj, sec, str)
+--     end
+-- end
 
-ShortName = ui_item.build_short_name_first
-function ui_item.build_short_name_first(obj, sec, str)
-    if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
-        return gc(ini_ammo:r_string_ex(sec, "name") .. "_s")
-    else
-        return ShortName(obj, sec, str)
-    end
-end
-
--- custom ammo desc, inject descriptions later
-BuildFooter = ui_item.build_desc_footer
-function ui_item.build_desc_footer(obj, sec, str)
-    if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
-        return gc(ini_ammo:r_string_ex(sec, "name") .. "_descr")
-    else
-        return BuildFooter(obj, sec, str)
-    end
-end
+-- ShortName = ui_item.build_short_name_first
+-- function ui_item.build_short_name_first(obj, sec, str)
+--     if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
+--         return gc(ini_ammo:r_string_ex(sec, "name") .. "_s")
+--     else
+--         return ShortName(obj, sec, str)
+--     end
+-- end
