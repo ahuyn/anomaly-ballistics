@@ -59,10 +59,11 @@ function do_breakdown(ammo_list, tool)
         for i=1,#parts_map,2 do
             local new_box_size = 0
             local box_to_make = parts_map[i]
+            local box_chance = SYS_GetParam(2, box_to_make, "drop_chance") or 1
             local base_amt = tonumber(parts_map[i+1])
             -- new 1 by 1 formula for consistency
             for i=1,box_size do 
-                if math.random() < salvage_coef then
+                if math.random() < (salvage_coef * box_chance) then
                     new_box_size = new_box_size + base_amt
                 end
             end

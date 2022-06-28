@@ -840,5 +840,45 @@
 		<text>.338 DU AP</text>
 	</string>
 	
+	<!-- some leftovers -->
 	
+	<string id="ammo_new_50_bmg">
+		<text>.50 BMG M2 Ball Rounds</text>
+	</string>
+	<string id="ammo_new_50_bmg_descr">
+		<text>.50 Browning Machine Gun (12.7x99mm) cartridge introduced in 1910 and adopted in 1921 along with the Browning M2 heavy machine gun. This round is very commonly used for man-portable anti-armor capabilities, where a single shot to the engine block is enough to disable a civilian vehicle or heavily damage a lightly armored military vehicle. Rarely imported in the Zone due to the lack of need - the Zone already does more than enough work destroying vehicles as it is. </text>
+	</string>
+	<string id="ammo_new_50_bmg_s">
+		<text>.50 Ball</text>
+	</string>
+	<string id="ammo_new_50_ap">
+		<text>.50 BMG M2 AP Rounds</text>
+	</string>
+	<string id="ammo_new_50_ap_descr">
+		<text>.50 M2 AP round used to effectively counter more heavily armored vehicles and personnel. This round is capable of defeating any threat in the Zone, but will rarely be used due to its great weight, rarity and compatibility with weaponry. It is rumored Freedom has a secret stash of this ammo somewhere that is used to fend off Monolith threats in the Army Warehouses area.</text>
+	</string>
+	<string id="ammo_new_50_ap_s">
+		<text>.50 AP</text>
+	</string>
+
+	
+	<string id="ammo_new_4.6x30_fmj">
+		<text>4.6x30mm FMJ rounds</text>
+	</string>
+	<string id="ammo_new_4.6x30_fmj_descr">
+		<text>4.6x30mm bottlenecked PDW round developed for the MP7. Capable of defeating soft body armor but is insufficient to defeat armor rated for rifle-grade threats. This full metal jacket projectile has a lead-antimony core and is optimized for damage to soft targets.</text>
+	</string>
+	<string id="ammo_new_4.6x30_fmj_s">
+		<text>4.6x30 FMJ</text>
+	</string>
+	<string id="ammo_new_4.6x30_ap">
+		<text>4.6x30mm AP rounds</text>
+	</string>
+	<string id="ammo_new_4.6x30_ap_descr">
+		<text>German DM111 round with a hardened core. Lighter and faster, but loses a bit of stopping power in exchange. Given that the standard operating procedure for using the MP7 is to throw high volumes of fire with low-recoil rounds, it is not terribly concerning.</text>
+	</string>
+	<string id="ammo_new_4.6x30_ap_s">
+		<text>4.6x30 AP</text>
+	</string>
+
 </string_table>
