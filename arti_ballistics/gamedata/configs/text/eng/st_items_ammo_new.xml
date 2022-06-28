@@ -880,5 +880,14 @@
 	<string id="ammo_new_4.6x30_ap_s">
 		<text>4.6x30 AP</text>
 	</string>
+	<string id="ammo_new_4.ammo_new_12x76_bull">
+		<text>12x90 'Bull' Magnum Slugs</text>
+	</string>
+	<string id="ammo_new_12x76_bull_descr">
+		<text>12 gauge shell with stainless steel base and extremely high powder load. The projectile consists of a dense, copper-covered lead slug encased around a cone of depleted uranium. Ridiculously heavy and powerful round that requires a specially reinforced shotgun to be safely fired out of. The identity of the creator or buyers of these rounds and the shotguns they use remains a mystery.</text>
+	</string>
+	<string id="ammo_new_12x76_bull_s">
+		<text>12x90 Bull</text>
+	</string>
 
 </string_table>
