@@ -6,6 +6,8 @@ print_dbg = ballistics_mcm.print_dbg
 ini_ammo = ini_file("ammo\\importer.ltx")
 ini_damage = ini_file("creatures\\damages.ltx")
 
+ini_sounds = ini_file("ammo\\sounds.ltx")
+
 Bone_IDs = {
 	[1]  =  "bip01_pelvis", 
     [2]  =	"bip01_pelvis",
@@ -79,15 +81,21 @@ function play_particle(npc, bone_id, name)
     end
 end
 
-function play_sound_on_actor(snd, volume)
-	if not snd then
+-- play some sounds that scale based on distance
+function play_sound_on_location(snd, npc, distance)
+	if not snd or not npc or not ini_sounds:section_exist(snd) then
 		return
 	end
-	local actor = db.actor
-	local snd = xr_sound.get_safe_sound_object(snd)
+    distance = distance or get_distance(db.actor, npc)
+    to_use = distance > 10 and ini_sounds:r_string_ex(snd, "far") and "far" or "near"
+    snd_to_play = ini_sounds:r_string_ex(snd, to_use)
+    if not snd_to_play then return end
+    snd_to_play = snd_to_play .. math.random(ini_sounds:r_float_ex(snd, to_use.."_amt") or 1)
+	local snd = xr_sound.get_safe_sound_object(snd_to_play)
 	if snd then
-		snd:play(actor, 0, sound_object.s2d)
-		snd.volume = volume or 1
+        print_dbg("Playing %s", snd_to_play)
+		snd:play(npc, 0, sound_object.s2d)
+		snd.volume = (distance > 10) and 0.3 + (0.7 * (1 - (clamp(distance, 2, 100) - 2)/98)) or 1
 		return snd
 	end
 end
@@ -103,7 +111,7 @@ function npc_bone_mult(bone_id)
         local damages = SYS_GetParam(0, "stalker_damage", bone_name)
         damages = str_explode(damages, ",")
         stalker_damage[bone_id] = tonumber(damages[1])
-        return damages[1]
+        return stalker_damage[bone_id]
     end
 end
 
@@ -282,14 +290,18 @@ end
 
 -- Provide a damage modifier based on distance, adjusted by bullet velocity and flatness
 function modify_distance(shooter, npc, ammo)
-    local npc_pos = npc:position()
-	local shooter_pos = shooter:position()
-	local dist = npc_pos:distance_to(shooter_pos)
+	local dist = get_distance(shooter, npc)
     local air_res = SYS_GetParam(2, ammo, "k_air_resistance") or 0.05
     air_res = clamp(air_res, 0, 1.1)
     local mod = clamp( 1 / ( 1 + (dist / 600) * air_res / ( 1.3 - air_res)), 0.02, 1)
     -- print_dbg("applying distance modifier %s", mod)
     return mod
+end
+
+function get_distance(shooter, npc)
+    local npc_pos = npc:position()
+	local shooter_pos = shooter:position()
+	return npc_pos:distance_to(shooter_pos)
 end
 
 -- One way to modify damage based on velocity. 20% of bonus velocity (e.g. taken from flatness upgrades) is added as hit damage.
