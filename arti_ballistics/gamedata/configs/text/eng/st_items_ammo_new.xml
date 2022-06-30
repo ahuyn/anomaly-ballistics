@@ -282,7 +282,7 @@
 		<text>7.62x25mm P rounds</text>
 	</string>
 	<string id="ammo_new_7.62x25_p_descr">
-		<text>The 7.62x25mm cartridge is a Russian bottle-necked pistol cartridge widely used in former Soviet satellite states, China and Pakistan among other countries. The cartridge is an enhanced Russian version of the 7.63x25mm Mauser. It has an excellent penetration and can easily defeat lighter ballistic vests as well as kevlar helmets. Although most firearms chambered in this calibre are obsolete and removed from military inventories, the cartridge still sees widespread use because of the large quantity of stored ammunition available.</text>
+		<text>The 7.62x25mm cartridge is a Russian bottle-necked pistol cartridge widely used in former Soviet satellite states, China and Pakistan among other countries. The cartridge is an enhanced Russian version of the 7.63x25mm Mauser. Possesses excellent penetration capabilities and can easily defeat lighter ballistic vests as well as kevlar helmets. Although most firearms chambered in this caliber are obsolete and removed from military inventories, the cartridge still sees widespread use because of the large quantity of stored ammunition available.</text>
 	</string>
 	<string id="ammo_new_7.62x25_p_s">
 		<text>7.62x25 P</text>
@@ -330,7 +330,7 @@
 		<text>5.7x28 SS190 rounds</text>
 	</string>
 	<string id="ammo_new_5.7x28_ss190_descr">
-		<text>The FN 5.7x28mm is a high velocity cartridge designed and manufactured by FN Herstal. It is a bottlenecked centrefire cartridge that is somewhat similar to the .22 Hornet or .22 K-Hornet. The 5.7x28mm was developed in conjunction with the FN P90 personal defense weapon (PDW) and FN Five_seven pistol, in response to perceived threats of body armor. As such, this type of projectile is capable of defeating rifle plates handedly, but its small size reduces its damage potential greatly.</text>
+		<text>The FN 5.7x28mm is a high velocity cartridge designed and manufactured by FN Herstal. It is a bottlenecked centrefire cartridge that is somewhat similar to the .22 Hornet or .22 K-Hornet. The 5.7x28mm was developed in conjunction with the FN P90 personal defense weapon (PDW) and FN Five-seven pistol, in response to perceived threats of body armor. As such, this type of projectile is capable of defeating rifle plates handedly, but its small size reduces its damage potential greatly.</text>
 	</string>
 	<string id="ammo_new_5.7x28_ss190_s">
 		<text>5.7x28 AP</text>
@@ -470,7 +470,7 @@
 		<text>5.45x39mm 7N22 AP rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_aps_descr">
-		<text>Special-issue 5.45x39 calibre 7N22 armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hard-alloy armour-piercing penetrator that is highly effective against body armour. Issued to Spetsnaz units conducting direct action against the most dangerous and well-armed foes, though a handful of these rounds rarely find their way into the hands of Dutyers.</text>
+		<text>Special-issue 5.45x39 caliber 7N22 armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hard-alloy armour-piercing penetrator that is highly effective against body armour. Issued to Spetsnaz units conducting direct action against the most dangerous and well-armed foes, though a handful of these rounds rarely find their way into the hands of Dutyers.</text>
 	</string>
 	<string id="ammo_new_5.45x39_aps_s">
 		<text>5.45x39 AP+</text>
