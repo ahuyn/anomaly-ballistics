@@ -95,7 +95,8 @@ function play_sound_on_location(snd, npc, distance)
 	if snd then
         print_dbg("Playing %s", snd_to_play)
 		snd:play(npc, 0, sound_object.s2d)
-		snd.volume = (distance > 10) and 0.3 + (0.7 * (1 - (clamp(distance, 2, 100) - 2)/98)) or 1
+        snd.volume = 1
+		-- snd.volume = (distance > 10) and 0.3 + (0.7 * (1 - (clamp(distance, 2, 100) - 2)/98)) or 1
 		return snd
 	end
 end
@@ -178,24 +179,16 @@ end
 
 -- zombies have an inexplicable 0.1x damage multiplier that isn't reflected anywhere, so I added it here
 local undead_clsid = {
-    [clsid.fracture] 				= true,
-    [clsid.fracture_s] 				= true,
-    [clsid.zombie] 					= true,
-    [clsid.zombie_s] 				= true,
+    SM_IZLOM 				= true,
+    SM_ZOMBI 				= true
 }
 
 local mutant_hp = {
-    
-		[clsid.bloodsucker] 			= 1.5,
-		[clsid.bloodsucker_s] 			= 1.5,
-		[clsid.chimera] 				= 3,
-		[clsid.chimera_s] 				= 3,
-		[clsid.controller] 				= 3,
-		[clsid.controller_s] 			= 3,
-        [clsid.fracture] 				= 10,
-        [clsid.fracture_s] 				= 10,
-        [clsid.zombie] 					= 10,
-        [clsid.zombie_s] 				= 10,
+    SM_BLOOD 			= 1.5,
+    SM_CONTR 			= 3,
+    SM_CHIMS 			= 3,
+    SM_IZLOM 			= 10,
+    SM_ZOMBI			= 10,
 }
 function mutant_prot_values(mutant, id)
     
@@ -212,7 +205,7 @@ function mutant_prot_values(mutant, id)
         hit_frac = SYS_GetParam(2, prot_sec, "hit_fraction_monster")
     end
     if not hit_frac then hit_frac = 0.5 end
-    local clsid = get_clsid(mutant)
+    local clsid = SYS_GetParam(0, sec, "kind") or SYS_GetParam(0, sec, "class") 
     local mult = mutant_hp[clsid] and (get_config("mutant") or undead_clsid[clsid]) and 1/mutant_hp[clsid] or 1
     return {
         id = id,
