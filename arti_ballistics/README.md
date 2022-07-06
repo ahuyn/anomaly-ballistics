@@ -68,3 +68,9 @@ General properties of new ammo:
 | CHAOS      | ???? |
 | Explosive  | ???? |
 | Lightning  | ???? |
+
+## Recipes
+
+To balance the power of the new rounds, the recipes have been gated behind new items.
+
+These recipes have a small chance to drop from stashes, or can be purchased. Be on the lookout!

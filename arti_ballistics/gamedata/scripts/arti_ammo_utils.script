@@ -78,6 +78,58 @@ function process_wpn(wpn, bypass)
     end
 end
 
+local recipe_trader = {
+    killer = {
+       "recipe_ammo_nato",
+       "recipe_ammo_pistol"
+    },
+    army = {
+        "recipe_ammo_ru1",
+        "recipe_ammo_ru2"
+    },
+    ecolog = {
+        "recipe_ammo_arty2",
+        "recipe_ammo_arty1"
+    },
+    monolith = {
+        "recipe_ammo_ru2",
+        "recipe_ammo_fire",
+    },
+    duty = {
+        "recipe_ammo_ru1",
+        "recipe_ammo_shotgun"
+    },
+    freedom = {
+        "recipe_ammo_nato",
+        "recipe_ammo_fire",
+    },
+    csky = {
+        "recipe_ammo_shotgun",
+        "recipe_ammo_arty1",
+    },
+    stalker = {
+        "recipe_ammo_pistol",
+        "recipe_ammo_shotgun",
+    },
+    bandit = {
+        "recipe_ammo_ru1",
+        "recipe_ammo_pistol"
+    },
+    greh = {
+        "recipe_ammo_arty2",
+        "recipe_ammo_nato",
+    },
+    isg = {
+        "recipe_ammo_ru1",
+        "recipe_ammo_ru2",
+        "recipe_ammo_pistol",
+        "recipe_ammo_shotgun",
+        "recipe_ammo_nato",
+        "recipe_ammo_arty1",
+        "recipe_ammo_arty2",
+        "recipe_ammo_fire",
+    },
+}
 
 TraderAuto = trader_autoinject.update
 function trader_autoinject.update(npc)
@@ -104,6 +156,16 @@ function trader_autoinject.update(npc)
     for k,v in pairs(to_create) do
         alife_release_id(k)
         alife_create_item(v.sec, npc, {ammo = v.cnt})
+    end
+
+    
+    local level = trader_autoinject.supply_level(npc, true)
+    local chance = clamp(30 * (level - 1), 100, 100)
+    local comm = trader_autoinject.get_real_community(npc, "stalker")
+    for k,v in pairs(recipe_trader[comm]) do
+        if math.random(100) <= chance then
+            alife_create_item(v, npc)
+        end
     end
 end
 
@@ -164,6 +226,34 @@ function ui_item.build_desc_footer(obj, sec, str)
     return _str
 end
 
+-- spawn recipes with random weights
+local recipe_weights = {
+    recipe_ammo_ru1 = 30,
+    recipe_ammo_ru2 = 15,
+    recipe_ammo_pistol = 30,
+    recipe_ammo_shotgun = 20,
+    recipe_ammo_nato = 15,
+    recipe_ammo_arty1 = 10,
+    recipe_ammo_arty2 = 10,
+    recipe_ammo_fire = 10,
+}
+
+SpawnTreasure = treasure_manager.try_spawn_treasure
+
+function treasure_manager.try_spawn_treasure(box)
+    local id = box:id()
+
+	--printf("try_spawn_treasure [%s]",caches[id])
+    -- no spawn if the cache is already looted
+	if not (treasure_manager.caches[id]) then
+		return
+	end
+    SpawnTreasure(box)
+    local k = random_key_table(recipe_weights)
+    if math.random(100) <= recipe_weights[k] then
+        alife_create_item(k, box)
+    end
+end
 function on_game_start()
 	custom_functor_autoinject.add_functor("mg_link", try_mg_link, try_mg_link, nil, mg_link, true)
 end
