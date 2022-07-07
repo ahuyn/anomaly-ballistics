@@ -186,7 +186,12 @@ function on_game_start()
         local count = ini_ammo:line_count(ammo) or 0
         for i=0,count-1 do
             local result, id, value = ini_ammo:r_line(ammo , i , "", "")
-            workshop_autoinject.add_override_recipe(id, value, 6)
+            -- anomaly balls specific stuff
+            if string.find(id, "_bad") then
+                workshop_autoinject.add_new_recipe(6, id, value)
+            else
+                workshop_autoinject.add_override_recipe(id, value, 6)
+            end
         end
     end)
 end
