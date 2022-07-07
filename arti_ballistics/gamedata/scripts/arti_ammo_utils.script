@@ -159,8 +159,8 @@ function trader_autoinject.update(npc)
     end
 
     
-    local level = trader_autoinject.supply_level(npc, true)
-    local chance = clamp(30 * (level - 1), 100, 100)
+    local level = trader_autoinject.supply_level(npc, true) or 1
+    local chance = clamp(30 * (level - 1), 0, 100)
     local comm = trader_autoinject.get_real_community(npc, "stalker")
     for k,v in pairs(recipe_trader[comm]) do
         if math.random(100) <= chance then
