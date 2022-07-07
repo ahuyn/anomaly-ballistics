@@ -1,9 +1,19 @@
 arti_crusher = {
-    af_night_star = "powder_nightstar",
-    af_medusa = "powder_medusa",
-    af_gravi = "powder_gravi",
-    af_fireball = "powder_fireball",
-    af_blood = "powder_blood"
+    af_pin = "powder_nightstar,3",
+    af_night_star = "powder_nightstar,5",
+    
+    af_medusa = "powder_gravi,3",
+    af_vyvert = "powder_gravi,4",
+    af_gravi = "powder_gravi,5",
+    
+    af_crystal = "powder_fireball,3",
+    af_fireball = "powder_fireball.5",
+    
+    af_blood = "powder_blood,3",
+    af_mincer_meat = "powder_blood,5",
+
+    af_electra_sparkler = "powder_battery,4",
+    af_dummy_battery = "powder_battery,5",
 }
 
 gc = game.translate_string
@@ -25,10 +35,11 @@ end
 
 function crush(obj, bag, mode)
     local to_create = arti_crusher[obj:section()]
-    if to_create then
+    to_create = str_explode(to_create, ",")
+    if to_create[1] then
         alife_release(obj)
-        for i=1,5 do
-            alife_create_item(to_create, db.actor)
+        for i=1,tonumber(to_create[2]) do
+            alife_create_item(to_create[1], db.actor)
         end
     end
 end
