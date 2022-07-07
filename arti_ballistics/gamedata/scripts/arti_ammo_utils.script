@@ -95,7 +95,7 @@ local recipe_trader = {
         "recipe_ammo_ru2",
         "recipe_ammo_fire",
     },
-    duty = {
+    dolg = {
         "recipe_ammo_ru1",
         "recipe_ammo_shotgun"
     },
