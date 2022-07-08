@@ -652,7 +652,7 @@
 		<text>7.62x54mm 'Headhunter' match rounds</text>
 	</string>
 	<string id="ammo_new_7.62x54_fp_descr">
-		<text>High-precision variant of the 7.62x54mm round, with a flat nose that provides very high accuracy at medium to long ranges. These rounds are used for competition shooting where accuracy and precision are key, and thus these rounds are all carefully built to be exactly the same. The flat nosed round is designed for superior weight distribution and to punch clean holes through targets, and is tipped with a plastic plug to retain maximal aerodynamic performance. While the armor penetrating capabilities are lacking, the sheer force of impact due to the flat nose is enough to cause deadly concussions. In practice, snipers report that headshots with these rounds will lethally concuss targets, almost always guaranteeing a kill. Proper use of such rounds demands high skill.</text>
+		<text>High-precision variant of the 7.62x54mm round, with a flat nose that provides tight groupings at medium to long ranges. These rounds are used for competition shooting where accuracy and precision are key, and thus these rounds are all carefully built to be exactly the same. The flat nosed round is designed for superior weight distribution and to punch clean holes through targets, and is tipped with a plastic plug to retain maximal aerodynamic performance. While the armor penetrating capabilities are lacking, the sheer force of impact due to the flat nose is enough to cause deadly concussions. In practice, snipers report that headshots with these rounds will lethally concuss targets, almost always guaranteeing a kill. Proper use of such rounds demands high skill.</text>
 	</string>
 	<string id="ammo_new_7.62x54_fp_s">
 		<text>7.62x54 FP</text>

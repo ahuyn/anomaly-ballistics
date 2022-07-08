@@ -162,6 +162,7 @@ function trader_autoinject.update(npc)
     local level = trader_autoinject.supply_level(npc, true) or 1
     local chance = clamp(30 * (level - 1), 0, 100)
     local comm = trader_autoinject.get_real_community(npc, "stalker")
+    if not recipe_trader[comm] then return end
     for k,v in pairs(recipe_trader[comm]) do
         if math.random(100) <= chance then
             alife_create_item(v, npc)
