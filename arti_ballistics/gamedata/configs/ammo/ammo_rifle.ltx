@@ -5,13 +5,13 @@ k_ap		= 0.175
 impair      = 1
 cost        = 1250
 
-[ammo_5.45x39_fmj_bad]:ammo_5.45x39_fmj ; 7N6M
+[ammo_5.45x39_fmj_bad]:ammo_5.45x39_fmj ; 7N10
 name		= ammo_new_5.45x39_fmjs
-k_hit		= 1.05
-k_ap		= 0.199
-cost        = 1650
-impair      = 0.9
+k_hit		= 1
+k_ap		= 0.205
+cost        = 1950
 dg_ammo     = ammo_5.45x39_fmj
+k_pen       = 0.7
 dg_chance   = 0.4
 
 
@@ -36,37 +36,44 @@ cost        = 1750
 dg_ammo     = ammo_5.45x39_ep
 dg_chance   = 0.4
 
-[ammo_5.45x39_ap]:ammo_base ; 7N10 AP
+[ammo_5.45x39_ap]:ammo_base ; 7N22 AP
 name		= ammo_new_5.45x39_ap
-k_hit		= 1
-k_ap		= 0.225
-k_pen       = 0.8
-cost        = 1950
-
-[ammo_5.45x39_ap_bad]:ammo_5.45x39_ap ; 7N22 AP
-name		= ammo_new_5.45x39_aps
-k_hit		= 1
+k_hit		= 0.95
 k_ap		= 0.255
-k_pen       = 0.85
+k_pen       = 0.8
 impair      = 1.1
-cost        = 2350
+cost        = 2210
+
+[ammo_5.45x39_ap_bad]:ammo_5.45x39_ap ; 7N39 super AP
+name		= ammo_new_5.45x39_aps
+k_hit		= 0.9
+k_ap		= 0.305
+k_pen       = 0.9
+impair      = 1.5
+cost        = 2950
 dg_ammo     = ammo_5.45x39_ap
-dg_chance   = 0.8
+dg_chance   = 0.9
 
 
 [ammo_5.56x45_fmj]:ammo_base ; M193
+handler     = arti_handlers.fragment
 name		= ammo_new_5.56x45_fmj
 k_hit		= 1
 k_ap		= 0.155
 cost        = 1500
+frag        = 1.5
+special     = frag
 
 [ammo_5.56x45_fmj_bad]:ammo_5.56x45_fmj ; MK318
+handler     = arti_handlers.fragment
 name		= ammo_new_5.56x45_fmjs
 k_hit		= 1.05
 k_ap		= 0.205
 cost        = 2000
 dg_ammo     = ammo_5.56x45_fmj
 dg_chance   = 0.5
+frag        = 1.5
+special     = frag
 
 [ammo_5.56x45_ss190]:ammo_base ; civ hunting
 name		= ammo_new_5.56x45_hp
@@ -92,14 +99,14 @@ dg_chance   = 0.5
 [ammo_5.56x45_ap]:ammo_base ; M855
 name		= ammo_new_5.56x45_ss190
 k_hit		= 0.8
-k_ap		= 0.235
+k_ap		= 0.225
 k_pen       = 0.8
 cost        = 1800
 
 [ammo_5.56x45_ap_bad]:ammo_5.56x45_ap ; M855A1
 name		= ammo_new_5.56x45_ap
 k_hit		= 0.95
-k_ap		= 0.255
+k_ap		= 0.295
 k_pen       = 0.7
 cost        = 2500
 dg_ammo     = ammo_5.56x45_ap
@@ -138,7 +145,7 @@ impair      = 2
 cost		= 3330
 special     = fire
 dg_ammo     = ammo_7.62x39_ap
-dg_chance   = 0.6
+dg_chance   = 0.8
 
 
 [ammo_9x39_pab9]:ammo_base ; SP5
@@ -171,7 +178,7 @@ k_ap		= 0.325
 impair      = 1
 cost		= 3500
 dg_ammo     = ammo_9x39_ap
-dg_chance   = 0.7
+dg_chance   = 0.8
 
 
 [ammo_5.45x39_fmj_verybad]:ammo_5.45x39_fmj_bad

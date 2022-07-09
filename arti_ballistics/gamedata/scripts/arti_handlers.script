@@ -136,19 +136,28 @@ function apply_std_calcs(tbl, npc, s_hit, precalc)
     tbl.bone_mult = bone_data.mult
 end
 
+-- determine if a hit fully penetrates either mutant or npc
+local function full_pen_modifier(precalc, is_npc)
+    if not is_npc then
+        return 1 - clamp(2 * (precalc.bone_data.armor - precalc.ammo_data.k_ap), 0, 1)
+    else
+        return clamp(precalc.ammo_data.k_ap - precalc.bone_data.armor, 0, 1)
+    end
+    return 0
+end
+
 function process_hp(precalc, is_npc)
     local hp_mult = ini_ammo:r_float_ex(precalc.ammo_data.sec, "k_hp") 
     if not hp_mult then return 1 end
+    local modifier = full_pen_modifier(precalc, is_npc)
     -- mutants get partial hp expansion
     if not is_npc then
-        local hp_frac = hp_mult - 1
-        local modifier = 1 - clamp(2 * (precalc.bone_data.armor - precalc.ammo_data.k_ap), 0, 1)
-        
+        local hp_frac = hp_mult - 1        
         if modifier > 0 then hp_mult = 1 + (hp_frac * modifier) end
         print_dbg("Mutant with armor %s, bullet with AP %s, HP modifier %s, final HP %s", precalc.bone_data.armor, precalc.ammo_data.k_ap, modifier, hp_mult)
         return hp_mult
     else
-        if precalc.ammo_data.k_ap > precalc.bone_data.armor then return hp_mult end
+        if modifier > 0 then return hp_mult end
     end
     return 1
 end
@@ -306,6 +315,15 @@ function buckshot_damage(npc, s_hit, ctx)
     return s_hit
 end
 
+function fragment(npc, s_hit, ctx)
+    local precalc = prework(npc, s_hit, ctx)
+    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
+    
+    if full_pen_modifier(precalc, ctx.is_npc) > 0 and math_random(3) == 3 then
+        s_hit.power = s_hit.power * ini_ammo:r_float_ex(ctx.hit_data.ammo, "frag") or 1.5
+    end
+end
+
 -- slugs ignore up to 20 armor on headshot
 function slug(npc, s_hit, ctx)
     if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx) end
@@ -363,7 +381,7 @@ function varmageddon(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     if not ctx.is_npc then 
         -- varma mult always applies
-        local v_mult = ini_ammo:r_float_ex(ammo_data.sec, "v_mult") or 1.5
+        local v_mult = ini_ammo:r_float_ex(ctx.hit_data.sec, "v_mult") or 1.5
         s_hit.power = s_hit.power * v_mult
     end
     return s_hit

@@ -49,6 +49,9 @@
 	<string id="st_ballistics_flinch">
 		<text>chance to stagger human enemies</text>
 	</string>
+	<string id="st_ballistics_frag">
+		<text>chance to fragment, dealing extra damage</text>
+	</string>
 	<string id="st_ballistics_hp">
 		<text>expansion damage on full penetration</text>
 	</string>
@@ -421,20 +424,20 @@
 		<text>5.45x39mm FMJ rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmj_descr">
-		<text>Steel-cased military 5.45x39 caliber round, designation 7N6, was the first standard issue round for automatic rifles of Warsaw Pact countries using the new intermediate cartridge. Provides better accuracy than the 7.62 calibre round thanks to reduced recoil and a 100-metre increase in range. Unique bullet design ensures consistent yawing on flesh peneteration, ensuring consistent stopping power.</text>
+		<text>Steel-cased military 5.45x39 caliber round, designation 7N6, was the first standard issue round for automatic rifles of Warsaw Pact countries using the new intermediate cartridge. Provides better accuracy than the 7.62 calibre round thanks to reduced recoil and a 100-metre increase in range. Unique bullet design ensures consistent yawing on flesh peneteration, ensuring consistent stopping power. Typically found loaded in the rifles of backline troops, rear guards and poor schmucks patrolling the borders of the Exclusion Zone.</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmj_s">
 		<text>5.45x39 FMJ</text>
 	</string>	
 	
 	<string id="ammo_new_5.45x39_fmjs">
-		<text>5.45x39mm 7N6M FMJ rounds</text>
+		<text>5.45x39mm EP rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_descr">
-		<text>5.45x39 7N6 bullet in a brass case and packed with modern propellant. Provides overall superior performance to the 7N6, and more importantly replaces the original corrosive primer with a modern clean one. This variety of round makes for a nice bartering good in the Zone, with some stalkers dealing exclusively with these rounds instead of currency.</text>
+		<text>Standard-issue 5.45x39 caliber 7N10 is an enhanced penetration round for automatic rifles of Warsaw Pact countries. A harder and sleeker steel core is used to improve penetration. Standard issue round with modern SSU ground forces, and is readily found in stock with most military personnel. Improved penetration capabilities make a huge difference in combat effectiveness when fighting Mercenaries and Monolith forces.</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_s">
-		<text>5.45x39 FMJ+</text>
+		<text>5.45x39 EP</text>
 	</string>
 
 	<string id="ammo_new_5.45x39_sp">
@@ -460,17 +463,17 @@
 		<text>5.45x39mm AP rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_ap_descr">
-		<text>Standard-issue 5.45x39 calibre 7N10 is an enhanced penetration round for automatic rifles of Warsaw Pact countries. A harder and sleeker steel core is used to improve penetration. Standard issue round with modern SSU infantry, which is to say, definitely not the personnel found guarding checkpoints in the Zone. The select group of military personnel who do see action are issued this ammunition type to maximize lethality against well-armed stalkers, mercenaries and Monolith forces.</text>
+		<text>Special-issue 5.45x39 caliber 7N22 armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hard-alloy armour-piercing penetrator that is highly effective against body armour. Issued to Spetsnaz units conducting direct action against the most dangerous and well-armed foes, though a handful of these rounds rarely find their way into the hands of Dutyers. </text>
 	</string>
-	<string id="ammo_new_5.45x39-ep_s">
+	<string id="ammo_new_5.45x39_ap_s">
 		<text>5.45x39 AP</text>
 	</string>
 
 	<string id="ammo_new_5.45x39_aps">
-		<text>5.45x39mm 7N22 AP rounds</text>
+		<text>5.45x39mm 7N39 AP rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_aps_descr">
-		<text>Special-issue 5.45x39 caliber 7N22 armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hard-alloy armour-piercing penetrator that is highly effective against body armour. Issued to Spetsnaz units conducting direct action against the most dangerous and well-armed foes, though a handful of these rounds rarely find their way into the hands of Dutyers.</text>
+		<text>Classified, extremely rare 5.45x39 caliber 7N39 'super' armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hardened tungsten penetrator and the cartridge packs a high-pressure load, conferring extreme penetration capability against most types of armor. Extremely difficult to find outside of Russian Special Forces armories - it has long been rumored that the Russian Federation is aware of the activities in the Zone and is conducting clandestine activities under the guise of cooperation with the Ukrainian Armed Forces, likely serving their own agenda. No matter the origin, these rounds are likely the best intermediate rifle rounds you can find.</text>
 	</string>
 	<string id="ammo_new_5.45x39_aps_s">
 		<text>5.45x39 AP+</text>
@@ -491,7 +494,7 @@
 		<text>5.56x45mm Mk318 FMJ rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_descr">
-		<text>Match-grade 5.56x45 FMJ round that is standard issue with the modern U.S. Armed Forces. First fielded by Marines in response to M855's reported ineffectiveness at reliably putting down targets, the Mk318 was developed in tandem with the M855A1 and ultimately serves as one of the two standard rounds with the U.S. Armed Forces. The bullet provides tight groupings out of short barrels, penetrates barriers reliably and offers fragmentation potential on par with the M193. Most importantly, the round has much better flight characteristics owing to the open tip design while not sacrificing much in the way of lethality or armor penetration. A reasonably rare find, however members of Freedom maintain an unusually high stock of these rounds, the origin of which is a well-guarded secret.</text>
+		<text>Match-grade 5.56x45 FMJ round that is standard issue with the modern U.S. Armed Forces. First fielded by Marines in response to M855's reported ineffectiveness at reliably putting down targets, the Mk318 was developed in tandem with the M855A1 and ultimately serves as one of the two standard rounds with the U.S. Armed Forces. The bullet provides tight groupings out of short barrels, penetrates barriers reliably and offers fragmentation potential exceeding that of the M193. Most importantly, the round has much better flight characteristics owing to the open tip design while not sacrificing much in the way of lethality or armor penetration. A reasonably rare find, however members of Freedom maintain an unusually high stock of these rounds, the origin of which is a well-guarded secret.</text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_s">
 		<text>5.56x45 FMJ+</text>
@@ -521,7 +524,7 @@
 		<text>5.56x45mm AP rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_ap_descr">
-		<text>The latest NATO military 5.56x45 caliber enhanced penetration round, known as M855A1, used by the US armed forces. The failure of the M855 round led to the development of both the Mk318 and this round, which offers both increased armor penetrating capabilities but also increased stopping power fired out of standard rifles. Imported in bulk by unknown suppliers of the Mercenary group, and forms one of the bulk import items (alongside marijuana) that Freedom trades for.</text>
+		<text>The latest NATO military 5.56x45 caliber enhanced penetration round, known as M855A1, used by the US armed forces. The failure of the M855 round led to the development of both the Mk318 and this round, which offers both increased armor penetrating capabilities but also increased stopping power fired out of standard rifles. Difficult to find but extremely effective, especially against exosuit-level protection. Imported in bulk by unknown suppliers of the Mercenary group, and forms one of the bulk import items (alongside marijuana) that Freedom trades for.</text>
 	</string>
 	<string id="ammo_new_5.56x45_ap_s">
 		<text>5.56x45 AP</text>
@@ -531,7 +534,7 @@
 		<text>5.56x45mm EP rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_ss190_descr">
-		<text>Relatively obsolete NATO 5.56x45 caliber round with a steel core. Initially developed as a means to counter body armor, the round, designated M855, lost the fragmentation properties that made the M193 such an effective round and thus sacrified a huge amount of stopping power just to penetrate armor. Large quantities of this round have made it to the Zone as most militaries have abandoned their stocks of this ineffectual round. Even despite the commonality, most stalkers only use these rounds begrudgingly.</text>
+		<text>Relatively obsolete NATO 5.56x45 caliber round with a steel core. Initially developed as a means to counter body armor, the round, designated M855, lost the fragmentation properties that made the M193 such an effective round and thus traded a huge amount of stopping power for respectable armor defeating capability. Large quantities of this round have made it to the Zone as most militaries have abandoned their stocks of this ineffectual round. Even despite the commonality, most stalkers only use these rounds begrudgingly.</text>
 	</string>
 	<string id="ammo_new_5.56x45_ss190_s">
 		<text>5.56x45 EP</text>
@@ -560,14 +563,14 @@
 		<text>7.62x39mm AP rounds</text>
 	</string>
 	<string id="ammo_new_7.62x39_ap_descr">
-		<text>7.62x39 round with a carbon steel core. These rounds are designed to neutralize enemy personnel behind light cover and defeat modern body armor that the M43 round normally struggles with. Issued on an increasing basis to SSU troops in order to combat the increasing presence of Monolith forces, as part of an agreement with the Russian government.</text>
+		<text>7.62x39 round with a carbon steel core. These rounds are designed to neutralize enemy personnel behind light cover and defeat modern body armor that the M43 round normally struggles with. Thanks to the heavy weight, this round transfers more force on target compared to lighter 5.45 rounds, at the cost of accuracy and effective range. Issued on an increasing basis to SSU troops in order to combat the increasing presence of Monolith forces, as part of an agreement with the Russian government.</text>
 	</string>
 	<string id="ammo_new_7.62x39_ap_s">
 		<text>7.62x39 AP</text>
 	</string>
 
 	<string id="ammo_new_7.62x39_api">
-		<text>7.62x39 BZ API rounds</text>
+		<text>7.62x39mm BZ API rounds</text>
 	</string>
 	<string id="ammo_new_7.62x39_api_descr">
 		<text>7.62x39 armor-piercing rounds with an incendiary component added to the base of the bullet. Designed to blow up vehicles by shooting the fuel tanks, the penetrator punches through any armor plating and the incendiary component creates sparks as they pass through, igniting fuel. While armored vehicles are an extreme shortage in the Zone, these rounds work extremely well as a means to inhumanely increase lethality against armored targets. Due to the incendiary component, the temperatures generated are high and increases heat generated in the weapon.</text>
@@ -578,7 +581,7 @@
 
 	
 	<string id="ammo_new_9x39_sp5">
-		<text>9x39 mm SP-5 rounds</text>
+		<text>9x39mm SP-5 rounds</text>
 	</string>
 	<string id="ammo_new_9x39_sp5_descr">
 		<text>The SP-5 is a subsonic rifle round with a bimetallic casing. The round contains a steel core with a gap behind it that is filled with lead. Canonically used in tandem with the VSS Vintorez, this round provides tight groupings and high stopping power, but is hampered by its steep trajectory and limited range. Requires a suppressor for stealth firing. Used by special services of Warsaw Pact countries.</text>
@@ -597,7 +600,7 @@
 	</string>
 	
 	<string id="ammo_new_9x39_pab9">
-		<text>9x39 mm PAB-9 rounds</text>
+		<text>9x39mm PAB-9 rounds</text>
 	</string>
 	<string id="ammo_new_9x39_pab9_descr">
 		<text>Old issue PAB-9 ammo that is no longer produced. In an effort to cut costs of producing SP-6 rounds, the penetrator core was stamped instead of machined and the propellant was replaced with a cheaper, dirtier mix. The end result is a cartridge that has performance mildly better than the SP-6, but very quickly destroys the weapon it is shot out of.</text>
