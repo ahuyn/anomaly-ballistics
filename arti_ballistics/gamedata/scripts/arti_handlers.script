@@ -319,7 +319,7 @@ function fragment(npc, s_hit, ctx)
     local precalc = prework(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     
-    if full_pen_modifier(precalc, ctx.is_npc) > 0 and math_random(3) == 3 then
+    if full_pen_modifier(precalc, ctx.is_npc) > 0 and math_random(4) == 4 then
         s_hit.power = s_hit.power * ini_ammo:r_float_ex(ctx.hit_data.ammo, "frag") or 1.5
     end
 end
@@ -381,7 +381,7 @@ function varmageddon(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     if not ctx.is_npc then 
         -- varma mult always applies
-        local v_mult = ini_ammo:r_float_ex(ctx.hit_data.sec, "v_mult") or 1.5
+        local v_mult = ini_ammo:r_float_ex(ctx.hit_data.ammo, "v_mult") or 1.5
         s_hit.power = s_hit.power * v_mult
     end
     return s_hit

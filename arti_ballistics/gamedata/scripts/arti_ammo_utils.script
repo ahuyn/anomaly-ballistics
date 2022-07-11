@@ -229,14 +229,14 @@ end
 
 -- spawn recipes with random weights
 local recipe_weights = {
-    recipe_ammo_ru1 = 30,
-    recipe_ammo_ru2 = 15,
-    recipe_ammo_pistol = 30,
-    recipe_ammo_shotgun = 20,
-    recipe_ammo_nato = 15,
-    recipe_ammo_arty1 = 10,
-    recipe_ammo_arty2 = 10,
-    recipe_ammo_fire = 10,
+    recipe_ammo_ru1 = 20,
+    recipe_ammo_ru2 = 10,
+    recipe_ammo_pistol = 20,
+    recipe_ammo_shotgun = 15,
+    recipe_ammo_nato = 10,
+    recipe_ammo_arty1 = 5,
+    recipe_ammo_arty2 = 5,
+    recipe_ammo_fire = 5,
 }
 
 SpawnTreasure = treasure_manager.try_spawn_treasure
