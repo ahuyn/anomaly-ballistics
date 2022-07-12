@@ -205,7 +205,7 @@ function mutant_prot_values(mutant, id)
         hit_frac = SYS_GetParam(2, prot_sec, "hit_fraction_monster")
     end
     if not hit_frac then hit_frac = 0.5 end
-    local clsid = SYS_GetParam(0, sec, "kind") or SYS_GetParam(0, sec, "class") 
+    local clsid = SYS_GetParam(0, sec, "class") or ""
     local mult = mutant_hp[clsid] and (get_config("mutant") or undead_clsid[clsid]) and 1/mutant_hp[clsid] or 1
     return {
         id = id,
