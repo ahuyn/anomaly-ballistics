@@ -50,11 +50,13 @@ function mg_link(obj)
     end
 end
 
-function downgrade_ammo(sec, bypass)
+function downgrade_ammo(sec, bypass, mult)
+    mult = mult or 1
     local dg_ammo = ini_ammo:r_string_ex(sec, "dg_ammo")
     local dg_chance = ini_ammo:r_float_ex(sec, "dg_chance") or 0
+    dg_chance = dg_chance * mult
     print_dbg("Attempt downgrade ammo %s to %s", sec, dg_ammo)
-    if dg_ammo and (math_random() < dg_chance or bypass) then
+    if dg_ammo and (math_random() < (dg_chance) or bypass) then
         print_dbg("Downgrading ammo %s to %s", sec, dg_ammo)
         return dg_ammo
     else 
@@ -187,7 +189,7 @@ end
 AlifeCreate = _G.alife_create_item
 function _G.alife_create_item(section, obj, t)
     if downgrade and IsItem("ammo",section) and obj:id() ~= AC_ID then 
-        section = downgrade_ammo(section)
+        section = downgrade_ammo(section, false, 1.2)
     end
     return AlifeCreate(section, obj, t)
 end
@@ -255,6 +257,19 @@ function treasure_manager.try_spawn_treasure(box)
         alife_create_item(k, box)
     end
 end
+
+RollAmmo = magazines_loot.determine_ammo
+-- subject the ammo pop in mags to downgrade
+function magazines_loot.determine_ammo(ammo_to_pick, mag_sec, rank)
+    if RollAmmo then
+        print_dbg("Roll to downgrade %s in %s", ammo_to_pick, mag_sec)
+        ammo_to_pick = RollAmmo(ammo_to_pick, mag_sec, rank)
+        ammo_to_pick = downgrade_ammo(ammo_to_pick)
+    end
+    return ammo_to_pick
+end
+
 function on_game_start()
 	custom_functor_autoinject.add_functor("mg_link", try_mg_link, try_mg_link, nil, mg_link, true)
+    RegisterScriptCallback("magazines_fill_ammo", mag_ammo_thing)
 end

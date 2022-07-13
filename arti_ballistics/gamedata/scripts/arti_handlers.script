@@ -359,7 +359,7 @@ function headshot(npc, s_hit, ctx)
     apply_std_calcs(calcs, npc, s_hit, precalc)
 
     -- ignore armor on headshot, set armor to one below ap to guarantee full damage
-    if head_bones[ctx.bone_id] then
+    if head_bones[ctx.bone_id] and not dialogs_axr_companion.is_actor_companion(db.actor, npc) then
         print_dbg("Ignoring armor on headshot")
         bone_data.armor = clamp(ammo_data.k_ap - 0.05, 0, 1)
         npc:set_bone_visible("bip01_head", false, true)
