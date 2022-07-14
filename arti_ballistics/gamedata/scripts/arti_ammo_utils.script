@@ -271,5 +271,4 @@ end
 
 function on_game_start()
 	custom_functor_autoinject.add_functor("mg_link", try_mg_link, try_mg_link, nil, mg_link, true)
-    RegisterScriptCallback("magazines_fill_ammo", mag_ammo_thing)
 end

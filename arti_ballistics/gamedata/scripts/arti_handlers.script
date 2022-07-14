@@ -168,6 +168,11 @@ function npc_standard(precalc)
     print_dbg("[NPC] Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
     
     local armor_tier = get_tier(bone_data.armor)
+    -- reduce ap slightly based on bonus armor, simulates nosos being more tanky
+    if armor_tier == 7 then
+        ammo_data.k_ap = ammo_data.k_ap - clamp(bone_data.armor - 0.43, 0, 0.05)
+        ammo_data.k_ap = clamp(ammo_data.k_ap, 0, 0.4)
+    end
     local ap_tier = get_tier(ammo_data.k_ap)
     local ap_frac = get_frac(ammo_data.k_ap)
 
@@ -179,9 +184,11 @@ function npc_standard(precalc)
         bone_adj = bone_adj * mult
         local mult_adj = clamp((1 + bone_adj) / bone_data.mult, 0.6, 1)
         print_dbg("AP insufficient, reducing multiplier by %s", mult_adj)
-        mult = mult * mult_adj
-        
+        mult = mult * mult_adj 
     end
+
+
+
     -- print_dbg("Difference of %s, AP fraction of %s", diff, ap_frac)
     return mult
 end
@@ -359,7 +366,7 @@ function headshot(npc, s_hit, ctx)
     apply_std_calcs(calcs, npc, s_hit, precalc)
 
     -- ignore armor on headshot, set armor to one below ap to guarantee full damage
-    if head_bones[ctx.bone_id] and not dialogs_axr_companion.is_actor_companion(db.actor, npc) then
+    if head_bones[ctx.bone_id] and bone_data.armor < 0.35 and not dialogs_axr_companion.is_actor_companion(db.actor, npc) then
         print_dbg("Ignoring armor on headshot")
         bone_data.armor = clamp(ammo_data.k_ap - 0.05, 0, 1)
         npc:set_bone_visible("bip01_head", false, true)
