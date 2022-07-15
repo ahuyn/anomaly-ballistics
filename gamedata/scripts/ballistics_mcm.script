@@ -146,6 +146,7 @@ local defaults = {
     ["impair"] = true,
     ["recoil"] = true,
     ["mutant"] = true,
+    ["burer"] = 0,
 }
 
 function get_config(key)
@@ -160,7 +161,7 @@ function on_mcm_load()
             {id = "impair", type = "check", val = 1, def=true},
             {id = "recoil", type = "check", val = 1, def=true},
             {id = "mutant", type = "check", val = 1, def=true},
-            -- {id = "rungun", type = "check", val = 1, def=false},
+            {id = "burer", type = "list", val = 2, def=0, content= {{0,"bclassic"} , {1,"bmeaty"} , {2,"bsith"}}},
         }
     }
     return op

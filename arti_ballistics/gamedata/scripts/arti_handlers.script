@@ -198,6 +198,22 @@ function mutant_standard(precalc)
     bone_data = precalc.bone_data
     print_dbg("[MUT] Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
     
+    -- chance to zero damage, capped at 50% and play particle
+    if bone_data.deflect then
+        local air_res = SYS_GetParam(2, ammo_data.sec, "k_air_resistance") or 0.05
+        air_res = clamp(air_res, 0, 0.5)
+        air_res = air_res * (1 - get_cur_vel())
+        print_dbg("%s chance to deflect", air_res)
+        if math_random() < air_res then
+            local snd = xr_sound.get_safe_sound_object("anomaly\\anomaly_gravy_hit1")
+            if snd then
+                snd.volume = 1
+                snd:play(db.actor, 0, sound_object.s2d)
+            end
+            return 0
+        end
+    end
+
     local ap_val = ammo_data.k_ap * 2
     if ap_val > bone_data.armor then
         return clamp((ap_val - bone_data.armor)/ap_val, bone_data.hit_fraction, 1)

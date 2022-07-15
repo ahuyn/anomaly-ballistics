@@ -190,11 +190,17 @@ local mutant_hp = {
     SM_IZLOM 			= 10,
     SM_ZOMBI			= 10,
 }
+
+local burer = {
+    SM_BURER            = 3
+}
 function mutant_prot_values(mutant, id)
     
     local sec = mutant:section()
     local skin_armor = SYS_GetParam(2, sec, "skin_armor")
+    local clsid = SYS_GetParam(0, sec, "class") or ""
     local prot_sec = SYS_GetParam(0, sec, "protections_sect")
+    local burer_lv = get_config("burer") or 0
     if not skin_armor then
         if prot_sec then
             skin_armor = SYS_GetParam(2, prot_sec, "skin_armor") or 0
@@ -205,12 +211,21 @@ function mutant_prot_values(mutant, id)
         hit_frac = SYS_GetParam(2, prot_sec, "hit_fraction_monster")
     end
     if not hit_frac then hit_frac = 0.5 end
-    local clsid = SYS_GetParam(0, sec, "class") or ""
     local mult = mutant_hp[clsid] and (get_config("mutant") or undead_clsid[clsid]) and 1/mutant_hp[clsid] or 1
+    
+    if burer[clsid] then
+        if burer_lv > 0 then
+            skin_armor = skin_armor / 2
+        end
+        if burer_lv == 1 then
+            mult = 0.4
+        end
+    end
     return {
         id = id,
         hit_fraction = hit_frac,
         armor = skin_armor,
+        deflect = (burer[clsid] and burer_lv == 2) and true or false,
         mult = mult
     }
 end
@@ -273,12 +288,12 @@ function actor_on_weapon_before_fire(flags)
 end
 
 -- return the velocity modifier for the current weapon, or 1
-function get_cur_vel(id)
-    return cur_wep_data.id == id and cur_wep_data.vel_mod or 0
+function get_cur_vel()
+    return cur_wep_data.vel_mod
 end
 
-function get_recoil(id)
-    return cur_wep_data.id == id and cur_wep_data.recoil or 1
+function get_recoil()
+    return cur_wep_data.recoil
 end
 
 -- Provide a damage modifier based on distance, adjusted by bullet velocity and flatness
