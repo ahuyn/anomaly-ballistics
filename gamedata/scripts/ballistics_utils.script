@@ -198,7 +198,7 @@ function mutant_prot_values(mutant, id)
     
     local sec = mutant:section()
     local skin_armor = SYS_GetParam(2, sec, "skin_armor")
-    local clsid = SYS_GetParam(0, sec, "class") or ""
+    local clsid = SYS_GetParam(0, sec, "kind") or SYS_GetParam(0, sec, "class") 
     local prot_sec = SYS_GetParam(0, sec, "protections_sect")
     local burer_lv = get_config("burer") or 0
     if not skin_armor then

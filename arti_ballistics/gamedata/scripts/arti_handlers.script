@@ -548,3 +548,14 @@ function explosion(npc, s_hit, ctx)
     return s_hit
 end
 
+-- unrelated but make actor kung fu proof with melee
+ActorPunch = xr_effects.actor_punch
+
+function xr_effects.actor_punch(npc)
+    local active_wpn = db.actor:active_item()
+    if active_wpn and IsMelee(active_wpn) then
+        
+    else
+        ActorPunch(npc)
+    end
+end
