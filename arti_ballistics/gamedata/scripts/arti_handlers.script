@@ -347,6 +347,12 @@ function fragment(npc, s_hit, ctx)
     end
 end
 
+function fragment_sound(npc, s_hit, ctx)
+    fragment(npc, s_hit, ctx)
+    play_sound_on_location("elite", npc)
+end
+
+
 -- slugs ignore up to 20 armor on headshot
 function slug(npc, s_hit, ctx)
     if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx) end
@@ -526,6 +532,7 @@ end
 function soulripper(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     play_sound_on_location("soulripper", npc)
+    s_hit.impulse = 9001
     return s_hit
 end
 

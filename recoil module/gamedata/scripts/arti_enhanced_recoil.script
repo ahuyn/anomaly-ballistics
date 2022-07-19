@@ -60,8 +60,6 @@ local function parse_anims(sec)
 	end
 end
 
-local DEGREE_COEF = 0.017453292519943295769236907684886
-
 local shotc = 1
 local shott = 0
 local fov_r = 1
@@ -126,7 +124,20 @@ function shoot_effect(obj, sect)
 			level.set_pp_effector_factor(eid,v)
 		end
 	end
+
+	printf("Processing aim shift")
 	
+	-- bump camera up, temp remove due to issues with rotation
+	if recoil_base > 1 then
+		local actor_position = device().cam_pos
+		local actor_direction = device().cam_dir	
+		local is_zoomed = obj:cast_Weapon():IsZoomed()
+		local degree_base = is_zoomed == 1 and SYS_GetParam(2, sect, "zoom_cam_step_angle_horz") or SYS_GetParam(2, sect, "cam_step_angle_horz")
+		degree_base = degree_base * (recoil_base - 0.5) * 0.023453292519943295769236907684886 
+		actor_direction.y = clamp(actor_direction.y + degree_base, -0.999, 0.999)
+		-- actor_direction = vector_rotate_y(actor_direction, (math.random() - 0.5) * degree_base)
+		db.actor:actor_look_at_point(vector():set(actor_position):add(actor_direction:mul(10000)))
+	end
     shotc = shotc+1
 	shott = time_global()+100
 end

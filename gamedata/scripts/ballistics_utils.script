@@ -94,9 +94,9 @@ function play_sound_on_location(snd, npc, distance)
 	local snd = xr_sound.get_safe_sound_object(snd_to_play)
 	if snd then
         print_dbg("Playing %s", snd_to_play)
-		snd:play(npc, 0, sound_object.s2d)
-        snd.volume = 1
-		-- snd.volume = (distance > 10) and 0.3 + (0.7 * (1 - (clamp(distance, 2, 100) - 2)/98)) or 1
+		snd:play(db.actor, 0, sound_object.s2d)
+        -- snd.volume = 1
+		snd.volume = (distance > 10) and 0.3 + (0.7 * (1 - (clamp(distance, 2, 100) - 2)/98)) or 1
 		return snd
 	end
 end
@@ -169,12 +169,6 @@ function npc_on_death_callback(npc, who)
     if custom_bone_data[npc:id()] then
         custom_bone_data[npc:id()] = nil
     end
-end
-
--- return fake multiplier to effectively get mutant hp
-function mutant_hp(mutant)
-    return SYS_GetParam(2, mutant:section(), "Health") or 100
-
 end
 
 -- zombies have an inexplicable 0.1x damage multiplier that isn't reflected anywhere, so I added it here

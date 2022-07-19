@@ -189,7 +189,7 @@ end
 AlifeCreate = _G.alife_create_item
 function _G.alife_create_item(section, obj, t)
     if downgrade and IsItem("ammo",section) and obj:id() ~= AC_ID then 
-        section = downgrade_ammo(section, false, 1.2)
+        section = downgrade_ammo(section, true)
     end
     return AlifeCreate(section, obj, t)
 end
