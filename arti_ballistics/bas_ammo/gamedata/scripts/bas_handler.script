@@ -1,0 +1,41 @@
+local weakened = {}
+
+function corrosive_cloud(npc, s_hit, ctx)
+    local effect = particles_obj("artefact\\effects\\af_acidic_idle_color")
+    play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_show_01")
+    level.iterate_nearest(npc:position(), 5, function(obj)
+        if obj and obj:alive() and obj:id() ~= AC_ID then
+            weakened[obj:id()] = true
+            effect:play_at_pos(obj:position())
+        end
+    end)
+    return ballistic_handlers.default(npc, s_hit, ctx)
+end
+
+function on_before_hit(npc, s_hit, bone_id, flags)
+    if weakened[npc:id()] then
+        s_hit.power = s_hit.power * 1.2
+    end
+end
+
+function actor_on_before_hit(s_hit, bone_id, flags)
+    if weakened[s_hit.draftsman:id()] and s_hit.type == hit.wound then
+        s_hit.power = s_hit.power * 0.7
+    end
+end
+
+function se_on_unregister(se)
+    weakened[se.id] = nil
+end
+
+function on_death_callback(npc, who)
+    weakened[npc:id()] = nil
+end
+
+function on_game_start()
+    RegisterScriptCallback("npc_on_death_callback", on_death_callback)
+    RegisterScriptCallback("monster_on_death_callback", on_death_callback)
+    RegisterScriptCallback("actor_on_before_hit", actor_on_before_hit)
+    RegisterScriptCallback("on_before_hit", npc_on_before_hit)
+    RegisterScriptCallback("monster_on_before_hit", npc_on_before_hit)
+end

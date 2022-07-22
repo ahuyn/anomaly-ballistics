@@ -1,0 +1,280 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[ammo_23x75_shrapnel]:ammo_base ; #00
+GroupControlSection    = spawn_group
+discovery_dependency =
+$spawn            = "weapons\ammo\ammo_23x75_shrapnel" ; option for Level Editor
+class            = AMMO_S
+cform           = skeleton
+visual          = dynamics\weapons\wpn_ammo\ammo_12x70_buck.ogf
+description        = ammo_23x75_shrapnel_descr
+$prefetch         = 64
+
+cost            = 2100
+
+box_size        = 10
+
+inv_name        = ammo_23x75_shrapnel
+;inv_name_short    = ammo_23x75_shrapnel_s
+inv_name_short    = ammo_23x75_shrapnel
+inv_weight        = 0.45
+
+icons_texture                                       = ui\ui_icon_bas
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 121
+inv_grid_y         = 1
+
+
+k_dist            = 1.0
+k_disp            = 35
+k_hit            = 6.0
+k_impulse        = 5.5
+k_ap            = 0.3
+buck_shot        = 6
+tracer            = on
+4to1_tracer        = false
+wm_size         = 0.08
+k_air_resistance = 1.5
+
+tier                                     = 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[ammo_23x75_barrikada]:ammo_base ; #00
+GroupControlSection    = spawn_group
+discovery_dependency =
+$spawn            = "weapons\ammo\ammo_23x75_barrikada" ; option for Level Editor
+class            = AMMO_S
+cform           = skeleton
+visual          = dynamics\weapons\wpn_ammo\ammo_12x76_zhekan.ogf
+description        = ammo_23x75_barrikada_descr
+$prefetch         = 64
+
+cost            = 3500
+
+box_size        = 10
+
+inv_name        = ammo_23x75_barrikada
+;inv_name_short    = ammo_23x75_barrikada_s
+inv_name_short    = ammo_23x75_barrikada
+inv_weight        = 0.5
+
+icons_texture                                       = ui\ui_icon_bas
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 121
+inv_grid_y         = 0
+
+k_dist            = 1.00
+k_disp            = 1.00
+k_hit            = 10.7
+k_impulse        = 50
+k_ap            = 0.6
+impair          = 0.05
+tracer            = off
+4to1_tracer        = on
+wm_size         = 0.2
+k_air_resistance = 1.1
+k_bullet_speed    = 1.15
+
+tier                                     = 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[ammo_9x21_sp10]:ammo_base ; 165 gr
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn			= "weapons\ammo\ammo_9x21_sp10" ; option for Level Editor
+class			= AMMO_S
+cform           = skeleton
+visual          = dynamics\weapons\wpn_ammo\ammo_1143x23_Hydro.ogf
+description		= ammo_9x21_sp10_descr
+$prefetch 		= 64
+
+cost			= 3196
+
+box_size		= 14
+
+inv_name		= ammo_9x21_sp10
+;inv_name_short	= ammo_9x21_sp10_s
+inv_name_short	= ammo_9x21_sp10
+inv_weight		= .24
+
+icons_texture                                       = ui\ui_icon_bas
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 119
+inv_grid_y         = 0
+
+k_disp			= 0.66
+k_hit			= 0.77 ;  1.25
+k_impulse		= 0.8
+k_ap			= 0.45
+impair			= 1.1
+tracer_color_ID	= 0
+wm_size         = 0.088
+k_air_resistance = 0.8
+k_bullet_speed	= 1.25
+k_cam_dispersion = 1.0 ;  1.1
+
+tier                                     = 2
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[ammo_20x70_buck]:ammo_base ; #00
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn			= "weapons\ammo\ammo_20x70_buck" ; option for Level Editor
+class			= AMMO_S
+cform           = skeleton
+visual          = dynamics\weapons\wpn_ammo\ammo_12x70_buck.ogf
+description		= ammo_20x70_buck_descr
+$prefetch 		= 64
+
+cost			= 450
+
+box_size		= 10
+
+inv_name		= ammo_20x70_buck
+inv_name_short	= ammo_20x70_buck
+inv_name_short	= ammo_20x70_buck_s
+inv_weight		= .35
+
+icons_texture                                       = ui\ui_icon_bas
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 119
+inv_grid_y         = 1
+
+k_dist			= 0.55
+k_disp			= 4.6
+k_hit			= 0.35 ;  0.4
+k_impulse		= 0.33
+k_ap			= 0.03
+buck_shot		= 5
+tracer			= off
+4to1_tracer		= false
+wm_size         = 0.02
+k_air_resistance = 2.0
+
+tier                                     = 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[ammo_23_eco]:ammo_base ; #00
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn			= "weapons\ammo\ammo_20x70_buck" ; option for Level Editor
+class			= AMMO_S
+cform           = skeleton
+visual          = dynamics\weapons\wpn_ammo\ammo_12x70_buck.ogf
+description		= ammo_23_eco_descr
+$prefetch 		= 64
+
+cost			= 3500
+
+box_size		= 1
+
+inv_name		= ammo_23_eco
+inv_name_short	= ammo_23_eco
+inv_name_short	= ammo_23_eco_s
+inv_weight		= .05
+
+icons_texture                                       = ui\ui_icon_bas
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 121
+inv_grid_y         = 2
+
+
+k_disp			= 0.5
+k_impulse		= 0.15
+k_ap			= 0.01
+tracer_color_ID	= 1
+wm_size         = 0.048
+k_air_resistance = 0.15
+
+tier                                     = 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[ammo_vog-30]:ammo_base
+GroupControlSection	= spawn_group
+discovery_dependency =
+
+class			= S_VOG25
+cform           = skeleton
+visual          = dynamics\weapons\wpn_ammo\ammo_vog_25.ogf
+description		= ammo_vog_30_descr
+
+$prefetch 		= 64
+
+cost			= 1850
+
+box_size		= 1
+
+inv_name		= ammo_vog_30
+inv_name_short	= ammo_vog_30_s
+inv_weight		= 0.2 ;.08
+
+icons_texture                                       = ui\ui_icon_bas
+
+inv_grid_width     = 1
+inv_grid_height    = 1
+inv_grid_x         = 126
+inv_grid_y         = 1
+
+kill_msg_x			= 38
+kill_msg_y			= 233
+kill_msg_width		= 21
+kill_msg_height		= 22
+
+k_disp			= 0.6
+k_hit			= 8.0 ;  2
+k_impulse		= 1.1
+k_ap			= 0.55
+buck_shot		= 0
+tracer			= off
+wm_size         = 0.05
+
+fake_grenade_name = wpn_fake_missile
+
+tier                                     = 5
+snd_on_take								 = other
+grenade_ammo							 = true
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[ammo_338_federal]:ammo_base 
+GroupControlSection	= spawn_group
+discovery_dependency =
+$spawn			= "weapons\ammo\ammo_338_federal" ; option for Level Editor
+class			= AMMO_S
+cform           = skeleton
+visual          = dynamics\weapons\wpn_ammo\ammo_338_lapua.ogf
+description		= ammo_338_federal_descr
+$prefetch 		= 64
+
+cost			= 4100
+
+box_size		= 10
+
+inv_name		= ammo_338_federal
+inv_name_short	= ammo_338_federal_s
+inv_weight		= .420
+
+icons_texture                                       = ui\ui_icon_bas
+
+inv_grid_width     = 2
+inv_grid_height    = 1
+inv_grid_x         = 119
+inv_grid_y         = 2
+
+k_disp			= 0.67
+k_hit			= 1.0 
+k_impulse		= 0.81
+k_ap			= 0.9
+tracer_color_ID	= 2
+wm_size         = 0.066
+k_air_resistance = 0.05
+
+tier                                     = 3
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

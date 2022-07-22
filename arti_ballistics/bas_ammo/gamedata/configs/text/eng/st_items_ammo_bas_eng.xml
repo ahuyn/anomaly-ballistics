@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<!--
+	Ammunition
+-->
+
+<string_table>
+	
+	<string id="ammo_new_23x75_shrapnel">
+		<text>23x75mm "Shrapnel-25" shells</text>
+	</string>
+	<string id="ammo_new_23x75_shrapnel_descr">
+		<text>Cartridge with buckshot charge. Application range up to 25 meters. It is used for firing from the KS-23 carbine. Due to the fact that the barrel has rifling in the KS-23 carbine, the buckshot flies over a large area, which allows you to shoot offhand, practically without aiming.\n</text>
+	</string>
+	<string id="ammo_new_23x75_shrapnel_s">
+		<text>23x75mm Shrapnel</text>
+	</string>
+	
+	<string id="ammo_new_23x75_barrikada">
+		<text>23x75мм "Barrikada" shells</text>
+	</string>
+	<string id="ammo_new_23x75_barrikada_descr">
+		<text>A cartridge with a steel pointed bullet. It is used to forcibly stop vehicles by damaging them. Application range up to 100 meters. It is used for firing from the KS-23 carbine.</text>
+	</string>
+	<string id="ammo_new_23x75_barrikada_s">
+		<text>23x75mm Barrikada</text>
+	</string>
+
+		<string id="ammo_new_9x21_sp10">
+		<text>9x21mm SP10 rounds</text>
+	</string>
+	<string id="ammo_new_9x21_sp10_descr">
+		<text>Pistol cartridge with a bullet of increased penetration. Designed to destroy manpower protected by personal protective equipment. The nose part of the heat-strengthened steel core protrudes from the shell, due to which a high penetration effect of the bullet is achieved. Succeeded by the 9mm 7N21 and 7N31 special-issue rounds.</text>
+	</string>
+	<string id="ammo_new_9x21_sp10_s">
+		<text>9x21 SP10</text>
+	</string>
+
+	<string id="ammo_new_20x70_buck">
+		<text>20x70 Buckshot shells</text>
+	</string>
+	<string id="ammo_new_20x70_buck_descr">
+		<text>Standard 20-caliber shell filled with 5 6mm buckshot pellets. Highly lethal at close range. Due to the reduced powder charge it suffers from reduced power compared to 12 gauge shotguns. The lighter recoil makes it more popular for novice hunters. Only suitable for use with smoothbore weapons.</text>
+	</string>
+	<string id="ammo_new_20x70_buck_s">
+		<text>20x70 Buck</text>
+	</string>
+
+	<string id="ammo_new_23_eco">
+		<text>23x75 "Cloudkill" Cartridge</text>
+	</string>
+	<string id="ammo_new_23_eco_descr">
+		<text>Special use cartridge developed by the Ecologist faction, part of an ongoing joint study with Duty. This cartridge contains a hollow metal ball filled with a liquid toxin derived from chemical anomalies. On impact with a target, the toxin vaporizes into a chemical cloud that severely weakens the targets and produces a similar effect on any nearby targets. Against all targets it induces lethargy and weakness, making them more susceptible to impacts and other forms of damage. With mutants specifically, the round weakens their ability to exert force, reducing the strength of their attacks. Specially ordered by Duty to increase the chances of surviving highly dangerous mutant raids by weakening the stronger monsters.</text>
+	</string>
+	<string id="ammo_new_23_eco_s">
+		<text>23x75 Poison Cloud</text>
+	</string>
+	
+	<string id="st_ballistics_toxic">
+		<text>creates weakening toxin clouds</text>
+	</string>
+
+
+
+	<string id="ammo_new_338_federal">
+		<text>.338 Federal FMJ rounds</text>
+	</string>
+	<string id="ammo_new_338_federal_descr">
+		<text>The .338 Federal is a rifle cartridge based on the .308 Winchester case necked up to .33 caliber. It was created by Federal Cartridge and Sako in 2006 and intended as a big game cartridge with reasonable recoil for lightweight rifles.</text>
+	</string>
+	<string id="ammo_new_338_federal_s">
+		<text>.338 Federal</text>
+	</string>
+	
+</string_table>

@@ -257,16 +257,17 @@ function treasure_manager.try_spawn_treasure(box)
         alife_create_item(k, box)
     end
 end
-
-RollAmmo = magazines_loot.determine_ammo
--- subject the ammo pop in mags to downgrade
-function magazines_loot.determine_ammo(ammo_to_pick, mag_sec, rank)
-    if RollAmmo then
-        print_dbg("Roll to downgrade %s in %s", ammo_to_pick, mag_sec)
-        ammo_to_pick = RollAmmo(ammo_to_pick, mag_sec, rank)
-        ammo_to_pick = downgrade_ammo(ammo_to_pick)
+if magazines then
+    RollAmmo = magazines_loot.determine_ammo
+    -- subject the ammo pop in mags to downgrade
+    function magazines_loot.determine_ammo(ammo_to_pick, mag_sec, rank)
+        if RollAmmo then
+            print_dbg("Roll to downgrade %s in %s", ammo_to_pick, mag_sec)
+            ammo_to_pick = RollAmmo(ammo_to_pick, mag_sec, rank)
+            ammo_to_pick = downgrade_ammo(ammo_to_pick)
+        end
+        return ammo_to_pick
     end
-    return ammo_to_pick
 end
 
 function on_game_start()
