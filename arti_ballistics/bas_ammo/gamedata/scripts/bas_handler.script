@@ -40,6 +40,6 @@ function on_game_start()
     RegisterScriptCallback("npc_on_death_callback", on_death_callback)
     RegisterScriptCallback("monster_on_death_callback", on_death_callback)
     RegisterScriptCallback("actor_on_before_hit", actor_on_before_hit)
-    RegisterScriptCallback("on_before_hit", npc_on_before_hit)
-    RegisterScriptCallback("monster_on_before_hit", npc_on_before_hit)
+    RegisterScriptCallback("npc_on_before_hit", on_before_hit)
+    RegisterScriptCallback("monster_on_before_hit", on_before_hit)
 end
