@@ -10,7 +10,7 @@
 		<text>23x75mm "Shrapnel-25" shells</text>
 	</string>
 	<string id="ammo_new_23x75_shrapnel_descr">
-		<text>Cartridge with buckshot charge. Application range up to 25 meters. It is used for firing from the KS-23 carbine. Due to the fact that the barrel has rifling in the KS-23 carbine, the buckshot flies over a large area, which allows you to shoot offhand, practically without aiming.\n</text>
+		<text>23mm shell with 8 #00 pellets. Application range up to 25 meters. It is used for firing from the KS-23 carbine. Due to the fact that the barrel has rifling in the KS-23 carbine, the buckshot flies over a large area, which allows you to shoot offhand, practically without aiming. Fielded in limited quantities with the KS-23 as a hunting round for extremely tough mutants.\n</text>
 	</string>
 	<string id="ammo_new_23x75_shrapnel_s">
 		<text>23x75mm Shrapnel</text>
@@ -20,7 +20,7 @@
 		<text>23x75μμ "Barrikada" shells</text>
 	</string>
 	<string id="ammo_new_23x75_barrikada_descr">
-		<text>A cartridge with a steel pointed bullet. It is used to forcibly stop vehicles by damaging them. Application range up to 100 meters. It is used for firing from the KS-23 carbine.</text>
+		<text>23mm shell with a pointed steel bullet. Employed to forcibly stop vehicles by destroying the engine block. Application range up to 100 meters. Imported by esoteric stalkers for hunting very large creatures.</text>
 	</string>
 	<string id="ammo_new_23x75_barrikada_s">
 		<text>23x75mm Barrikada</text>

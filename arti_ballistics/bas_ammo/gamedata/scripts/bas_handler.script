@@ -1,8 +1,12 @@
+play_sound_on_location = ballistics_utils.play_sound_on_location
+play_particle       = ballistics_utils.play_particle
+
 local weakened = {}
 
 function corrosive_cloud(npc, s_hit, ctx)
-    local effect = particles_obj("artefact\\effects\\af_acidic_idle_color")
+    local effect = particles_object("artefact\\effects\\af_acidic_idle_color")
     play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_show_01")
+    play_sound_on_location("acid", npc)
     level.iterate_nearest(npc:position(), 5, function(obj)
         if obj and obj:alive() and obj:id() ~= AC_ID then
             weakened[obj:id()] = true
