@@ -230,7 +230,7 @@ function process_flinch(npc, precalc)
     ap_tier = get_tier(ammo_data.k_ap)
     armor_tier = get_tier(bone_data.armor)
     local flinch_adj = (ap_tier - armor_tier) * 0.3
-    local flinch_chance =  clamp(0.9 - flinch_adj, 0, 1)
+    local flinch_chance =  clamp(0.95 - flinch_adj, 0, 1)
     -- print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
     if flinch_chance > 0 and math_random() < flinch_chance then
         -- print_dbg("Staggering NPC")
