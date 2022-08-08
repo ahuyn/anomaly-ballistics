@@ -7,7 +7,7 @@ arti_crusher = {
     af_gravi = "powder_gravi,5",
     
     af_crystal = "powder_fireball,3",
-    af_fireball = "powder_fireball.5",
+    af_fireball = "powder_fireball,5",
     
     af_blood = "powder_blood,3",
     af_mincer_meat = "powder_blood,5",
