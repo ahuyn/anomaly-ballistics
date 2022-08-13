@@ -128,7 +128,7 @@ function shoot_effect(obj, sect)
 		end
 	end
 
-	recoil_camera(obj, recoil_base, shotc)
+	recoil_camera(obj, recoil_base, shotc, s)
     shotc = shotc+1
 	shott = time_global()+100
 end
@@ -141,7 +141,7 @@ function recoil_multiplier(base, wpn, ammo_sec, shotc)
 	return base
 end
 
-function recoil_camera(obj, recoil_base, shotc)
+function recoil_camera(obj, recoil_base, shotc, s)
 	local mult = (clamp((5 - shotc)/5, 0, 1)) * s or 0
 	if recoil_base > 0.9 and mult > 0 and db.actor.actor_look_at_point and db.actor.actor_stop_look_at_point then
 		printf("Recoil mult is %s, shots fired %s", mult, shotc)
