@@ -55,9 +55,9 @@ function downgrade_ammo(sec, bypass, mult)
     local dg_ammo = ini_ammo:r_string_ex(sec, "dg_ammo")
     local dg_chance = ini_ammo:r_float_ex(sec, "dg_chance") or 0
     dg_chance = dg_chance * mult
-    print_dbg("Attempt downgrade ammo %s to %s", sec, dg_ammo)
+    -- print_dbg("Attempt downgrade ammo %s to %s", sec, dg_ammo)
     if dg_ammo and (math_random() < (dg_chance) or bypass) then
-        print_dbg("Downgrading ammo %s to %s", sec, dg_ammo)
+        -- print_dbg("Downgrading ammo %s to %s", sec, dg_ammo)
         return dg_ammo
     else 
         return sec
@@ -72,7 +72,7 @@ function process_wpn(wpn, bypass)
     local dg_ammo = ini_ammo:r_string_ex(ammo_type, "dg_ammo") or ""
     local dg_chance = ini_ammo:r_float_ex(ammo_type, "dg_chance") or 0
     if ammo_data_inv[dg_ammo] and (bypass or math_random() < dg_chance) then
-        print_dbg("Downgrading ammo for weapon %s", wpn:section())
+        -- print_dbg("Downgrading ammo for weapon %s", wpn:section())
         local cnt = wpn:get_ammo_in_magazine()
         wpn:unload_magazine(true)
         wpn:set_ammo_type(ammo_data_inv[dg_ammo] - 1)

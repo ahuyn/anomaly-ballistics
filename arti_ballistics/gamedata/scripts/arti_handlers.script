@@ -365,10 +365,11 @@ function slug(npc, s_hit, ctx)
 
     -- ignore armor on headshot
     if head_bones[ctx.bone_id] then
-        print_dbg("Stunning on headshot")
-        bone_data.armor = clamp(bone_data.armor - 0.05, 0, 1)
+        bone_data.armor = clamp(bone_data.armor - 0.1, 0, 1)
+    elseif ballistics_utils.center_mass[ctx.bone_id] and math_random() < 0.9 then
         play_anim(npc)
     end
+
 
     calcs.ap_calc = npc_standard(precalc)
 
@@ -532,7 +533,8 @@ end
 function soulripper(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     play_sound_on_location("soulripper", npc)
-    s_hit.impulse = 9001
+    s_hit.impulse = 90001
+    s_hit.type = hit.explosion
     return s_hit
 end
 

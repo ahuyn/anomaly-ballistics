@@ -56,7 +56,7 @@
 		<text>expansion damage on full penetration</text>
 	</string>
 	<string id="st_ballistics_slug">
-		<text>headshots stun, ignore some armor</text>
+		<text>headshots ignore some armor, center mass stuns</text>
 	</string>
 	<string id="st_ballistics_rip">
 		<text>extreme expansion damage</text>

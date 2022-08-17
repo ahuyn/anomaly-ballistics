@@ -69,6 +69,18 @@ head_bones = {
     [19] =	"jaw_1",
 }
 
+center_mass = {
+    
+	[1]  =  "bip01_pelvis", 
+    [2]  =	"bip01_pelvis", 
+    [11] =	"bip01_spine",
+    [12] =	"bip01_spine1",
+    [13] =	"bip01_spine2",
+	[20] = "bip01_l_clavicle", 
+	[33] = "bip01_r_clavicle",
+	[46] = "bip01_pelvis", 
+}
+
 -- play particle at npc bone
 function play_particle(npc, bone_id, name)
     bone_id = (not bone_id or bone_id == 65535) and 1 or bone_id
@@ -93,7 +105,7 @@ function play_sound_on_location(snd, npc, distance)
     snd_to_play = snd_to_play .. math.random(ini_sounds:r_float_ex(snd, to_use.."_amt") or 1)
 	local snd = xr_sound.get_safe_sound_object(snd_to_play)
 	if snd then
-        print_dbg("Playing %s", snd_to_play)
+        -- print_dbg("Playing %s", snd_to_play)
 		snd:play(db.actor, 0, sound_object.s2d)
         -- snd.volume = 1
 		snd.volume = (distance > 10) and 0.3 + (0.7 * (1 - (clamp(distance, 2, 100) - 2)/98)) or 1
@@ -125,10 +137,11 @@ function npc_bone_protection(npc, bone_id)
     if custom_bone_data[id] and custom_bone_data[id][bone_id] then return custom_bone_data[id][bone_id], True
     else
         local bone_name = Bone_IDs[bone_id] or "bip01_spine"
-        local bone_sec = read_npc_bone_sec(npc)
+        local bone_sec = read_npc_bone_sec(npc) or "stalker_hero_1"
         if not bone_cache[bone_sec] then bone_cache[bone_sec] = {} end
         if not bone_cache[bone_sec][bone_name] then
-            local bone_armor = str_explode(ini_damage:r_string_ex(bone_sec, bone_name), ",") 
+            local bone_armor_str = ini_damage:r_string_ex(bone_sec, bone_name) or "0, 0.15"
+            local bone_armor = str_explode(bone_armor_str, ",") 
             bone_cache[bone_sec][bone_name] = tonumber(bone_armor[2]) or 0.15
         end
         return bone_cache[bone_sec][bone_name], False
@@ -138,7 +151,7 @@ end
 function read_npc_bone_sec(npc)
     local visual_data = game.get_visual_userdata(npc:get_visual_name())
     if not visual_data then
-        print_dbg("!!! Visual %s is lacking data !!!", npc:get_visual_name())
+        printf("!!! Visual %s is lacking data !!!", npc:get_visual_name())
         return "stalker_hero_1"
     end
     local bone_sec = visual_data:r_string_ex("bone_protection", "bones_protection_sect", "stalker_hero_1") 
@@ -270,10 +283,10 @@ function actor_on_weapon_before_fire(flags)
             cur_wep_data.vel_mod = vel_add/base_vel
             cur_wep_data.dec = base_degrade
             cur_wep_data.recoil = (base_recoil + recoil_add)/base_recoil
-            print_dbg("Stored velocity mod %s, recoil %s, degradation %s for wpn %s", cur_wep_data.vel_mod, cur_wep_data.recoil, base_degrade, sec)
+            -- print_dbg("Stored velocity mod %s, recoil %s, degradation %s for wpn %s", cur_wep_data.vel_mod, cur_wep_data.recoil, base_degrade, sec)
         else
             -- clear
-            print_dbg("Clearing cwd")
+            -- print_dbg("Clearing cwd")
             cur_wep_data.id = 0
             cur_wep_data.vel_mod = 0
             cur_wep_data.dec = 0
