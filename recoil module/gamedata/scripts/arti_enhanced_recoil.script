@@ -144,7 +144,7 @@ end
 function recoil_camera(obj, recoil_base, shotc, s)
 	local mult = (clamp((5 - shotc)/5, 0, 1)) * s or 0
 	local sect = obj:section()
-	if recoil_base > 0.9 and mult > 0 and db.actor.actor_look_at_point and db.actor.actor_stop_look_at_point then
+	if recoil_base > 1 and mult > 0 and db.actor.actor_look_at_point and db.actor.actor_stop_look_at_point then
 		-- print_dbg("Recoil mult is %s, shots fired %s", mult, shotc)
 		local actor_position = device().cam_pos
 		local actor_direction = device().cam_dir	
@@ -154,6 +154,7 @@ function recoil_camera(obj, recoil_base, shotc, s)
 		actor_direction.y = clamp(actor_direction.y + degree_base, -0.999, 0.999)
 		actor_direction = vector_rotate_y(actor_direction, (math.random() - 0.5) * degree_base)
 		db.actor:actor_look_at_point(vector():set(actor_position):add(actor_direction:mul(10000)))
+		print_dbg("Camera effected up %s degrees", degree_base)
 		if not is_looking then
 			is_looking = true
 			CreateTimeEvent("stoplook", math.random(10), 0, function()
