@@ -422,10 +422,10 @@ local fire_eff = particles_object("artefact\\artefact_zharka")
 -- ignite + reduce armor
 function fire_damage(npc, s_hit, ctx)
     s_hit = fire_dot(npc, s_hit, ctx)
-    -- shred 0.01 off each hit
+    -- shred 0.06 off each hit
     local bone_data = npc_bone_data(npc, ctx.bone_id)
     if ctx.is_npc then
-        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
+        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.06, 0, 1))
     end
     -- play something?
     return s_hit
