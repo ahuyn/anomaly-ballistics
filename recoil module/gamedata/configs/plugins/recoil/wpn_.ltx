@@ -1,154 +1,172 @@
 ;-- Weapons shoot effects
 
+;-- 
+[generic_default]
+kick_recoil = 0.4, 0.3, 0.2, 0.2, 0.2
+[generic_w_pistol]
+kick_recoil = 0.4, 0.3, 0.2, 0.2, 0.2
+
+[generic_w_smg]
+kick_recoil = 0.2, 0.4, 0.2, 0.2, 0.2
+
+[generic_w_rifle]
+kick_recoil = 0.1, 0.4, 0.3, 0.2, 0.2
+
+[generic_w_shotgun]
+kick_recoil = 1.0, 1.0, 1.0, 1.0, 1.0
+
+[generic_w_sniper]
+kick_recoil = 0.1, 0.1, 0.1, 0.1, 0.1
+
 ;-- s: effect power [1-5]
 ;-- r,e: anim effects
 ;-- p: ppe effects
 
-[wpn_aps]
+[wpn_aps]: generic_w_pistol
 s = 1
 r = 0
 e = 0.5, 0.3, 0.4:1, 0.6:0, 0.6:0, 0 
 p =
 
-[wpn_pb]
+[wpn_pb]: generic_w_pistol
 s = 1
 r = 0
 e = 0.5, 0.4, 0.3:0, 0.4:0, 0.4:0, 0 
 p =
 
-[wpn_beretta]
+[wpn_beretta]: generic_w_pistol
 s = 1
 r = 0
 e = 0.8, 0.6, 0.4:0, 0.8, 0.8:0, 0.3 
 p = blur=0
 
-[wpn_cz75]
+[wpn_cz75]: generic_w_pistol
 s = 1
 r = 0
 e = 0.5, 0.3, 0.4:0, 0.5:0, 0.5:0, 0 
 p =
 
-[wpn_hpsa]
+[wpn_hpsa]: generic_w_pistol
 s = 1
 r = 0
 e = 0.6, 0.5, 0.6:0, 0.8:0, 0.8:0, 0 
 p =
 
-[wpn_mp5]
+[wpn_mp5]: generic_w_smg
 s = 1
 r = 0
 e = 0.1, 0.1, 0.3:0, 0.3, 0.3:0, 0.2  
 p = blur=0
 
-[wpn_desert_eagle]
+[wpn_desert_eagle]: generic_w_pistol
 s = 2
 r = 1
 e = 1.2, 0.8, 0.9:1, 1.8, 2:0, 0.7 
 p = blur=0,  duality_h=0.04
 
-[wpn_desert_eagle_custom]
+[wpn_desert_eagle_custom]: generic_w_pistol
 s = 2
 r = 1
 e = 1.2, 0.8, 0.9:1, 1.8, 2:0, 0.6 
 p = blur=0,  duality_h=0.03
 
-[wpn_aug]
+[wpn_aug]: generic_w_rifle
 s = 1
 r = 0
 e = 0.1, 0.2:0, 0.3:0, 0.2, 0.2:0, 0.2 
 p = blur=0
 
-[wpn_9a91]
+[wpn_9a91]: generic_w_rifle
 s = 1
 r = 0
 e = 0, 1:0, 1:0, 1:0, 1:0, 0.4 
 p = blur=0
 
-[wpn_groza]
+[wpn_groza]: generic_w_rifle
 s = 1
 r = 0
 e = 0.3, 0.3:0, 0.4:0, 0.3:0, 0.4:0, 0.2 
 p = blur=0
 
-[wpn_vintorez]
+[wpn_vintorez]: generic_w_sniper
 s = 1
 r = 0
 e = 0, 0.6:0, 0.6:0, 0.4, 0.6:0, 0.2
 p = blur=0
 
-[wpn_abakan]
+[wpn_abakan]: generic_w_rifle
 s = 1
 r = 0
 e = 0.3, 0.3:0, 0.3:0, 0.3, 0.3:0, 0.2
 p = blur=0
 
-[wpn_ak]
+[wpn_ak]: generic_w_rifle
 s = 1
 r = 0
 e = 0.6, 0.8:0, 0.8:0, 0.6, 1.2:0, 0.3
 p = blur=0
 
-[wpn_l96a1]
+[wpn_l96a1]: generic_w_sniper
 s = 2
 r = 1
 e = 1:0, 1:0, 1.5:1, 1:0, 1:0, 1
 p = blur=0
 
-[wpn_mosin]
+[wpn_mosin]: generic_w_sniper
 s = 2 ;  4
 r = 1
 e = 1:0, 1:0, 1.5:1, 2:0, 2:0, 1:1 
 p = blur=0
 
-[wpn_gauss]
+[wpn_gauss]: generic_w_sniper
 s = 1
 r = 1
 e = 0, 1:0, 1:0, 1, 1.2:1, 0.2 
 p = blur=0
 
-[wpn_bm16]
+[wpn_bm16]: generic_w_shotgun
 s = 2
 r = 1
 e = 1, 1, 1, 1, 2, 1
 p = blur=0, duality_v=0.06
 
-[wpn_bm16_full]
+[wpn_bm16_full]: generic_w_shotgun
 s = 2
 r = 1
 e = 1, 1, 1, 1, 2, 1
 p = blur=0,  grey=0.05, duality_v=0.02
 
-[wpn_mossberg590]
+[wpn_mossberg590]: generic_w_shotgun
 s = 1
 r = 1
 e = 0.8, 0.8, 0.6, 1, 0.8, 0.6
 p = grey=0.05, duality_v=0.02
 
-[wpn_protecta]
+[wpn_protecta]: generic_w_shotgun
 s = 1
 r = 0
 e = 1, 0.8, 0.8, 1, 0.8, 0.8
 p = grey=0.02, duality_v=0.02
 
-[wpn_saiga12s]
+[wpn_saiga12s]: generic_w_shotgun
 s = 1
 r = 0
 e = 1, 0.8, 0.8, 1, 1, 1
 p = grey=0.02, duality_v=0.02
 
-[wpn_wincheaster1300]
+[wpn_wincheaster1300]: generic_w_shotgun
 s = 1
 r = 1
 e = 1, 0.8, 1, 1.2, 0.8, 0.6
 p = grey=0.02, duality_v=0.02
 
-[wpn_m79]
+[wpn_m79]: generic_w_rifle
 s = 2
 r = 1
 e = 1, 0.9, 1, 0.8, 0.8, 0.6
 p = grey=0.05, duality_v=0.04
 
-[wpn_rpg7]
+[wpn_rpg7]: generic_w_sniper
 s = 3
 r = 1
 e = 0, 1:1, 2:1, 0, 3:1, 0 

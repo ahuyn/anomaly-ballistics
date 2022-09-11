@@ -421,13 +421,26 @@ local fire_eff = particles_object("artefact\\artefact_zharka")
 
 -- ignite + reduce armor
 function fire_damage(npc, s_hit, ctx)
-    s_hit = fire_dot(npc, s_hit, ctx)
+    s_hit =  ballistic_handlers.default(npc, s_hit, ctx)
     -- shred 0.06 off each hit
     local bone_data = npc_bone_data(npc, ctx.bone_id)
     if ctx.is_npc then
-        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.06, 0, 1))
+        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.05, 0, 1))
     end
-    -- play something?
+    play_particle(npc, ctx.bone_id, "artefact\\af_thermal_idle")
+    print_dbg("Ignited %s", npc:id())
+    play_sound_on_location("incendiary", npc)
+    add_effect("ignite"..npc:id()..math.random(5), 5, 
+    function()
+        play_particle(npc, 11, "artefact\\artefact_zharka")
+        if not npc:alive() then return end
+        local h = hit()
+        h.type = hit.fire
+        h.draftsman = db.actor
+        h.power = math_random(5, 10) / 100
+        h.bone = "bip01_spine"
+        npc:hit(h)
+    end)
     return s_hit
 end
 
@@ -538,33 +551,42 @@ function soulripper(npc, s_hit, ctx)
     return s_hit
 end
 
--- spawn an explosive
-function explosion(npc, s_hit, ctx)
-    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
-    local npc_pos = npc:position()
-    npc_pos.y = npc_pos.y + 0.5
-
-    local explode_obj = alife_create_item("bullet_blow", npc)
-    CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
-    function(id)
-        local explode_obj = get_object_by_id(id)
-        if explode_obj then
-            explode_obj:explode(0)
-            return true
-        end
-        return false
-    end, explode_obj.id)
-    return s_hit
+-- custom raycast to get 12.7 point of aim
+function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
+    local ammo_table = utils_item.get_ammo(wpn:section(), wpn:id())
+    ammo_type = wpn:get_ammo_type()
+    if ammo_table[ammo_type + 1] and ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special") == "explodes" then
+		gvid = db.actor:game_vertex_id()
+		local r = level.get_target_dist and level.get_target_dist() or 3
+        if r > 1000 then return end
+		pos = vector():set(db.actor:position())
+		pos:add(device().cam_dir:mul(r))
+		lvid = level.vertex_id(pos)
+        
+        local explode_obj = alife_create_item("bullet_blow", {pos, lvid, gvid})
+        CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
+        function(id)
+            local explode_obj = get_object_by_id(id)
+            if explode_obj then
+                explode_obj:explode(0)
+                return true
+            end
+            return false
+        end, explode_obj.id)
+    end
 end
 
--- unrelated but make actor kung fu proof with melee
-ActorPunch = xr_effects.actor_punch
-
-function xr_effects.actor_punch(npc)
-    local active_wpn = db.actor:active_item()
-    if active_wpn and IsMelee(active_wpn) then
-        
-    else
-        ActorPunch(npc)
+-- enhanced recoil patch
+if enhanced_recoil then
+    RecoilMult = enhanced_recoil.recoil_multiplier
+    function enhanced_recoil.recoil_multiplier(wpn, shotc)
+        local sect = wpn:section()
+        local ammo_list = utils_item.get_ammo(sect, wpn:id())
+        local ammo_type = ammo_list[wpn:get_ammo_type() + 1]
+        return RecoilMult(wpn, shotc) * (ini_ammo:r_float_ex(ammo_type, "recoil") or 1)
     end
+end
+
+function on_game_start()
+    RegisterScriptCallback("actor_on_weapon_fired", actor_on_weapon_fired)
 end

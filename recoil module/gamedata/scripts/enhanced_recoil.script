@@ -149,19 +149,17 @@ function camera_effect(obj, recoil_base, h_recoil, strength)
 end
 
 -- Invoked whenever a shot is fired and enhanced recoil applies.
--- Patch this to modify the magnitude based on the weapon, ammo and shots fired.
--- What this does:
--- Value is applied as the recoil  
-function recoil_multiplier(base, wpn, ammo_sec, shotc)
-	return base
+-- Patch this to modify the magnitude based on the weapon and burst length
+function recoil_multiplier(wpn, shotc)
+	return 1
 end
 
 local v_factor = 0.5
 local v_recoil = 0
 
 -- local horizontal_base = 0
-local h_recoil = 0
 local h_factor = 0.4
+local h_recoil = 0
 -- local mult_table = {
 -- 	[1] = 0,
 -- 	[2] = 0,
@@ -192,7 +190,7 @@ function recoil_camera(obj, recoil_base, shotc, s)
 		-- Randomness
 		local h_recoil_rnd = (math.random()-0.5)
 		-- local h_recoil_rnd = math.random(-1, 1)
-		h_recoil = h_recoil_rnd * horizontal_base * h_factor
+		h_recoil = h_recoil_rnd * horizontal_base * h_factor * recoil_multiplier(obj, shotc)
 		
 		-- Rotate camera left-right
 		actor_direction = vector_rotate_y(actor_direction, h_recoil)
@@ -204,7 +202,7 @@ function recoil_camera(obj, recoil_base, shotc, s)
 
 		local zoom_factor = obj:cast_Weapon():GetZoomFactor() 
 		local zoom_kick_factor = is_zoomed and zoom_factor ~= 0 and 5*(1/zoom_factor) or 1
-		v_recoil = vertical_base * zoom_kick_factor * mult * v_factor
+		v_recoil = vertical_base * zoom_kick_factor * mult * v_factor * recoil_multiplier(obj, shotc)
 		actor_direction.y = clamp(actor_direction.y + (v_recoil), -0.999, 0.999)
 
 		-- printf("recoil_base: " .. recoil_base)

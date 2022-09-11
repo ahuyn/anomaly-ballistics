@@ -65,7 +65,7 @@
 		<text>deals bonus damage to mutants</text>
 	</string>
 	<string id="st_ballistics_explodes">
-		<text>explodes on impacting target</text>
+		<text>explodes on impact</text>
 	</string>
 	<string id="st_ballistics_chaos">
 		<text>60%-160% damage/ap range</text>
@@ -816,7 +816,7 @@
 		<text>12.7x55mm Explosive rounds</text>
 	</string>
 	<string id="ammo_new_12.7x55_exp_descr">
-		<text>A relatively new and restricted development, these experimental rounds have a small fragment of a destabilized thermal artifact wrapped in lead with a standard metal jacket. The round exhibits no anomalous effects when impacting most solid surfaces, but the artifact core releases a tremendous amount of energy on impacting an organic target. The lead casing and metal jacket become shrapnel for the explosion, like the outer case of a grenade. While the armor penetration is limited due to a majority of the energy being transferred radially outward, the force of the explosion will cause serious damage to the target and anyone around them.</text>
+		<text>A relatively new and restricted development, these experimental rounds have a small fragment of a destabilized thermal artifact wrapped in lead with a standard metal jacket. The round exhibits no anomalous effects when impacting most solid surfaces, but the artifact core releases a tremendous amount of energy on impacting a hard target. The lead casing and metal jacket become shrapnel for the explosion, like the outer case of a grenade. While the armor penetration is limited due to a majority of the energy being transferred radially outward, the force of the explosion will cause serious damage and disorientation to the target and anyone around them.</text>
 	</string>
 	<string id="ammo_new_12.7x55_exp_s">
 		<text>12.7x55 EXP</text>
