@@ -23,12 +23,6 @@
 <string id="ui_mcm_ballistics_cost_desc">
 	<text>Use the base cost defined in custom ammo config.</text>
 </string>
-<string id="ui_mcm_ballistics_recoil">
-	<text>Enhanced Enhanced Recoil</text>
-</string>
-<string id="ui_mcm_ballistics_recoil_desc">
-	<text>Enables the modular enhanced recoil effects that also factor in ammo and weapon recoil stats.</text>
-</string>
 <string id="ui_mcm_ballistics_mutant">
 	<text>Increased Mutant Health</text>
 </string>

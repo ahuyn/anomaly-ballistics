@@ -1,13 +1,15 @@
-[ammo_7.62x54_7h1]:ammo_base; 57_N_323S
+[ammo_7.62x54_7h1]:ammo_base; 57-N-323S
 name		= ammo_new_7.62x54r
 k_hit		= 1
 k_ap		= 0.2
+k_pen       = 0.3
 cost        = 800
 
 [ammo_7.62x54_7h1_bad]:ammo_7.62x54_7h1 ; 7N1
 name		= ammo_new_7.62x54_7n1
 k_hit		= 1.1
 k_ap		= 0.249
+k_pen       = 0.4
 cost        = 1400
 dg_ammo     = ammo_7.62x54_7h1
 dg_chance   = 0.5
@@ -55,10 +57,11 @@ dg_ammo     = ammo_7.62x54_ap
 dg_chance   = 0.8
 
 
-[ammo_pkm_100]:ammo_base ;57_N_323S belt
+[ammo_pkm_100]:ammo_base ;57-N-323S belt
 name		= ammo_new_7.62x54_ppr
 k_hit		= 1
 k_ap		= 0.2
+k_pen       = 0.3
 impair      = 1
 cost        = 4000
 
@@ -67,7 +70,7 @@ handler     = arti_handlers.buckshot_damage
 name		= ammo_new_7.62x54_split
 k_hit		= 0.55
 k_ap		= 0.175
-k_pen       = 0.3
+k_pen       = 0.2
 impair      = 1.5
 cost        = 6500
 dg_ammo     = ammo_pkm_100
@@ -78,12 +81,14 @@ dg_chance   = 0.6
 name		= ammo_new_7.62x51_fmj
 k_hit		= 1
 k_ap		= 0.225
+k_pen       = 0.3
 cost        = 1800
 
 [ammo_7.62x51_fmj_bad]:ammo_7.62x51_fmj; mk316?
 name		= ammo_new_7.62x51_fmjs
 k_hit		= 1.05
 k_ap		= 0.275
+k_pen       = 0.3
 cost        = 2600
 dg_ammo     = ammo_7.62x51_fmj
 dg_chance   = 0.4
@@ -110,12 +115,14 @@ special     = pierce
 name		= ammo_new_7.92x33_fmj
 k_hit		= 1
 k_ap		= 0.195
+k_pen       = 0.35
 cost        = 900
 
 [ammo_7.92x33_fmj_bad]:ammo_7.92x33_fmj ;match
 name		= ammo_new_7.92x33_match
 k_hit		= 1
 k_ap		= 0.215
+k_pen       = 0.35
 cost        = 1500
 dg_ammo     = ammo_7.92x33_fmj
 dg_chance   = 0.4
@@ -142,6 +149,7 @@ dg_chance   = 0.7
 name		= ammo_new_12.7x55_fmj
 k_hit		= 1
 k_ap		= 0.305
+k_pen       = 0.15
 impair      = 1
 cost        = 4000
 
@@ -149,6 +157,7 @@ cost        = 4000
 name		= ammo_new_12.7x55_fmjs
 k_hit		= 1.05
 k_ap		= 0.335
+k_pen       = 0.15
 cost        = 6000
 dg_ammo     = ammo_12.7x55_fmj
 dg_chance   = 0.4

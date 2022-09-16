@@ -239,7 +239,9 @@ function mutant_prot_values(mutant, id)
 end
 
 -- Utils to handle storing velocity. Before weapon fired, compute and cache velocity modifier
-local cur_wep_data = {}
+local cur_wep_data = {
+    id = 0
+}
 -- check and update current weapon to cache hit power, velocity and recoil (for recoil module)
 function actor_on_weapon_before_fire(flags)
     local current_wpn = db.actor:active_item()
@@ -272,17 +274,9 @@ function actor_on_weapon_before_fire(flags)
 					local val = tonumber(string.sub(shot_dec, 2))
 					base_degrade = op == "+" and base_degrade + val or base_degrade - val
 				end
-
-                local recoil = ini_sys:r_string_ex(section,"cam_step_angle_horz")
-				if recoil then
-					local op = string.sub(recoil, 1, 1)
-					local val = tonumber(string.sub(recoil, 2))
-					recoil_add = op == "+" and recoil_add + val or recoil_add - val
-				end
             end
             cur_wep_data.vel_mod = vel_add/base_vel
             cur_wep_data.dec = base_degrade
-            cur_wep_data.recoil = (base_recoil + recoil_add)/base_recoil
             -- print_dbg("Stored velocity mod %s, recoil %s, degradation %s for wpn %s", cur_wep_data.vel_mod, cur_wep_data.recoil, base_degrade, sec)
         else
             -- clear
@@ -290,7 +284,6 @@ function actor_on_weapon_before_fire(flags)
             cur_wep_data.id = 0
             cur_wep_data.vel_mod = 0
             cur_wep_data.dec = 0
-            cur_wep_data.recoil = 1
         end
     end
 end

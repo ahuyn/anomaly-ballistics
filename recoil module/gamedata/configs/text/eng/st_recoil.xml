@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<!--
+	Ammunition
+-->
+
+<string_table>
+    <string id="ui_mcm_menu_recoil">
+        <text>Recoil</text>
+    </string>
+    <string id="ui_mcm_recoil_title">
+        <text>Enhanced Recoil</text>
+    </string>
+    <string id="ui_mcm_recoil_enabled">
+        <text>Enable feature</text>
+    </string>
+    <string id="ui_mcm_recoil_enabled_desc">
+        <text>Enables enhanced recoil effects.</text>
+    </string>
+    <string id="ui_mcm_recoil_camera">
+        <text>Enable camera movement</text>
+    </string>
+    <string id="ui_mcm_recoil_camera_desc">
+        <text>Moves the camera to create recoil patterns. If disruptive or annoying, this can be toggled off.</text>
+    </string>
+    <string id="ui_mcm_recoil_stance">
+        <text>Stance affects recoil</text>
+    </string>
+    <string id="ui_mcm_recoil_stance_desc">
+        <text>Standing still stabilizes the weapon and reduces recoil. Movement increases recoil.</text>
+    </string>
+</string_table>
