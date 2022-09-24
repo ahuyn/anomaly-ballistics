@@ -186,9 +186,6 @@ function npc_standard(precalc)
         print_dbg("AP insufficient, reducing multiplier by %s", mult_adj)
         mult = mult * mult_adj 
     end
-
-
-
     -- print_dbg("Difference of %s, AP fraction of %s", diff, ap_frac)
     return mult
 end
@@ -417,6 +414,17 @@ function varmageddon(npc, s_hit, ctx)
     return s_hit
 end
 
+function rip(npc, s_hit, ctx)
+    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
+    if s_hit.power > 0.5 and db.actor.health < 1 then
+    	local s = xr_sound.get_safe_sound_object("Soul_"..math.random(5))
+		s:play(db.actor, 0, sound_object.s2d)
+    end
+    db.actor.health = clamp(db.actor.health + (0.1 * s_hit.power), 0, 1)
+
+    return s_hit
+end
+
 local fire_eff = particles_object("artefact\\artefact_zharka")
 
 -- ignite + reduce armor
@@ -508,7 +516,7 @@ function chaos_damage(npc, s_hit, ctx)
     s_hit.power = final_hit
 end
 
-local effect = particles_object("artefact\\effects\\af_electra_show_flash_00")
+local shock_effect = particles_object("artefact\\effects\\af_electra_show_flash_00")
 -- for shock anti armor
 function shock_damage(npc, s_hit, ctx)
     if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx)
@@ -534,7 +542,7 @@ function shock_damage(npc, s_hit, ctx)
         level.iterate_nearest(npc:position(), radius, function(obj)
             if obj and obj:alive() and obj:id() ~= AC_ID then
                 obj:hit(h)
-                effect:play_at_pos(obj:position())
+                shock_effect:play_at_pos(obj:position())
             end
         end)
     end
@@ -544,35 +552,78 @@ function shock_damage(npc, s_hit, ctx)
 end
 
 function soulripper(npc, s_hit, ctx)
-    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
+    s_hit = head_bones[ctx.bone_id] and rip(npc, s_hit, ctx) or ballistic_handlers.default(npc, s_hit, ctx)
     play_sound_on_location("soulripper", npc)
     s_hit.impulse = 90001
     s_hit.type = hit.explosion
     return s_hit
 end
 
--- custom raycast to get 12.7 point of aim
+-- get position of where actor is aiming
+function get_point_of_aim()
+    gvid = db.actor:game_vertex_id()
+    local r = level.get_target_dist and level.get_target_dist() or 3
+    if r > 1000 then return end
+    pos = vector():set(db.actor:position())
+    pos:add(device().cam_dir:mul(r))
+    lvid = level.vertex_id(pos)
+    return {pos, lvid, gvid}
+end
+
+local mine_id = 0
+function explode_handler()
+    local aim_point = get_point_of_aim()
+    if not aim_point then return end
+    local explode_obj = alife_create_item("bullet_blow", aim_point)
+    CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
+    function(id)
+        local explode_obj = get_object_by_id(id)
+        if explode_obj then
+            explode_obj:explode(0)
+            return true
+        end
+        return false
+    end, explode_obj.id)
+end
+
+-- local thunderbolt_fx              = particles_object("_samples_particles_\\explode_radial_electra")
+
+-- function thunderbolt_handler()
+--     local aim_point = get_point_of_aim()
+--     if not aim_point then 
+--         printf("No thunderbolt?")
+--         return 
+--     end
+    
+--     printf("Thunderbolt %s", #aim_point)
+--     thunder_pos = vector():set(aim_point[1].x, aim_point[1].y+60, aim_point[1].z)
+
+-- 	thunderbolt_fx:play_at_pos(thunder_pos)
+--     ballistics_utils.play_sound_distance("electric_big", db.actor:position():distance_to(aim_point[1]))
+    
+--     level.iterate_nearest(aim_point[1], 15, function(obj)
+--         if obj and obj:alive() and obj:id() ~= AC_ID then
+--             local h = hit()
+--             h.type = hit.shock
+--             h.draftsman = db.actor
+--             h.bone = "bip01_spine"
+--             h.power = 1 - (aim_point[1]:distance_to(obj:position())/15)
+--             obj:hit(h)
+--             shock_effect:play_at_pos(obj:position())
+--         end
+--     end)
+-- end
+
+local custom_proj_table = {
+    ["explodes"] = explode_handler,
+    ["thunderbolt"] = thunderbolt_handler
+}
+
 function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
     local ammo_table = utils_item.get_ammo(wpn:section(), wpn:id())
     ammo_type = wpn:get_ammo_type()
-    if ammo_table[ammo_type + 1] and ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special") == "explodes" then
-		gvid = db.actor:game_vertex_id()
-		local r = level.get_target_dist and level.get_target_dist() or 3
-        if r > 1000 then return end
-		pos = vector():set(db.actor:position())
-		pos:add(device().cam_dir:mul(r))
-		lvid = level.vertex_id(pos)
-        
-        local explode_obj = alife_create_item("bullet_blow", {pos, lvid, gvid})
-        CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
-        function(id)
-            local explode_obj = get_object_by_id(id)
-            if explode_obj then
-                explode_obj:explode(0)
-                return true
-            end
-            return false
-        end, explode_obj.id)
+    if ammo_table[ammo_type + 1] and custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")] then
+        custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")]()
     end
 end
 

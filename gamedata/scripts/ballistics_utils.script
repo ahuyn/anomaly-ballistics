@@ -99,17 +99,21 @@ function play_sound_on_location(snd, npc, distance)
 		return
 	end
     distance = distance or get_distance(db.actor, npc)
+    play_sound_distance(snd, distance)
+end
+
+function play_sound_distance(snd, distance)
     to_use = distance > 10 and ini_sounds:r_string_ex(snd, "far") and "far" or "near"
     snd_to_play = ini_sounds:r_string_ex(snd, to_use)
     if not snd_to_play then return end
     snd_to_play = snd_to_play .. math.random(ini_sounds:r_float_ex(snd, to_use.."_amt") or 1)
-	local snd = xr_sound.get_safe_sound_object(snd_to_play)
-	if snd then
+	local s = xr_sound.get_safe_sound_object(snd_to_play)
+	if s then
         -- print_dbg("Playing %s", snd_to_play)
-		snd:play(db.actor, 0, sound_object.s2d)
+		s:play(db.actor, 0, sound_object.s2d)
         -- snd.volume = 1
-		snd.volume = (distance > 10) and 0.3 + (0.7 * (1 - (clamp(distance, 2, 100) - 2)/98)) or 1
-		return snd
+		s.volume = (distance > 10) and 0.3 + (0.7 * (1 - (clamp(distance, 2, 100) - 2)/98)) or 1
+		return s
 	end
 end
 

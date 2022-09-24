@@ -59,7 +59,7 @@
 		<text>headshots ignore some armor, center mass stuns</text>
 	</string>
 	<string id="st_ballistics_rip">
-		<text>extreme expansion damage</text>
+		<text>expansion damage, lifesteal</text>
 	</string>
 	<string id="st_ballistics_varma">
 		<text>deals bonus damage to mutants</text>
@@ -92,7 +92,7 @@
 		<text>limited target piercing</text>
 	</string>
 	<string id="st_ballistics_soulripper">
-		<text>exponential ultra piercing</text>
+		<text>exponential ultra piercing, headshots heal</text>
 	</string>
 
 	<string id="st_link">
@@ -233,20 +233,20 @@
 		<text>.45 ACP</text>
 	</string>
 	<string id="ammo_new_11.43x23_fmjs">
-		<text>.45 ACP +P rounds</text>
+		<text>.45 ACP AP+P rounds</text>
 	</string>
 	<string id="ammo_new_11.43x23_fmjs_descr">
-		<text>.45 ACP round with an overpressure load to bring the terminal performance of the .45 bullet up to modern standards. Recommended to use in a modern handgun that is capable of withstanding the increased pressure, otherwise the round poses a danger to the operator.</text>
+		<text>.45 ACP round with an overpressure load to bring the terminal performance of the .45 bullet up to modern standards. Carbon steel penetrator has been added to the large bullet, adding some effectiveness in armor penetration without losing too much stopping power. Recommended to use in a modern handgun that is capable of withstanding the increased pressure, otherwise the round poses a danger to the operator.</text>
 	</string>
 	<string id="ammo_new_11.43x23_fmjs_s">
-		<text>.45 ACP +P</text>
+		<text>.45 ACP AP+P</text>
 	</string>
 	
 	<string id="ammo_new_11.43x23_hp">
 		<text>.45 ACP JHP rounds</text>
 	</string>
 	<string id="ammo_new_11.43x23_hp_descr">
-		<text>Standard load .45 ACP round with a hollow point bullet. Infamously effective against unarmored human targets and is a mainstay round of most law enforcement.</text>
+		<text>Standard load .45 ACP round with a hollow point bullet. Infamously effective against unarmored human targets and is a mainstay round of most law enforcement. Surprisingly effective against mutants and makes for a popular option to protect against them.</text>
 	</string>
 	<string id="ammo_new_11.43x23_hp_s">
 		<text>.45 HP</text>
@@ -256,7 +256,7 @@
 		<text>.45 ACP 'RIP' rounds</text>
 	</string>
 	<string id="ammo_new_11.43x23_hydro_descr">
-		<text>This novel .45 ACP calibre round consists of a jacketed bullet sliced into 9 thin 'petals'. Designated as the 'Radically Invasive Projectile', this bullet splinters into nine fragments after penetrating a target. The fragments create multiple wound channels, causing catastrophic damage. Originally based on the infamous 'Black Talon' expanding projectiles, the RIP round improves on the design by having the petals break off as they travel through the target. Due to the fragile shape of the bullet, this round is easily defeated by armor or by sufficiently tough mutant hide. Imported in limited quantities.</text>
+		<text>This experimental .45 ACP round is constructed from a chemical artifact fragment around which lead was 'grown' and molded into a bullet shape, then electroplated with nickel. The bullet is produced through classified experiments developed by the Ministry of Science in conjunction with Freedom-supplied research. Despite the hard metal coating the bullet readily fragments into several 'talons' which grants the round phenomeal stopping power at the cost of reduced penetration. Curiously, the bullets seem to create a localized anomaly around the point of shooting, affecting living things in the immediate vicnity. Speculators believe that unknown means draw the life energy from the victim to the shooter.</text>
 	</string>
 	<string id="ammo_new_11.43x23_hydro_s">
 		<text>.45 RIP</text>
