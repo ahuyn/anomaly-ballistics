@@ -40,6 +40,8 @@ k_hit		= 0.95
 k_ap		= 0.135
 k_pen       = 0.8
 cost        = 840
+dg_ammo     = ammo_9x18_fmj
+dg_chance   = 0.5
 
 [ammo_9x18_ap_bad]:ammo_9x18_ap; 7N16 PMM, modern AP
 name		= ammo_new_9x18_7n25
@@ -96,6 +98,8 @@ k_hit		= 0.9
 k_pen       = 0.75
 k_ap		= 0.195
 cost        = 1350
+dg_ammo     = ammo_9x19_fmj
+dg_chance   = 0.6
 
 [ammo_9x19_ap_bad]:ammo_9x19_ap ; 7N31 overpressure AP
 name		= ammo_new_9x19_7n31
@@ -105,7 +109,6 @@ k_pen       = 0.8
 impair      = 1.25
 cost        = 1950
 recoil		= 1.05
-
 dg_ammo     = ammo_9x19_pbp
 dg_chance   = 0.7
 
@@ -123,7 +126,7 @@ impair      = 1.15
 cost        = 1300
 recoil		= 1.15
 dg_ammo     = ammo_11.43x23_fmj
-dg_chance   = 0.4
+dg_chance   = 0.6
 
 [ammo_11.43x23_hydro]:ammo_base ; HP
 handler     = arti_handlers.varmageddon
@@ -193,6 +196,8 @@ special     = hp
 
 [ammo_7.62x25_ps_bad]:ammo_7.62x25_ps; acid
 handler     = arti_handlers.acid_damage
+i_handler   = ballistic_handlers.particle
+i_particle  = artefact\\effects\\af_acidic_idle_color
 name		= ammo_new_7.62x25_cor
 k_hit		= 1
 k_ap		= 0.149

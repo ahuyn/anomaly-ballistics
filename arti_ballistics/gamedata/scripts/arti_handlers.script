@@ -11,6 +11,7 @@ modify_velocity     = ballistics_utils.modify_velocity
 modify_distance     = ballistics_utils.modify_distance
 get_distance        = ballistics_utils.get_distance
 get_cur_vel         = ballistics_utils.get_cur_vel
+read_npc_bone_sec   = ballistics_utils.read_npc_bone_sec
 add_effect          = arti_timed_events.add_effect
 play_sound_on_location = ballistics_utils.play_sound_on_location
 math_floor          = math.floor
@@ -20,6 +21,7 @@ math_random         = math.random
 Bone_IDs            = ballistics_utils.Bone_IDs
 head_bones          = ballistics_utils.head_bones
 ini_ammo            = ballistics_utils.ini_ammo
+ini_damage          = ballistics_utils.ini_damage
 
 local anims = {
     "norm_2_critical_hit_torso_0", -- good
@@ -350,7 +352,7 @@ function fragment_sound(npc, s_hit, ctx)
 end
 
 
--- slugs ignore up to 20 armor on headshot
+-- slugs are effective at merely crushing people to death (based on their hit fraction)
 function slug(npc, s_hit, ctx)
     if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx) end
     local calcs = {}
@@ -358,11 +360,15 @@ function slug(npc, s_hit, ctx)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
 
+    -- some sort of impact damage later?
+    -- local bone_sec = ballistics_utils.read_npc_bone_sec(npc)
+    -- local hit_frac = ini_damage:r_float_ex(bone_sec, "hit_fraction_npc") or 1
+
     apply_std_calcs(calcs, npc, s_hit, precalc)
 
-    -- ignore armor on headshot
+    -- ignore some armor on headshot
     if head_bones[ctx.bone_id] then
-        bone_data.armor = clamp(bone_data.armor - 0.1, 0, 1)
+        bone_data.armor = clamp(bone_data.armor - 0.11, 0, 1)
     elseif ballistics_utils.center_mass[ctx.bone_id] and math_random() < 0.9 then
         play_anim(npc)
     end
@@ -414,6 +420,32 @@ function varmageddon(npc, s_hit, ctx)
     return s_hit
 end
 
+function ambush(npc, s_hit, ctx)
+    
+    local calcs = {}
+    local precalc = prework(npc, s_hit, ctx)
+    ammo_data = precalc.ammo_data
+    bone_data = precalc.bone_data
+
+    apply_std_calcs(calcs, npc, s_hit, precalc)
+    -- hitting distracted npc confers 20% damage bonus and ups pen one class (SP6 eq)
+    if not npc:best_enemy() or npc:best_enemy():id() ~= 0 then
+        calcs.ambush = 1.2
+        ammo_data.k_ap = ammo_data.k_ap + 0.05
+    end
+    if not ctx.is_npc then
+        calcs.ap_calc = mutant_standard(precalc)
+    else
+        -- tier based formula with overpen, and flinch
+        calcs.ap_calc = npc_standard(precalc)
+    end
+    
+    local final_hit = tbl_reduce(calcs)
+    print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
+    s_hit.power = final_hit
+    return s_hit
+end
+
 function rip(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     if s_hit.power > 0.5 and db.actor.health < 1 then
@@ -425,53 +457,44 @@ function rip(npc, s_hit, ctx)
     return s_hit
 end
 
-local fire_eff = particles_object("artefact\\artefact_zharka")
-
--- ignite + reduce armor
-function fire_damage(npc, s_hit, ctx)
-    s_hit =  ballistic_handlers.default(npc, s_hit, ctx)
-    -- shred 0.06 off each hit
-    local bone_data = npc_bone_data(npc, ctx.bone_id)
-    if ctx.is_npc then
-        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.05, 0, 1))
-    end
-    play_particle(npc, ctx.bone_id, "artefact\\af_thermal_idle")
+function ignite_npc(npc, bone_id, stack, duration)
+    play_particle(npc, bone_id, "artefact\\af_thermal_idle")
+    stack = stack or 1
+    duration = duration or 5
     print_dbg("Ignited %s", npc:id())
     play_sound_on_location("incendiary", npc)
-    add_effect("ignite"..npc:id()..math.random(5), 5, 
+    add_effect("ignite"..npc:id()..math.random(stack), duration, 
     function()
         play_particle(npc, 11, "artefact\\artefact_zharka")
         if not npc:alive() then return end
         local h = hit()
-        h.type = hit.fire
+        h.type = hit.burn
         h.draftsman = db.actor
         h.power = math_random(5, 10) / 100
         h.bone = "bip01_spine"
         npc:hit(h)
     end)
+end
+
+-- ignite + reduce armor
+function dragonsbreath(npc, s_hit, ctx)
+    s_hit = ballistic_handlers.default(npc, s_hit, ctx)
+    -- shred 0.06 off each hit
+    local bone_data = npc_bone_data(npc, ctx.bone_id)
+    if ctx.is_npc then
+        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
+    end
+    ignite_npc(npc, ctx.bone_id, 10, 6)
+    s_hit.type = hit.burn
     return s_hit
 end
 
 -- ignite
-function fire_dot(npc, s_hit, ctx)
+function fire_damage(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     local ignite_chance = ini_ammo:r_float_ex(ctx.hit_data.ammo, "ignite") or 0
     if math_random() < ignite_chance then
-        play_particle(npc, ctx.bone_id, "artefact\\af_thermal_idle")
-        print_dbg("Ignited %s", npc:id())
-        play_sound_on_location("incendiary", npc)
-        add_effect("ignite"..npc:id(), 5, 
-        function()
-            print_dbg("Burning %s", npc:id())
-            play_particle(npc, 11, "artefact\\artefact_zharka")
-            if not npc:alive() then return end
-            local h = hit()
-            h.type = hit.fire
-            h.draftsman = db.actor
-            h.power = math_random(5, 10) / 100
-            h.bone = "bip01_spine"
-            npc:hit(h)
-        end)
+        ignite_npc(npc, ctx.bone_id, 5)
     end
     return s_hit
 end
@@ -487,6 +510,7 @@ function acid_damage(npc, s_hit, ctx)
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.6, 0, 1))
         play_sound_on_location("acid", npc)
     end
+    s_hit.type = hit.chemical_burn
     return s_hit
 end
 
@@ -527,7 +551,7 @@ function shock_damage(npc, s_hit, ctx)
     local armor_tier = get_tier(precalc.bone_data.armor)
 
     apply_std_calcs(calcs, npc, s_hit, precalc)
-    calcs.lightning_bonus = 1 + (armor_tier * 0.5)
+    calcs.lightning_bonus = 1 + (armor_tier * 0.6)
     snd = "electric"
     if armor_tier > 3 then
         snd = "electric_big"
@@ -535,18 +559,19 @@ function shock_damage(npc, s_hit, ctx)
         local h = hit()
         h.type = hit.shock
         h.draftsman = db.actor
-        h.power = armor_tier * 0.15
+        h.power = armor_tier * 0.2
         h.bone = "bip01_spine"
         radius = armor_tier / 2
 
         level.iterate_nearest(npc:position(), radius, function(obj)
-            if obj and obj:alive() and obj:id() ~= AC_ID then
+            if obj and obj:alive() and obj:id() ~= AC_ID and obj:id() ~= npc:id() then
                 obj:hit(h)
                 shock_effect:play_at_pos(obj:position())
             end
         end)
     end
     s_hit.power = tbl_reduce(calcs)
+    s_hit.type = hit.shock
     play_sound_on_location(snd, npc)
     return s_hit
 end
@@ -571,9 +596,7 @@ function get_point_of_aim()
 end
 
 local mine_id = 0
-function explode_handler()
-    local aim_point = get_point_of_aim()
-    if not aim_point then return end
+function explode_handler(aim_point)
     local explode_obj = alife_create_item("bullet_blow", aim_point)
     CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
     function(id)
@@ -586,44 +609,18 @@ function explode_handler()
     end, explode_obj.id)
 end
 
--- local thunderbolt_fx              = particles_object("_samples_particles_\\explode_radial_electra")
-
--- function thunderbolt_handler()
---     local aim_point = get_point_of_aim()
---     if not aim_point then 
---         printf("No thunderbolt?")
---         return 
---     end
-    
---     printf("Thunderbolt %s", #aim_point)
---     thunder_pos = vector():set(aim_point[1].x, aim_point[1].y+60, aim_point[1].z)
-
--- 	thunderbolt_fx:play_at_pos(thunder_pos)
---     ballistics_utils.play_sound_distance("electric_big", db.actor:position():distance_to(aim_point[1]))
-    
---     level.iterate_nearest(aim_point[1], 15, function(obj)
---         if obj and obj:alive() and obj:id() ~= AC_ID then
---             local h = hit()
---             h.type = hit.shock
---             h.draftsman = db.actor
---             h.bone = "bip01_spine"
---             h.power = 1 - (aim_point[1]:distance_to(obj:position())/15)
---             obj:hit(h)
---             shock_effect:play_at_pos(obj:position())
---         end
---     end)
--- end
-
 local custom_proj_table = {
     ["explodes"] = explode_handler,
-    ["thunderbolt"] = thunderbolt_handler
+    -- ["thunderbolt"] = thunderbolt_handler
 }
 
 function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
     local ammo_table = utils_item.get_ammo(wpn:section(), wpn:id())
     ammo_type = wpn:get_ammo_type()
     if ammo_table[ammo_type + 1] and custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")] then
-        custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")]()
+        aim_point = get_point_of_aim()
+        if not aim_point then return end
+        custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")](aim_point)
     end
 end
 

@@ -43,7 +43,7 @@ recoil		= 1.05
 cost        = 1500
 
 [ammo_7.62x54_ap_bad]:ammo_7.62x54_ap; BZ API
-handler     = arti_handlers.fire_dot
+handler     = arti_handlers.fire_damage
 name		= ammo_new_7.62x54_api
 k_hit		= 1.2
 k_ap		= 0.335
@@ -99,6 +99,8 @@ name		= ammo_new_7.62x51_ap
 k_hit		= 0.9
 k_ap		= 0.335
 cost        = 2500
+dg_ammo     = ammo_7.62x51_fmj
+dg_chance   = 0.4
 
 [ammo_7.62x51_ap_bad]:ammo_7.62x51_ap ; slap
 name		= ammo_new_7.62x51_slap
@@ -133,6 +135,8 @@ k_hit		= 1
 k_ap		= 0.305
 k_pen       = 0.4
 cost        = 2100
+dg_ammo     = ammo_7.92x33_fmj
+dg_chance   = 0.5
 
 [ammo_7.92x33_ap_bad]:ammo_7.92x33_ap ; lightning
 handler     = arti_handlers.shock_damage
@@ -170,9 +174,12 @@ k_pen       = 0.4
 impair      = 1
 recoil		= 1.05
 cost        = 6500
+dg_ammo     = ammo_12.7x55_fmj
+dg_chance   = 0.4
 
 [ammo_12.7x55_ap_bad]:ammo_12.7x55_ap; explosive
 name		= ammo_new_12.7x55_exp
+impact_h    = arti_handlers.explode_handler
 k_hit		= 0.3
 k_ap		= 0.049
 impair      = 1.3

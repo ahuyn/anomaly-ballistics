@@ -73,6 +73,9 @@
 	<string id="st_ballistics_acid">
 		<text>reduces armor on hit</text>
 	</string>
+	<string id="st_ballistics_ambush">
+		<text>bonus damage and AP vs. unaware targets</text>
+	</string>
 	<string id="st_ballistics_head">
 		<text>headshots ignore armor</text>
 	</string>
@@ -327,7 +330,7 @@
 		<text>Civilian-grade SS196SR 5.7x28 FMJ round. Unlike the SS190, this round is not rated to defeat body armor. However, in practice this round is still capable of defeating light kevlar and thus is still used fairly commonly for that reason. Much cheaper and easier to acquire than its military armor-piercing brother, and is a good choice for the budget-conscious black operator looking to terrorize Loners.</text>
 	</string>
 	<string id="ammo_new_5.7x28_fmj_s">
-		<text>5.7x28 AP</text>
+		<text>5.7x28 FMJ</text>
 	</string>
 	<string id="ammo_new_5.7x28_ss190">
 		<text>5.7x28 SS190 rounds</text>
