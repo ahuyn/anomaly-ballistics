@@ -532,17 +532,29 @@ function chaos_damage(npc, s_hit, ctx)
     -- these work for mutant or man
     apply_std_calcs(calcs, npc, s_hit, precalc)
     
+    random = math_random()
+
     -- ap +/- 2 tiers randomly
-    ammo_data.k_ap = clamp(ammo_data.k_ap + math_random()/9, 0, 1)
+    ammo_data.k_ap = clamp(ammo_data.k_ap + random/9, 0, 1)
     if not ctx.is_npc then
         calcs.ap_calc = mutant_standard(precalc)
     else
         -- tier based formula with overpen, and flinch
         calcs.ap_calc = npc_standard(precalc)
     end
-
-    calcs.chaos = 0.6 + math_random()
+    -- damage inverse of ap
+    calcs.chaos = 0.6 + (1 - math_random)
     
+    local extra_effect = math_random(6)
+    if extra_effect == 3 then
+        ignite_npc(npc, 11, 5, 5)
+    elseif extra_effect == 4 and ctx.is_npc then
+        play_anim(npc)
+        jam_wep(npc)
+    elseif extra_effect == 5 then
+        db.actor.health = clamp(db.actor.health + (0.1 * s_hit.power), 0, 1)
+    end
+    -- add random effect
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
