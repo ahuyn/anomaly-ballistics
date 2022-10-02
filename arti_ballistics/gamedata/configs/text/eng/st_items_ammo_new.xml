@@ -242,7 +242,7 @@
 		<text>.45 ACP round with an overpressure load to bring the terminal performance of the .45 bullet up to modern standards. Carbon steel penetrator has been added to the large bullet, adding some effectiveness in armor penetration without losing too much stopping power. Recommended to use in a modern handgun that is capable of withstanding the increased pressure, otherwise the round poses a danger to the operator.</text>
 	</string>
 	<string id="ammo_new_11.43x23_fmjs_s">
-		<text>.45 ACP AP+P</text>
+		<text>.45 AP+P</text>
 	</string>
 	
 	<string id="ammo_new_11.43x23_hp">
@@ -632,7 +632,7 @@
 		<text>Surplus 7.62x54mm 57-N-323S ammunition. The 7.62x54mm round is the second-oldest rifle cartridge still in use today, first produced in 1891 for the Mosin-Nagant rifle. The basic design of the bullet has not changed much since 1908, and remains very popular today amongst hunters and target shooters. These rounds are loose, but can be linked together for use in the PK machine gun.</text>
 	</string>
 	<string id="ammo_new_7.62x54r_s">
-		<text>7.62x54mm PP</text>
+		<text>7.62x54 PP</text>
 	</string>
 
 	<string id="ammo_new_7.62x54_7n1">

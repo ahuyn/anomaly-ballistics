@@ -229,11 +229,12 @@ function process_flinch(npc, precalc)
     ap_tier = get_tier(ammo_data.k_ap)
     armor_tier = get_tier(bone_data.armor)
     local flinch_adj = (ap_tier - armor_tier) * 0.3
-    local flinch_chance =  clamp(0.95 - flinch_adj, 0, 1)
+    local flinch_chance = clamp(0.95 - flinch_adj, 0, 1)
     -- print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
     if flinch_chance > 0 and math_random() < flinch_chance then
         -- print_dbg("Staggering NPC")
         play_anim(npc)
+        jam_wep(npc)
     end
 end
 
@@ -242,6 +243,13 @@ function play_anim(npc)
         npc:set_movement_type(move.stand)
     end
     npc:play_cycle(anims[math_random(#anims)], true)
+end
+
+function jam_wep(npc)
+    
+	local itm = npc:active_item()
+	if not itm or not IsWeapon(itm) or math_random() > 0.5 then return end -- skip if npc has no gun in hand
+    itm:unload_magazine()
 end
 
 -- refer to ballistics_mcm.txt for logic details
@@ -470,7 +478,7 @@ function ignite_npc(npc, bone_id, stack, duration)
         local h = hit()
         h.type = hit.burn
         h.draftsman = db.actor
-        h.power = math_random(5, 10) / 100
+        h.power = math_random(5, 15) / 100
         h.bone = "bip01_spine"
         npc:hit(h)
     end)
@@ -484,7 +492,7 @@ function dragonsbreath(npc, s_hit, ctx)
     if ctx.is_npc then
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
     end
-    ignite_npc(npc, ctx.bone_id, 10, 6)
+    ignite_npc(npc, ctx.bone_id, 10, 10)
     s_hit.type = hit.burn
     return s_hit
 end

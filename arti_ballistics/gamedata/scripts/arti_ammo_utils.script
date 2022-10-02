@@ -271,5 +271,11 @@ if magazines then
 end
 
 function on_game_start()
+    ini_ammo:section_for_each(function(section)
+        
+        local ammo_data = get_ammo_data(section)
+        str = "| " .. ui_item.get_sec_short_name(section) .. " | " .. section .. " | Type | " .. gc("st_prop_armor_".. math_floor(ammo_data.k_ap * 20)) .. " (" .. ammo_data.k_ap .. ") | |"
+        printf(str)
+    end)
 	custom_functor_autoinject.add_functor("mg_link", try_mg_link, try_mg_link, nil, mg_link, true)
 end
