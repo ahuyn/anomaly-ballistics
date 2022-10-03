@@ -168,6 +168,7 @@ end
 local defaults = {
     ["debug"] = true,
     ["incoming"] = false,
+    ["osp"] = false,
     ["cost"] = true,
     ["impair"] = true,
     ["mutant"] = true,
@@ -183,6 +184,7 @@ function on_mcm_load()
             { id= "title",type= "slide",link= "ui_options_slider_player",text="ui_mcm_ballistics_title",size= {512,50},spacing= 20 },
             {id = "debug", type = "check", val = 1, def=true},
             {id = "incoming", type = "check", val = 1, def=false},
+            {id = "osp", type = "check", val = 1, def=false},
             {id = "cost", type = "check", val = 1, def=true},
             {id = "impair", type = "check", val = 1, def=true},
             {id = "mutant", type = "check", val = 1, def=true},

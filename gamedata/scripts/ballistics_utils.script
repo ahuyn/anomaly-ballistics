@@ -155,10 +155,9 @@ end
 
 -- compute actor bone prot based on active suit
 function actor_bone_prot(bone_id)
-    if head_bones[bone_id] then
-        local helmet = db.actor:item_in_slot(12)
-        if not helmet then return 0
-        else return helmet:cast_Helmet():GetBoneArmor(bone_id) end
+    local helmet = db.actor:item_in_slot(12)
+    if head_bones[bone_id] and helmet then
+        return helmet:cast_Helmet():GetBoneArmor(bone_id)
     else
         local outfit = db.actor:item_in_slot(7)
         if not outfit then return 0 
