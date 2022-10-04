@@ -133,23 +133,31 @@ function npc_bone_mult(bone_id)
 end
 
 -- Pull bone protection for a given NPC's bone. Can use custom bone data.
--- returns two arguments, second one indicates if this has already been modified
+-- returns two values, second one indicates if this has already been modified
 local bone_cache = {}
 local custom_bone_data = {}
 function npc_bone_protection(npc, bone_id)
     local id = npc:id()
     if id == AC_ID then return actor_bone_prot(bone_id), False end
-    if custom_bone_data[id] and custom_bone_data[id][bone_id] then return custom_bone_data[id][bone_id], True
+    if custom_bone_data[id] and custom_bone_data[id][bone_id] then return {
+        armor = custom_bone_data[id][bone_id],
+        modified = false
+    }
     else
         local bone_name = Bone_IDs[bone_id] or "bip01_spine"
         local bone_sec = read_npc_bone_sec(npc) or "stalker_hero_1"
-        if not bone_cache[bone_sec] then bone_cache[bone_sec] = {} end
-        if not bone_cache[bone_sec][bone_name] then
+        if not bone_cache[bone_sec] then 
+            bone_cache[bone_sec] = {} 
+        end
+        if not bone_cache[bone_sec][bone_id] then
             local bone_armor_str = ini_damage:r_string_ex(bone_sec, bone_name) or "0, 0.15"
             local bone_armor = str_explode(bone_armor_str, ",") 
-            bone_cache[bone_sec][bone_name] = tonumber(bone_armor[2]) or 0.15
+            bone_cache[bone_sec][bone_id] = tonumber(bone_armor[2]) or 0.15
         end
-        return bone_cache[bone_sec][bone_name], False
+        return {
+            armor = bone_cache[bone_sec][bone_id],
+            modified = false
+        }
     end
 end
 
@@ -186,12 +194,12 @@ end
 
 -- util to collect information about a bone - damage multiplier, id, name
 function npc_bone_data(npc, bone_id)
-    armor, modified = npc_bone_protection(npc, bone_id)
+    bone_prot = npc_bone_protection(npc, bone_id)
     return {
         id = bone_id,
         name = Bone_IDs[bone_id],
-        armor = armor,
-        modified = modified,
+        armor = bone_prot.armor,
+        modified = bone_prot.modified,
         mult = npc_bone_mult(bone_id)
     }
 end

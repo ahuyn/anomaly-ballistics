@@ -48,7 +48,7 @@ end
 
 -- deal residual impact damage only
 function impact(diff, ap_frac, pen)
-    print_dbg("Impact")
+    -- print_dbg("Impact")
     return 1 / (10 * (diff - 2))
 end
 
@@ -57,13 +57,13 @@ function reduce(diff, ap_frac, pen)
     -- local floor = diff == 0 and 0 or (2 * diff + 1) * 0.15
     -- local range = (3 - diff) * 0.15 * (1 - ap_frac)
     local modifier =  1 - (0.3 * (diff + (1 - ap_frac)))
-    print_dbg("Reduction of %s", modifier)
+    -- print_dbg("Reduction of %s", modifier)
     return modifier
 end
 
 -- deal full damage (does nothing lol)
 function full(diff, ap_frac, pen)
-    print_dbg("Full")
+    -- print_dbg("Full")
     return 1
 end
 
@@ -72,7 +72,7 @@ end
 -- only matters if diff > 3, or more than 0.2
 function penetrate(diff, ap_frac, pen)
     adj = clamp((diff - 3)/4, 0.05, pen) 
-    print_dbg("Overkill, reduce by %s", adj)
+    -- print_dbg("Overkill, reduce by %s", adj)
     return 1 - adj
 end
 
@@ -171,7 +171,7 @@ end
 function npc_standard(precalc)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
-    print_dbg("[NPC] Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
+    -- print_dbg("[NPC] Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
     
     local armor_tier = get_tier(bone_data.armor)
     local ap_tier = get_tier(ammo_data.k_ap)
@@ -204,14 +204,13 @@ end
 function mutant_standard(precalc)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
-    print_dbg("[MUT] Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
+    -- print_dbg("[MUT] Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
     
     -- chance to zero damage, capped at 50% and play particle
     if bone_data.deflect then
         local air_res = SYS_GetParam(2, ammo_data.sec, "k_air_resistance") or 0.05
         air_res = clamp(air_res, 0, 0.5)
         air_res = air_res * (1 - get_cur_vel())
-        print_dbg("%s chance to deflect", air_res)
         if math_random() < air_res then
             local snd = xr_sound.get_safe_sound_object("anomaly\\anomaly_gravy_hit1")
             if snd then
@@ -242,10 +241,20 @@ function process_flinch(npc, precalc)
     -- print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
     if flinch_chance > 0 and math_random() < flinch_chance then
         -- print_dbg("Staggering NPC")
-        play_anim(npc)
-        jam_wep(npc)
+        stun_npc(npc)
     end
 end
+
+local npc_stun = {}
+function stun_npc(npc)
+    if is_actor(npc) then
+        level.add_cam_effector("camera_effects\\fusker.anm",959,false,"")
+    else
+        play_anim(npc)
+        npc_stun[npc:id()] = time_global() + 750
+    end
+end
+
 
 function play_anim(npc)
     if npc:movement_type() == move.walk or npc:movement_type() == move.run then
@@ -254,11 +263,16 @@ function play_anim(npc)
     npc:play_cycle(anims[math_random(#anims)], true)
 end
 
-function jam_wep(npc)
-    
-	local itm = npc:active_item()
-	if not itm or not IsWeapon(itm) or math_random() > 0.5 then return end -- skip if npc has no gun in hand
-    itm:unload_magazine()
+function on_enemy_eval(obj, enemy, flags)
+    if npc_stun[obj:id()] then
+        if time_global() > npc_stun[obj:id()] then
+            npc_stun[obj:id()] = false
+        else flags.ret_value = false end
+    end
+end
+
+function npc_on_death_callback(victim, who)
+    npc_stun[victim:id()] = nil
 end
 
 -- refer to ballistics_mcm.txt for logic details
@@ -373,7 +387,7 @@ end
 
 -- slugs are effective at merely crushing people to death (based on their hit fraction)
 function slug(npc, s_hit, ctx)
-    if not ctx.is_npc or is_actor(npc) then return ballistic_handlers.default(npc, s_hit, ctx) end
+    if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx) end
     local calcs = {}
     local precalc = prework(npc, s_hit, ctx)
     ammo_data = precalc.ammo_data
@@ -389,7 +403,7 @@ function slug(npc, s_hit, ctx)
     if head_bones[ctx.bone_id] then
         bone_data.armor = clamp(bone_data.armor - 0.11, 0, 1)
     elseif ballistics_utils.center_mass[ctx.bone_id] and math_random() < 0.9 then
-        play_anim(npc)
+        stun_npc(npc)
     end
 
 
@@ -506,7 +520,7 @@ function dragonsbreath(npc, s_hit, ctx)
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
     end
     if is_actor(npc) then
-        local s = xr_sound.get_safe_sound_object(snd_to_play)
+        local s = xr_sound.get_safe_sound_object("potushite_zhopu")
         if s then
             s:play(db.actor, 0, sound_object.s2d)
         end
@@ -525,7 +539,7 @@ function fire_damage(npc, s_hit, ctx)
     if math_random() < ignite_chance then
         if is_actor(npc) then
             -- play funni ignite sound
-            local s = xr_sound.get_safe_sound_object(snd_to_play)
+            local s = xr_sound.get_safe_sound_object("potushite_zhopu")
             if s then
         		s:play(db.actor, 0, sound_object.s2d)
             end
@@ -540,7 +554,8 @@ end
 -- for corrosive ammo
 function acid_damage(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
-    if not ctx.is_npc or is_actor(npc) then return s_hit end
+    s_hit.type = hit.chemical_burn
+    if not ctx.is_npc or  is_actor(npc) then return s_hit end
     -- shred ONCE per bone
     local bone_data = npc_bone_data(npc, ctx.bone_id)
     play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
@@ -548,7 +563,6 @@ function acid_damage(npc, s_hit, ctx)
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.6, 0, 1))
         play_sound_on_location("acid", npc)
     end
-    s_hit.type = hit.chemical_burn
     return s_hit
 end
 
@@ -580,8 +594,7 @@ function chaos_damage(npc, s_hit, ctx)
         if extra_effect == 3 then
             ignite_npc(npc, 11, 5, 5)
         elseif extra_effect == 4 and ctx.is_npc then
-            play_anim(npc)
-            jam_wep(npc)
+            stun_npc(npc)
         elseif extra_effect == 5 then
             db.actor.health = clamp(db.actor.health + (0.1 * s_hit.power), 0, 1)
         end
@@ -596,6 +609,7 @@ end
 local shock_effect = particles_object("artefact\\effects\\af_electra_show_flash_00")
 -- for shock anti armor
 function shock_damage(npc, s_hit, ctx)
+    s_hit.type = hit.shock
     if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx)
     end
     local calcs = {}
@@ -624,7 +638,6 @@ function shock_damage(npc, s_hit, ctx)
         end)
     end
     s_hit.power = tbl_reduce(calcs)
-    s_hit.type = hit.shock
     play_sound_on_location(snd, npc)
     return s_hit
 end
@@ -688,4 +701,6 @@ end
 
 function on_game_start()
     RegisterScriptCallback("actor_on_weapon_fired", actor_on_weapon_fired)
+    RegisterScriptCallback("on_enemy_eval", on_enemy_eval)
+    RegisterScriptCallback("npc_on_death_callback", npc_on_death_callback)
 end
