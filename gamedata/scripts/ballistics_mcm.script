@@ -106,8 +106,10 @@ _G.CAI_Stalker__BeforeHitCallback = function(npc,s_hit,bone_id)
     if custom_hit then
         SendScriptCallback("npc_on_before_hit",npc,custom_hit.s_hit,custom_hit.bone_id, flags)
         if flags.ret_value then
-            npc:set_health_ex(npc.health - custom_hit.s_hit.power)
-            s_hit.power = 0.0001 -- removing engine stuff
+            s_hit.power = custom_hit.s_hit.power
+            s_hit.ap = 0
+            -- npc:set_health_ex(npc.health - custom_hit.s_hit.power)
+            -- s_hit.power = 0.0001 -- removing engine stuff
         end
     else
         SendScriptCallback("npc_on_before_hit",npc,s_hit,bone_id,flags)

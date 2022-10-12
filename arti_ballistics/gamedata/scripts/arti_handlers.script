@@ -49,7 +49,7 @@ end
 -- deal residual impact damage only
 function impact(diff, ap_frac, pen)
     -- print_dbg("Impact")
-    return 1 / (10 * (diff - 2))
+    return 1 / (8 * (diff - 2))
 end
 
 -- reduction based on AP frac and diff
@@ -98,7 +98,7 @@ local damage_subcalcs = {
 function tbl_reduce(x)
     local acc = 1
     for k,v in pairs(x) do
-        -- print_dbg("Applying key %s, val %s", k ,v)
+        print_dbg("Applying key %s, val %s", k ,v)
         acc = acc * v
     end
     return acc
@@ -112,6 +112,13 @@ function get_frac(val)
     frac = math.fmod(val * 20, 1)
     if frac > 0.95 then frac = 1 end
     return frac
+end
+
+local function change_damage_type(s_hit, hit_type, bone_data, is_actor)
+    s_hit.type = hit_type
+    if not is_actor then
+        s_hit.power = s_hit.power * bone_data.mult
+    end
 end
 
 --[[
@@ -135,11 +142,11 @@ end
 function apply_std_calcs(tbl, npc, s_hit, precalc)
     tbl.base_power = precalc.base_power
     ammo_data = precalc.ammo_data
-    bone_data = precalc.bone_data
+    -- bone_data = precalc.bone_data
     tbl.k_hit = ammo_data.k_hit
     tbl.velocity = modify_velocity()
     tbl.distance = modify_distance(s_hit.draftsman, npc, ammo_data.sec)
-    tbl.bone_mult = is_actor(npc) and 1 or bone_data.mult
+    -- tbl.bone_mult = is_actor(npc) and 1 or bone_data.mult
 end
 
 -- determine if a hit fully penetrates either mutant or npc
@@ -168,7 +175,7 @@ function process_hp(precalc, is_npc)
     return 1
 end
 
-function npc_standard(precalc)
+function npc_standard(s_hit, precalc)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
     -- print_dbg("[NPC] Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
@@ -187,6 +194,10 @@ function npc_standard(precalc)
         print_dbg("AP insufficient, reducing multiplier by %s", mult_adj)
         mult = mult * mult_adj 
     end
+
+    if mult < -3 then
+        change_damage_type(s_hit, hit.strike, bone_data, true)
+    end
     
     -- tweak multiplier based on heavy/exo armor
     if armor_tier == 7 then
@@ -194,14 +205,15 @@ function npc_standard(precalc)
         -- ammo_data.k_ap = ammo_data.k_ap - clamp(bone_data.armor - 0.43, 0, 0.05)
         -- ammo_data.k_ap = clamp(ammo_data.k_ap, 0, 0.4)
         -- new - artificial hp (clamped at 100)
-        local tank_coef = 10 * clamp(bone_data.armor - 0.4, 0, 0.1)
+        local tank_coef = 10 * clamp(bone_data.armor - 0.4, 0.1, 0.3)
+        print_dbg("Exo tank coef %s", tank_coef)
         mult = mult * (1/tank_coef)
     end
     -- print_dbg("Difference of %s, AP fraction of %s", diff, ap_frac)
     return mult
 end
 
-function mutant_standard(precalc)
+function mutant_standard(s_hit, precalc)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
     -- print_dbg("[MUT] Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
@@ -285,10 +297,10 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     apply_std_calcs(calcs, npc, s_hit, precalc)
 
     if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(precalc)
+        calcs.ap_calc = mutant_standard(s_hit, precalc)
     else
         -- tier based formula with overpen, and flinch
-        calcs.ap_calc = npc_standard(precalc)
+        calcs.ap_calc = npc_standard(s_hit, precalc)
         process_flinch(npc, precalc)
     end
     if not is_actor(npc) then
@@ -310,7 +322,6 @@ local limbs = {
     [8]  = "bip01_r_calf",
     [9]  = "bip01_r_foot",
 	[10] = "bip01_r_toe0", 
-	[21] = "bip01_l_upperarm", 
 	[22] = "bip01_l_forearm", 
 	[23] = "bip01_l_hand", 
 	[24] = "bip01_l_finger0", 
@@ -322,7 +333,6 @@ local limbs = {
 	[30] = "bip01_l_finger2", 
 	[31] = "bip01_l_finger21", 
 	[32] = "bip01_l_finger22", 
-	[34] = "bip01_r_upperarm", 
 	[35] = "bip01_r_forearm", 
 	[36] = "bip01_r_hand", 
 	[37] = "bip01_r_finger0", 
@@ -359,7 +369,7 @@ function buckshot_damage(npc, s_hit, ctx)
         calcs.base_power = precalc.base_power
     
         apply_std_calcs(calcs, npc, s_hit, precalc)
-        calcs.ap_calc = ctx.is_npc and npc_standard(precalc) or mutant_standard(precalc)
+        calcs.ap_calc = ctx.is_npc and npc_standard(s_hit, precalc) or mutant_standard(s_hit, precalc)
 
         local final_hit = tbl_reduce(calcs)
         print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
@@ -407,7 +417,7 @@ function slug(npc, s_hit, ctx)
     end
 
 
-    calcs.ap_calc = npc_standard(precalc)
+    calcs.ap_calc = npc_standard(s_hit, precalc)
 
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
@@ -433,7 +443,7 @@ function headshot(npc, s_hit, ctx)
         play_particle(npc, 15, "anomaly2\\effects\\body_tear_blood_01")
         play_sound_on_location("headshot", npc)
     end
-    calcs.ap_calc = npc_standard(precalc)
+    calcs.ap_calc = npc_standard(s_hit, precalc)
 
     calcs.hollowpoint = process_hp(precalc, ctx.is_npc)
 
@@ -467,10 +477,10 @@ function ambush(npc, s_hit, ctx)
         ammo_data.k_ap = ammo_data.k_ap + 0.05
     end
     if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(precalc)
+        calcs.ap_calc = mutant_standard(s_hit, precalc)
     else
         -- tier based formula with overpen, and flinch
-        calcs.ap_calc = npc_standard(precalc)
+        calcs.ap_calc = npc_standard(s_hit, precalc)
     end
     
     local final_hit = tbl_reduce(calcs)
@@ -529,6 +539,7 @@ function dragonsbreath(npc, s_hit, ctx)
         ignite_npc(npc, ctx.bone_id, 10, 10)
     end
     s_hit.type = hit.burn
+    change_damage_type(s_hit, hit.burn, bone_data, is_actor(npc))
     return s_hit
 end
 
@@ -554,7 +565,7 @@ end
 -- for corrosive ammo
 function acid_damage(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
-    s_hit.type = hit.chemical_burn
+    change_damage_type(s_hit, hit.chemical_burn, bone_data, is_actor(npc))
     if not ctx.is_npc or  is_actor(npc) then return s_hit end
     -- shred ONCE per bone
     local bone_data = npc_bone_data(npc, ctx.bone_id)
@@ -581,10 +592,10 @@ function chaos_damage(npc, s_hit, ctx)
     -- ap +/- 2 tiers randomly
     ammo_data.k_ap = clamp(ammo_data.k_ap + random/9, 0, 1)
     if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(precalc)
+        calcs.ap_calc = mutant_standard(s_hit, precalc)
     else
         -- tier based formula with overpen, and flinch
-        calcs.ap_calc = npc_standard(precalc)
+        calcs.ap_calc = npc_standard(s_hit, precalc)
     end
     -- damage inverse of ap
     calcs.chaos = 0.6 + (1 - math_random)
@@ -609,11 +620,11 @@ end
 local shock_effect = particles_object("artefact\\effects\\af_electra_show_flash_00")
 -- for shock anti armor
 function shock_damage(npc, s_hit, ctx)
-    s_hit.type = hit.shock
+    local precalc = prework(npc, s_hit, ctx)
+    change_damage_type(s_hit, hit.shock, precalc.bone_data, is_actor(npc))
     if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx)
     end
     local calcs = {}
-    local precalc = prework(npc, s_hit, ctx)
     
     local armor_tier = get_tier(precalc.bone_data.armor)
 
@@ -626,12 +637,12 @@ function shock_damage(npc, s_hit, ctx)
         local h = hit()
         h.type = hit.shock
         h.draftsman = db.actor
-        h.power = armor_tier * 0.2
+        h.power = armor_tier * 0.3
         h.bone = "bip01_spine"
         radius = armor_tier / 2
 
         level.iterate_nearest(npc:position(), radius, function(obj)
-            if obj and obj:alive() and obj:id() ~= AC_ID and obj:id() ~= npc:id() then
+            if obj and obj:alive() and obj:id() ~= AC_ID then
                 obj:hit(h)
                 shock_effect:play_at_pos(obj:position())
             end
