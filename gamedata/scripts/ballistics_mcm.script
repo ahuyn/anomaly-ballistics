@@ -93,7 +93,7 @@ _G.CActor__BeforeHitCallback = function(actor,s_hit,bone_id)
     if custom_hit then
         SendScriptCallback("actor_on_before_hit",s_hit,bone_id,flags)
         if flags.ret_value and get_config("incoming") then
-            s_hit.power = custom_hit.s_hit.power
+            s_hit.power = custom_hit.power
             s_hit.ap = 0
         end
     end

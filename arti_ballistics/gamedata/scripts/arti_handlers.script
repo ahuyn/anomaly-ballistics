@@ -98,7 +98,7 @@ local damage_subcalcs = {
 function tbl_reduce(x)
     local acc = 1
     for k,v in pairs(x) do
-        print_dbg("Applying key %s, val %s", k ,v)
+        -- print_dbg("Applying key %s, val %s", k ,v)
         acc = acc * v
     end
     return acc
@@ -206,7 +206,7 @@ function npc_standard(s_hit, precalc)
         -- ammo_data.k_ap = clamp(ammo_data.k_ap, 0, 0.4)
         -- new - artificial hp (clamped at 100)
         local tank_coef = 10 * clamp(bone_data.armor - 0.4, 0.1, 0.3)
-        print_dbg("Exo tank coef %s", tank_coef)
+        -- print_dbg("Exo tank coef %s", tank_coef)
         mult = mult * (1/tank_coef)
     end
     -- print_dbg("Difference of %s, AP fraction of %s", diff, ap_frac)
