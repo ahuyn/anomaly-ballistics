@@ -8,18 +8,17 @@ function print_dbg(text, ...)
 	end
 end
 
--- checking if actor shot the gun and if gun is gun
-function validate_hit(shit)
-    if shit.draftsman and shit.draftsman:id() ~= AC_ID then return end
+-- checking if actor shot the gun at npc or vice versa and if gun is gun
+function validate_hit(s_hit, is_actor)
+    if s_hit.draftsman and ((not is_actor and s_hit.draftsman:id() ~= AC_ID) or is_actor and s_hit.type ~= hit.fire_wound) then return end
 	if bone_id == 65535 then return end
-	if shit.power >= 50 then return end
-	local shooter = shit.draftsman
-	local wpn = level.object_by_id(shit.weapon_id)
+	if s_hit.power >= 50 then return end
+	local wpn = level.object_by_id(s_hit.weapon_id)
 	if not wpn or IsGrenade(wpn) or (not IsWeapon(wpn)) then return end
 	local sec = wpn:section()
 	if ini_sys:r_string_ex(sec, "class") == "S_EXPLO" then return end
 	if IsItem("fake_ammo_wpn",sec) then return end
-    ammo_map = utils_item.get_ammo(nil, shit.weapon_id)
+    ammo_map = utils_item.get_ammo(nil, s_hit.weapon_id)
     local ammo = ammo_map[wpn:get_ammo_type() + 1]
     return {
         ["wpn"] = wpn, 
@@ -38,10 +37,11 @@ end
 
 -- for the most part calculations will be deferred to function-specifics for each ammo type
 -- Generically it will call a function specified in config. Function determines how damage is applied.
+-- is_npc is either 0 (actor), 1 (npc), 2 (mutant)
 -- Final damage should be stored in s_hit.power field.
 -- Return false or nothing in order to pass the original hit.
 function on_before_hit(npc,s_hit,bone_id, is_npc)
-    local valid_hit_data = validate_hit(s_hit)
+    local valid_hit_data = validate_hit(s_hit, npc:id() == AC_ID)
     if not (valid_hit_data) then -- no data, so we don't care about the hit
         return false 
     end
@@ -65,7 +65,7 @@ function on_before_hit(npc,s_hit,bone_id, is_npc)
     end
 
     return {
-        ["shit"] = s_hit,
+        ["s_hit"] = s_hit,
         ["bone_id"] = bone_id
     }
 end
@@ -73,37 +73,64 @@ end
 -- Overriding hit callbacks so our custom hits can communicate with other scripts
 local flags = { ret_value = true }
 
-_G.CAI_Stalker__BeforeHitCallback = function(npc,shit,bone_id)
-    local s_hit = shit
+_G.CActor__BeforeHitCallback = function(actor,s_hit,bone_id) 
+    if (s_hit.type ~= hit.strike) then
+		if (bind_stalker_ext.invulnerable_time and time_global() < bind_stalker_ext.invulnerable_time) then 
+			bind_stalker_ext.invulnerable_time = bind_stalker_ext.invulnerable_time - 500
+			return false
+		end
+	end
+	
+	if (s_hit.power > 0) then 
+		if (s_hit.draftsman and s_hit.draftsman:id() ~= 0 and IsStalker(s_hit.draftsman) and s_hit.draftsman:relation(db.actor) == game_object.friend) then 
+			return false 
+		end
+	end
+	
+	flags.ret_value = true
+    
+    local custom_hit = get_config("incoming") and on_before_hit(actor,s_hit,bone_id, true) or s_hit
+    if custom_hit then
+        SendScriptCallback("actor_on_before_hit",s_hit,bone_id,flags)
+        if flags.ret_value and get_config("incoming") then
+            s_hit.power = custom_hit.power
+            s_hit.ap = 0
+        end
+    end
+	return flags.ret_value
+end
+
+_G.CAI_Stalker__BeforeHitCallback = function(npc,s_hit,bone_id)
     flags.ret_value = true
     local custom_hit = on_before_hit(npc,s_hit,bone_id, true)
     if custom_hit then
-        SendScriptCallback("npc_on_before_hit",npc,custom_hit.shit,custom_hit.bone_id, flags)
+        SendScriptCallback("npc_on_before_hit",npc,custom_hit.s_hit,custom_hit.bone_id, flags)
         if flags.ret_value then
-            npc:set_health_ex(npc.health - custom_hit.shit.power)
-            shit.power = 0.0001 -- removing engine stuff
+            s_hit.power = custom_hit.s_hit.power
+            s_hit.ap = 0
+            -- npc:set_health_ex(npc.health - custom_hit.s_hit.power)
+            -- s_hit.power = 0.0001 -- removing engine stuff
         end
     else
-        SendScriptCallback("npc_on_before_hit",npc,shit,bone_id,flags)
+        SendScriptCallback("npc_on_before_hit",npc,s_hit,bone_id,flags)
     end
 	return flags.ret_value
 end
 
 -- bone mult is unknown for monster, so simply assume skin armor vs ap calcs
-_G.CBaseMonster__BeforeHitCallback = function(monster,shit,bone_id)
-	local s_hit = shit
+_G.CBaseMonster__BeforeHitCallback = function(monster,s_hit,bone_id)
     flags.ret_value = true
     local custom_hit = on_before_hit(monster,s_hit,bone_id, false)
     if custom_hit then
-        SendScriptCallback("monster_on_before_hit",monster,custom_hit.shit,custom_hit.bone_id, flags)
+        SendScriptCallback("monster_on_before_hit",monster,custom_hit.s_hit,custom_hit.bone_id, flags)
         if flags.ret_value then
-            shit.power = custom_hit.shit.power
-            shit.ap = 0
-    --         monster:set_health_ex(monster.health - custom_hit.shit.power)
-    --         shit.power = 0.0001
+            s_hit.power = custom_hit.s_hit.power
+            s_hit.ap = 0
+    --         monster:set_health_ex(monster.health - custom_hit.s_hit.power)
+    --         s_hit.power = 0.0001
         end
     else
-        SendScriptCallback("monster_on_before_hit",monster,shit,bone_id,flags)
+        SendScriptCallback("monster_on_before_hit",monster,s_hit,bone_id,flags)
     end
 	return flags.ret_value
 end
@@ -142,6 +169,8 @@ end
 -- If you don't use MCM, change your defaults from here.
 local defaults = {
     ["debug"] = true,
+    ["incoming"] = false,
+    ["osp"] = false,
     ["cost"] = true,
     ["impair"] = true,
     ["mutant"] = true,
@@ -156,6 +185,8 @@ function on_mcm_load()
     op = { id= "ballistics",sh=true ,gr={
             { id= "title",type= "slide",link= "ui_options_slider_player",text="ui_mcm_ballistics_title",size= {512,50},spacing= 20 },
             {id = "debug", type = "check", val = 1, def=true},
+            {id = "incoming", type = "check", val = 1, def=false},
+            {id = "osp", type = "check", val = 1, def=false},
             {id = "cost", type = "check", val = 1, def=true},
             {id = "impair", type = "check", val = 1, def=true},
             {id = "mutant", type = "check", val = 1, def=true},
