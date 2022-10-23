@@ -598,7 +598,7 @@ function chaos_damage(npc, s_hit, ctx)
         calcs.ap_calc = npc_standard(s_hit, precalc)
     end
     -- damage inverse of ap
-    calcs.chaos = 0.6 + (1 - math_random)
+    calcs.chaos = 0.6 + (1 - random)
     
     local extra_effect = math_random(6)
     if not is_actor(npc) then
