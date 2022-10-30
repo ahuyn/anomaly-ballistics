@@ -71,7 +71,7 @@
 		<text>headshots ignore some armor, center mass stuns</text>
 	</string>
 	<string id="st_ballistics_rip">
-		<text>high expansion damage, lifesteal</text>
+		<text>expansion damage, lifesteal</text>
 	</string>
 	<string id="st_ballistics_varma">
 		<text>deals bonus damage to mutants</text>
@@ -80,7 +80,7 @@
 		<text>explodes on impact</text>
 	</string>
 	<string id="st_ballistics_chaos">
-		<text>60%-160% damage/ap range, random effects</text>
+		<text>60%-160% damage/ap range</text>
 	</string>
 	<string id="st_ballistics_acid">
 		<text>reduces armor on hit</text>

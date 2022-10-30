@@ -45,11 +45,11 @@
 | 5.56x45 HP 		| HP   | IIA (0.105) | Hunting hollow point round. |
 | 5.56x45 Varmageddon| Anti-mutant HP | IIA (0.125) | Specialized hunting hollow rounds that deal substantially more damage to mutants. |
 | 5.56x45 M855 EP 	| AP- | III (0.225) | Reduced performance AP round. Penetrates armor, yes, but sacrifices a lot in stopping power to do so. Reasonably common. |
-| 5.56x45 M855A1 AP | AP | IV (0.295) | M855 with its problems fixed. AP is improved, raw damage is improved and overpenetration is reduced. |
+| 5.56x45 M855A1 AP | AP | V (0.3) | M855 with its problems fixed. AP is improved, raw damage is improved and overpenetration is reduced. |
 | 7.62x39 FMJ 		| FMJ | II (0.185) | Standard surplus FMJ round. |
-| 7.62x39 M67 FMJ   | FMJ+| III (0.215) | Modern FMJ rounds produced by Yugoslavians. |
+| 7.62x39 M67 FMJ   | FMJ+| III (0.215) | Modernized FMJ round. |
 | 7.62x39 AP 		| AP | IV (0.275) | Armor penetrating rounds. |
-| 7.62x39 API 		| AP Incendiary | IV (0.295) | Rounds that defeat armor and set people on fire. Awesome! |
+| 7.62x39 API 		| AP Incendiary | V (0.305) | Rounds that defeat armor and set people on fire. Awesome! |
 | 9x39 SP-5 		| FMJ | III (0.245) | Subsonic FMJ sniping round.|
 | 9x39 SPP   		| FMJ | IV (0.275) | Subsonic FMJ sniping round. Bonus damage and AP against unaware targets, making this very powerful if you can stay quiet.|
 | 9x39 PAB-9 		| AP | V (0.33) | Surplus AP round. Technically better than SP-6 but destroys your gun really fast. |

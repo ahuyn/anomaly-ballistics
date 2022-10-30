@@ -1,0 +1,59 @@
+<string_table>
+    
+	<string id="st_ammo_recipe_ru1">
+		<text>GRAU Small Arms Report, Volume 1</text>
+	</string>
+	<string id="st_ammo_recipe_ru1_desc">
+		<text>Classified documents stolen from a Russian research center and moved to the Zone temporarily for hiding. Contains specifications on current and experimental Russian rounds as well as empirical test data on round performance. Volume 1 only considers standard and special issue rounds for military and police work, including crowd control. For matters of information security, armor piercing ammunition schematics are moved to a higher security document.</text>
+	</string>
+    
+	<string id="st_ammo_recipe_ru2">
+		<text>GRAU Small Arms Report, Volume 2</text>
+	</string>
+	<string id="st_ammo_recipe_ru2_desc">
+		<text>Classified documents stolen from a Russian research center and moved to the Zone temporarily for hiding. Contains specifications on experimental Russian armor-piercing rounds of varying calibers as well as empirical test data on round performance. This volume is dedicated to armor piercing rounds, including material analysis on penetrator cores and details on different mechanisms to maximize damage after defeating armor. The pages concerning incendiary armor piercing rounds are mysteriously ripped out.</text>
+	</string>
+    
+	<string id="st_ammo_recipe_pistol">
+		<text>Handguns for Self Defense</text>
+	</string>
+	<string id="st_ammo_recipe_pistol_desc">
+		<text>American produced book detailing the various fine details in employing handguns for personal protection. Various common handguns and their ammunition types are covered, from the lowly .32 ACP up to increasingly impractical magnum loads. Interspersed throughout the book are extremely dubious 'first hand accounts', likely written by people who have never had to pull their weapons on targets that would shoot back or bite.</text>
+	</string>
+    
+	<string id="st_ammo_recipe_shotgun">
+		<text>Biggest Game: Taking Down Large Land Animals</text>
+	</string>
+	<string id="st_ammo_recipe_shotgun_desc">
+		<text>A detailed book concerning the sports of competition shooting and hunting large animals. Various types of ammunition and their purposes are detailed, along with detailed charts of performance and terminal ballistics in various conditions. Anatomy of several large game animals are also present, with notes on where to make efficient killshots - unfortunately, none of these normal creatures are present in the Zone.</text>
+	</string>
+
+	<string id="st_ammo_recipe_nato">
+		<text>MIL-STD-1168C Manual M-5</text>
+	</string>
+	<string id="st_ammo_recipe_nato_desc">
+		<text>Broad technical document that covers all the specifications and dimensions of modern small arms ammunition under the NATO set of standards. Various esoteric calibers are covered for the sake of completeness, as well as brief blurbs about their history and comments from quartermasters and special forces operators.</text>
+	</string>
+    
+	<string id="st_ammo_recipe_arty1">
+		<text>Applications of Artifacts on Small Arms, Rev. 3</text>
+	</string>
+	<string id="st_ammo_recipe_arty1_desc">
+		<text>Research paper produced by the Ministry of Science with the help of various stalker groups. Over twenty different experiment types are listed, most of which ended in failures of varyingly catastrophic levels.</text>
+	</string>
+
+	<string id="st_ammo_recipe_arty2">
+		<text>Sin Ritual Book</text>
+	</string>
+	<string id="st_ammo_recipe_arty2_desc">
+		<text>Mysterious book that appears to be constructed from several hand-written sheets of paper, with no authors or identifying marks. The information inside is surprisingly thorough and useful, almost like reading a wildlife guide. Considerable data is present on the Zone's many 'gifts' - divided among mutant anatomy, anomaly structure, and artifact properties. Dispersed amongst the information are various useful applications of the Zone's bounties: what parts of the Flesh may be extracted for a blood reestoring serum, for example, or how a Fruit Punch anomaly can be used to very carefully remove stains from clothing.</text>
+	</string>
+    
+	<string id="st_ammo_recipe_fire">
+		<text>Pyromaniac's Cookbook</text>
+	</string>
+	<string id="st_ammo_recipe_fire_desc">
+		<text>A notebook covered in fine traces of ash. Information inside concerns only that of things related to fire - Burner anomalies, Fireball artifacts, incendiary ammunition and grenades.Cobbled together from various sources, some printed, some handwritten.</text>
+	</string>
+
+</string_table>

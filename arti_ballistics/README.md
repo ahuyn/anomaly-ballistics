@@ -15,16 +15,19 @@ Reworks ballistic damage to curb the strength of smallbore AP ammo and makes amm
 Do note that mutant damage formula is more or less unchanged. There are a few edge cases but the majority of the work focuses on NPC interaction.
 
 Armor classes are broken down roughly into the following:
-| Class | Bone Armor | Armors      |
-| ------|------------| ----------- |
-| None  | 0          | Leather jackets, trenchcoats |
-| I     | 0.05       | SSP suits | 
-| IIA   | 0.1        | Stalker Suits | 
-| II    | 0.15       | PS5 suits, heavier stalker suits |
-| III   | 0.2        | Berill-5M |
-| IV    | 0.25       | SKAT-9 |
-| V     | 0.3        | Exosuits |
-| VI+   | 0.35+      | Exoskeletons |
+
+NOTE: AP value is used in the ammo stat display. Due to the stats windows not supporting strings, the AP value had to be coerced to a number.
+
+| Class | AP | Bone Armor | Armors      |
+| ------|----| -----------| ----------- |
+| None  |  0 | 0          | Leather jackets, trenchcoats |
+| I     |  1 | 0.05       | SSP suits | 
+| IIA   |  2 | 0.1        | Stalker Suits | 
+| II    |  3 | 0.15       | PS5 suits, heavier stalker suits |
+| III   |  4 | 0.2        | Berill-5M |
+| IV    |  5 | 0.25       | SKAT-9 |
+| V     |  6 | 0.3        | Exosuits |
+| VI+   |  7 | 0.35+      | Exoskeletons |
 
 More granularity would have been nice but this based on the model capture, which breaks down armor broadly into these categories.
 
