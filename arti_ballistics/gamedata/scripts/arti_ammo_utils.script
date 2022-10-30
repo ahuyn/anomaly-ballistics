@@ -219,9 +219,9 @@ function ui_item.build_desc_footer(obj, sec, str)
         else str_spec = {} end
 
         _str = _str .. "\\n \\n" .. gc("st_ball_properties") .. "\\n \\n"
-        _str = _str .. " " .. clr_p .. gc("st_dot") .. " " .. clr_2 .. gc("st_prop_k_hit") .. " " .. clr_1 .. str_dmg .. "\\n"
+        -- _str = _str .. " " .. clr_p .. gc("st_dot") .. " " .. clr_2 .. gc("st_prop_k_hit") .. " " .. clr_1 .. str_dmg .. "\\n"
         _str = _str .. " " .. clr_p .. gc("st_dot") .. " " .. clr_2 .. gc("st_prop_k_ap") .. " " .. clr_1 .. str_ap .. "\\n"
-        _str = _str .. " " .. clr_p .. gc("st_dot") .. " " .. clr_2 .. gc("st_prop_impair") .. " " .. clr_1 .. str_impair .. "\\n"
+        -- _str = _str .. " " .. clr_p .. gc("st_dot") .. " " .. clr_2 .. gc("st_prop_impair") .. " " .. clr_1 .. str_impair .. "\\n"
         for k,v in pairs(str_spec) do        
             _str = _str .. " " .. clr_p .. gc("st_dot") .. " " .. clr_2 .. gc("st_ballistics_"..v) .. " " .. "\\n"
         end

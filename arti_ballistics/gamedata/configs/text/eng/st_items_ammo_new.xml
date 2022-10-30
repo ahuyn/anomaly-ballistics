@@ -13,10 +13,25 @@
 		<text>PROPERTIES:</text>
 	</string>
 	<string id="st_prop_k_hit">
-		<text>damage multiplier:</text>
+		<text>Damage multiplier</text>
 	</string>
 	<string id="st_prop_k_ap">
-		<text>defeats armor level:</text>
+		<text>Defeats armor level</text>
+	</string>
+	<string id="st_prop_k_hp">
+		<text>Expansion bonus</text>
+	</string>
+	<string id="st_prop_k_vel">
+		<text>Velocity modifier</text>
+	</string>
+	<string id="st_prop_k_disp">
+		<text>Accuracy modifier</text>
+	</string>
+	<string id="st_prop_impair">
+		<text>Wear multiplier</text>
+	</string>
+	<string id="st_prop_projectiles">
+		<text>Projectiles</text>
 	</string>
 	<string id="st_prop_armor_0">
 		<text>none</text>
@@ -41,9 +56,6 @@
 	</string>
 	<string id="st_prop_armor_7">
 		<text>VI+</text>
-	</string>
-	<string id="st_prop_impair">
-		<text>wear multiplier:</text>
 	</string>
 
 	<string id="st_ballistics_flinch">
@@ -606,7 +618,7 @@
 		<text>9x39mm PAB-9 rounds</text>
 	</string>
 	<string id="ammo_new_9x39_pab9_descr">
-		<text>Old issue PAB-9 ammo that is no longer produced. In an effort to cut costs of producing SP-6 rounds, the penetrator core was stamped instead of machined and the propellant was replaced with a cheaper, dirtier mix. The end result is a cartridge that has performance mildly better than the SP-6, but very quickly destroys the weapon it is shot out of.</text>
+		<text>Old issue PAB-9 ammo that is no longer produced. In an effort to cut costs of producing SP-6 rounds, the penetrator core was stamped instead of machined and the propellant was replaced with a cheaper, dirtier mix. The end result is a cartridge that has performance mildly better than the SP-6, but suffers from instability in flight and very quickly destroys the weapon it is shot out of.</text>
 	</string>
 
 	<string id="ammo_new_9x39_pab9_s">

@@ -57,7 +57,7 @@ Bone_IDs = {
 	[44] = "bip01_r_hand", 
 	[45] = "bip01_r_hand", 
 	[46] = "bip01_pelvis", 
-    }
+}
 
 head_bones = {
         
