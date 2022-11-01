@@ -145,7 +145,7 @@ function apply_std_calcs(tbl, npc, s_hit, precalc)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
     tbl.k_hit = ammo_data.k_hit
-    tbl.velocity = modify_velocity()
+    tbl.velocity = is_actor(npc) and 1 or modify_velocity()
     tbl.distance = modify_distance(s_hit.draftsman, npc, ammo_data.sec)
     tbl.bone_mult = is_actor(npc) and 1 or bone_data.mult
 end

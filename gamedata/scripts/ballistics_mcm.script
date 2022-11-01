@@ -89,9 +89,9 @@ _G.CActor__BeforeHitCallback = function(actor,s_hit,bone_id)
 	
 	flags.ret_value = true
     
-    local custom_hit = get_config("incoming") and on_before_hit(actor,s_hit,bone_id, true) or s_hit
+    local custom_hit = get_config("incoming") and on_before_hit(actor,s_hit,bone_id, true).s_hit or s_hit
     if custom_hit then
-        SendScriptCallback("actor_on_before_hit",s_hit,bone_id,flags)
+        SendScriptCallback("actor_on_before_hit",custom_hit,bone_id,flags)
         if flags.ret_value and get_config("incoming") then
             s_hit.power = custom_hit.power
             s_hit.ap = 0

@@ -15,6 +15,9 @@
 	<string id="st_prop_k_hit">
 		<text>Damage multiplier</text>
 	</string>
+	<string id="st_prop_armor">
+		<text>Defeats armor level: </text>
+	</string>
 	<string id="st_prop_k_ap">
 		<text>Armor Piercing</text>
 	</string>

@@ -138,7 +138,10 @@ local bone_cache = {}
 local custom_bone_data = {}
 function npc_bone_protection(npc, bone_id)
     local id = npc:id()
-    if id == AC_ID then return actor_bone_prot(bone_id), False end
+    if id == AC_ID then return {
+        armor = actor_bone_prot(bone_id),
+        modified = false
+    } end
     if custom_bone_data[id] and custom_bone_data[id][bone_id] then return {
         armor = custom_bone_data[id][bone_id],
         modified = false
@@ -316,11 +319,11 @@ end
 
 -- return the velocity modifier for the current weapon, or 1
 function get_cur_vel()
-    return cur_wep_data.vel_mod
+    return cur_wep_data.vel_mod or 1
 end
 
 function get_recoil()
-    return cur_wep_data.recoil
+    return cur_wep_data.recoil or 1
 end
 
 -- Provide a damage modifier based on distance, adjusted by bullet velocity and flatness
