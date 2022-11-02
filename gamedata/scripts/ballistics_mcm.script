@@ -90,7 +90,7 @@ _G.CActor__BeforeHitCallback = function(actor,s_hit,bone_id)
 	flags.ret_value = true
     -- go to original 
     if not get_config("incoming") then     
-    	SendScriptCallback("actor_on_before_hit",shit,bone_id,flags)
+    	SendScriptCallback("actor_on_before_hit",s_hit,bone_id,flags)
         return flags.ret_value 
     end
 
