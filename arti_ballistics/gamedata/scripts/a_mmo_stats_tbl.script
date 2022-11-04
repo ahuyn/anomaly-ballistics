@@ -44,7 +44,10 @@ function utils_ui.prepare_stats_table()
     ["velocity"]={ 
         index= 6, typ= "float",   name= "st_prop_k_vel",       icon_p= "ui_wp_prop_nastilnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",      compare= false, sign= true, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_flatness"} } ,
     ["wear"]={ 
-        index= 7 , typ= "float",   name= "st_prop_impair",       icon_p= "ui_wp_prop_nadezhnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_wear"} } 
+        index= 7 , typ= "float",   name= "st_prop_impair",       icon_p= "ui_wp_prop_nadezhnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_wear"} } ,
+    ["special"]={ 
+        index= 7 , typ= "float",   name= "st_prop_special",       icon_p= "ui_am_condition",           icon_n= "", track= false,  magnitude= 1,    unit= "",   compare= false, sign= false, show_always=false, value_functor= {"a_mmo_stats_tbl","prop_special"} } 
+        
     }
 end
 
@@ -62,14 +65,35 @@ function utils_ui.UIInfoItem:GetType(sec)
     if ini_ammo:section_exist(sec) then return "ammo"
     else return GetType(self, sec) end
 end
+
+Update = utils_ui.UIInfoItem.Update
+function utils_ui.UIInfoItem:Update(obj, sec, flags)
+    Update(self, obj, sec, flags)
+    -- patch the armor val
+    if sec and ini_ammo:section_exist(sec) then
+        for i=1,#self.stats do
+            if self.stats[i].cap:GetText() == game.translate_string("st_prop_k_ap") then
+                local ap = ini_ammo:r_float_ex(sec, "k_ap") or 0
+                ap = math.floor(ap * 20)
+                self.stats[i].txt:SetText(game.translate_string("st_prop_armor_"..ap))
+            end
+            if self.stats[i].cap:GetText() == game.translate_string("st_prop_special") then    
+                local str_spec = ini_ammo:r_string_ex(sec, "special")
+                if str_spec then
+                    self.stats[i].txt:SetText(game.translate_string("st_ballistics_"..str_spec))
+                end
+            end
+        end
+    end
+end
+
 function prop_damage(obj, sec)
     return math.floor(100 * (ini_ammo:r_float_ex(sec, "k_hit") or SYS_GetParam(2, sec, "k_hit") or 1))
 end
 
 -- pull from the armor classification
 function prop_ap(obj, sec)
-    local ap = ini_ammo:r_float_ex(sec, "k_ap") or 0
-    return ap * 20
+    return 1
 end
 
 function prop_hp(obj, sec)
@@ -107,4 +131,8 @@ function prop_wear(obj, sec)
         return math.floor(100 * impair)
     else return 0
     end
+end
+function prop_special(obj, sec)
+    local str_spec = ini_ammo:r_string_ex(sec, "special")
+    if str_spec then return 1 else return 0 end
 end

@@ -19,7 +19,7 @@
 		<text>Defeats armor level: </text>
 	</string>
 	<string id="st_prop_k_ap">
-		<text>Armor Piercing</text>
+		<text>Defeats armor level</text>
 	</string>
 	<string id="st_prop_k_hp">
 		<text>Expansion bonus</text>
@@ -35,6 +35,9 @@
 	</string>
 	<string id="st_prop_projectiles">
 		<text>Projectiles</text>
+	</string>
+	<string id="st_prop_special">
+		<text>Special</text>
 	</string>
 	<string id="st_prop_armor_0">
 		<text>none</text>

@@ -15,8 +15,11 @@
 	<string id="st_prop_k_hit">
 		<text>Damage multiplier</text>
 	</string>
+	<string id="st_prop_armor">
+		<text>Defeats armor level: </text>
+	</string>
 	<string id="st_prop_k_ap">
-		<text>Armor Piercing</text>
+		<text>Defeats armor level</text>
 	</string>
 	<string id="st_prop_k_hp">
 		<text>Expansion bonus</text>
@@ -32,6 +35,9 @@
 	</string>
 	<string id="st_prop_projectiles">
 		<text>Projectiles</text>
+	</string>
+	<string id="st_prop_special">
+		<text>Special</text>
 	</string>
 	<string id="st_prop_armor_0">
 		<text>none</text>
@@ -71,7 +77,7 @@
 		<text>headshots ignore some armor, center mass stuns</text>
 	</string>
 	<string id="st_ballistics_rip">
-		<text>expansion damage, lifesteal</text>
+		<text>high expansion damage, lifesteal</text>
 	</string>
 	<string id="st_ballistics_varma">
 		<text>deals bonus damage to mutants</text>
@@ -80,7 +86,7 @@
 		<text>explodes on impact</text>
 	</string>
 	<string id="st_ballistics_chaos">
-		<text>60%-160% damage/ap range</text>
+		<text>60%-160% damage/ap range, random effects</text>
 	</string>
 	<string id="st_ballistics_acid">
 		<text>reduces armor on hit</text>
