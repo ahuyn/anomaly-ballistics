@@ -94,6 +94,9 @@
 	<string id="st_ballistics_ambush">
 		<text>bonus damage and AP vs. unaware targets</text>
 	</string>
+	<string id="st_ballistics_impair">
+		<text>rapidly degrades weapon</text>
+	</string>
 	<string id="st_ballistics_head">
 		<text>headshots ignore armor</text>
 	</string>
@@ -107,10 +110,10 @@
 		<text>fires three projectiles</text>
 	</string>
 	<string id="st_ballistics_shock">
-		<text>damage and aoe increases with target armor</text>
+		<text>damage, aoe increases with target armor</text>
 	</string>
 	<string id="st_ballistics_pierce">
-		<text>limited target piercing</text>
+		<text>cover piercing</text>
 	</string>
 	<string id="st_ballistics_soulripper">
 		<text>exponential ultra piercing, headshots heal</text>
@@ -584,7 +587,7 @@
 		<text>7.62x39mm AP rounds</text>
 	</string>
 	<string id="ammo_new_7.62x39_ap_descr">
-		<text>7.62x39 round with a carbon steel core. These rounds are designed to neutralize enemy personnel behind light cover and defeat modern body armor that the M43 round normally struggles with. Thanks to the heavy weight, this round transfers more force on target compared to lighter 5.45 rounds, at the cost of accuracy and effective range. Issued on an increasing basis to SSU troops in order to combat the increasing presence of Monolith forces, as part of an agreement with the Russian government.</text>
+		<text>7.62x39 7N23 round with a carbon steel core. These rounds are designed to neutralize enemy personnel behind light cover and defeat modern body armor that the M43 round normally struggles with. Thanks to the heavy weight, this round transfers more force on target compared to lighter 5.45 rounds, at the cost of accuracy and effective range. Issued on an increasing basis to SSU troops in order to combat the increasing presence of Monolith forces, as part of an agreement with the Russian government.</text>
 	</string>
 	<string id="ammo_new_7.62x39_ap_s">
 		<text>7.62x39 AP</text>
@@ -818,7 +821,7 @@
 		<text>12.7x55mm STs-130 PT2 rounds</text>
 	</string>
 	<string id="ammo_new_12.7x55_fmjs_descr">
-		<text>Bronze 12.7x55mm subsonic cartridge used in the VKS bullpup sniper rifle. PT2 designation round is designed for high accuracy, strong armor penetration and extreme stopping power at short to medium ranges. As this round is a relatively recent development, it is imported and fielded in highly limited capacity. General Voronin maintains a reserve of these rounds, along with VKS rifles, to be issued for clandestine assassination missions.</text>
+		<text>Bronze 12.7x55mm subsonic cartridge used in the VKS bullpup sniper rifle. PT2 designation round is designed for high accuracy, good armor penetration and extreme stopping power at short to medium ranges. As this round is a relatively recent development, it is imported and fielded in highly limited capacity. General Voronin maintains a reserve of these rounds, along with VKS rifles, to be issued for clandestine assassination missions.</text>
 	</string>
 	<string id="ammo_new_12.7x55_fmjs_s">
 		<text>12.7x55 PT2</text>

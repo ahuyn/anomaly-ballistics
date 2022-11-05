@@ -21,8 +21,8 @@ k_hit		= 1
 k_ap		= 0.12
 k_hp        = 1.4
 impair      = 1
-special     = hp
 cost        = 1550
+special     = hp
 
 [ammo_5.45x39_ep_bad]:ammo_5.45x39_ep ; soft point
 name		= ammo_new_5.45x39_sp
@@ -71,13 +71,13 @@ special     = frag
 [ammo_5.56x45_fmj_bad]:ammo_5.56x45_fmj ; MK318
 handler     = arti_handlers.fragment_sound
 name		= ammo_new_5.56x45_fmjs
-k_hit		= 1.05
-k_hp        = 1.01
-k_ap		= 0.205
+k_hit		= 1.1
+k_ap		= 0.195
+k_pen       = 0.1
 cost        = 2000
 dg_ammo     = ammo_5.56x45_fmj
 dg_chance   = 0.5
-frag        = 1.3
+frag        = 1.6
 special     = frag
 
 [ammo_5.56x45_ss190]:ammo_base ; civ hunting
@@ -104,7 +104,7 @@ dg_chance   = 0.5
 
 [ammo_5.56x45_ap]:ammo_base ; M855
 name		= ammo_new_5.56x45_ss190
-k_hit		= 0.8
+k_hit		= 0.75
 k_ap		= 0.225
 k_pen       = 0.8
 cost        = 1800
@@ -114,7 +114,7 @@ dg_chance   = 0.2
 
 [ammo_5.56x45_ap_bad]:ammo_5.56x45_ap ; M855A1
 name		= ammo_new_5.56x45_ap
-k_hit		= 0.95
+k_hit		= 1
 k_ap		= 0.3
 cost        = 2500
 recoil		= 1.05
@@ -163,35 +163,37 @@ dg_chance   = 0.8
 
 [ammo_9x39_pab9]:ammo_base ; SP5
 name		= ammo_new_9x39_sp5
-k_hit		= 1
-k_ap		= 0.245
-k_pen       = 0.4
+k_hit		= 1.3
+k_ap		= 0.205
+k_pen       = 0.25
 impair      = 1
-cost		= 2600
+cost		= 2500
 
 [ammo_9x39_pab9_bad]:ammo_9x39_pab9 ; SPP
 handler     = arti_handlers.ambush
 name		= ammo_new_9x39_spp
-k_hit		= 1.05
-k_ap		= 0.275
-cost		= 3400
+k_hit		= 1.3
+k_ap		= 0.245
+cost		= 3300
 dg_ammo     = ammo_9x39_pab9
 dg_chance   = 0.5
 special     = ambush
 
 [ammo_9x39_ap]:ammo_base ; PAB9, severe dura loss
 name		= ammo_new_9x39_pab9
-k_hit		= 1.04
-k_ap		= 0.33
-k_pen       = 0.4
-impair      = 3
-cost		= 2500
+k_hit		= 1.3
+k_ap		= 0.28
+k_pen       = 0.5
+impair      = 2.5
+cost		= 1900
 recoil		= 1.05
+special     = impair
 
 [ammo_9x39_ap_bad]:ammo_9x39_ap ; SP6
 handler     = arti_handlers.ambush
+k_hit		= 1.2
 name		= ammo_new_9x39_ap
-k_ap		= 0.325
+k_ap		= 0.275
 impair      = 1
 cost		= 3500
 dg_ammo     = ammo_9x39_ap

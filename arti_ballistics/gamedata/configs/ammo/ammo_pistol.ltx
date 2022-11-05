@@ -115,12 +115,13 @@ dg_chance   = 0.7
 
 [ammo_11.43x23_fmj]:ammo_base ; FMJ
 name        = ammo_new_11.43x23_fmj
+k_hit       = 1.2
 k_ap        = 0.09
 cost        = 800
 
 [ammo_11.43x23_fmj_bad]:ammo_11.43x23_fmj; +P
 name		= ammo_new_11.43x23_fmjs
-k_hit		= 0.9
+k_hit		= 1
 k_ap		= 0.15
 impair      = 1.15
 cost        = 1300
@@ -131,17 +132,16 @@ dg_chance   = 0.6
 [ammo_11.43x23_hydro]:ammo_base ; HP
 handler     = arti_handlers.varmageddon
 name		= ammo_new_11.43x23_hp
-k_hit		= 1
+k_hit		= 1.2
 k_ap        = 0.069
 k_hp	    = 1.5
-varma	    = 1.15
 cost        = 1000
 special     = hp
 
 [ammo_11.43x23_hydro_bad]:ammo_11.43x23_hydro; RIP
 handler     = arti_handlers.rip
 name		= ammo_new_11.43x23_hydro
-k_hit		= 0.6
+k_hit		= 0.75
 k_ap        = 0.069
 k_hp	    = 3
 impair      = 1.3

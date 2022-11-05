@@ -1,32 +1,5 @@
 local ini_ammo = ini_file("ammo\\importer.ltx")
 
-
--- damage multiplier
--- ap class
--- hp expansion %
--- num projectiles
--- dispersion if applicable
--- velocity if applicable   
--- wear
--- function pop_ammo_table()
---     printf("Pop ammo table")
---     if utils_ui.stats_table.ammo then return end
---     utils_ui.add_stats_table("ammo", "damage", { 
---         index= 1, typ= "float",  name= "st_prop_k_hit",         icon_p= "ui_wp_prop_damage",             icon_n= "", track= false,  magnitude= 1,    unit= "st_stat_dmg",            compare= false, sign=false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_damage"} })
---     utils_ui.add_stats_table("ammo", "ap", { 
---         index= 2, typ= "string",  name= "st_prop_k_ap",         icon_p= "ui_am_propery_01",             icon_n= "", track= false,  magnitude= 1,    unit= "",             compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_ap"} })
---     utils_ui.add_stats_table("ammo", "hp", { 
---         index= 3, typ= "float",   name= "st_prop_k_hp",         icon_p= "ui_am_prop_restore_bleeding",             icon_n= "", track= false,  magnitude= 1,    unit= "st_perc ",              compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_hp"} })
---     utils_ui.add_stats_table("ammo", "projectiles", { 
---         index= 4, typ= "float",   name= "st_prop_projectiles",  icon_p= "ui_wp_prop_skorostrelnost",             icon_n= "", track= false,  magnitude= 1,    unit= "st_stat_dmg",             compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_projectiles"} })
---     utils_ui.add_stats_table("ammo", "accuracy",{ 
---         index= 5, typ= "float",   name= "st_prop_k_disp",       icon_p= "ui_wp_prop_tochnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",       compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_accuracy"} } )
---     utils_ui.add_stats_table("ammo", "velocity",{ 
---         index= 6, typ= "float",   name= "st_prop_k_vel",       icon_p= "ui_wp_prop_nastilnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",      compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_flatness"} } )
---     utils_ui.add_stats_table("ammo", "wear",{ 
---         index= 7 , typ= "float",   name= "st_prop_impair",       icon_p= "ui_wp_prop_nadezhnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_wear"} } )
--- end
-
 PrepStats = utils_ui.prepare_stats_table
 function utils_ui.prepare_stats_table()
     PrepStats()
@@ -43,11 +16,12 @@ function utils_ui.prepare_stats_table()
         index= 5, typ= "float",   name= "st_prop_k_disp",       icon_p= "ui_wp_prop_tochnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",       compare= false, sign= true, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_accuracy"} } ,
     ["velocity"]={ 
         index= 6, typ= "float",   name= "st_prop_k_vel",       icon_p= "ui_wp_prop_nastilnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",      compare= false, sign= true, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_flatness"} } ,
+    ["recoil"]={ 
+        index= 7 , typ= "float",   name= "st_prop_recoil",       icon_p= "ui_wp_prop_otdacha",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_recoil"} } ,    
     ["wear"]={ 
-        index= 7 , typ= "float",   name= "st_prop_impair",       icon_p= "ui_wp_prop_nadezhnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_wear"} } ,
+        index= 8 , typ= "float",   name= "st_prop_impair",       icon_p= "ui_wp_prop_nadezhnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_wear"} } ,
     ["special"]={ 
-        index= 7 , typ= "float",   name= "st_prop_special",       icon_p= "ui_am_condition",           icon_n= "", track= false,  magnitude= 1,    unit= "",   compare= false, sign= false, show_always=false, value_functor= {"a_mmo_stats_tbl","prop_special"} } 
-        
+        index= 9 , typ= "float",   name= "st_prop_special",       icon_p= "ui_am_condition",           icon_n= "", track= false,  magnitude= 1,    unit= "",   compare= false, sign= false, show_always=false, value_functor= {"a_mmo_stats_tbl","prop_special"} } 
     }
 end
 
@@ -121,6 +95,15 @@ function prop_flatness(obj, sec)
     local flat = SYS_GetParam(2, sec, "k_bullet_speed")
     if flat ~= 1 then
         return math.floor(100 * (flat - 1))
+    else return 0
+    end
+end
+
+function prop_recoil(obj, sec)
+    if not enhanced_recoil_mcm then return 0 end
+    local recoil = SYS_GetParam(2, sec, "recoil")
+    if recoil ~= 1 then
+        return recoil
     else return 0
     end
 end

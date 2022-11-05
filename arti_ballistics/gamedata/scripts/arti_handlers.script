@@ -489,6 +489,7 @@ function ambush(npc, s_hit, ctx)
     return s_hit
 end
 
+
 function rip(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     if is_actor(npc) then return s_hit end
@@ -684,9 +685,19 @@ function explode_handler(aim_point)
     end, explode_obj.id)
 end
 
+
+-- randomly rip the durability
+function pab(aim_point)
+    local rand = math_random(16)
+    local wpn = db.actor:active_item()
+    if wpn and rand < 5 then
+        wpn:set_condition(clamp(wpn:condition() - (rand/100), 0, 1))
+    end
+end
+
 local custom_proj_table = {
     ["explodes"] = explode_handler,
-    -- ["thunderbolt"] = thunderbolt_handler
+    ["impair"] = pab
 }
 
 function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
