@@ -77,10 +77,10 @@
 		<text>headshots ignore some armor, center mass stuns</text>
 	</string>
 	<string id="st_ballistics_rip">
-		<text>high expansion damage, lifesteal</text>
+		<text>lifesteal</text>
 	</string>
 	<string id="st_ballistics_varma">
-		<text>deals bonus damage to mutants</text>
+		<text>bonus damage vs. mutants</text>
 	</string>
 	<string id="st_ballistics_explodes">
 		<text>explodes on impact</text>
@@ -116,7 +116,7 @@
 		<text>cover piercing</text>
 	</string>
 	<string id="st_ballistics_soulripper">
-		<text>exponential ultra piercing, headshots heal</text>
+		<text>headshots heal</text>
 	</string>
 
 	<string id="st_link">

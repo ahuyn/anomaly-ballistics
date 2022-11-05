@@ -1,8 +1,6 @@
 local ini_ammo = ini_file("ammo\\importer.ltx")
 
-PrepStats = utils_ui.prepare_stats_table
-function utils_ui.prepare_stats_table()
-    PrepStats()
+function inject_stats()
     utils_ui.stats_table["ammo"] = {
      ["damage"] = { 
         index= 1, typ= "float",  name= "st_prop_k_hit",         icon_p= "ui_wp_prop_damage",             icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",            compare= false, sign=false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_damage"} },
@@ -23,6 +21,22 @@ function utils_ui.prepare_stats_table()
     ["special"]={ 
         index= 9 , typ= "float",   name= "st_prop_special",       icon_p= "ui_am_condition",           icon_n= "", track= false,  magnitude= 1,    unit= "",   compare= false, sign= false, show_always=false, value_functor= {"a_mmo_stats_tbl","prop_special"} } 
     }
+end
+
+if ish_item_stats then
+    override_stats_table = ish_item_stats.override_stats_table
+    
+    ish_item_stats.override_stats_table = function()
+        override_stats_table()
+        inject_stats()
+    end
+end
+
+prepare_stats_table = utils_ui.prepare_stats_table
+
+utils_ui.prepare_stats_table = function()
+    prepare_stats_table()
+    inject_stats()
 end
 
 GetTable = utils_ui.get_stats_table
