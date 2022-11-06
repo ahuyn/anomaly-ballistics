@@ -2,10 +2,18 @@
 
 ini_ammo = ini_file("ammo\\importer.ltx")
 
-function print_dbg(text, ...) 
-	if get_config("debug") then
-		printf("ballistics | %s | " .. text, time_global(), ...)
+local dbg_log
+function print_dbg( text , ...)
+	if get_config("debug") or false then
+		dbg_log = dbg_log or mcm_log and mcm_log.new("DBG")
+		if dbg_log then
+			dbg_log.enabled = true
+			dbg_log:log( text , ...)
+		else
+			printf( "ballistics: | %s |  "..text ,time_global(), ...)
+		end
 	end
+	return nil
 end
 
 -- checking if actor shot the gun at npc or vice versa and if gun is gun
@@ -114,11 +122,9 @@ _G.CAI_Stalker__BeforeHitCallback = function(npc,s_hit,bone_id)
         SendScriptCallback("npc_on_before_hit",npc,custom_hit.s_hit,custom_hit.bone_id, flags)
         if flags.ret_value then
             if custom_hit.s_hit.type ~= hit.fire_wound then
-                printf("Send full hit %s", custom_hit.s_hit.power)
                 s_hit.power = custom_hit.s_hit.power
                 s_hit.ap = 0
             else
-                printf("Reduce health by %s", custom_hit.s_hit.power)
                 npc:set_health_ex(npc.health - custom_hit.s_hit.power)
                 s_hit.power = 0.0001 -- removing engine stuff
             end
