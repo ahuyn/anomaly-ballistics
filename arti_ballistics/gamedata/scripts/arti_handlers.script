@@ -191,7 +191,7 @@ function npc_standard(s_hit, precalc)
     if diff < 1 and mult < 1 and bone_data.mult > 1 then
         bone_adj = bone_data.mult - 1
         bone_adj = bone_adj * mult
-        local mult_adj = clamp((1 + bone_adj) / bone_data.mult, 0.6, 1)
+        local mult_adj = clamp((1 + bone_adj) / bone_data.mult, 0.4, 1)
         print_dbg("AP insufficient, reducing multiplier by %s", mult_adj)
         mult = mult * mult_adj 
     end
@@ -531,10 +531,6 @@ function dragonsbreath(npc, s_hit, ctx)
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
     end
     if is_actor(npc) then
-        local s = xr_sound.get_safe_sound_object("potushite_zhopu")
-        if s then
-            s:play(db.actor, 0, sound_object.s2d)
-        end
         ignite_npc(npc, ctx.bone_id, 1)
     else
         ignite_npc(npc, ctx.bone_id, 10, 10)
