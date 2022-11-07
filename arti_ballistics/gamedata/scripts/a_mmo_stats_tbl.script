@@ -1,35 +1,6 @@
 local ini_ammo = ini_file("ammo\\importer.ltx")
 
-
--- damage multiplier
--- ap class
--- hp expansion %
--- num projectiles
--- dispersion if applicable
--- velocity if applicable   
--- wear
--- function pop_ammo_table()
---     printf("Pop ammo table")
---     if utils_ui.stats_table.ammo then return end
---     utils_ui.add_stats_table("ammo", "damage", { 
---         index= 1, typ= "float",  name= "st_prop_k_hit",         icon_p= "ui_wp_prop_damage",             icon_n= "", track= false,  magnitude= 1,    unit= "st_stat_dmg",            compare= false, sign=false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_damage"} })
---     utils_ui.add_stats_table("ammo", "ap", { 
---         index= 2, typ= "string",  name= "st_prop_k_ap",         icon_p= "ui_am_propery_01",             icon_n= "", track= false,  magnitude= 1,    unit= "",             compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_ap"} })
---     utils_ui.add_stats_table("ammo", "hp", { 
---         index= 3, typ= "float",   name= "st_prop_k_hp",         icon_p= "ui_am_prop_restore_bleeding",             icon_n= "", track= false,  magnitude= 1,    unit= "st_perc ",              compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_hp"} })
---     utils_ui.add_stats_table("ammo", "projectiles", { 
---         index= 4, typ= "float",   name= "st_prop_projectiles",  icon_p= "ui_wp_prop_skorostrelnost",             icon_n= "", track= false,  magnitude= 1,    unit= "st_stat_dmg",             compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_projectiles"} })
---     utils_ui.add_stats_table("ammo", "accuracy",{ 
---         index= 5, typ= "float",   name= "st_prop_k_disp",       icon_p= "ui_wp_prop_tochnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",       compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_accuracy"} } )
---     utils_ui.add_stats_table("ammo", "velocity",{ 
---         index= 6, typ= "float",   name= "st_prop_k_vel",       icon_p= "ui_wp_prop_nastilnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",      compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_flatness"} } )
---     utils_ui.add_stats_table("ammo", "wear",{ 
---         index= 7 , typ= "float",   name= "st_prop_impair",       icon_p= "ui_wp_prop_nadezhnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_wear"} } )
--- end
-
-PrepStats = utils_ui.prepare_stats_table
-function utils_ui.prepare_stats_table()
-    PrepStats()
+function inject_stats()
     utils_ui.stats_table["ammo"] = {
      ["damage"] = { 
         index= 1, typ= "float",  name= "st_prop_k_hit",         icon_p= "ui_wp_prop_damage",             icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",            compare= false, sign=false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_damage"} },
@@ -43,9 +14,29 @@ function utils_ui.prepare_stats_table()
         index= 5, typ= "float",   name= "st_prop_k_disp",       icon_p= "ui_wp_prop_tochnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",       compare= false, sign= true, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_accuracy"} } ,
     ["velocity"]={ 
         index= 6, typ= "float",   name= "st_prop_k_vel",       icon_p= "ui_wp_prop_nastilnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",      compare= false, sign= true, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_flatness"} } ,
+    ["recoil"]={ 
+        index= 7 , typ= "float",   name= "st_prop_recoil",       icon_p= "ui_wp_prop_otdacha",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_recoil"} } ,    
     ["wear"]={ 
-        index= 7 , typ= "float",   name= "st_prop_impair",       icon_p= "ui_wp_prop_nadezhnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_wear"} } 
+        index= 8 , typ= "float",   name= "st_prop_impair",       icon_p= "ui_wp_prop_nadezhnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_wear"} } ,
+    ["special"]={ 
+        index= 9 , typ= "float",   name= "st_prop_special",       icon_p= "ui_am_condition",           icon_n= "", track= false,  magnitude= 1,    unit= "",   compare= false, sign= false, show_always=false, value_functor= {"a_mmo_stats_tbl","prop_special"} } 
     }
+end
+
+if ish_item_stats then
+    override_stats_table = ish_item_stats.override_stats_table
+    
+    ish_item_stats.override_stats_table = function()
+        override_stats_table()
+        inject_stats()
+    end
+end
+
+prepare_stats_table = utils_ui.prepare_stats_table
+
+utils_ui.prepare_stats_table = function()
+    prepare_stats_table()
+    inject_stats()
 end
 
 GetTable = utils_ui.get_stats_table
@@ -62,14 +53,35 @@ function utils_ui.UIInfoItem:GetType(sec)
     if ini_ammo:section_exist(sec) then return "ammo"
     else return GetType(self, sec) end
 end
+
+Update = utils_ui.UIInfoItem.Update
+function utils_ui.UIInfoItem:Update(obj, sec, flags)
+    Update(self, obj, sec, flags)
+    -- patch the armor val
+    if sec and ini_ammo:section_exist(sec) then
+        for i=1,#self.stats do
+            if self.stats[i].cap:GetText() == game.translate_string("st_prop_k_ap") then
+                local ap = ini_ammo:r_float_ex(sec, "k_ap") or 0
+                ap = math.floor(ap * 20)
+                self.stats[i].txt:SetText(game.translate_string("st_prop_armor_"..ap))
+            end
+            if self.stats[i].cap:GetText() == game.translate_string("st_prop_special") then    
+                local str_spec = ini_ammo:r_string_ex(sec, "special")
+                if str_spec then
+                    self.stats[i].txt:SetText(game.translate_string("st_ballistics_"..str_spec))
+                end
+            end
+        end
+    end
+end
+
 function prop_damage(obj, sec)
     return math.floor(100 * (ini_ammo:r_float_ex(sec, "k_hit") or SYS_GetParam(2, sec, "k_hit") or 1))
 end
 
 -- pull from the armor classification
 function prop_ap(obj, sec)
-    local ap = ini_ammo:r_float_ex(sec, "k_ap") or 0
-    return ap * 20
+    return 1
 end
 
 function prop_hp(obj, sec)
@@ -101,10 +113,23 @@ function prop_flatness(obj, sec)
     end
 end
 
+function prop_recoil(obj, sec)
+    if not enhanced_recoil_mcm then return 0 end
+    local recoil = SYS_GetParam(2, sec, "recoil")
+    if recoil ~= 1 then
+        return recoil
+    else return 0
+    end
+end
+
 function prop_wear(obj, sec)
     local impair = ini_ammo:r_float_ex(sec, "impair") or 1
     if impair ~= 1 then
         return math.floor(100 * impair)
     else return 0
     end
+end
+function prop_special(obj, sec)
+    local str_spec = ini_ammo:r_string_ex(sec, "special")
+    if str_spec then return 1 else return 0 end
 end

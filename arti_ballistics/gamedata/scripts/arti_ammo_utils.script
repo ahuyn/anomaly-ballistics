@@ -199,35 +199,6 @@ function death_manager.set_weapon_drop_condition(npc,itm)
     SetWep(npc, itm)
     process_wpn(itm)
 end
--- loadout stuff
-
-local clr_1  = utils_xml.get_color("ui_gray_1")
-local clr_2  = utils_xml.get_color("ui_gray_2")
-local clr_p  = utils_xml.get_color("d_purple")
-gc = game.translate_string
-BuildFooter = ui_item.build_desc_footer
-function ui_item.build_desc_footer(obj, sec, str)
-    _str = BuildFooter(obj, sec, str)
-    sec = obj and obj:section() or sec
-    if ini_ammo:section_exist(sec) and ini_ammo:r_string_ex(sec, "name") then
-        local ammo_data = get_ammo_data(sec)
-        local str_dmg = math_floor(ammo_data.k_hit * 100) .. "%"
-        local str_ap = gc("st_prop_armor_".. math_floor(ammo_data.k_ap * 20))
-        local str_impair = math.floor(100 * (ini_ammo:r_float_ex(sec, "impair") or 1)) .. "%"
-        local str_spec = ini_ammo:r_string_ex(sec, "special")
-        if str_spec then str_spec = str_explode(str_spec, ",") 
-        else str_spec = {} end
-
-        _str = _str .. "\\n \\n" .. gc("st_ball_properties") .. "\\n \\n"
-        -- _str = _str .. " " .. clr_p .. gc("st_dot") .. " " .. clr_2 .. gc("st_prop_k_hit") .. " " .. clr_1 .. str_dmg .. "\\n"
-        _str = _str .. " " .. clr_p .. gc("st_dot") .. " " .. clr_2 .. gc("st_prop_armor") .. " " .. clr_1 .. str_ap .. "\\n"
-        -- _str = _str .. " " .. clr_p .. gc("st_dot") .. " " .. clr_2 .. gc("st_prop_impair") .. " " .. clr_1 .. str_impair .. "\\n"
-        for k,v in pairs(str_spec) do        
-            _str = _str .. " " .. clr_p .. gc("st_dot") .. " " .. clr_2 .. gc("st_ballistics_"..v) .. " " .. "\\n"
-        end
-    end
-    return _str
-end
 
 -- spawn recipes with random weights
 local recipe_weights = {

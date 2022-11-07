@@ -97,7 +97,6 @@ function timer_disassembly_item(npc_id, table, name)
     for k,v in pairs(table) do
         create_ammo(k, npc:position(), npc:level_vertex_id(), npc:game_vertex_id(), npc:id(), v)
     end
-	-- CreateTimeEvent(npc:id(), "box_ammo_aggregation", 0, item_weapon.ammo_aggregation_full, npc:id())
     
     local parts_text = create_disassemble_list(table)
 	actor_menu.set_item_news("success", "weapon_ammo", "st_dis_text_11", name, game.translate_string("st_dis_text_9"), parts_text)

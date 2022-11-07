@@ -133,7 +133,7 @@ end
 function prework(npc, s_hit, ctx)
     local precalc = {}
     
-    precalc.base_power = ui_wpn_params.read_float(ctx.hit_data.wpn_sec, "", "hit_power")
+    precalc.base_power = ctx.hit_data.wpn:cast_Weapon():GetHitPower()
     precalc.ammo_data = get_ammo_data(ctx.hit_data.ammo)
     precalc.bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or mutant_prot_values(npc, ctx.bone_id)
 
@@ -191,7 +191,7 @@ function npc_standard(s_hit, precalc)
     if diff < 1 and mult < 1 and bone_data.mult > 1 then
         bone_adj = bone_data.mult - 1
         bone_adj = bone_adj * mult
-        local mult_adj = clamp((1 + bone_adj) / bone_data.mult, 0.6, 1)
+        local mult_adj = clamp((1 + bone_adj) / bone_data.mult, 0.4, 1)
         print_dbg("AP insufficient, reducing multiplier by %s", mult_adj)
         mult = mult * mult_adj 
     end
@@ -489,6 +489,7 @@ function ambush(npc, s_hit, ctx)
     return s_hit
 end
 
+
 function rip(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     if is_actor(npc) then return s_hit end
@@ -530,10 +531,6 @@ function dragonsbreath(npc, s_hit, ctx)
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
     end
     if is_actor(npc) then
-        local s = xr_sound.get_safe_sound_object("potushite_zhopu")
-        if s then
-            s:play(db.actor, 0, sound_object.s2d)
-        end
         ignite_npc(npc, ctx.bone_id, 1)
     else
         ignite_npc(npc, ctx.bone_id, 10, 10)
@@ -684,9 +681,19 @@ function explode_handler(aim_point)
     end, explode_obj.id)
 end
 
+
+-- randomly rip the durability
+function pab(aim_point)
+    local rand = math_random(16)
+    local wpn = db.actor:active_item()
+    if wpn and rand < 5 then
+        wpn:set_condition(clamp(wpn:condition() - (rand/100), 0, 1))
+    end
+end
+
 local custom_proj_table = {
     ["explodes"] = explode_handler,
-    -- ["thunderbolt"] = thunderbolt_handler
+    ["impair"] = pab
 }
 
 function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
