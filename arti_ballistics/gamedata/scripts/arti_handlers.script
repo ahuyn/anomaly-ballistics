@@ -4,6 +4,7 @@ npc_bone_mult       = ballistics_utils.npc_bone_mult
 npc_bone_protection = ballistics_utils.npc_bone_protection
 npc_bone_data       = ballistics_utils.npc_bone_data
 play_particle       = ballistics_utils.play_particle
+play_particle_firepoint = ballistics_utils.play_particle_firepoint
 mutant_hp           = ballistics_utils.mutant_hp
 mutant_prot_values  = ballistics_utils.mutant_prot_values
 modify_bone         = ballistics_utils.modify_bone
@@ -276,7 +277,10 @@ function on_enemy_eval(obj, enemy, flags)
     if npc_stun[obj:id()] then
         if time_global() > npc_stun[obj:id()] then
             npc_stun[obj:id()] = false
-        else flags.ret_value = false end
+        else 
+            flags.override = true
+            flags.ret_value = false 
+        end
     end
 end
 
@@ -442,7 +446,7 @@ function headshot(npc, s_hit, ctx)
     calcs.hollowpoint = process_hp(precalc, ctx.is_npc)
 
     local final_hit = tbl_reduce(calcs)
-    if headshot and final_hit/2 > npc.health then
+    if headshot and final_hit > npc.health then
         npc:set_bone_visible("bip01_head", false, true)
         play_particle(npc, 15, "anomaly2\\effects\\body_tear_blood_05")
         play_particle(npc, 15, "anomaly2\\effects\\body_tear_blood_01")
@@ -471,8 +475,8 @@ function ambush(npc, s_hit, ctx)
     bone_data = precalc.bone_data
 
     apply_std_calcs(calcs, npc, s_hit, precalc)
-    -- hitting distracted npc confers 20% damage bonus and ups pen one class (SP6 eq)
-    if not npc:best_enemy() or npc:best_enemy():id() ~= 0 then
+    -- hitting distracted npc with suppressed weapon confers 20% damage bonus and ups pen one class (SP6 eq)
+    if ctx.hit_data.wpn:weapon_is_silencer() and(not npc:best_enemy() or npc:best_enemy():id() ~= 0) then
         calcs.ambush = 1.2
         ammo_data.k_ap = ammo_data.k_ap + 0.05
     end
@@ -511,7 +515,7 @@ function ignite_npc(npc, bone_id, stack, duration)
     play_sound_on_location("incendiary", npc)
     add_effect("ignite"..npc:id()..math.random(stack), duration, 
     function()
-        play_particle(npc, 11, "artefact\\artefact_zharka")
+        play_particle(npc, 11, "damage_fx\\effects\\body_burn_01")
         if not npc:alive() then return end
         local h = hit()
         h.type = hit.burn
@@ -668,7 +672,9 @@ function get_point_of_aim()
 end
 
 local mine_id = 0
-function explode_handler(aim_point)
+function explode_handler()
+    local aim_point = get_point_of_aim()
+    if not aim_point then return end
     local explode_obj = alife_create_item("bullet_blow", aim_point)
     CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
     function(id)
@@ -681,9 +687,8 @@ function explode_handler(aim_point)
     end, explode_obj.id)
 end
 
-
 -- randomly rip the durability
-function pab(aim_point)
+function pab()
     local rand = math_random(16)
     local wpn = db.actor:active_item()
     if wpn and rand < 5 then
@@ -691,18 +696,33 @@ function pab(aim_point)
     end
 end
 
+function play_acid()
+    play_particle_firepoint("artefact\\effects\\af_acidic_idle_color_trail")
+end
+function play_shock()
+    play_particle_firepoint("anomaly2\\effects\\electra_entrance_small")
+end
+function play_grav()
+    play_particle_firepoint("anomaly2\\bloodsucker_shield")
+end
+function play_fire_big()
+    play_particle_firepoint("artefact\\af_thermal_idle")
+end
+
 local custom_proj_table = {
     ["explodes"] = explode_handler,
-    ["impair"] = pab
+    ["impair"] = pab,
+    ["soulripper"] = play_grav,
+    ["shock"] = play_shock,
+    ["fire_melt"] = play_fire_big,
+    ["acid"] = play_acid
 }
 
 function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
     local ammo_table = utils_item.get_ammo(wpn:section(), wpn:id())
     ammo_type = wpn:get_ammo_type()
     if ammo_table[ammo_type + 1] and custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")] then
-        aim_point = get_point_of_aim()
-        if not aim_point then return end
-        custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")](aim_point)
+        custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")]()
     end
 end
 
