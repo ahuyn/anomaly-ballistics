@@ -388,6 +388,7 @@ function fragment(npc, s_hit, ctx)
     if not is_actor(npc) and full_pen_modifier(precalc, ctx.is_npc) > 0 and math_random(4) == 4 then
         s_hit.power = s_hit.power * ini_ammo:r_float_ex(ctx.hit_data.ammo, "frag") or 1.5
     end
+    return s_hit
 end
 
 function fragment_sound(npc, s_hit, ctx)
@@ -423,6 +424,7 @@ function slug(npc, s_hit, ctx)
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
+    return s_hit
 end
 
 -- jfp headshots
@@ -446,14 +448,19 @@ function headshot(npc, s_hit, ctx)
     calcs.hollowpoint = process_hp(precalc, ctx.is_npc)
 
     local final_hit = tbl_reduce(calcs)
-    if headshot and final_hit > npc.health then
-        npc:set_bone_visible("bip01_head", false, true)
-        play_particle(npc, 15, "anomaly2\\effects\\body_tear_blood_05")
-        play_particle(npc, 15, "anomaly2\\effects\\body_tear_blood_01")
-        play_sound_on_location("headshot", npc)
-    end
+    CreateTimeEvent("headsplode", npc:id(), 0, function()
+        if not npc:alive() then
+            npc:set_bone_visible("bip01_head", false, true)
+            play_particle(npc, 15, "anomaly2\\effects\\body_tear_blood_05")
+            play_particle(npc, 15, "anomaly2\\effects\\body_tear_blood_01")
+            play_sound_on_location("headshot", npc)
+        end
+        return true
+    end)
+        
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
+    return s_hit
 end
 
 -- for 5.56 varmageddon

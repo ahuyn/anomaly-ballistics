@@ -93,7 +93,7 @@ function play_particle(npc, bone_id, name)
     end
 end
 
-
+-- play a particle at the weapon bone firepoint. good for emulating fancier muzzle fx
 function play_particle_firepoint(name)
     local wpn = db.actor:active_item()
     if not wpn then return end
@@ -105,7 +105,7 @@ function play_particle_firepoint(name)
         local offset = utils_data.read_from_ini(nil,hud,"fire_point","string",nil) or VEC_ZERO
         offset = offset and utils_data.string_to_vector(offset)
         last_particle:play_at_pos( wpn:bone_position(fire_bone, true), offset ) 
-        CreateTimeEvent("particle_stop", math.random(30), 0.5, 
+        CreateTimeEvent("particle_stop", math.random(30), 0.7, 
         function()
             last_particle:stop()
             return true
