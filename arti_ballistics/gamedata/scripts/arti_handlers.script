@@ -29,6 +29,36 @@ local anims = {
     "norm_1_critical_hit_head_0", -- good
 }
 
+
+local limbs = {
+    [3]  = "bip01_l_thigh",
+    [4]  = "bip01_l_calf",
+	[6]  = "bip01_l_toe0", 
+    [7]  = "bip01_r_thigh",
+    [8]  = "bip01_r_calf",
+	[10] = "bip01_r_toe0", 
+	[22] = "bip01_l_forearm", 
+	[24] = "bip01_l_finger0", 
+	[25] = "bip01_l_finger01", 
+	[26] = "bip01_l_finger02", 
+	[27] = "bip01_l_finger1", 
+	[28] = "bip01_l_finger11", 
+	[29] = "bip01_l_finger12", 
+	[30] = "bip01_l_finger2", 
+	[31] = "bip01_l_finger21", 
+	[32] = "bip01_l_finger22", 
+	[35] = "bip01_r_forearm",
+	[37] = "bip01_r_finger0", 
+	[38] = "bip01_r_finger01", 
+	[39] = "bip01_r_finger02", 
+	[40] = "bip01_r_finger1", 
+	[41] = "bip01_r_finger11", 
+	[42] = "bip01_r_finger12", 
+	[43] = "bip01_r_finger2", 
+	[44] = "bip01_r_finger21", 
+	[45] = "bip01_r_finger22", 
+}
+
 -- pulls custom ap and hit power values from code
 function get_ammo_data(ammo_sec)
     if ini_ammo:section_exist(ammo_sec) then
@@ -181,7 +211,7 @@ function npc_standard(s_hit, precalc)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
     -- print_dbg("[NPC] Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
-    
+
     local armor_tier = get_tier(bone_data.armor)
     local ap_tier = get_tier(ammo_data.k_ap)
     local ap_frac = get_frac(ammo_data.k_ap)
@@ -192,7 +222,7 @@ function npc_standard(s_hit, precalc)
     if diff < 1 and mult < 1 and bone_data.mult > 1 then
         bone_adj = bone_data.mult - 1
         bone_adj = bone_adj * mult
-        local mult_adj = clamp((1 + bone_adj) / bone_data.mult, 0.4, 1)
+        local mult_adj = clamp((1 + bone_adj) / bone_data.mult, 0.6, 1)
         print_dbg("AP insufficient, reducing multiplier by %s", mult_adj)
         mult = mult * mult_adj 
     end
@@ -294,6 +324,12 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     local calcs = {}
     local precalc = prework(npc, s_hit, ctx)
     
+    -- halve leg armor and damage multiplier
+    if get_config("legs") and limbs[precalc.bone_data.id] then
+        bone_data.armor = bone_data.armor / 2
+        bone_data.mult = bone_data.mult / 2
+    end
+
     -- add standard calcs for hit, bone mult, etc
     apply_std_calcs(calcs, npc, s_hit, precalc)
 
@@ -314,38 +350,6 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     return s_hit
 end
 
-local limbs = {
-    [3]  = "bip01_l_thigh",
-    [4]  = "bip01_l_calf",
-    [5]  = "bip01_l_foot",
-	[6]  = "bip01_l_toe0", 
-    [7]  = "bip01_r_thigh",
-    [8]  = "bip01_r_calf",
-    [9]  = "bip01_r_foot",
-	[10] = "bip01_r_toe0", 
-	[22] = "bip01_l_forearm", 
-	[23] = "bip01_l_hand", 
-	[24] = "bip01_l_finger0", 
-	[25] = "bip01_l_finger01", 
-	[26] = "bip01_l_finger02", 
-	[27] = "bip01_l_finger1", 
-	[28] = "bip01_l_finger11", 
-	[29] = "bip01_l_finger12", 
-	[30] = "bip01_l_finger2", 
-	[31] = "bip01_l_finger21", 
-	[32] = "bip01_l_finger22", 
-	[35] = "bip01_r_forearm", 
-	[36] = "bip01_r_hand", 
-	[37] = "bip01_r_finger0", 
-	[38] = "bip01_r_finger01", 
-	[39] = "bip01_r_finger02", 
-	[40] = "bip01_r_finger1", 
-	[41] = "bip01_r_finger11", 
-	[42] = "bip01_r_finger12", 
-	[43] = "bip01_r_finger2", 
-	[44] = "bip01_r_finger21", 
-	[45] = "bip01_r_finger22", 
-}
 
 local boar_clsid = {
     [clsid.boar] 				= true,
@@ -557,11 +561,6 @@ function fire_damage(npc, s_hit, ctx)
     local ignite_chance = ini_ammo:r_float_ex(ctx.hit_data.ammo, "ignite") or 0
     if math_random() < ignite_chance then
         if is_actor(npc) then
-            -- play funni ignite sound
-            local s = xr_sound.get_safe_sound_object("potushite_zhopu")
-            if s then
-        		s:play(db.actor, 0, sound_object.s2d)
-            end
             ignite_npc(npc, ctx.bone_id, 1)
         else
             ignite_npc(npc, ctx.bone_id, 3, 10)
@@ -720,6 +719,7 @@ local custom_proj_table = {
     ["explodes"] = explode_handler,
     ["impair"] = pab,
     ["soulripper"] = play_grav,
+    ["chaos"] = play_grav,
     ["shock"] = play_shock,
     ["fire_melt"] = play_fire_big,
     ["acid"] = play_acid
