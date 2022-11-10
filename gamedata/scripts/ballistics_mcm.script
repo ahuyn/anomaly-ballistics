@@ -59,7 +59,7 @@ function on_before_hit(npc,s_hit,bone_id, is_npc)
     
     local func = get_handler(ammo)
     if not func then return false end
-    print_dbg("Applying custom hit for %s on %s using function %s.%s. Prev hit power %s", ammo, bone_id, func[1], func[2], s_hit.power)
+    -- print_dbg("Applying custom hit for %s on %s using function %s.%s. Prev hit power %s", ammo, bone_id, func[1], func[2], s_hit.power)
     local hit_ctx = {
         hit_data = valid_hit_data,
         bone_id = bone_id,

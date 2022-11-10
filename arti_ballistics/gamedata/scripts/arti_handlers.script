@@ -30,35 +30,6 @@ local anims = {
 }
 
 
-local limbs = {
-    [3]  = "bip01_l_thigh",
-    [4]  = "bip01_l_calf",
-	[6]  = "bip01_l_toe0", 
-    [7]  = "bip01_r_thigh",
-    [8]  = "bip01_r_calf",
-	[10] = "bip01_r_toe0", 
-	[22] = "bip01_l_forearm", 
-	[24] = "bip01_l_finger0", 
-	[25] = "bip01_l_finger01", 
-	[26] = "bip01_l_finger02", 
-	[27] = "bip01_l_finger1", 
-	[28] = "bip01_l_finger11", 
-	[29] = "bip01_l_finger12", 
-	[30] = "bip01_l_finger2", 
-	[31] = "bip01_l_finger21", 
-	[32] = "bip01_l_finger22", 
-	[35] = "bip01_r_forearm",
-	[37] = "bip01_r_finger0", 
-	[38] = "bip01_r_finger01", 
-	[39] = "bip01_r_finger02", 
-	[40] = "bip01_r_finger1", 
-	[41] = "bip01_r_finger11", 
-	[42] = "bip01_r_finger12", 
-	[43] = "bip01_r_finger2", 
-	[44] = "bip01_r_finger21", 
-	[45] = "bip01_r_finger22", 
-}
-
 -- pulls custom ap and hit power values from code
 function get_ammo_data(ammo_sec)
     if ini_ammo:section_exist(ammo_sec) then
@@ -323,12 +294,6 @@ end
 function ballistic_handlers.default(npc, s_hit, ctx)
     local calcs = {}
     local precalc = prework(npc, s_hit, ctx)
-    
-    -- halve leg armor and damage multiplier
-    if get_config("legs") and limbs[precalc.bone_data.id] then
-        bone_data.armor = bone_data.armor / 2
-        bone_data.mult = bone_data.mult / 2
-    end
 
     -- add standard calcs for hit, bone mult, etc
     apply_std_calcs(calcs, npc, s_hit, precalc)
@@ -358,7 +323,7 @@ local boar_clsid = {
 
 -- buckshot ignores up to 20 armor on limb hit
 function buckshot_damage(npc, s_hit, ctx)
-    if boar_clsid[get_clsid(npc)] or (ctx.is_npc and limbs[ctx.bone_id] and not is_actor(npc)) then
+    if boar_clsid[get_clsid(npc)] or (ctx.is_npc and ballistics_utils.limbs[ctx.bone_id] and not is_actor(npc)) then
         local calcs = {}
         local precalc = prework(npc, s_hit, ctx)
         bone_data = precalc.bone_data
@@ -368,7 +333,9 @@ function buckshot_damage(npc, s_hit, ctx)
         if boar_clsid[get_clsid(npc)] then
             bone_data.mult = 1.3
         else
-            bone_data.armor = clamp(bone_data.armor - 0.2, 0, 1)
+            -- do not reduce too excessively if leg meta enabled
+            local reduction = get_config("legs") and 0.05 or 0.2
+            bone_data.armor = clamp(bone_data.armor - reduction, 0, 1)
         end
         
         calcs.base_power = precalc.base_power

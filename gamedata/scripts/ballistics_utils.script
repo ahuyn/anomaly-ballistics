@@ -81,6 +81,35 @@ center_mass = {
 	[46] = "bip01_pelvis", 
 }
 
+
+limbs = {
+    [3]  = "bip01_l_thigh",
+    [4]  = "bip01_l_calf",
+	[6]  = "bip01_l_toe0", 
+    [7]  = "bip01_r_thigh",
+    [8]  = "bip01_r_calf",
+	[10] = "bip01_r_toe0", 
+	[22] = "bip01_l_forearm", 
+	[24] = "bip01_l_finger0", 
+	[25] = "bip01_l_finger01", 
+	[26] = "bip01_l_finger02", 
+	[27] = "bip01_l_finger1", 
+	[28] = "bip01_l_finger11", 
+	[29] = "bip01_l_finger12", 
+	[30] = "bip01_l_finger2", 
+	[31] = "bip01_l_finger21", 
+	[32] = "bip01_l_finger22", 
+	[35] = "bip01_r_forearm",
+	[37] = "bip01_r_finger0", 
+	[38] = "bip01_r_finger01", 
+	[39] = "bip01_r_finger02", 
+	[40] = "bip01_r_finger1", 
+	[41] = "bip01_r_finger11", 
+	[42] = "bip01_r_finger12", 
+	[43] = "bip01_r_finger2", 
+	[44] = "bip01_r_finger21", 
+	[45] = "bip01_r_finger22", 
+}
 -- play particle at npc bone
 function play_particle(npc, bone_id, name)
     bone_id = (not bone_id or bone_id == 65535) and 1 or bone_id
@@ -218,13 +247,19 @@ end
 -- util to collect information about a bone - damage multiplier, id, name
 function npc_bone_data(npc, bone_id)
     bone_prot = npc_bone_protection(npc, bone_id)
-    return {
+    local data = {
         id = bone_id,
         name = Bone_IDs[bone_id],
         armor = bone_prot.armor,
         modified = bone_prot.modified,
         mult = npc_bone_mult(bone_id)
     }
+    -- halve leg armor and damage multiplier
+    if get_config("legs") and limbs[bone_id] then
+        data.armor = data.armor / 2
+        data.mult = data.mult / 2
+    end
+    return data
 end
 
 function npc_on_death_callback(npc, who)
