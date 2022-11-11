@@ -213,6 +213,11 @@ function npc_bone_protection(npc, bone_id)
     end
 end
 
+function hit_frac(npc, bone_id)
+    local bone_sec = read_npc_bone_sec(npc) or "stalker_hero_1"
+    return ini_damage:r_string_ex(bone_sec, "hit_fraction_npc") or 0.5
+end
+
 -- compute actor bone prot based on active suit
 function actor_bone_prot(bone_id)
     local helmet = db.actor:item_in_slot(12)
@@ -252,7 +257,8 @@ function npc_bone_data(npc, bone_id)
         name = Bone_IDs[bone_id],
         armor = bone_prot.armor,
         modified = bone_prot.modified,
-        mult = npc_bone_mult(bone_id)
+        mult = npc_bone_mult(bone_id),
+        hit_fraction = hit_frac(npc, bone_id)
     }
     -- halve leg armor and damage multiplier
     if get_config("legs") and limbs[bone_id] then

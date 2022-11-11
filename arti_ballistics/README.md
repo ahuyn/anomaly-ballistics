@@ -20,7 +20,7 @@ NOTE: AP value is used in the ammo stat display. Due to the stats windows not su
 
 | Class | AP | Bone Armor | Armors      |
 | ------|----| -----------| ----------- |
-| None  |  0 | 0          | Leather jackets, trenchcoats |
+| None  |  0 | 0.0011     | Leather jackets, trenchcoats |
 | I     |  1 | 0.05       | SSP suits | 
 | IIA   |  2 | 0.1        | Stalker Suits | 
 | II    |  3 | 0.15       | PS5 suits, heavier stalker suits |
@@ -35,10 +35,12 @@ Each ammo type has a corresponding AP amount that also falls into one of these c
 
 | Difference | Effects    |
 | -----------|------------|
-| -3 to -7   | Deflection. Deal fractional impact damage |
-| -2 to 0    | Partial penetration, damage reduction up to 90% |
+| -3 to -7   | Deflection. Deal impact damage |
+| -1 to 0    | Partial penetration, damage reduction up to 60% |
 | 1 to 3     | Full penetration, full damage |
 | 4 to 7     | Overkill penetration, reduced damage |
+
+Impact damage is further subdivided based on bullet force (arbitrary values currently) vs. NPC tankiness, dealing up to 40% damage.
 
 The aim of this system is to provide a semi-realistic and balanced system for ballistic damage vs. armor while providing for fun gameplay.
 
