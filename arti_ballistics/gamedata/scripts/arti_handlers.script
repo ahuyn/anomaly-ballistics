@@ -338,7 +338,7 @@ function buckshot_damage(npc, s_hit, ctx)
             bone_data.mult = 1.3
         else
             bone_data.armor = clamp(bone_data.armor - 0.1, 0, 1)
-            ammo_data.k_imp = 1
+            ammo_data.k_imp = ammo_data.k_imp + 0.15
         end
         
         calcs.base_power = precalc.base_power
