@@ -62,7 +62,7 @@ end
 function reduce(diff, ap_frac, ammo_data, bone_data)
     -- local floor = diff == 0 and 0 or (2 * diff + 1) * 0.15
     -- local range = (3 - diff) * 0.15 * (1 - ap_frac)
-    local modifier =  1 - (0.3 * (diff + (1 - ap_frac)))
+    local modifier =  1 - (0.2 * (diff + (1 - ap_frac)))
     -- print_dbg("Reduction of %s", modifier)
     return modifier
 end
@@ -88,7 +88,7 @@ local damage_subcalcs = {
     [-5] = impact,
     [-4] = impact,
     [-3] = impact,
-    [-2] = impact,
+    [-2] = reduce,
     [-1] = reduce,
     [0] = reduce,
     [1] = full,

@@ -36,7 +36,7 @@ Each ammo type has a corresponding AP amount that also falls into one of these c
 | Difference | Effects    |
 | -----------|------------|
 | -3 to -7   | Deflection. Deal impact damage |
-| -1 to 0    | Partial penetration, damage reduction up to 60% |
+| -2 to 0    | Partial penetration, damage reduction up to 60% |
 | 1 to 3     | Full penetration, full damage |
 | 4 to 7     | Overkill penetration, reduced damage |
 
