@@ -53,10 +53,10 @@
 <string id="ui_mcm_lst_bsith">
 	<text>Sith</text>
 </string>
-<string id="ui_mcm_ballistics_rungun">
-	<text>Run and Gun mode</text>
+<string id="ui_mcm_ballistics_legs">
+	<text>Leg Meta</text>
 </string>
-<string id="ui_mcm_ballistics_rungun_desc">
-	<text>Increases ammo drops, slightly reduces outgoing damage and reduces ammo sale cost.</text>
+<string id="ui_mcm_ballistics_legs_desc">
+	<text>Reduces limb armor and limb damage takenby half. Higher AP rounds will suffer while hollowpoint rounds will be more effective. Gives an alternative, ammo-intensive option for taking down heavily armored foes.</text>
 </string>
 </string_table>

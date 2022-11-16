@@ -3,6 +3,7 @@ handler     = arti_handlers.buckshot_damage
 name		= ammo_new_12x70_buck
 k_hit		= 0.35
 k_ap		= 0.025
+k_imp       = 0.5
 impair      = 1
 cost        = 800
 
@@ -10,6 +11,7 @@ cost        = 800
 name		= ammo_new_12x70_magnum
 k_hit		= 0.42
 k_ap		= 0.05
+k_imp       = 0.6
 impair      = 1.3
 cost        = 1300
 recoil		= 1.5
@@ -22,14 +24,17 @@ handler     = arti_handlers.slug
 name		= ammo_new_12x70_zhekan
 k_hit		= 2.5
 k_ap		= 0.1
+k_imp       = 0.8
 impair      = 1
 cost        = 1250
 recoil		= 1.1
 special     = slug
+
 [ammo_12x76_zhekan_bad]:ammo_12x76_zhekan ; dart
 name		= ammo_new_12x70_dart
 k_hit		= 2
 k_ap		= 0.175
+k_imp       = 0.7
 impair      = 1.3
 cost        = 1850
 recoil		= 1.1
@@ -42,6 +47,7 @@ handler     = arti_handlers.buckshot_damage
 name		= ammo_new_12x70_flechette
 k_hit		= 0.28
 k_ap		= 0.1
+k_imp       = 0.5
 impair      = 1
 cost        = 1000
 
@@ -55,6 +61,7 @@ ignite      = 1
 cost        = 3300
 dg_ammo     = ammo_12x76_dart
 dg_chance   = 0.95
+special     = fire_melt
 
 
 [ammo_12x70_buck_verybad]:ammo_12x70_buck_bad
