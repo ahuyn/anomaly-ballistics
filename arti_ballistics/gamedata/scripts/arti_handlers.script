@@ -123,6 +123,7 @@ end
 local function change_damage_type(s_hit, hit_type, bone_data, is_actor)
     s_hit.type = hit_type
     -- undo bone mult as elemental hits shouldn't get any bonus/malus from body part
+    -- actor always receives full hits to allow for armor damage calc
     if not is_actor then
         s_hit.power = s_hit.power / bone_data.mult
     end
@@ -205,10 +206,6 @@ function npc_standard(s_hit, precalc)
     
     -- tweak multiplier based on heavy/exo armor
     if armor_tier == 7 then
-        -- old - ap reduction based on armor strength
-        -- ammo_data.k_ap = ammo_data.k_ap - clamp(bone_data.armor - 0.43, 0, 0.05)
-        -- ammo_data.k_ap = clamp(ammo_data.k_ap, 0, 0.4)
-        -- new - artificial hp (clamped at 100)
         local tank_coef = 10 * clamp(bone_data.armor - 0.4, 0.1, 0.3)
         -- print_dbg("Exo tank coef %s", tank_coef)
         mult = mult * (1/tank_coef)
