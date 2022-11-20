@@ -386,16 +386,11 @@ function slug(npc, s_hit, ctx)
     local precalc = prework(npc, s_hit, ctx)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
-
-    -- some sort of impact damage later?
-    -- local bone_sec = ballistics_utils.read_npc_bone_sec(npc)
-    -- local hit_frac = ini_damage:r_float_ex(bone_sec, "hit_fraction_npc") or 1
-
     apply_std_calcs(calcs, npc, s_hit, precalc)
 
     -- ignore some armor on headshot
     if head_bones[ctx.bone_id] then
-        bone_data.armor = clamp(bone_data.armor - 0.15, 0, 1)
+        bone_data.armor = clamp(bone_data.armor - 0.1, 0, 1)
         headsplode(npc)
     elseif ballistics_utils.center_mass[ctx.bone_id] and math_random() < 0.9 then
         stun_npc(npc)
@@ -632,7 +627,6 @@ end
 
 function soulripper(npc, s_hit, ctx)
     s_hit = head_bones[ctx.bone_id] and rip(npc, s_hit, ctx) or ballistic_handlers.default(npc, s_hit, ctx)
-    play_sound_on_location("soulripper", npc)
     return s_hit
 end
 
@@ -665,10 +659,10 @@ end
 
 -- randomly rip the durability
 function pab()
-    local rand = math_random(16)
+    local rand = math_random(4)
     local wpn = db.actor:active_item()
-    if wpn and rand < 5 then
-        wpn:set_condition(clamp(wpn:condition() - (rand/100), 0, 1))
+    if wpn and rand == 1 then
+        wpn:set_condition(clamp(wpn:condition() - 0.01, 0, 1))
     end
 end
 
@@ -677,6 +671,10 @@ function play_acid()
 end
 function play_shock()
     play_particle_firepoint("anomaly2\\effects\\electra_entrance_small")
+end
+function play_grav_sound()
+    play_particle_firepoint("anomaly2\\bloodsucker_shield")
+    play_sound_on_location("soulripper", db.actor)
 end
 function play_grav()
     play_particle_firepoint("anomaly2\\bloodsucker_shield")
@@ -689,7 +687,7 @@ local custom_proj_table = {
     ["explodes"] = explode_handler,
     ["impair"] = pab,
     ["soulripper"] = play_grav,
-    ["chaos"] = play_grav,
+    ["chaos"] = play_grav_sound,
     ["shock"] = play_shock,
     ["fire_melt"] = play_fire_big,
     ["acid"] = play_acid
