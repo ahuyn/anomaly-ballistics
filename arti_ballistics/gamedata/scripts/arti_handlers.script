@@ -33,13 +33,11 @@ local anims = {
 -- pulls custom ap and hit power values from code
 function get_ammo_data(ammo_sec)
     if ini_ammo:section_exist(ammo_sec) then
-        local k_hp = ini_ammo:r_float_ex(ammo_sec, "k_hp")
-        pen = k_hp and 0 or 0.5 
         return {
             sec     = ammo_sec,
             k_hit   = ini_ammo:r_float_ex(ammo_sec, "k_hit") or SYS_GetParam(2, ammo_sec, "k_hit") or 1,
             k_ap    = ini_ammo:r_float_ex(ammo_sec, "k_ap") or SYS_GetParam(2, ammo_sec, "k_ap") or 0,
-            k_pen   = ini_ammo:r_float_ex(ammo_sec, "k_pen") or pen,
+            k_pen   = ini_ammo:r_float_ex(ammo_sec, "k_pen") or 0,
             k_imp   = ini_ammo:r_float_ex(ammo_sec, "k_imp") or 0
         }
     end
@@ -53,8 +51,11 @@ end
 function impact(diff, ap_frac, ammo_data, bone_data)
     -- print_dbg("Impact")
     -- return 1 / (8 * (diff - 2))
+    if head_bones[bone_data.id] then
+        bone_data.hit_fraction = clamp(bone_data.hit_fraction * 1.1, 0, 1)
+    end
     local frac_adj = 1 - bone_data.hit_fraction
-    return 0.2 + clamp(ammo_data.k_imp - frac_adj, -0.19, 0.2)
+    return 0.2 + clamp(ammo_data.k_imp - frac_adj, -0.165, 0.2)
 end
 
 -- reduction based on AP frac and diff
@@ -77,7 +78,7 @@ end
 -- default is reducing down to pen 
 -- only matters if diff > 3, or more than 0.2
 function penetrate(diff, ap_frac, ammo_data, bone_data)
-    adj = clamp((diff - 3)/4, 0.05, ammo_data.k_pen) 
+    adj = clamp((diff - 4)/4, 0.05, ammo_data.k_pen) 
     -- print_dbg("Overkill, reduce by %s", adj)
     return 1 - adj
 end
@@ -94,7 +95,7 @@ local damage_subcalcs = {
     [1] = full,
     [2] = full,
     [3] = full,
-    [4] = penetrate,
+    [4] = full,
     [5] = penetrate,
     [6] = penetrate,
     [7] = penetrate,
@@ -542,10 +543,8 @@ function acid_damage(npc, s_hit, ctx)
     -- shred ONCE per bone
     local bone_data = npc_bone_data(npc, ctx.bone_id)
     play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
-    if not bone_data.modified then
-        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.6, 0, 1))
-        play_sound_on_location("acid", npc)
-    end
+    modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.7, 0, 1))
+    play_sound_on_location("acid", npc)
     return s_hit
 end
 
@@ -580,6 +579,9 @@ function chaos_damage(npc, s_hit, ctx)
             stun_npc(npc)
         elseif extra_effect == 5 then
             db.actor.health = clamp(db.actor.health + (0.1 * s_hit.power), 0, 1)
+        elseif extra_effect == 6 then
+            -- random full AP
+            calcs.ap_calc = 1
         end
     end
     -- add random effect
