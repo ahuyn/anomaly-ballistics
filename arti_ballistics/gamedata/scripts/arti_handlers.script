@@ -50,7 +50,6 @@ end
 -- deal residual impact damage only
 function impact(diff, ap_frac, ammo_data, bone_data)
     -- print_dbg("Impact")
-    -- return 1 / (8 * (diff - 2))
     if head_bones[bone_data.id] then
         bone_data.hit_fraction = clamp(bone_data.hit_fraction * 1.1, 0, 1)
     end
@@ -61,16 +60,12 @@ end
 -- reduction based on AP frac and diff
 -- diff is 0-2
 function reduce(diff, ap_frac, ammo_data, bone_data)
-    -- local floor = diff == 0 and 0 or (2 * diff + 1) * 0.15
-    -- local range = (3 - diff) * 0.15 * (1 - ap_frac)
     local modifier =  1 - (0.2 * (diff + (1 - ap_frac)))
-    -- print_dbg("Reduction of %s", modifier)
     return modifier
 end
 
 -- deal full damage (does nothing lol)
 function full(diff, ap_frac, ammo_data, bone_data)
-    -- print_dbg("Full")
     return 1
 end
 
@@ -543,7 +538,7 @@ function acid_damage(npc, s_hit, ctx)
     -- shred ONCE per bone
     local bone_data = npc_bone_data(npc, ctx.bone_id)
     play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
-    modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.7, 0, 1))
+    modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.8, 0, 1))
     play_sound_on_location("acid", npc)
     return s_hit
 end
@@ -571,7 +566,7 @@ function chaos_damage(npc, s_hit, ctx)
     -- damage inverse of ap
     calcs.chaos = 0.6 + (1 - random)
     
-    local extra_effect = math_random(6)
+    local extra_effect = math_random(15)
     if not is_actor(npc) then
         if extra_effect == 3 then
             ignite_npc(npc, 11, 5, 5)
@@ -582,6 +577,21 @@ function chaos_damage(npc, s_hit, ctx)
         elseif extra_effect == 6 then
             -- random full AP
             calcs.ap_calc = 1
+        elseif extra_effect == 7 then
+            play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
+            modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.8, 0, 1))
+            play_sound_on_location("acid", npc)
+        elseif extra_effect == 8 then
+            local explode_obj = alife_create_item("bullet_blow", npc)
+            CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
+            function(id)
+                local explode_obj = get_object_by_id(id)
+                if explode_obj then
+                    explode_obj:explode(0)
+                    return true
+                end
+                return false
+            end, explode_obj.id)
         end
     end
     -- add random effect
@@ -688,8 +698,8 @@ end
 local custom_proj_table = {
     ["explodes"] = explode_handler,
     ["impair"] = pab,
-    ["soulripper"] = play_grav,
-    ["chaos"] = play_grav_sound,
+    ["soulripper"] = play_grav_sound,
+    ["chaos"] = play_grav,
     ["shock"] = play_shock,
     ["fire_melt"] = play_fire_big,
     ["acid"] = play_acid

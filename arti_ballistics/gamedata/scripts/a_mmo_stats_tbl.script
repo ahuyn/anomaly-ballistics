@@ -61,15 +61,24 @@ function utils_ui.UIInfoItem:Update(obj, sec, flags)
     if sec and ini_ammo:section_exist(sec) then
         for i=1,#self.stats do
             if self.stats[i].cap:GetText() == game.translate_string("st_prop_k_ap") then
-                local ap = ini_ammo:r_float_ex(sec, "k_ap") or 0
-                ap = math.floor(ap * 20)
-                self.stats[i].txt:SetText(game.translate_string("st_prop_armor_"..ap))
+                local str
+                if ini_ammo:r_string_ex(sec, "special") == "chaos" then
+                    str = "I-V"
+                else
+                    local ap = ini_ammo:r_float_ex(sec, "k_ap") or 0
+                    ap = math.floor(ap * 20)
+                    str = game.translate_string("st_prop_armor_"..ap)
+                end
+                self.stats[i].txt:SetText(str)
             end
             if self.stats[i].cap:GetText() == game.translate_string("st_prop_special") then    
                 local str_spec = ini_ammo:r_string_ex(sec, "special")
                 if str_spec then
                     self.stats[i].txt:SetText(game.translate_string("st_ballistics_"..str_spec))
                 end
+            end
+            if self.stats[i].cap:GetText() == game.translate_string("st_prop_k_hit") and ini_ammo:r_string_ex(sec, "special") == "chaos" then
+                self.stats[i].txt:SetText("60-160%")
             end
         end
     end
