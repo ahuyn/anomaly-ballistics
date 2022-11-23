@@ -359,8 +359,9 @@ function fragment(npc, s_hit, ctx)
 end
 
 function fragment_sound(npc, s_hit, ctx)
-    fragment(npc, s_hit, ctx)
+    s_hit = fragment(npc, s_hit, ctx)
     play_sound_on_location("elite", npc)
+    return s_hit
 end
 
 function headsplode(npc)
@@ -409,20 +410,19 @@ function headshot(npc, s_hit, ctx)
     bone_data = precalc.bone_data
 
     apply_std_calcs(calcs, npc, s_hit, precalc)
-    local headshot = false
     -- ignore armor on headshot, set armor to one below ap to guarantee full damage
     if head_bones[ctx.bone_id] and bone_data.armor < 0.35 and not dialogs_axr_companion.is_actor_companion(db.actor, npc) then
         print_dbg("Ignoring armor on headshot")
-        bone_data.armor = clamp(ammo_data.k_ap - 0.05, 0, 1)
-        headshot = true
+        calcs.ap_calc = 1
+        headsplode(npc)
+    else
+        calcs.ap_calc = npc_standard(s_hit, precalc)
     end
-    calcs.ap_calc = npc_standard(s_hit, precalc)
 
     calcs.hollowpoint = process_hp(precalc, ctx.is_npc)
 
     local final_hit = tbl_reduce(calcs)
-    headsplode(npc)
-        
+    
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
     return s_hit
@@ -474,7 +474,7 @@ function rip(npc, s_hit, ctx)
     	local s = xr_sound.get_safe_sound_object("Soul_"..math.random(5))
 		s:play(db.actor, 0, sound_object.s2d)
     end
-    db.actor.health = clamp(db.actor.health + (0.1 * s_hit.power), 0, 1)
+    db.actor.health = clamp(db.actor.health + 0.05 + (0.2 * s_hit.power), 0, 1)
 
     return s_hit
 end
@@ -560,7 +560,6 @@ function chaos_damage(npc, s_hit, ctx)
     if not ctx.is_npc then
         calcs.ap_calc = mutant_standard(s_hit, precalc)
     else
-        -- tier based formula with overpen, and flinch
         calcs.ap_calc = npc_standard(s_hit, precalc)
     end
     -- damage inverse of ap
