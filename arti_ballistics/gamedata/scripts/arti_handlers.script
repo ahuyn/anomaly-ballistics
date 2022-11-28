@@ -100,7 +100,7 @@ local damage_subcalcs = {
 function tbl_reduce(x)
     local acc = 1
     for k,v in pairs(x) do
-        -- print_dbg("Applying key %s, val %s", k ,v)
+        print_dbg("Applying key %s, val %s", k ,v)
         acc = acc * v
     end
     return acc
