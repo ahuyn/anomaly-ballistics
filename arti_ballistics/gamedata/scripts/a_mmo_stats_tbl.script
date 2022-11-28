@@ -39,7 +39,7 @@ local function get_bone_armor(armor)
         printf("Userdata armor")
         if IsOutfit(armor) then
             return armor:cast_CustomOutfit():GetBoneArmor(15)
-        elseif IsHelmet(armor) then
+        elseif IsItem("helmet", armor:section()) then
             return armor:cast_Helmet():GetBoneArmor(11)
         end
     elseif type(armor) == "string" then
