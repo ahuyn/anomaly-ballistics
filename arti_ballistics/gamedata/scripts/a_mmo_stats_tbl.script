@@ -38,14 +38,16 @@ local function get_bone_armor(armor)
     if type(armor.id) == "function" then
         printf("Userdata armor")
         if IsOutfit(armor) then
-            return armor:cast_CustomOutfit():GetBoneArmor(15)
+            return armor:cast_CustomOutfit():GetBoneArmor(11)
         elseif IsItem("helmet", armor:section()) then
-            return armor:cast_Helmet():GetBoneArmor(11)
+            return armor:cast_Helmet():GetBoneArmor(15)
         end
     elseif type(armor) == "string" then
         printf("Section armor")
         local coeff = SYS_GetParam(0, armor, "bones_koeff_protection")
-        return SYS_GetParam(2, coeff, "bip01_spine") or 0
+        local prot = SYS_GetParam(0, coeff, "bip01_spine")
+        prot = str_explode(prot, ",")
+        return tonumber(prot[2]) or 0
     end
     return 0
 end
