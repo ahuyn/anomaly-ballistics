@@ -21,6 +21,8 @@ function inject_stats()
     ["special"]={ 
         index= 9 , typ= "float",   name= "st_prop_special",       icon_p= "ui_am_condition",           icon_n= "", track= false,  magnitude= 1,    unit= "",   compare= false, sign= false, show_always=false, value_functor= {"a_mmo_stats_tbl","prop_special"} } 
     }
+
+    utils_ui.stats_table["outfit"].fire_wound_protection = { index=  1, typ= "float",   name= "ui_inv_outfit_fire_wound_protection",    icon_p= "ui_am_propery_01",   icon_n= "", track= false, magnitude= 1, unit= "", compare= false, sign= false, show_always= true , value_functor= {"utils_item","get_outfit_protection", "FireWound"}}
 end
 
 if ish_item_stats then
@@ -30,6 +32,29 @@ if ish_item_stats then
         override_stats_table()
         inject_stats()
     end
+end
+
+local function get_bone_armor(armor)
+    if type(armor.id) == "function" then
+        printf("Userdata armor")
+        if IsOutfit(armor) then
+            return armor:cast_CustomOutfit():GetBoneArmor(11)
+        elseif IsItem("helmet", armor:section()) then
+            return armor:cast_Helmet():GetBoneArmor(15)
+        end
+    elseif type(armor) == "string" then
+        printf("Section armor")
+        local coeff = SYS_GetParam(0, armor, "bones_koeff_protection")
+        local prot = SYS_GetParam(0, coeff, "bip01_spine")
+        prot = str_explode(prot, ",")
+        return tonumber(prot[2]) or 0
+    end
+    return 0
+end
+
+local function armor_to_class(val)
+    val = clamp(math.floor(val * 20), 0, 7)
+    return game.translate_string("st_prop_armor_"..val)
 end
 
 prepare_stats_table = utils_ui.prepare_stats_table
@@ -54,22 +79,46 @@ function utils_ui.UIInfoItem:GetType(sec)
     else return GetType(self, sec) end
 end
 
-Update = utils_ui.UIInfoItem.Update
-function utils_ui.UIInfoItem:Update(obj, sec, flags)
-    Update(self, obj, sec, flags)
+-- patching sync_finale because these post-update effects should only be applied once
+Sync_Finale = utils_ui.UIInfoItem.Sync_Finale
+function utils_ui.UIInfoItem:Sync_Finale(cond, ele_syncer, ele_resizer, ele_adapter, offset)
+    local ret = Sync_Finale(self, cond, ele_syncer, ele_resizer, ele_adapter, offset)
+    if not ele_syncer then return ret end
     -- patch the armor val
+    local sec = self.section
+    local obj = self.id and level.object_by_id(self.id) or nil
     if sec and ini_ammo:section_exist(sec) then
         for i=1,#self.stats do
             if self.stats[i].cap:GetText() == game.translate_string("st_prop_k_ap") then
-                local ap = ini_ammo:r_float_ex(sec, "k_ap") or 0
-                ap = math.floor(ap * 20)
-                self.stats[i].txt:SetText(game.translate_string("st_prop_armor_"..ap))
+                local str
+                if ini_ammo:r_string_ex(sec, "special") == "chaos" then
+                    str = "I-V"
+                else
+                    local ap = ini_ammo:r_float_ex(sec, "k_ap") or 0
+                    str = armor_to_class(ap)
+                end
+                self.stats[i].txt:SetText(str)
             end
             if self.stats[i].cap:GetText() == game.translate_string("st_prop_special") then    
                 local str_spec = ini_ammo:r_string_ex(sec, "special")
                 if str_spec then
                     self.stats[i].txt:SetText(game.translate_string("st_ballistics_"..str_spec))
                 end
+            end
+            if self.stats[i].cap:GetText() == game.translate_string("st_prop_k_hit") and ini_ammo:r_string_ex(sec, "special") == "chaos" then
+                self.stats[i].txt:SetText("60-160%")
+            end
+        end
+    end
+
+    if IsItem("outfit", sec) or IsItem("helmet", sec) then
+        local armor = get_bone_armor(obj and obj or sec)
+        printf("Armor %s has prot val %s", sec, armor)
+        str = armor_to_class(armor)
+        
+        for i=1,#self.stats do
+            if self.stats[i].cap:GetText() == game.translate_string("ui_inv_outfit_fire_wound_protection") then
+                self.stats[i].txt:SetText(str)
             end
         end
     end

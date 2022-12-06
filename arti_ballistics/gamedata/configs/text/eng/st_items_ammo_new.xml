@@ -77,7 +77,7 @@
 		<text>headshots ignore some armor, center mass stuns</text>
 	</string>
 	<string id="st_ballistics_rip">
-		<text>lifesteal</text>
+		<text>steals life on hit</text>
 	</string>
 	<string id="st_ballistics_varma">
 		<text>bonus damage vs. mutants</text>
@@ -86,7 +86,7 @@
 		<text>explodes on impact</text>
 	</string>
 	<string id="st_ballistics_chaos">
-		<text>60%-160% damage/ap range, random effects</text>
+		<text>yes</text>
 	</string>
 	<string id="st_ballistics_acid">
 		<text>reduces armor on hit</text>
@@ -367,7 +367,7 @@
 		<text>5.7x28 Unstable Core</text>
 	</string>
 	<string id="ammo_new_5.7x28_chaos_descr">
-		<text>5.7x28mm SS190 rounds with signs of unknown anomalous tampering. These are rarely found in the employ of Monolith and Sinners, and possess markers of treatment in the same vein as other experimental ammo types. These in particular have a bullet that destabilizes its presence in reality, randomly losing and gaining velocity, mass, and kinetic potential during flight. Performance is thus highly erratic, though if fired at high enough volume the overall potential seems to be higher than standard rounds. The exact nature and purpose of these rounds are unknown.</text>
+		<text>5.7x28mm SS190 rounds with signs of unknown anomalous tampering. These are rarely found in the employ of Monolith and Sinners, and possess markers of treatment in the same vein as other experimental ammo types. While inert at rest, the rounds rapidly destabilize (in reality, not in flight) and behave erratically, making them highly unpredictable. Use with caution.</text>
 	</string>
 	<string id="ammo_new_5.7x28_chaos_s">
 		<text>5.7x28 CHAOS</text>

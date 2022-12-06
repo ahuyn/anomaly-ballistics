@@ -33,13 +33,11 @@ local anims = {
 -- pulls custom ap and hit power values from code
 function get_ammo_data(ammo_sec)
     if ini_ammo:section_exist(ammo_sec) then
-        local k_hp = ini_ammo:r_float_ex(ammo_sec, "k_hp")
-        pen = k_hp and 0 or 0.5 
         return {
             sec     = ammo_sec,
             k_hit   = ini_ammo:r_float_ex(ammo_sec, "k_hit") or SYS_GetParam(2, ammo_sec, "k_hit") or 1,
             k_ap    = ini_ammo:r_float_ex(ammo_sec, "k_ap") or SYS_GetParam(2, ammo_sec, "k_ap") or 0,
-            k_pen   = ini_ammo:r_float_ex(ammo_sec, "k_pen") or pen,
+            k_pen   = ini_ammo:r_float_ex(ammo_sec, "k_pen") or 0,
             k_imp   = ini_ammo:r_float_ex(ammo_sec, "k_imp") or 0
         }
     end
@@ -52,24 +50,22 @@ end
 -- deal residual impact damage only
 function impact(diff, ap_frac, ammo_data, bone_data)
     -- print_dbg("Impact")
-    -- return 1 / (8 * (diff - 2))
+    if head_bones[bone_data.id] then
+        bone_data.hit_fraction = clamp(bone_data.hit_fraction * 1.1, 0, 1)
+    end
     local frac_adj = 1 - bone_data.hit_fraction
-    return 0.2 + clamp(ammo_data.k_imp - frac_adj, -0.19, 0.2)
+    return 0.2 + clamp(ammo_data.k_imp - frac_adj, -0.165, 0.2)
 end
 
 -- reduction based on AP frac and diff
 -- diff is 0-2
 function reduce(diff, ap_frac, ammo_data, bone_data)
-    -- local floor = diff == 0 and 0 or (2 * diff + 1) * 0.15
-    -- local range = (3 - diff) * 0.15 * (1 - ap_frac)
     local modifier =  1 - (0.2 * (diff + (1 - ap_frac)))
-    -- print_dbg("Reduction of %s", modifier)
     return modifier
 end
 
 -- deal full damage (does nothing lol)
 function full(diff, ap_frac, ammo_data, bone_data)
-    -- print_dbg("Full")
     return 1
 end
 
@@ -77,7 +73,7 @@ end
 -- default is reducing down to pen 
 -- only matters if diff > 3, or more than 0.2
 function penetrate(diff, ap_frac, ammo_data, bone_data)
-    adj = clamp((diff - 3)/4, 0.05, ammo_data.k_pen) 
+    adj = clamp((diff - 4)/4, 0.05, ammo_data.k_pen) 
     -- print_dbg("Overkill, reduce by %s", adj)
     return 1 - adj
 end
@@ -94,7 +90,7 @@ local damage_subcalcs = {
     [1] = full,
     [2] = full,
     [3] = full,
-    [4] = penetrate,
+    [4] = full,
     [5] = penetrate,
     [6] = penetrate,
     [7] = penetrate,
@@ -104,7 +100,7 @@ local damage_subcalcs = {
 function tbl_reduce(x)
     local acc = 1
     for k,v in pairs(x) do
-        -- print_dbg("Applying key %s, val %s", k ,v)
+        print_dbg("Applying key %s, val %s", k ,v)
         acc = acc * v
     end
     return acc
@@ -363,8 +359,9 @@ function fragment(npc, s_hit, ctx)
 end
 
 function fragment_sound(npc, s_hit, ctx)
-    fragment(npc, s_hit, ctx)
+    s_hit = fragment(npc, s_hit, ctx)
     play_sound_on_location("elite", npc)
+    return s_hit
 end
 
 function headsplode(npc)
@@ -413,20 +410,19 @@ function headshot(npc, s_hit, ctx)
     bone_data = precalc.bone_data
 
     apply_std_calcs(calcs, npc, s_hit, precalc)
-    local headshot = false
     -- ignore armor on headshot, set armor to one below ap to guarantee full damage
     if head_bones[ctx.bone_id] and bone_data.armor < 0.35 and not dialogs_axr_companion.is_actor_companion(db.actor, npc) then
         print_dbg("Ignoring armor on headshot")
-        bone_data.armor = clamp(ammo_data.k_ap - 0.05, 0, 1)
-        headshot = true
+        calcs.ap_calc = 1
+        headsplode(npc)
+    else
+        calcs.ap_calc = npc_standard(s_hit, precalc)
     end
-    calcs.ap_calc = npc_standard(s_hit, precalc)
 
     calcs.hollowpoint = process_hp(precalc, ctx.is_npc)
 
     local final_hit = tbl_reduce(calcs)
-    headsplode(npc)
-        
+    
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
     return s_hit
@@ -478,7 +474,7 @@ function rip(npc, s_hit, ctx)
     	local s = xr_sound.get_safe_sound_object("Soul_"..math.random(5))
 		s:play(db.actor, 0, sound_object.s2d)
     end
-    db.actor.health = clamp(db.actor.health + (0.1 * s_hit.power), 0, 1)
+    db.actor.health = clamp(db.actor.health + 0.05 + (0.2 * s_hit.power), 0, 1)
 
     return s_hit
 end
@@ -542,10 +538,8 @@ function acid_damage(npc, s_hit, ctx)
     -- shred ONCE per bone
     local bone_data = npc_bone_data(npc, ctx.bone_id)
     play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
-    if not bone_data.modified then
-        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.6, 0, 1))
-        play_sound_on_location("acid", npc)
-    end
+    modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.8, 0, 1))
+    play_sound_on_location("acid", npc)
     return s_hit
 end
 
@@ -566,13 +560,12 @@ function chaos_damage(npc, s_hit, ctx)
     if not ctx.is_npc then
         calcs.ap_calc = mutant_standard(s_hit, precalc)
     else
-        -- tier based formula with overpen, and flinch
         calcs.ap_calc = npc_standard(s_hit, precalc)
     end
     -- damage inverse of ap
     calcs.chaos = 0.6 + (1 - random)
     
-    local extra_effect = math_random(6)
+    local extra_effect = math_random(15)
     if not is_actor(npc) then
         if extra_effect == 3 then
             ignite_npc(npc, 11, 5, 5)
@@ -580,6 +573,24 @@ function chaos_damage(npc, s_hit, ctx)
             stun_npc(npc)
         elseif extra_effect == 5 then
             db.actor.health = clamp(db.actor.health + (0.1 * s_hit.power), 0, 1)
+        elseif extra_effect == 6 then
+            -- random full AP
+            calcs.ap_calc = 1
+        elseif extra_effect == 7 then
+            play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
+            modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.8, 0, 1))
+            play_sound_on_location("acid", npc)
+        elseif extra_effect == 8 then
+            local explode_obj = alife_create_item("bullet_blow", npc)
+            CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
+            function(id)
+                local explode_obj = get_object_by_id(id)
+                if explode_obj then
+                    explode_obj:explode(0)
+                    return true
+                end
+                return false
+            end, explode_obj.id)
         end
     end
     -- add random effect
@@ -686,8 +697,8 @@ end
 local custom_proj_table = {
     ["explodes"] = explode_handler,
     ["impair"] = pab,
-    ["soulripper"] = play_grav,
-    ["chaos"] = play_grav_sound,
+    ["soulripper"] = play_grav_sound,
+    ["chaos"] = play_grav,
     ["shock"] = play_shock,
     ["fire_melt"] = play_fire_big,
     ["acid"] = play_acid
