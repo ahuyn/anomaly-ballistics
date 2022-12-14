@@ -23,6 +23,15 @@ function inject_stats()
     }
 end
 
+if ish_item_stats then
+    override_stats_table = ish_item_stats.override_stats_table
+
+    ish_item_stats.override_stats_table = function()
+        override_stats_table()
+        inject_stats()
+    end
+end
+
 local function armor_to_class(val)
     val = clamp(math.floor(val * 20), 0, 7)
     return game.translate_string("st_prop_armor_"..val)
@@ -30,7 +39,7 @@ end
 
 prepare_stats_table = utils_ui.prepare_stats_table
 
-utils_ui.prepare_stats_table = function()
+function utils_ui.prepare_stats_table()
     prepare_stats_table()
     inject_stats()
 end
@@ -38,7 +47,9 @@ end
 GetTable = utils_ui.get_stats_table
 function utils_ui.get_stats_table(sec)
     if ini_ammo:section_exist(sec) then
-        if not utils_ui.stats_table["ammo"] then inject_stats() end
+        if not utils_ui.stats_table["ammo"] or is_empty(utils_ui.stats_table["ammo"]) then 
+            inject_stats() 
+        end
         return utils_ui.stats_table["ammo"]
     else
         return GetTable(sec)
