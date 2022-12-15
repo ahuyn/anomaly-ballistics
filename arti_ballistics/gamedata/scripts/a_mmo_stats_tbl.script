@@ -23,25 +23,9 @@ function inject_stats()
     }
 end
 
-if ish_item_stats then
-    override_stats_table = ish_item_stats.override_stats_table
-
-    ish_item_stats.override_stats_table = function()
-        override_stats_table()
-        inject_stats()
-    end
-end
-
 local function armor_to_class(val)
     val = clamp(math.floor(val * 20), 0, 7)
     return game.translate_string("st_prop_armor_"..val)
-end
-
-prepare_stats_table = utils_ui.prepare_stats_table
-
-function utils_ui.prepare_stats_table()
-    prepare_stats_table()
-    inject_stats()
 end
 
 GetTable = utils_ui.get_stats_table
@@ -153,4 +137,8 @@ end
 function prop_special(obj, sec)
     local str_spec = ini_ammo:r_string_ex(sec, "special")
     if str_spec then return 1 else return 0 end
+end
+
+function on_game_start()
+    inject_stats()
 end
