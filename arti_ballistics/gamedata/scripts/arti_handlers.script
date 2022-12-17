@@ -507,9 +507,7 @@ function dragonsbreath(npc, s_hit, ctx)
     if ctx.is_npc then
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
     end
-    if is_actor(npc) then
-        ignite_npc(npc, ctx.bone_id, 1)
-    else
+    if not is_actor(npc) then
         ignite_npc(npc, ctx.bone_id, 10, 10)
     end
     s_hit.type = hit.burn
@@ -522,9 +520,7 @@ function fire_damage(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     local ignite_chance = ini_ammo:r_float_ex(ctx.hit_data.ammo, "ignite") or 0
     if math_random() < ignite_chance then
-        if is_actor(npc) then
-            ignite_npc(npc, ctx.bone_id, 1)
-        else
+        if not is_actor(npc) then
             ignite_npc(npc, ctx.bone_id, 3, 10)
         end
     end

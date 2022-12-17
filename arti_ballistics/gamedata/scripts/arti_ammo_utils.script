@@ -180,10 +180,12 @@ function death_manager.try_spawn_ammo(npc)
     SpawnAmmo(npc)
     downgrade = false
 end
+-- catch the guys that already exist
 SetDrop = death_manager.set_weapon_drop_condition
 function death_manager.set_weapon_drop_condition(npc,itm)
     downgrade = true
     SetDrop(npc,itm)
+    -- process_wpn(itm)
     downgrade = false
 end
 AlifeCreate = _G.alife_create_item
@@ -194,10 +196,14 @@ function _G.alife_create_item(section, obj, t)
     return AlifeCreate(section, obj, t)
 end
 
-SetWep = death_manager.set_weapon_drop_condition
-function death_manager.set_weapon_drop_condition(npc,itm)
-    SetWep(npc, itm)
-    process_wpn(itm)
+-- this happens whenever npc comes online, currently guarantees that the npc will never have access to better ammo in the wapon
+function npc_on_net_spawn(npc)
+    CreateTimeEvent("downgrade_ammos",npc:id(), 0,function()
+        npc:iterate_inventory(function(t, item)
+            if IsWeapon(item) then process_wpn(item, true) end
+        end)
+        return true
+    end)
 end
 
 -- spawn recipes with random weights
@@ -243,4 +249,5 @@ end
 
 function on_game_start()
 	custom_functor_autoinject.add_functor("mg_link", try_mg_link, try_mg_link, nil, mg_link, true)
+	RegisterScriptCallback("npc_on_net_spawn",npc_on_net_spawn)
 end
