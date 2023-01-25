@@ -247,7 +247,17 @@ if magazines then
     end
 end
 
+function on_get_item_cost(kind, obj, profile, calculated_cost, ret)
+    local sec = obj:section()
+    if SYS_GetParam(1, sec, "is_component") and profile.mode == 1 then
+        local calculated_cost = ret.new_cost or calculated_cost -- in case someone adjusted the price of the weapon
+        calculated_cost = calculated_cost * 0.1
+        ret.new_cost = calculated_cost
+    end
+end
+
 function on_game_start()
 	custom_functor_autoinject.add_functor("mg_link", try_mg_link, try_mg_link, nil, mg_link, true)
 	RegisterScriptCallback("npc_on_net_spawn",npc_on_net_spawn)
+	RegisterScriptCallback("on_get_item_cost",on_get_item_cost)
 end
