@@ -35,12 +35,12 @@ Each ammo type has a corresponding AP amount that also falls into one of these c
 
 | Difference | Effects    |
 | -----------|------------|
-| -3 to -7   | Deflection. Deal impact damage |
-| -2 to 0    | Partial penetration, damage reduction up to 60% |
+| -3 to -7   | Deflection. Deal 3-40% impact damage |
+| -2 to 0    | Partial penetration, 40-99% damage |
 | 1 to 3     | Full penetration, full damage |
-| 4 to 7     | Overkill penetration, reduced damage |
+| 4 to 7     | Overkill penetration, reduced damage (Hollow point / large caliber exempt) |
 
-Impact damage is further subdivided based on bullet force (arbitrary values currently) vs. NPC tankiness, dealing up to 40% damage.
+Impact damage is further subdivided based on bullet force vs. NPC tankiness, modifying damage by 3-40% of the original value.
 
 The aim of this system is to provide a semi-realistic and balanced system for ballistic damage vs. armor while providing for fun gameplay.
 
