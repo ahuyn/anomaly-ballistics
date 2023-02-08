@@ -133,10 +133,8 @@ local recipe_trader = {
     },
 }
 
-TraderAuto = trader_autoinject.update
-function trader_autoinject.update(npc)
-    TraderAuto(npc)
-    
+function trader_on_restock(npc)
+
     if trader_autoinject.get_trader_type(npc) == 1 then
         trader_autoinject.spawn_items(npc, {
             powder_fire = 5
@@ -260,4 +258,5 @@ function on_game_start()
 	custom_functor_autoinject.add_functor("mg_link", try_mg_link, try_mg_link, nil, mg_link, true)
 	RegisterScriptCallback("npc_on_net_spawn",npc_on_net_spawn)
 	RegisterScriptCallback("on_get_item_cost",on_get_item_cost)
+	RegisterScriptCallback("trader_on_restock",trader_on_restock)
 end
