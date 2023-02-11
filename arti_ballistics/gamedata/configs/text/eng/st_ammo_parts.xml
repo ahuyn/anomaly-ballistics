@@ -42,7 +42,7 @@
 		<text>Propellant, large rifle</text>
 	</string>
 	<string id="st_powder_mag_desc">
-		<text>High-yield, slow burning ball propellant for large rifle rounds. This powder yields the most energy and burns the slowest, thus it is only suitable for use in large caliber rifle ammunition fired from long-barrel weapons. \n \n</text>
+		<text>High-yield, slow burning ball propellant for large rifle rounds. This powder produces the most energy and burns the slowest, thus it is only suitable for use in large caliber rifle ammunition fired from long-barrel weapons. \n \n</text>
 	</string>
 	<string id="st_handgun_rounds">
 		<text>Handgun bullets</text>
@@ -54,19 +54,19 @@
 		<text>Handgun bullets, Armor piercing</text>
 	</string>
 	<string id="st_handgun_ap_rounds_desc">
-		<text>Variously sized handgun rounds salvaged from ammunition. These have alloy penetrators embedded in the bullet. Handgun rounds are usually too slow to penetrate armor, even with penetrators, unless an overpressure powder charge is used or the bullet is designed specially for penetrating armor, like the 5.7x28 round. \n \n</text>
+		<text>Variously sized handgun rounds salvaged from ammunition. These have alloy penetrators embedded in the bullet. Handgun rounds are usually too slow to penetrate armor, even with penetrators, unless overpressure loads are used. \n \n</text>
 	</string>
 	<string id="st_shotgun_rounds">
 		<text>Lead shot</text>
 	</string>
 	<string id="st_shotgun_rounds_desc">
-		<text>Small lead buckshot pellets used in hunting shotguns. These can also be melted down and cast into large slugs.</text>
+		<text>#00 sized buckshot pellets used in hunting shotguns. These can also be melted down and cast into large slugs.</text>
 	</string>
 	<string id="st_shotgun_ap_rounds">
-		<text>Saboted dart</text>
+		<text>Saboted darts</text>
 	</string>
 	<string id="st_shotgun_ap_rounds_desc">
-		<text>Hardened steel dart round encased in a sabot. These are designed to be fired out of police shotguns to disable engine blocks, but do decently well against body armor. \n \n</text>
+		<text>Hardened steel dart rounds encased in a sabot. These are designed to be fired out of police shotguns to disable engine blocks, but do decently well against body armor. \n \n</text>
 	</string>
 	<string id="st_rifle5_rounds">
 		<text>Small caliber rifle bullets</text>
@@ -91,10 +91,59 @@
 		<text>Large caliber rifle bullets, Armor piercing</text>
 	</string>
 	<string id="st_rifle7_ap_rounds_desc">
-		<text>Full-size rifle bullets with embedded alloy penetrators. These are found in special-issue cartridges used by military and special forces to defeat body armor from long range. \n \n</text>
+		<text>Full-size rifle bullets with embedded alloy penetrators. These are found in special-issue cartridges used by military and special forces to defeat light vehicle armor from long range. \n \n</text>
 	</string>
 
 	
+    <string id="ui_mcm_menu_ammomaker">
+        <text>Ammo Maker</text>
+    </string>
+    <string id="ui_mcm_ammomaker_title">
+        <text>Ammo Maker</text>
+    </string>
+    <string id="ui_mcm_ammomaker_old_salvage">
+        <text>Ammo Salvage Chance</text>
+    </string>
+    <string id="ui_mcm_ammomaker_old_salvage_desc">
+        <text>Salvage multiplier for standard ammunition. This multiplier is placed on top of individual component salvage chances. For example, if you have a 50% chance to salvage casings and this slider is set to 60%, your final chance is (0.5 * 0.6) = 0.3, or 30% chance to recover casings.
+        </text>
+    </string>
+    <string id="ui_mcm_ammomaker_old_salvage">
+        <text>Ammo Salvage Multiplier</text>
+    </string>
+    <string id="ui_mcm_ammomaker_old_salvage_desc">
+        <text>Salvage multiplier for standard ammunition. This multiplier is placed on top of individual component salvage chances. For example, if you have a 50% chance to salvage casings and this slider is set to 60%, your final chance is (0.5 * 0.6) = 0.3, or 30% chance to recover casings.
+        </text>
+    </string>
+    <string id="ui_mcm_ammomaker_new_salvage">
+        <text>Good Ammo Salvage Multiplier</text>
+    </string>
+    <string id="ui_mcm_ammomaker_new_salvage_desc">
+        <text>Salvage multiplier for fancy ammunition (assuming using Anomaly Ballistic Framework). This multiplier is placed on top of individual component salvage chances. For example, if you have a 50% chance to salvage casings and this slider is set to 60%, your final chance is (0.5 * 0.6) = 0.3, or 30% chance to recover casings.
+        </text>
+    </string>
+    <string id="ui_mcm_ammomaker_powder">
+        <text>Propellant Salvage Chance</text>
+    </string>
+    <string id="ui_mcm_ammomaker_powder_desc">
+        <text>Chance to recover propellant/gunpowder when disassembling ammo.
+        </text>
+    </string>
+    <string id="ui_mcm_ammomaker_casing">
+        <text>Casing Salvage Chance</text>
+    </string>
+    <string id="ui_mcm_ammomaker_casing_desc">
+        <text>Chance to recover casings when disassembling ammo.
+        </text>
+    </string>
+	
+    <string id="ui_mcm_ammomaker_bullet">
+        <text>Bullet Salvage Chance</text>
+    </string>
+    <string id="ui_mcm_ammomaker_old_salvage_desc">
+        <text>Chance to recover bullets when disassembling ammo.
+        </text>
+    </string>
 	<!-- new mats -->
 	
 	<string id="st_powder_fireball">

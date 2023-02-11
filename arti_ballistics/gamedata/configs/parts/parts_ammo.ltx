@@ -1,7 +1,7 @@
 [salvage_high]
-salvage = 0.9
+salvage = old
 [salvage_low]
-salvage = 0.7
+salvage = new
 
 [part_defaults]
 degrade = 0.001
@@ -9,11 +9,12 @@ parts = casing_p,1,powder_1,1,bullet_pistol,1
 
 [ammo_9x18_fmj]:part_defaults,salvage_low
 parts = casing_p,1,powder_1,1,bullet_pistol,1
+[ammo_9x18_ap]:part_defaults,salvage_low
+parts = casing_p,1,powder_1,1,bullet_pistol_ap,1
+
 [ammo_9x18_fmj_bad]:ammo_9x18_fmj,salvage_high
 [ammo_9x18_pmm]:ammo_9x18_fmj,salvage_low
 [ammo_9x18_pmm_bad]:ammo_9x18_fmj,salvage_high
-[ammo_9x18_ap]:part_defaults,salvage_low
-parts = casing_p,1,powder_1,1,bullet_pistol_ap,1
 [ammo_9x18_ap_bad]:ammo_9x18_ap,salvage_high
 
 [ammo_9x19_ap]:ammo_9x18_ap,salvage_low
@@ -30,13 +31,12 @@ parts = casing_p,1,powder_1,1,bullet_pistol_ap,2
 [ammo_11.43x23_hydro]:part_defaults,salvage_low
 parts = casing_p,1,powder_1,1,bullet_pistol,2
 [ammo_11.43x23_hydro_bad]:ammo_11.43x23_hydro,salvage_high
-parts = casing_p,1,powder_1,2
+parts = casing_p,1,powder_1,2,bullet_pistol,2
 
 [ammo_7.62x25_p]:ammo_9x18_fmj,salvage_low
 [ammo_7.62x25_p_bad]:ammo_9x18_fmj,salvage_high
 [ammo_7.62x25_ps]:ammo_9x18_fmj,salvage_low
 [ammo_7.62x25_ps_bad]:ammo_9x18_fmj,salvage_high
-parts = casing_p,1,powder_1,1
 
 [ammo_5.7x28_ss190]:ammo_9x18_ap,salvage_low
 [ammo_5.7x28_ss190_bad]:ammo_9x18_ap,salvage_high

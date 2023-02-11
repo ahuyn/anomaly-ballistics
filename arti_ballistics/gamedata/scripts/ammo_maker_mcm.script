@@ -1,0 +1,27 @@
+
+
+-- If you don't use MCM, change your defaults from here.
+local defaults = {
+    ["old_salvage"] = 70,
+    ["new_salvage"] = 90,
+    ["casing"] = 50,
+    ["powder"] = 100,
+    ["bullet"] = 100,
+}
+
+function get_config(key)
+    if ui_mcm then return ui_mcm.get("ammomaker/"..key) else return defaults[key] end
+end
+
+function on_mcm_load()
+    op = { id= "ammomaker",sh=true ,gr={
+            { id= "title",type= "slide",link= "ui_options_slider_player",text="ui_mcm_ammomaker_title",size= {512,50},spacing= 20 },
+            {id = "casing", type = "track", val = 2, min=30,max=100,step=10, def = 50},
+            {id = "powder", type = "track", val = 2, min=30,max=100,step=10, def = 100},
+            {id = "bullet", type = "track", val = 2, min=30,max=100,step=10, def = 100},
+            {id = "old_salvage", type = "track", val = 2, min=30,max=100,step=10, def = 70},
+            {id = "new_salvage", type = "track", val = 2, min=30,max=100,step=10, def = 90},
+        }
+    }
+    return op
+end
