@@ -1,0 +1,84 @@
+ini_ammo            = ballistics_utils.ini_ammo
+math_random = math.random
+--grenade handlers
+
+-- m209 cluster
+
+local bomb_min_force = 2000
+local bomb_force = 3000
+function detonate(item_id)
+    local bomb = get_object_by_id(item_id)
+    if bomb then
+        printf("Exploding bomb")
+        bomb:explode(0)
+    end
+    return true
+end
+function bomb_scatter(item_id)
+    local bomb = level.object_by_id(item_id)
+    if bomb then
+        printf("Scattering bomb %s", item_id)
+        bomb:get_physics_shell():apply_force(
+            bomb_min_force + (random_float(-1, 1) * bomb_force * 5),
+            (bomb_min_force + (math_random() * bomb_force * 5)),
+            bomb_min_force + (random_float(-1, 1) * bomb_force * 5))
+        CreateTimeEvent(item_id, math_random(10), 0.2 + 1.5 * math_random(), detonate, item_id)
+        return true
+    end
+    return false
+end
+local cluster_particle
+function cluster_bomb(position, direction, ammo)
+    local bomb_type = ini_ammo:r_string_ex(ammo, "bomb_type")
+    if not bomb_type then return end
+    local bomb_count = ini_ammo:r_float_ex(ammo, "bomb_count") or 1
+
+    local lvid = db.actor:level_vertex_id()
+    local gvid = db.actor:game_vertex_id()
+    if not cluster_particle then cluster_particle = particles_object("explosions\\explosion_03") end
+    cluster_particle:play_at_pos(position)
+    printf("Creating %s bombs", bomb_count)
+    for i = 1, bomb_count do
+        local pos = vector():set(position.x, position.y, position.z)
+        local dir = vector():set(random_float(-1, 1), math_random(), random_float(-1, 1))
+        pos.x = pos.x + dir.x
+        pos.y = pos.y + dir.y + 1
+        pos.z = pos.z + dir.z
+        local bomb = alife_create_item(bomb_type, {pos, lvid, gvid})
+        CreateTimeEvent(bomb.id, bomb.id, 0, bomb_scatter, bomb.id)
+    end
+end
+
+local fire_particle, fire_particle2
+function ignite(pos, dir, ammo)
+
+    if not fire_particle then fire_particle = particles_object("explosions\\effects\\expl_smoke_big_veh") end
+    fire_particle:play_at_pos(pos)
+    if not fire_particle2 then fire_particle2 = particles_object("explosions\\effects\\expl_distortion") end
+    ballistics_utils.play_sound_distance("incendiary", db.actor:position():distance_to(pos))
+    fire_particle:play_at_pos(pos)
+    level.iterate_nearest(pos, 10, function(obj)
+        if obj and obj:alive() and obj:id() ~= AC_ID then
+            arti_handlers.ignite_npc(obj, 11, 10, 10)
+            arti_handlers.ignite_npc(obj, 11, 10, 10)
+            arti_handlers.ignite_npc(obj, 11, 10, 10)
+        end
+    end)
+end
+
+function explode(pos, dir, ammo)
+    local lvid = db.actor:level_vertex_id()
+    local gvid = db.actor:game_vertex_id()
+    local bomb_type = ini_ammo:r_string_ex(ammo, "bomb_type")
+    if not bomb_type then return end
+    local bomb = alife_create_item(bomb_type, {pos, lvid, gvid})
+    CreateTimeEvent(bomb.id, bomb.id, 0, function()
+        local bomb_obj = level.object_by_id(bomb.id)
+        if bomb_obj then
+            bomb_obj:explode(0)
+            return true
+        else
+            return false
+        end
+    end)
+end

@@ -1,0 +1,156 @@
+-- custom rocket/grenade binder based on hawu impact grenade
+
+ini_ammo = ini_file("ammo\\importer.ltx")
+
+--[[
+    Credits: Thial
+]]
+
+class "geometry_ray"
+--[[
+(At least one range parameter should be specified)
+ray_range:
+    Defines the total range of the ray. If you want to attach the ray to
+    a fast moving object it is good to extend the ray so that you can reduce
+    the polling rate by using the get function.
+contact_range:
+    Defines the distance at which the result will report being in contact.
+    You can skip it or set it to a value lower than the ray_range to
+    still be able to get the intersection position from the result while
+    marking the ray as not being in contact yet
+distance_offset:
+    Defines how much the intersection position is offset.
+    You can use both positive and negative values or you can leave it blank.
+flags (bit map = values can be added together for combined effect):
+    0 : None
+    1 : Objects
+    2 : Statics
+    4 : Shapes
+    8 : Obstacles
+]]--
+function geometry_ray:__init(ray_range, contact_range, distance_offset, flags)
+    if ray_range == nil and contact_range == nil then
+        return nil
+    end
+    self.ray_range = ray_range or contact_range
+    self.contact_range = contact_range or ray_range
+    self.distance_offset = distance_offset ~= nil and distance_offset or 0
+    self.ray = ray_pick()
+    self.ray:set_ignore_object(db.actor)
+    self.ray:set_flags(flags or 2)
+    self.ray:set_range(self.ray_range)
+end
+--[[
+position:
+    position from which the ray will start
+direction:
+    direction in which the ray will be fired
+]]--
+function geometry_ray:get(position, direction)    
+    if position == nil or direction == nil then
+        return nil
+    end
+    self.ray:set_position(position)
+    self.ray:set_direction(direction)
+    local distance = self.ray:query() and self.ray:get_distance() or self.ray_range
+    local result = {}
+    result.in_contact = distance <= self.contact_range
+    result.position = position:add(direction:mul(distance + self.distance_offset))
+    result.distance = distance + self.distance_offset
+    return result
+end
+
+function bind(obj)
+    if (not alife_object(obj:id())) then
+        obj:bind_object(custom_grenade_binder(obj))
+        printf("Bound id %s", obj:id())
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Class "custom_grenade_binder"
+--------------------------------------------------------------------------------
+
+local cardinal_vectors = {
+    vector():set(-1, 0, 0),
+    vector():set(0, 0, -1),
+    vector():set(1, 0, 0),
+    vector():set(0, 1, 0),
+    vector():set(0, 0, 1),
+}
+local VEC_GROUND = vector():set(0, -1, 0)
+class "custom_grenade_binder" (object_binder)
+
+function custom_grenade_binder:__init(obj) 
+    super(obj)
+
+    self.sec = self.object:section()
+    self.ray = geometry_ray(0.11, 0.1, nil, 1 + 2)
+    self.ray.ray:set_ignore_object(obj)
+    
+    -- self.ray = geometry_ray(40, 2, nil, 1 + 2)
+    -- self.ray.ray:set_ignore_object(obj)
+    -- self.frags_r = SYS_GetParam(2, self.sec, "frags_r", 6)
+    -- self.velocity_threshold = SYS_GetParam(2, self.sec, "velocity_threshold", 0.36)
+    self.tg_period = 33
+    self.object:set_fastcall(self.fastcall, self)
+end
+
+function custom_grenade_binder:fastcall()
+    local obj = self.object
+
+    if obj:parent() then
+        return
+    end
+
+    -- shamelessly stolen from molotovs
+    if (not self.position) then
+        -- self.velocity = 0
+        self.position = obj:position()
+        self.direction = VEC_GROUND
+        self.tg = 0
+        self.tg_time = 0
+        return
+    end
+
+    self.tg = self.tg + device().time_delta
+
+    if self.tg < self.tg_time then
+        return
+    end
+
+    self.tg_time = self.tg + self.tg_period
+
+    local pos = obj:position()
+    local dir = vector():set(pos):sub(self.position)
+
+    printf("Grenade direction: %s %s %s", dir.x, dir.y, dir.z)
+    local result = self.ray:get(pos, dir)
+    if result.in_contact or self.tg_time > 5000 then
+        if result.in_contact then
+            printf("Grenade in contact")
+        elseif self.tg_time > 5000 then
+            printf("Grenade expired")
+        end
+        res = self:explode(pos, dir)
+        self.object:destroy_object()
+    end 
+end
+
+function custom_grenade_binder:explode(pos, dir)
+    local weapon = db.actor:active_item()
+    ammo_map = utils_item.get_ammo(nil, weapon:id())
+    local ammo = ammo_map[weapon:get_ammo_type() + 1]
+    local func = ballistics_mcm.get_handler(ammo)
+    if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
+        _G[func[1]][func[2]](pos, dir, ammo)
+    end
+end
+
+function custom_grenade_binder:net_spawn(se_abstract)
+    if (not object_binder.net_spawn(self, se_abstract)) then
+        return false
+    end
+	
+    return true
+end

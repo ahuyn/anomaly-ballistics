@@ -5,7 +5,7 @@ function inject_stats()
      ["damage"] = { 
         index= 1, typ= "float",  name= "st_prop_k_hit",         icon_p= "ui_wp_prop_damage",             icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",            compare= false, sign=false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_damage"} },
     ["ap"] = { 
-        index= 2, typ= "string",  name= "st_prop_k_ap",         icon_p= "ui_am_propery_01",             icon_n= "", track= false,  magnitude= 1,    unit= "",             compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_ap"} },
+        index= 2, typ= "string",  name= "st_prop_k_ap",         icon_p= "ui_am_propery_01",             icon_n= "", track= false,  magnitude= 1,    unit= "",             compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_ap"} },
     ["hp"]= { 
         index= 3, typ= "float",   name= "st_prop_k_hp",         icon_p= "ui_am_prop_restore_bleeding",             icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",              compare= false, sign= true, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_hp"} },
     ["projectiles"] = { 
@@ -18,8 +18,10 @@ function inject_stats()
         index= 7 , typ= "float",   name= "st_prop_recoil",       icon_p= "ui_wp_prop_otdacha",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_recoil"} } ,    
     ["wear"]={ 
         index= 8 , typ= "float",   name= "st_prop_impair",       icon_p= "ui_wp_prop_nadezhnost",           icon_n= "", track= false,  magnitude= 1,    unit= "st_perc",   compare= false, sign= false, show_always= true, value_functor= {"a_mmo_stats_tbl","prop_wear"} } ,
+    ["radius"]={ 
+        index= 9 , typ= "float",   name= "st_prop_radius",       icon_p= "ui_am_prop_explo",           icon_n= "", track= false,  magnitude= 1,    unit= "m",   compare= false, sign= false, show_always= false, value_functor= {"a_mmo_stats_tbl","prop_radius"} } ,
     ["special"]={ 
-        index= 9 , typ= "float",   name= "st_prop_special",       icon_p= "ui_am_condition",           icon_n= "", track= false,  magnitude= 1,    unit= "",   compare= false, sign= false, show_always=false, value_functor= {"a_mmo_stats_tbl","prop_special"} } 
+        index= 10 , typ= "float",   name= "st_prop_special",       icon_p= "ui_am_condition",           icon_n= "", track= false,  magnitude= 1,    unit= "",   compare= false, sign= false, show_always=false, value_functor= {"a_mmo_stats_tbl","prop_special"} } 
     }
 end
 
@@ -102,7 +104,7 @@ end
 
 -- pull from the armor classification
 function prop_ap(obj, sec)
-    return 1
+    return ini_ammo:r_float_ex(sec, "k_ap") or 1
 end
 
 function prop_hp(obj, sec)
@@ -113,6 +115,10 @@ end
 function prop_projectiles(obj, sec)
     local proj = SYS_GetParam(2, sec, "buck_shot")
     return proj > 2 and proj or 0
+end
+
+function prop_radius(obj, sec)
+    return ini_ammo:r_float_ex(sec, "radius") or 0
 end
 
 -- 'normal' bullet dispersion is out of 0.66

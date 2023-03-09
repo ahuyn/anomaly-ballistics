@@ -659,6 +659,7 @@ function explode_handler()
         local explode_obj = get_object_by_id(id)
         if explode_obj then
             explode_obj:explode(0)
+            explode_obj:destroy_object()
             return true
         end
         return false
@@ -700,6 +701,8 @@ local custom_proj_table = {
     ["fire_melt"] = play_fire_big,
     ["acid"] = play_acid
 }
+
+
 
 function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
     local ammo_table = utils_item.get_ammo(wpn:section(), wpn:id())

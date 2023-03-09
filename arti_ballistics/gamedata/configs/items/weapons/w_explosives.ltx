@@ -1,0 +1,196 @@
+
+[fake_rifle_grenade]:identity_immunities,default_weapon_params
+$prefetch 		= 32
+visual              = dynamics\weapons\wpn_ammo\ammo_m209.ogf
+cform               = skeleton
+class               = G_FAKE
+description			=
+inv_weight			= 0
+
+cost				= 150
+
+blast				= 0;5.2 ;3.0
+blast_r				= 0;4.7 ;4
+blast_impulse		= 174 ;100
+;delete
+blast_impulse_factor = 1
+
+
+frags				= 0;94 ;10
+frags_r				= 28 ;10
+frag_hit			= 0.074 ;0.50
+frag_hit_impulse	=  44 ;50
+
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+
+up_throw_factor		= 0.36
+
+;trail				= weapons\rpg_trail_01, weapons\rpg_trail_02
+
+explode_particles	= explosions\effects\expl_bottle;explosions\explosion_01
+
+light_color		         = 1.9,1.4,0.5
+light_range		         = 14.0
+light_time 		         = 0.85
+
+ph_mass			 = 5
+;engine_f			= 530
+;engine_u			= 90
+
+jump_height = 1
+
+;������ �� ��������
+fragment_speed				= 190
+;wallmarks
+wallmark_section			= explosion_marks
+wm_size						= 0.1 ;0.05
+
+explode_duration			 = 5		;���������������� ������ (�)
+
+;�����
+snd_explode = $nil;wpn_fake_vog-25_explode
+
+;�������� ������� ��������, �� �� ������������
+inv_name		= ammo-m209
+inv_name_short	= "M209"
+inv_weight		= .2
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 16
+inv_grid_y			= 5
+
+kill_msg_x			= 61
+kill_msg_y			= 232
+kill_msg_width		= 19
+kill_msg_height		= 22
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; �������� CustomRocket
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+engine_present		= false		;������������ �� � ������ ���������
+lights_enabled 		= false			;���� ������ ������, �� ����� ������
+trail_light_color 	= 0.6,0.5,0.3
+trail_light_range 	= 8.0
+force_explode_time  = 10000
+
+script_binding = bind_grenade.bind
+
+[fake_vog]:fake_rifle_grenade
+visual          = dynamics\weapons\wpn_ammo\ammo_vog_25.ogf
+[wpn_real_m209]:identity_immunities,default_weapon_params
+GroupControlSection	= spawn_group
+discovery_dependency =
+visual              = dynamics\weapons\wpn_ammo\ammo_m209.ogf
+$prefetch			= 16
+class				= S_EXPLO
+cform				= skeleton
+visual				= dynamics\balon\bochka_fuel.ogf
+inv_name			=
+inv_name_short		=
+inv_weight			= .1
+
+inv_grid_width		= 1
+inv_grid_height		= 1
+inv_grid_x			= 9
+inv_grid_y			= 9
+;���� ���������� ���������
+can_take			= false
+
+cost				= 500
+;-------------------------------------------------------------------------------
+
+blast				= 5.2 ;3.0
+blast_r				= 4.7 ;4
+blast_impulse		= 174 ;100
+;delete
+blast_impulse_factor = 1
+
+frags				= 94 ;10
+frags_r				= 28 ;10
+frag_hit			= 0.074 ;0.50
+frag_hit_impulse	=  44 ;50
+
+hit_type_blast		= explosion
+hit_type_frag		= fire_wound
+
+up_throw_factor		= 0.36
+;-------------------------------------------------------------------------------
+wm_size                  = 0.1
+
+explode_particles	= explosions\explosion_01
+
+light_color		         = 1.9,1.4,0.5
+light_range		         = 14.0
+light_time 		         = 0.85
+
+;������ �� ��������
+fragment_speed				= 186		;�������� �������� (�/�)
+
+explode_duration		 = 5		;���������������� ������ (�)
+
+condition_to_explode	=0.f
+time_to_explode			=0.f
+set_timer_particles		=vehiclefx\exhaust_1
+;wallmarks
+wallmark_section		 = explosion_marks
+;�����
+snd_explode = wpn_fake_vog-25_explode
+immunities_sect			= explosive_barrel_low_new_immunities_sect
+
+
+
+[wpn_real_vog25]:wpn_real_m209
+visual              = dynamics\weapons\wpn_ammo\ammo_vog_25.ogf
+blast				= 4.8 ;3.0
+blast_r				= 4.3 ;4
+blast_impulse		= 150 ;100
+frags				= 85 ;10
+frags_r				= 20 ;10
+frag_hit			= 0.07 ;0.50
+frag_hit_impulse	=  34 ;50
+
+[m209_sub]:identity_immunities,default_weapon_params
+GroupControlSection	              		= spawn_group
+discovery_dependency              		=
+$spawn 				              		= "sm\scripts\mina_blow"
+$prefetch			              		= 16
+kind			                  		= i_tool
+class				              		= II_EXPLO            
+cform				              		= skeleton
+visual				              		= dynamics\weapons\wpn_pfm1\wpn_pfm1.ogf
+inv_name			              		= nil
+inv_name_short		              		= nil
+inv_weight                               = 0.001
+inv_grid_width		              		= 1
+inv_grid_height		              		= 1
+inv_grid_x			              		= 1
+inv_grid_y			              		= 39
+can_take			              		= false
+cost				              		= 0
+blast				              		= 2.5
+blast_r				              		= 5.2
+blast_impulse		              		= 60
+blast_impulse_factor              		= 1
+frags				                               = 6
+frags_r				                               = 36
+frag_hit			                               = 0.01
+frag_hit_impulse	                               = 2
+hit_type_blast		              		= explosion
+hit_type_frag		              		= fire_wound
+up_throw_factor		              		= 0.1
+wm_size                           		= 0.01
+explode_particles		          		= explosions\explosion_01
+light_color		                  		= 1.9,1.4,0.5
+light_range		                  		= 25.0
+light_time 		                  		= 0.85
+fragment_speed				      		= 170
+explode_duration			      		= 0
+time_to_explode			          		= 0.f
+snd_explode                       		= weapons\mine_boom
+immunities_sect			          		= planted_mine_immunities
+wallmark_section		          		= explosion_marks
+condition_to_explode	=0.f
+time_to_explode			=0.f
+set_timer_particles		=vehiclefx\exhaust_1
