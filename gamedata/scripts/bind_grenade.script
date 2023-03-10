@@ -63,7 +63,6 @@ end
 function bind(obj)
     if (not alife_object(obj:id())) then
         obj:bind_object(custom_grenade_binder(obj))
-        printf("Bound id %s", obj:id())
     end
 end
 
@@ -124,14 +123,8 @@ function custom_grenade_binder:fastcall()
     local pos = obj:position()
     local dir = vector():set(pos):sub(self.position)
 
-    printf("Grenade direction: %s %s %s", dir.x, dir.y, dir.z)
     local result = self.ray:get(pos, dir)
     if result.in_contact or self.tg_time > 5000 then
-        if result.in_contact then
-            printf("Grenade in contact")
-        elseif self.tg_time > 5000 then
-            printf("Grenade expired")
-        end
         res = self:explode(pos, dir)
         self.object:destroy_object()
     end 

@@ -9,7 +9,6 @@ local bomb_force = 3000
 function detonate(item_id)
     local bomb = get_object_by_id(item_id)
     if bomb then
-        printf("Exploding bomb")
         bomb:explode(0)
     end
     return true
@@ -17,7 +16,6 @@ end
 function bomb_scatter(item_id)
     local bomb = level.object_by_id(item_id)
     if bomb then
-        printf("Scattering bomb %s", item_id)
         bomb:get_physics_shell():apply_force(
             bomb_min_force + (random_float(-1, 1) * bomb_force * 5),
             (bomb_min_force + (math_random() * bomb_force * 5)),
@@ -37,7 +35,6 @@ function cluster_bomb(position, direction, ammo)
     local gvid = db.actor:game_vertex_id()
     if not cluster_particle then cluster_particle = particles_object("explosions\\explosion_03") end
     cluster_particle:play_at_pos(position)
-    printf("Creating %s bombs", bomb_count)
     for i = 1, bomb_count do
         local pos = vector():set(position.x, position.y, position.z)
         local dir = vector():set(random_float(-1, 1), math_random(), random_float(-1, 1))
