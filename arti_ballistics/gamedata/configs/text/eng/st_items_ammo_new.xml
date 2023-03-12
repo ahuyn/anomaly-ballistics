@@ -896,23 +896,42 @@
 		<text>VOG-25 Cluster</text>
 	</string>
 	
+	<string id="ammo_new_vog25_berserk">
+		<text>VOG-25 Berserk Grenade</text>
+	</string>
+	<string id="ammo_new_vog25_berserk_descr">
+		<text>Modified VOG-25 grenade created as an initial foray into leveraging psionic artifacts. On impact, creates a powerful signal that induces extreme anger and confusion in a small radius, causing affected creatures and humans to indiscriminately attack each other.</text>
+	</string>
+	<string id="ammo_new_vog25_berserk_s">
+		<text>VOG-25 Berserk</text>
+	</string>
+	
 	<string id="ammo_new_m209">
-		<text>M209 Grenade</text>
+		<text>40x46 HE Grenade</text>
 	</string>
 	<string id="ammo_new_m209_descr">
-		<text>40mm grenade used in the M203 underbarrel grenade launcher and M79 single shot grenade launcher. This round has a 3.5 metre kill zone. </text>
+		<text>40mm M406 grenade used in the M203 underbarrel grenade launcher and M79 single shot grenade launcher. This round has a 3.5 metre kill zone. </text>
 	</string>
 	<string id="ammo_new_m209_s">
-		<text>M209 Grenade</text>
+		<text>40mm HE</text>
 	</string>
 	<string id="ammo_new_m209_fire">
-		<text>M209 Incendiary Grenade</text>
+		<text>40x46 Incendiary Grenade</text>
 	</string>
 	<string id="ammo_new_m209_fire_descr">
 		<text>40mm grenade produced in special research facilities set up by the Ministry of Science. High explosive material is replaced by a brittle compound grown from thermal artifacts. On primary explosive detonation, a fine cloud of burning particles is scattered over a large area, igniting living creatures in the vicinity. No damage is dealt to nonliving things.</text>
 	</string>
 	<string id="ammo_new_m209_fire_s">
-		<text>M209 Incendiary</text>
+		<text>40mm Incendiary</text>
+	</string>
+	<string id="ammo_new_m209_mine">
+		<text>40x46 Proximity Grenade</text>
+	</string>
+	<string id="ammo_new_m209_mine_descr">
+		<text>40mm self arming proximity mine. The impact fuse has been replaced by a synthetic artifact growth that activates when near a living creature. In order to now blow up the user, the detonation mechanism only fully arms about 1 second after launch, and automatically detonates the warhead after 60 seconds for safety reasons.</text>
+	</string>
+	<string id="ammo_new_m209_mine_s">
+		<text>40mm Proximity</text>
 	</string>
 
 	<!-- some leftovers -->

@@ -54,11 +54,10 @@ function ignite(pos, dir, ammo)
     if not fire_particle2 then fire_particle2 = particles_object("explosions\\effects\\expl_distortion") end
     ballistics_utils.play_sound_distance("incendiary", db.actor:position():distance_to(pos))
     fire_particle:play_at_pos(pos)
+    fire_particle2:play_at_pos(pos)
     level.iterate_nearest(pos, 10, function(obj)
-        if obj and obj:alive() and obj:id() ~= AC_ID then
-            arti_handlers.ignite_npc(obj, 11, 10, 10)
-            arti_handlers.ignite_npc(obj, 11, 10, 10)
-            arti_handlers.ignite_npc(obj, 11, 10, 10)
+        if obj and obj:id() ~= AC_ID and obj:alive()  then
+            arti_handlers.ignite_npc(obj, 11, {20, 40}, 1, 10)
         end
     end)
 end
@@ -78,4 +77,59 @@ function explode(pos, dir, ammo)
             return false
         end
     end)
+end
+
+-- local berserked = {}
+-- function on_enemy_eval(obj, enemy, flags)
+--     if berserked[obj:id()] then
+--         flags.override = true
+--         flags.ret_value = true
+--     end
+-- end
+
+-- function berserk(pos, dir, ammo)
+--     printf("Berserk impact")
+--     level.iterate_nearest(pos, 5, function(obj)
+--         if obj and obj:id() ~= AC_ID and not berserked[obj:id()] and obj:alive()  then
+--             local st = db.storage[obj:id()]
+--             st.enemy_id = nil
+--             berserked[obj:id()] = true
+
+--             printf("Making %s berserk", obj:id())
+--             CreateTimeEvent(obj:id(), "berserk_wearoff", 20, function()
+--                 st.enemy_id = nil
+--                 berserked[obj:id()] = nil
+--                 return true
+--             end)
+--         end
+--     end)
+-- end
+
+-- function on_death_callback(obj)
+--     if berserked[obj:id()] then berserked[obj:id()] = nil end
+-- end
+
+
+-- function se_on_unregister(se)
+--     berserked[se.id] = nil
+-- end
+
+-- get_nades = item_weapon.get_grenades
+-- function item_weapon.get_grenades(section)
+--     printf("Get grenades")
+--     get_nades(section)
+--     item_weapon.GUI.show_verybad = true
+-- end
+
+-- Close = item_weapon.UIWheelAmmo.Close
+-- function item_weapon.UIWheelAmmo:Close()
+--     self.show_verybad = not _NO_DAMAGED_AMMO
+--     Close(self)
+-- end
+
+function on_game_start()
+    -- RegisterScriptCallback("on_enemy_eval", on_enemy_eval)
+    -- RegisterScriptCallback("npc_on_before_hit", on_before_hit)
+    -- RegisterScriptCallback("monster_on_before_hit", on_before_hit)
+    -- RegisterScriptCallback("server_entity_on_unregister", se_on_unregister)
 end

@@ -70,13 +70,6 @@ end
 -- Class "custom_grenade_binder"
 --------------------------------------------------------------------------------
 
-local cardinal_vectors = {
-    vector():set(-1, 0, 0),
-    vector():set(0, 0, -1),
-    vector():set(1, 0, 0),
-    vector():set(0, 1, 0),
-    vector():set(0, 0, 1),
-}
 local VEC_GROUND = vector():set(0, -1, 0)
 class "custom_grenade_binder" (object_binder)
 
@@ -131,9 +124,15 @@ function custom_grenade_binder:fastcall()
 end
 
 function custom_grenade_binder:explode(pos, dir)
-    local weapon = db.actor:active_item()
-    ammo_map = utils_item.get_ammo(nil, weapon:id())
-    local ammo = ammo_map[weapon:get_ammo_type() + 1]
+    local weapon = self.object:parent() or db.actor:active_item()
+    printf("grenade is %s", self.object:id())
+    local ammo = "ammo_vog-25"
+    if weapon ~= nil then
+        ammo_map = utils_item.get_ammo(nil, weapon:id())
+        if not is_empty(ammo_map) then
+            ammo = ammo_map[weapon:get_ammo_type() + 1]
+        end
+    end
     local func = ballistics_mcm.get_handler(ammo)
     if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
         _G[func[1]][func[2]](pos, dir, ammo)
