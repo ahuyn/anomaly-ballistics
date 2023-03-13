@@ -489,9 +489,9 @@ function ignite_npc(npc, bone_id, damage, stack, duration)
     dmg_low = clamp(dmg_low, 0, dmg_high)
     print_dbg("Ignited %s", npc:id())
     play_sound_on_location("incendiary", npc)
+    play_particle(npc, 11, "damage_fx\\effects\\body_burn_01", duration)
     add_effect("ignite"..npc:id()..math.random(stack), duration, 
     function()
-        play_particle(npc, 11, "damage_fx\\effects\\body_burn_01")
         if not npc:alive() then return end
         local h = hit()
         h.type = hit.burn
