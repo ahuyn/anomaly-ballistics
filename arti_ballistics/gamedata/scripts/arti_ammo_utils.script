@@ -221,7 +221,6 @@ SpawnTreasure = treasure_manager.try_spawn_treasure
 function treasure_manager.try_spawn_treasure(box)
     local id = box:id()
 
-	--printf("try_spawn_treasure [%s]",caches[id])
     -- no spawn if the cache is already looted
 	if not (treasure_manager.caches[id]) then
 		return
