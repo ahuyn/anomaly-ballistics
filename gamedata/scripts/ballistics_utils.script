@@ -110,10 +110,13 @@ limbs = {
 	[44] = "bip01_r_finger21", 
 	[45] = "bip01_r_finger22", 
 }
+
+
 -- play particle at npc bone
-function play_particle(npc, bone_id, name)
+function play_particle(npc, bone_id, name, duration)
     bone_id = (not bone_id or bone_id == 65535) and 1 or bone_id
     bone_name = Bone_IDs[bone_id] or "bip01_spine"
+    duration = duration or 1
     local particle = particles_object(name)
     local bone_pos = npc:bone_position(bone_name)
     
@@ -123,14 +126,12 @@ function play_particle(npc, bone_id, name)
     local timeout = time_global() + (duration * 1000)
     CreateTimeEvent(npc:id(), name, 0, function(npc, bone, particle, timeout)
         if time_global() > timeout then 
-            -- printf("Timing out particle")
             return true 
         end
         local bp = npc:bone_position(bone)
         if not particle:playing() then
             particle:play_at_pos(bp)
         end
-        -- printf("Moving particle to %s %s %s", bp.x, bp.y, bp.z)
         particle:move_to(bp, VEC_Z)
     end, npc, bone_name, particle, timeout)
 end
