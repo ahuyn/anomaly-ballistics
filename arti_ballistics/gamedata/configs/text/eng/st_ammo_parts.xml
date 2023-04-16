@@ -150,13 +150,13 @@
 		<text>Thermal Artifact Fragments</text>
 	</string>
 	<string id="st_powder_fireball_desc">
-		<text>Pulverized remains of thermally active artifacts, for use in crafting certain types of ammo. Container is pleasantly warm to the touch. \n \n</text>
+		<text>Pulverized remains of thermally active artifacts, for use in crafting certain types of ammo. Can be mixed into slow-burning powders to enhance their effectiveness, or be used in crafting incendiary rounds. Container is pleasantly warm to the touch.\n \n</text>
 	</string>
 	<string id="st_powder_nightstar">
 		<text>Volatile Artifact Fragments</text>
 	</string>
 	<string id="st_powder_nightstar_desc">
-		<text>Pulverized remains of volatile artifacts, for use in crafting certain types of ammo. Glows faintly and vibrates in the container.\n \n</text>
+		<text>Pulverized remains of volatile artifacts, for use in crafting certain types of ammo. Glows faintly and vibrates in the container. \n \n</text>
 	</string>
 	<string id="st_powder_blood">
 		<text>Chemical Artifact Fragments</text>
