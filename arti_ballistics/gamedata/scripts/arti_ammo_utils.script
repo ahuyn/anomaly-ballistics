@@ -83,43 +83,63 @@ end
 local recipe_trader = {
     killer = {
        "recipe_ammo_nato",
-       "recipe_ammo_pistol"
+       "recipe_ammo_pistol",
+       "recipe_ammo_powder",
+       "recipe_ammo_bullet"
     },
     army = {
         "recipe_ammo_ru1",
-        "recipe_ammo_ru2"
+        "recipe_ammo_ru2",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
     ecolog = {
         "recipe_ammo_arty2",
-        "recipe_ammo_arty1"
+        "recipe_ammo_arty1",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
     monolith = {
         "recipe_ammo_ru2",
         "recipe_ammo_fire",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
     dolg = {
         "recipe_ammo_ru1",
-        "recipe_ammo_shotgun"
+        "recipe_ammo_shotgun",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
     freedom = {
         "recipe_ammo_nato",
         "recipe_ammo_fire",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
     csky = {
         "recipe_ammo_shotgun",
         "recipe_ammo_arty1",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
     stalker = {
         "recipe_ammo_pistol",
         "recipe_ammo_shotgun",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
     bandit = {
         "recipe_ammo_ru1",
-        "recipe_ammo_pistol"
+        "recipe_ammo_pistol",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
     greh = {
         "recipe_ammo_arty2",
         "recipe_ammo_nato",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
     isg = {
         "recipe_ammo_ru1",
@@ -130,6 +150,8 @@ local recipe_trader = {
         "recipe_ammo_arty1",
         "recipe_ammo_arty2",
         "recipe_ammo_fire",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
 }
 
