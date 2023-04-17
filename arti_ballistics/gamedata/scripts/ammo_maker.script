@@ -192,6 +192,8 @@ function on_game_start()
             if string.find(id, "_bad") then
                 id = id:sub(1, -3)
                 workshop_autoinject.add_new_recipe(6, id, value)
+            elseif  SYS_GetParam(0, id, "type") then
+                workshop_autoinject.add_new_recipe(6, id, value)
             else
                 workshop_autoinject.add_override_recipe(id, value, 6)
             end
