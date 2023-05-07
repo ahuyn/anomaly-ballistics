@@ -53,7 +53,19 @@
 		<text>Pyromaniac's Cookbook</text>
 	</string>
 	<string id="st_ammo_recipe_fire_desc">
-		<text>A notebook covered in fine traces of ash. Information inside concerns only that of things related to fire - Burner anomalies, Fireball artifacts, incendiary ammunition and grenades.Cobbled together from various sources, some printed, some handwritten.</text>
+		<text>A notebook covered in fine traces of ash. Information inside concerns only that of things related to fire - Burner anomalies, Fireball artifacts, incendiary ammunition and grenades. Cobbled together from various sources, some printed, some handwritten.</text>
 	</string>
 
+	<string id="st_ammo_recipe_powder">
+		<text>Artifact Experimentation Trials #22, "Prometheus"</text>
+	</string>
+	<string id="st_ammo_recipe_powder_desc">
+		<text>Scientific notebook detailing experiments with artifacts. In particular, there are several trials using small fragments of broken artifacts to alter the properties of combustible materials. The experiment logs detail a technique that allow for reliable and repeatable fine adjustment of smokeless powder combustion using otherwise worthless pieces of thermal artifact fragments, as well as chaotic and unstable reactions with liquid fuel.</text>
+	</string>
+	<string id="st_ammo_recipe_bullet">
+		<text>Artifact Experimentation Trials #67, "Philosopher's Stone"</text>
+	</string>
+	<string id="st_ammo_recipe_bullet_desc">
+		<text>Scientific notebook detailing experiments with artifacts. A very extensive document focused on attempting to transmute metals to gold and silver. For the most part these experiments ended in various forms of failure, but there is documented success transmuting lead into significantly harder metals such as tungsten.</text>
+	</string>
 </string_table>

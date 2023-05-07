@@ -150,25 +150,25 @@
 		<text>Thermal Artifact Fragments</text>
 	</string>
 	<string id="st_powder_fireball_desc">
-		<text>Pulverized remains of thermally active artifacts, for use in crafting certain types of ammo. Container is pleasantly warm to the touch. Can be acquired by crushing Crystal and Fireball artifacts.</text>
+		<text>Pulverized remains of thermally active artifacts, for use in crafting certain types of ammo. Can be mixed into slow-burning powders to enhance their effectiveness, or be used in crafting incendiary rounds. Container is pleasantly warm to the touch.\n \n</text>
 	</string>
 	<string id="st_powder_nightstar">
 		<text>Volatile Artifact Fragments</text>
 	</string>
 	<string id="st_powder_nightstar_desc">
-		<text>Pulverized remains of volatile artifacts, for use in crafting certain types of ammo. Glows faintly and vibrates in the container. Can be acquired by very, very carefully breaking down Pin and Night Star artifacts. \n \n</text>
+		<text>Pulverized remains of volatile artifacts, for use in crafting certain types of ammo. Glows faintly and vibrates in the container. \n \n</text>
 	</string>
 	<string id="st_powder_blood">
 		<text>Chemical Artifact Fragments</text>
 	</string>
 	<string id="st_powder_blood_desc">
-		<text>Pulverized remains of chemically active artifacts, for use in crafting certain types of ammo. The toxic chemicals inside have been released, so this is hazardous to handle. Can be acquired by crushing Stone Blood and Meat Chunk artifacts. \n \n</text>
+		<text>Pulverized remains of chemically active artifacts, for use in crafting certain types of ammo. The toxic chemicals inside have been released, necessitating caution when handling. \n \n</text>
 	</string>
 	<string id="st_powder_gravi">
 		<text>Gravitational Artifact Fragments</text>
 	</string>
 	<string id="st_powder_gravi_desc">
-		<text>Pulverized remains of artifacts that exert gravitational fields, for use in crafting certain types of ammo. Constantly rattles in the container. Can be acquired by crushing Jellyfish, Wrenched or Gravi artifacts. \n \n</text>
+		<text>Pulverized remains of artifacts that exert gravitational fields, for use in crafting certain types of ammo. Constantly rattles in the container. \n \n</text>
 	</string>
 	<string id="st_powder_medusa">
 		<text>Jellyfish Fragments</text>
@@ -180,14 +180,14 @@
 		<text>Electrical Artifact Fragments</text>
 	</string>
 	<string id="st_powder_battery_desc">
-		<text>Pulverized remains of electrically active artifacts. Holding the container makes your hair stand on end. Can be acquired by crushing Sparkler or Battery artifacts, but remember to use non-conductive tools lest you fatally electrocute yourself.\n \n </text>
+		<text>Pulverized remains of electrically active artifacts. Holding the container makes your hair stand on end. \n \n </text>
 	</string>
 
 	<string id="st_powder_fire">
 		<text>Incendiary powder</text>
 	</string>
 	<string id="st_powder_fire_desc">
-		<text>Can of powder containing an incendiary mixture composed of magnesium, aluminum and barium nitrate. Usually purchased wholesale, this powder is found in small quantities in certain types of armor-piercing incendiary ammunition.\n \n </text>
+		<text>Can of powder containing an incendiary mixture composed of magnesium, aluminum and barium nitrate. Usually purchased wholesale, this powder is found in small quantities in certain types of armor-piercing incendiary ammunition. Can also be synthesized from artifact fragments.\n \n </text>
 	</string>
 
 	<string id="st_crush">

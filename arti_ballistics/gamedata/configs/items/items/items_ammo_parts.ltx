@@ -179,18 +179,7 @@ box_size                    = 10
 inv_grid_x			                                   = 2
 inv_grid_y			                                   = 3
 
-[powder_gravi]:identity_immunities
-GroupControlSection                                    = spawn_group 
-discovery_dependency                                   = 
-$spawn                                                 = "food and drugs\harmonica_a"
-cform                                                  = skeleton 
-class                                                  = II_ATTCH 
-kind			                                       = i_part
-attach_angle_offset		                               = -0.287979, 1.560923, 1.544060
-attach_position_offset	                               = 0.096910, -0.013594, 0.107925
-attach_bone_name		                               = bip01_r_hand
-auto_attach				                               = false
-visual				                                   = dynamics\equipments\trade\parts.ogf
+[powder_gravi]:weapon_ammo_parts
 description			                                   = st_powder_gravi_desc
 icons_texture				  = ui\ammo_parts
 inv_name			                                   = st_powder_gravi
@@ -200,8 +189,9 @@ inv_grid_height = 2
 inv_grid_x = 3
 inv_grid_y = 14
 icons_texture = ui\ui_maid_ammo
+box_size                    = 5
 cost				                                   = 2000
-inv_weight			                                   = 0.22
+inv_weight			                                   = 0.1
 
 [powder_fireball]:powder_gravi
 description			                                   = st_powder_fireball_desc
@@ -211,32 +201,24 @@ inv_grid_width = 1
 inv_grid_height = 2
 inv_grid_x = 0
 inv_grid_y = 14
-cost				                                   = 2000
-inv_weight			                                   = 0.22
+
 [powder_nightstar]:powder_gravi
 description			                                   = st_powder_nightstar_desc
 inv_name			                                   = st_powder_nightstar
 inv_name_short		                                   = st_powder_nightstar
 inv_grid_width = 1
 inv_grid_height = 2
-inv_grid_x = 3
+inv_grid_x = 4
 inv_grid_y = 14
-1icon_layer_x                            = 5
-1icon_layer_y                            = 40
-1icon_layer_scale                        = 1
-1icon_layer        	                               = tch_upgr_ico
-cost				                                   = 2000
-inv_weight			                                   = 0.22
+
 [powder_blood]:powder_gravi
 description			                                   = st_powder_blood_desc
 inv_name			                                   = st_powder_blood
 inv_name_short		                                   = st_powder_blood
 inv_grid_width = 1
 inv_grid_height = 2
-inv_grid_x = 3
+inv_grid_x = 1
 inv_grid_y = 14
-cost				                                   = 2000
-inv_weight			                                   = 0.22
 [powder_battery]:powder_gravi
 description			                                   = st_powder_battery_desc
 inv_name			                                   = st_powder_battery
@@ -245,8 +227,7 @@ inv_grid_width = 1
 inv_grid_height = 2
 inv_grid_x = 2
 inv_grid_y = 14
-cost				                                   = 2000
-inv_weight			                                   = 0.22
+; unused
 [powder_medusa]:powder_gravi
 description			                                   = st_powder_medusa_desc
 inv_name			                                   = st_powder_medusa

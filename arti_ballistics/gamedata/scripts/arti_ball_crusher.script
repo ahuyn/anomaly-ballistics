@@ -1,21 +1,23 @@
-arti_crusher = {
-    af_pin = "powder_nightstar,3",
-    af_night_star = "powder_nightstar,5",
+-- arti_crusher = {
+--     af_pin = "powder_nightstar:3",
+--     af_night_star = "powder_nightstar:5",
     
-    af_medusa = "powder_gravi,3",
-    af_vyvert = "powder_gravi,4",
-    af_gravi = "powder_gravi,5",
+--     af_medusa = "powder_gravi,3",
+--     af_vyvert = "powder_gravi,4",
+--     af_gravi = "powder_gravi,5",
     
-    af_crystal = "powder_fireball,3",
-    af_fireball = "powder_fireball,5",
+--     af_cristall = "powder_fireball,3",
+--     af_fireball = "powder_fireball,5",
     
-    af_blood = "powder_blood,3",
-    af_mincer_meat = "powder_blood,5",
+--     af_blood = "powder_blood,3",
+--     af_mincer_meat = "powder_blood,5",
 
-    af_electra_sparkler = "powder_battery,4",
-    af_dummy_battery = "powder_battery,5",
-}
+--     af_electra_sparkler = "powder_battery,4",
+--     af_dummy_battery = "powder_battery,5",
+-- }
 
+tbl = {}
+ini_balls = ini_file("items\\settings\\ball_crusher.ltx")
 gc = game.translate_string
 -- to powderize artifacts into crafting material
 
@@ -27,23 +29,64 @@ local bags = {
 	["actor_equ"] = true,
 	["actor_belt"] = true,
 }
+function load_table()
+    ini_balls:section_for_each(function(section)
+        local powders = {}
+        local lines = ini_balls:line_count(section) or 0
+        for i=0,lines-1 do
+            local _, id, value = ini_balls:r_line_ex(section,i)
+            value = str_explode(value, "-")
+            powders[id] = {
+                min = value[1] or 0,
+                max = value[2] or 0
+            }
+        end
+        tbl[section] = powders
+    end)
+end
 function try_crush(obj, bag, mode)
-    if obj and bags[bag] and modes[mode] and arti_crusher[obj:section()] then
+    if obj and bags[bag] and modes[mode] and tbl[obj:section()] then
         return gc("st_crush")
     end
 end
 
 function crush(obj, bag, mode)
-    local to_create = arti_crusher[obj:section()]
-    to_create = str_explode(to_create, ",")
-    if to_create[1] then
-        alife_release(obj)
-        for i=1,tonumber(to_create[2]) do
-            alife_create_item(to_create[1], db.actor)
-        end
+    local to_create = tbl[obj:section()]
+    local cond = obj:condition() or 1
+    for k,v in pairs(to_create) do
+        local diff = v.max - v.min
+        local amt = v.min + math.random(diff)
+        amt = math.ceil(amt * cond)
+        create_ammo(k, db.actor:position(), db.actor:level_vertex_id(), db.actor:game_vertex_id(), AC_ID, amt)
+    end
+    alife_release(obj)
+end
+
+SpawnTreasure = treasure_manager.try_spawn_treasure
+
+function treasure_manager.try_spawn_treasure(box)
+    local id = box:id()
+
+	--printf("try_spawn_treasure [%s]",caches[id])
+    -- no spawn if the cache is already looted
+	if not (treasure_manager.caches[id]) then
+		return
+	end
+    SpawnTreasure(box)
+    if math.random() < 0.1 then
+        create_ammo(random_choice(
+            "powder_gravi",
+            "powder_fireball",
+            "powder_nightstar",
+            "powder_battery",
+            "powder_blood")
+            , box:position(), box:level_vertex_id(), box:game_vertex_id(), box:id(), math.random(3))
     end
 end
 
+
+
 function on_game_start()
     custom_functor_autoinject.add_functor("arti_crush", try_crush, try_crush, nil, crush, true)
+    load_table()
 end
