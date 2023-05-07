@@ -524,7 +524,7 @@ function fire_damage(npc, s_hit, ctx)
     local ignite_chance = ini_ammo:r_float_ex(ctx.hit_data.ammo, "ignite") or 0
     if math_random() < ignite_chance then
         if not is_actor(npc) then
-            ignite_npc(npc, ctx.bone_id, {5, 15}, 3, 10)
+            ignite_npc(npc, ctx.bone_id, {5, 15}, 15, math.random(5, 20))
         end
     end
     return s_hit
@@ -568,7 +568,7 @@ function chaos_damage(npc, s_hit, ctx)
     local extra_effect = math_random(15)
     if not is_actor(npc) then
         if extra_effect == 3 then
-            ignite_npc(npc, 11, 5, 5)
+            ignite_npc(npc, ctx.bone_id, {1, 20}, 3, 10)
         elseif extra_effect == 4 and ctx.is_npc then
             stun_npc(npc)
         elseif extra_effect == 5 then
