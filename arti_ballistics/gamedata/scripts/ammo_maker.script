@@ -199,4 +199,6 @@ function on_game_start()
             end
         end
     end)
+    workshop_autoinject.remove_existing_recipes("ammo_vog-25")
+    workshop_autoinject.remove_existing_recipes("ammo_m209")
 end

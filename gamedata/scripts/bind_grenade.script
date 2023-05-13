@@ -65,10 +65,17 @@ function bind(obj)
         obj:bind_object(custom_grenade_binder(obj))
     end
 end
+--[[
 
 --------------------------------------------------------------------------------
--- Class "custom_grenade_binder"
+    Class "custom_grenade_binder"
+    Usage is trickier than for bullets. In order to use it the following steps are required:
+    1. grenade ammo section needs to define a custom fake_grenade_name
+    2. said fake_grenade_name needs line `script_binding = bind_grenade.bind`
+    3. when projectile hits the ground, custom explosion will be triggered (default does nothing)
+    4. Default explosion spawns item defined by `bomb_type` and immediately detonates if possible
 --------------------------------------------------------------------------------
+]]
 
 local VEC_GROUND = vector():set(0, -1, 0)
 class "custom_grenade_binder" (object_binder)
@@ -125,7 +132,6 @@ end
 
 function custom_grenade_binder:explode(pos, dir)
     local weapon = self.object:parent() or db.actor:active_item()
-    printf("grenade is %s", self.object:id())
     local ammo = "ammo_vog-25"
     if weapon ~= nil then
         ammo_map = utils_item.get_ammo(nil, weapon:id())
@@ -145,4 +151,22 @@ function custom_grenade_binder:net_spawn(se_abstract)
     end
 	
     return true
+end
+
+
+function explode(pos, dir, ammo)
+    local lvid = db.actor:level_vertex_id()
+    local gvid = db.actor:game_vertex_id()
+    local bomb_type = ini_ammo:r_string_ex(ammo, "bomb_type") or ""
+    if not bomb_type then return end
+    local bomb = alife_create_item(bomb_type, {pos, lvid, gvid})
+    CreateTimeEvent(bomb.id, bomb.id, 0, function()
+        local bomb_obj = level.object_by_id(bomb.id)
+        if bomb_obj then
+            bomb_obj:explode(0)
+            return true
+        else
+            return false
+        end
+    end)
 end

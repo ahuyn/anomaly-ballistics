@@ -62,23 +62,6 @@ function ignite(pos, dir, ammo)
     end)
 end
 
-function explode(pos, dir, ammo)
-    local lvid = db.actor:level_vertex_id()
-    local gvid = db.actor:game_vertex_id()
-    local bomb_type = ini_ammo:r_string_ex(ammo, "bomb_type")
-    if not bomb_type then return end
-    local bomb = alife_create_item(bomb_type, {pos, lvid, gvid})
-    CreateTimeEvent(bomb.id, bomb.id, 0, function()
-        local bomb_obj = level.object_by_id(bomb.id)
-        if bomb_obj then
-            bomb_obj:explode(0)
-            return true
-        else
-            return false
-        end
-    end)
-end
-
 -- local berserked = {}
 -- function on_enemy_eval(obj, enemy, flags)
 --     if berserked[obj:id()] then

@@ -37,7 +37,9 @@ end
 
 function get_handler(ammo_sec)
     if ini_ammo:section_exist(ammo_sec) then
-        local proc = ini_ammo:r_string_ex(ammo_sec, "handler") or "ballistic_handlers.default"
+        local is_grenade = SYS_GetParam(0, ammo_sec, "fake_grenade_name")
+        local default = is_grenade and "bind_grenade.explode" or "ballistic_handlers.default"
+        local proc = ini_ammo:r_string_ex(ammo_sec, "handler") or ("ballistic_handlers.default")
         proc = str_explode(proc, "%.")
         return proc
     end
