@@ -464,10 +464,10 @@
 	</string>	
 	
 	<string id="ammo_new_5.45x39_fmjs">
-		<text>5.45x39mm EP rounds</text>
+		<text>5.45x39mm Tracer rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_descr">
-		<text>Standard-issue 5.45x39 caliber 7N10 is an enhanced penetration round for automatic rifles of Warsaw Pact countries. A harder and sleeker steel core is used to improve penetration. Standard issue round with modern SSU ground forces, and is readily found in stock with most military personnel. Improved penetration capabilities make a huge difference in combat effectiveness when fighting Mercenaries and Monolith forces.</text>
+		<text>Special-issue 5.45x39 caliber 7T3 tracer round. Used to adjust fire and designate targets. Suffers from mildly reduced performance compared to the standard issue FMJ round, but is valuable for coordinating fire in concentrated operations. Seldom used in the Zone except by the Military, and usually only carried by officers to coordinate fire.</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_s">
 		<text>5.45x39 EP</text>
@@ -493,23 +493,23 @@
 	</string>
 
 	<string id="ammo_new_5.45x39_ap">
-		<text>5.45x39mm AP rounds</text>
+		<text>5.45x39mm 7N10 EP rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_ap_descr">
-		<text>Special-issue 5.45x39 caliber 7N22 armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hard-alloy armour-piercing penetrator that is highly effective against body armour. Issued to Spetsnaz units conducting direct action against the most dangerous and well-armed foes, though a handful of these rounds rarely find their way into the hands of Dutyers. </text>
+		<text>Standard-issue 5.45x39 caliber 7N10 is an enhanced penetration round for automatic rifles of Warsaw Pact countries. A harder and sleeker steel core is used to improve penetration. Standard issue round with modern SSU ground forces, and is readily found in stock with most military personnel. Improved penetration capabilities make a huge difference in combat effectiveness when fighting Mercenaries and Monolith forces.</text>
 	</string>
 	<string id="ammo_new_5.45x39_ap_s">
-		<text>5.45x39 AP</text>
+		<text>5.45x39 EP</text>
 	</string>
 
 	<string id="ammo_new_5.45x39_aps">
-		<text>5.45x39mm 7N39 AP rounds</text>
+		<text>5.45x39mm 7N22 AP rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_aps_descr">
-		<text>Classified, extremely rare 5.45x39 caliber 7N39 'super' armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hardened tungsten penetrator and the cartridge packs a high-pressure load, conferring extreme penetration capability against most types of armor. Extremely difficult to find outside of Russian Special Forces armories - it has long been rumored that the Russian Federation is aware of the activities in the Zone and is conducting clandestine activities under the guise of cooperation with the Ukrainian Armed Forces, likely serving their own agenda. No matter the origin, these rounds are likely the best intermediate rifle rounds you can find.</text>
+		<text>Special-issue 5.45x39 caliber 7N22 armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hard-alloy armour-piercing penetrator that is highly effective against body armour. Issued to Spetsnaz units conducting direct action against the most dangerous and well-armed foes, though a handful of these rounds rarely find their way into the hands of Dutyers. </text>
 	</string>
 	<string id="ammo_new_5.45x39_aps_s">
-		<text>5.45x39 AP+</text>
+		<text>5.45x39 AP</text>
 	</string>
 	
 	
@@ -524,10 +524,10 @@
 	</string>
 
 	<string id="ammo_new_5.56x45_fmjs">
-		<text>5.56x45mm Mk318 FMJ rounds</text>
+		<text>5.56x45mm Tracer rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_descr">
-		<text>Match-grade 5.56x45 FMJ round that is standard issue with U.S. Marines and other elite task groups. Developed in response to M855's reported ineffectiveness at reliably putting down targets, the Mk318 roundprovides tight groupings out of short barrels, penetrates barriers reliably and offers fragmentation potential exceeding that of the M193. These combined properties make the round unmatched in close-range modern warfare. A reasonably rare find, however members of Freedom maintain an unusually high stock of these rounds, the origin of which is a well-guarded secret.</text>
+		<text>Special issue 5.56x45 Tracer round used for target designation and fire adjustment. Standard issue in most NATO militaries for officers, light machine gunners and sometimes used by rank and file to provide a visual warning for low ammo. These rounds can </text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_s">
 		<text>5.56x45 FMJ+</text>

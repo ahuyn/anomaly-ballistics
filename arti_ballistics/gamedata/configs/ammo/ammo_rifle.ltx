@@ -1,25 +1,29 @@
 [ammo_5.45x39_fmj]:ammo_base ; 7N6
 name		= ammo_new_5.45x39_fmj
 k_hit		= 1
+hit_scale   = 0.85
 k_ap		= 0.175
 k_pen       = 0.2
 k_imp       = 0.6
-impair      = 1
+impair      = 0.95
 cost        = 1250
 
 [ammo_5.45x39_fmj_bad]:ammo_5.45x39_fmj ; 7N10
+handler     = arti_handlers.tracer
 name		= ammo_new_5.45x39_fmjs
 k_hit		= 1
-k_ap		= 0.205
+k_ap		= 0.15
 cost        = 1950
-k_pen       = 0.4
+k_pen       = 0.2
 dg_ammo     = ammo_5.45x39_fmj
 dg_chance   = 0.4
+special     = tracer
 
 
 [ammo_5.45x39_ep]:ammo_base ; hunting HP
 name		= ammo_new_5.45x39_hp
-k_hit		= 1
+k_hit		= 1.1
+hit_scale   = 0.85
 k_ap		= 0.12
 k_imp       = 0.6
 k_hp        = 1.4
@@ -29,7 +33,7 @@ special     = hp
 
 [ammo_5.45x39_ep_bad]:ammo_5.45x39_ep ; soft point
 name		= ammo_new_5.45x39_sp
-k_hit		= 1.05
+k_hit		= 1.1
 k_ap		= 0.15
 k_hp        = 1.1
 flinch      = true
@@ -42,6 +46,7 @@ dg_chance   = 0.4
 [ammo_5.45x39_ap]:ammo_base ; 7N22 AP
 name		= ammo_new_5.45x39_ap
 k_hit		= 0.9
+hit_scale   = 0.85
 k_ap		= 0.255
 k_imp       = 0.6
 k_pen       = 0.5
@@ -67,6 +72,7 @@ dg_chance   = 1
 handler     = arti_handlers.fragment
 name		= ammo_new_5.56x45_fmj
 k_hit		= 1
+hit_scale   = 0.85
 k_ap		= 0.155
 k_imp       = 0.6
 cost        = 1500
@@ -74,18 +80,19 @@ frag        = 1.5
 special     = frag
 
 [ammo_5.56x45_fmj_bad]:ammo_5.56x45_fmj ; MK318
-handler     = arti_handlers.fragment_sound
+handler     = arti_handlers.tracer
 name		= ammo_new_5.56x45_fmjs
-k_hit		= 1.1
-k_ap		= 0.195
+k_hit		= 1
+k_ap		= 0.15
 cost        = 2000
 dg_ammo     = ammo_5.56x45_fmj
 dg_chance   = 0.5
-frag        = 1.6
+special     = tracer
 
 [ammo_5.56x45_ss190]:ammo_base ; civ hunting
 name		= ammo_new_5.56x45_hp
 k_hit		= 1
+hit_scale   = 0.85
 k_ap		= 0.105
 k_imp       = 0.6
 k_hp        = 1.5
@@ -109,6 +116,7 @@ dg_chance   = 0.5
 [ammo_5.56x45_ap]:ammo_base ; M855
 name		= ammo_new_5.56x45_ss190
 k_hit		= 0.75
+hit_scale   = 0.85
 k_ap		= 0.225
 k_imp       = 0.6
 k_pen       = 0.6
@@ -119,7 +127,7 @@ dg_chance   = 0.2
 
 [ammo_5.56x45_ap_bad]:ammo_5.56x45_ap ; M855A1
 name		= ammo_new_5.56x45_ap
-k_hit		= 1
+k_hit		= 1.05
 k_ap		= 0.285
 k_pen       = 0.2
 cost        = 2500
