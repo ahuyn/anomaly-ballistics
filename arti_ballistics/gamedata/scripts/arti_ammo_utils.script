@@ -194,7 +194,7 @@ end
 
 local downgrade = false
 
-SpawnAmmo = death_manager.try_spawn_ammo
+-- SpawnAmmo = death_manager.try_spawn_ammo
 function death_manager.try_spawn_ammo(npc)
     downgrade = true
     SpawnAmmo(npc)

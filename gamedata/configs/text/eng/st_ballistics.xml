@@ -53,6 +53,24 @@
 <string id="ui_mcm_lst_bsith">
 	<text>Sith</text>
 </string>
+<string id="ui_mcm_ballistics_snork">
+	<text>Snork Durability Options</text>
+</string>
+<string id="ui_mcm_ballistics_snork_desc">
+	<text>Changes snork protection. Snorks have abnormally high armor which makes them annoying to fight in this new system. Options are as follows:
+		\n \n Normal: How they are now
+		\n \n Fat: Double health, half armor.
+		\n \n THICC: Triple health, quarter armor.</text>
+</string>
+<string id="ui_mcm_lst_snormal">
+	<text>Normal</text>
+</string>
+<string id="ui_mcm_lst_sfat">
+	<text>Fat</text>
+</string>
+<string id="ui_mcm_lst_ssfat">
+	<text>THICC</text>
+</string>
 <string id="ui_mcm_ballistics_legs">
 	<text>Leg Meta</text>
 </string>

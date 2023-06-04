@@ -121,6 +121,9 @@
 	<string id="st_ballistics_soulripper">
 		<text>headshots heal</text>
 	</string>
+	<string id="st_ballistics_tracer">
+		<text>marks targets for 20% increased damage</text>
+	</string>
 	<string id="st_ballistics_firebomb">
 		<text>ignites all targets</text>
 	</string>
@@ -231,7 +234,7 @@
 		<text>9x19mm JSP +P rounds</text>
 	</string>
 	<string id="ammo_new_9x19_pbps_descr">
-		<text>Match grade 9mm hand loaded JSP rounds. Soft Point rounds are semi-jacketed and expose the lead tip, and expand like hollowpoint rounds while retaining better armor penetration properties. These are custom-order rounds from folk craftsmen that have earned the nickname of 'Man stopper' due to their purported ability to stop men dead in their tracks.</text>
+		<text>Match grade 9mm hand loaded JSP rounds. Soft Point rounds are semi-jacketed and expose the lead tip, and expand like hollowpoint rounds while retaining better armor penetration properties. These are custom-order rounds from folk craftsmen enhanced with a touch of gravitational artifacts to disorient on impact.</text>
 	</string>
 	<string id="ammo_new_9x19_pbps_s">
 		<text>9x19 JSP</text>
@@ -474,13 +477,13 @@
 	</string>
 
 	<string id="ammo_new_5.45x39_sp">
-		<text>5.45x39mm Soft Point rounds</text>
+		<text>5.45x39mm Disruptor rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_sp_descr">
-		<text>Special-issue 5.45x39mm Soft Point rounds used by law enforcement in response to armed and dangerous threats. The jacketed round is cut away at the top, exposing the inner lead core, and the powder charge is increased. Provides penetration capabilities comparable to that of 7N6, but also expands similarly to hollow-point rounds and imparts a stumbling effect on impact.</text>
+		<text>Modified 5.45x39mm hollow point rounds developed by stalkers as a primitive form of experimentation with artifacts.  Embedded in the hollow tip is a common artifact shard that creates a micro-gravitational pulse on impact. The impact, if it does not penetrate body armor, disorients and interrupts the enemy. A popular folk remedy for helping avoid well-armed foes - the rounds may not kill, but distract long enough to retreat to safety.</text>
 	</string>
 	<string id="ammo_new_5.45x39_sp_s">
-		<text>5.45x39 SP</text>
+		<text>5.45x39 Disruptor</text>
 	</string>
 	<string id="ammo_new_5.45x39_hp">
 		<text>5.45x39mm HP rounds</text>

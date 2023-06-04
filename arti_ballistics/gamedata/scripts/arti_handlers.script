@@ -243,14 +243,15 @@ function process_flinch(npc, precalc)
     local ammo_data = precalc.ammo_data
     local bone_data = precalc.bone_data
     if not ini_ammo:r_bool_ex(ammo_data.sec, "flinch") then return end
-    ap_tier = get_tier(ammo_data.k_ap)
-    armor_tier = get_tier(bone_data.armor)
-    local flinch_adj = (ap_tier - armor_tier) * 0.3
+    -- ap_tier = get_tier(ammo_data.k_ap)
+    -- armor_tier = get_tier(bone_data.armor)
+    local flinch_adj = (bone_data.armor - ammo_data.k_ap) * 5
     local flinch_chance = clamp(0.95 - flinch_adj, 0, 1)
-    -- print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
+    print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
     if flinch_chance > 0 and math_random() < flinch_chance then
         -- print_dbg("Staggering NPC")
         stun_npc(npc)
+        npc.health = clamp(npc.health - 0.1, 0.1, 1)
     end
 end
 
@@ -397,6 +398,7 @@ function slug(npc, s_hit, ctx)
         headsplode(npc)
     elseif ballistics_utils.center_mass[ctx.bone_id] and math_random() < 0.9 then
         stun_npc(npc)
+        npc.health = clamp(npc.health - 0.1, 0.1, 1)
     end
 
     calcs.ap_calc = npc_standard(s_hit, precalc)
@@ -477,7 +479,7 @@ function tracer(npc, s_hit, ctx)
     if marked == npc:id() then return end
     marked = npc:id()
     play_sound_on_location("elite", db.actor)
-    -- aggro all the companions
+    -- aggro companions
     for k,v in pairs(axr_companions.list_actor_squad_by_id()) do
         companion = get_object_by_id(v)
         if companion then
@@ -500,8 +502,13 @@ function tracer(npc, s_hit, ctx)
 end
 
 function on_before_hit(npc, s_hit, bone_id, flags)
-    if npc:id() == marked and s_hit.draftsman:id() == AC_ID then
-        s_hit.power = s_hit.power * 1.2
+    if npc:id() == marked then
+        local companions = axr_companions.companion_squads
+        if s_hit.draftsman:id() == AC_ID then
+            s_hit.power = s_hit.power * 1.2
+        elseif companions[s_hit.draftsman:id()] then
+            s_hit.power = s_hit.power * 1.3
+        end
     end
 end
 

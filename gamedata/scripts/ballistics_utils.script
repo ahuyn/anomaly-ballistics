@@ -325,6 +325,12 @@ function mutant_prot_values(mutant, id)
     if not hit_frac then hit_frac = 0.5 end
     local mult = mutant_hp[clsid] and (get_config("mutant") or undead_clsid[clsid]) and 1/mutant_hp[clsid] or 1
     
+    local snork = get_config("snork")
+    if snork > 0 and clsid == SM_SNORK then
+        skin_armor = skin_armor / (snork * 2)
+        mult = mult * (1 + snork)
+    end
+
     if burer[clsid] then
         if burer_lv > 0 then
             skin_armor = skin_armor / 2
