@@ -231,10 +231,10 @@
 	</string>
 	
 	<string id="ammo_new_9x19_pbps">
-		<text>9x19mm JSP +P rounds</text>
+		<text>9x19mm Disruptor rounds</text>
 	</string>
 	<string id="ammo_new_9x19_pbps_descr">
-		<text>Match grade 9mm hand loaded JSP rounds. Soft Point rounds are semi-jacketed and expose the lead tip, and expand like hollowpoint rounds while retaining better armor penetration properties. These are custom-order rounds from folk craftsmen enhanced with a touch of gravitational artifacts to disorient on impact.</text>
+		<text>Modified hand loaded 9mm JSP rounds. The metal jacket around the tip has been cut back like a Soft Point round, and the cartridge and powder charge modified for higher pressure. The tip of the bullet is coated in a thin slurry of gravitational artifacts that creates micro-singularities on impact. Created as an unconventional means for common stalkers to deal with heavily armored foes.</text>
 	</string>
 	<string id="ammo_new_9x19_pbps_s">
 		<text>9x19 JSP</text>
@@ -473,7 +473,7 @@
 		<text>Special-issue 5.45x39 caliber 7T3 tracer round. Used to adjust fire and designate targets. Suffers from mildly reduced performance compared to the standard issue FMJ round, but is valuable for coordinating fire in concentrated operations. Seldom used in the Zone except by the Military, and usually only carried by officers to coordinate fire.</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_s">
-		<text>5.45x39 EP</text>
+		<text>5.45x39 Tracer</text>
 	</string>
 
 	<string id="ammo_new_5.45x39_sp">
@@ -533,7 +533,7 @@
 		<text>Special issue 5.56x45 Tracer round used for target designation and fire adjustment. Standard issue in most NATO militaries for officers, light machine gunners and sometimes used by rank and file to provide a visual warning for low ammo. These rounds can </text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_s">
-		<text>5.56x45 FMJ+</text>
+		<text>5.56x45 Tracer</text>
 	</string>
 	
 	<string id="ammo_new_5.56x45_hp">
@@ -570,7 +570,7 @@
 		<text>5.56x45mm EP rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_ss190_descr">
-		<text>Relatively obsolete NATO 5.56x45 caliber round with a steel core. Initially developed as a means to counter body armor, the round, designated M855, lost the fragmentation properties that made the M193 such an effective round and thus traded a huge amount of stopping power for respectable armor defeating capability. Large quantities of this round have made it to the Zone as most militaries have abandoned their stocks of this ineffectual round. Even despite the commonality, most stalkers only use these rounds begrudgingly.</text>
+		<text>Relatively obsolete NATO 5.56x45 caliber round with a steel core. Initially developed as a means to counter body armor, the round, designated M855, lost the fragmentation properties that made the M193 such an effective round and thus traded a huge amount of stopping power for respectable armor defeating capability. Large quantities have made it to the Zone as most militaries have abandoned their stocks of this ineffectual round. Even despite the commonality, most stalkers only use these rounds begrudgingly.</text>
 	</string>
 	<string id="ammo_new_5.56x45_ss190_s">
 		<text>5.56x45 EP</text>
