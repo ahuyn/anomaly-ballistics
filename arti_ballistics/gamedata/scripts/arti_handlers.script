@@ -251,7 +251,8 @@ function process_flinch(npc, precalc)
     if flinch_chance > 0 and math_random() < flinch_chance then
         -- print_dbg("Staggering NPC")
         stun_npc(npc)
-        npc.health = clamp(npc.health - 0.1, 0.1, 1)
+        health_dmg = (5 + math_random(10))/100
+        npc.health = clamp(npc.health - health_dmg, 0.05, 1)
     end
 end
 
@@ -394,8 +395,11 @@ function slug(npc, s_hit, ctx)
 
     -- ignore some armor on headshot
     if head_bones[ctx.bone_id] then
-        bone_data.armor = clamp(bone_data.armor - 0.1, 0, 1)
-        headsplode(npc)
+        local chest_armor = npc_bone_protection(npc, 11)
+        if chest_armor <= ammo_data.k_ap * 3 then
+            bone_data.armor = clamp(bone_data.armor - ammo_data.k_ap, 0, 1)
+            headsplode(npc)
+        end
     elseif ballistics_utils.center_mass[ctx.bone_id] and math_random() < 0.9 then
         stun_npc(npc)
         npc.health = clamp(npc.health - 0.1, 0.1, 1)
