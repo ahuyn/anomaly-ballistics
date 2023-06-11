@@ -394,7 +394,7 @@ function slug(npc, s_hit, ctx)
     -- ignore some armor on headshot
     if head_bones[ctx.bone_id] then
         local chest_armor = npc_bone_protection(npc, 11)
-        if chest_armor <= ammo_data.k_ap * 3 then
+        if chest_armor.armor <= ammo_data.k_ap * 3 then
             bone_data.armor = clamp(bone_data.armor - ammo_data.k_ap, 0, 1)
             headsplode(npc)
         end
