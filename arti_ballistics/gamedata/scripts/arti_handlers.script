@@ -238,22 +238,6 @@ function mutant_standard(s_hit, precalc)
     end
 end
 
--- flinch applies up to 3 levels above the tier
-function process_flinch(npc, precalc)
-    local ammo_data = precalc.ammo_data
-    local bone_data = precalc.bone_data
-    if not ini_ammo:r_bool_ex(ammo_data.sec, "flinch") then return end
-    local flinch_adj = (bone_data.armor - ammo_data.k_ap) * 5
-    local flinch_chance = clamp(0.95 - flinch_adj, 0, 0.8)
-    print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
-    if flinch_chance > 0 and math_random() < flinch_chance then
-        -- print_dbg("Staggering NPC")
-        stun_npc(npc)
-        health_dmg = (5 + math_random(10))/100
-        npc.health = clamp(npc.health - health_dmg, 0.05, 1)
-    end
-end
-
 local npc_stun = {}
 function stun_npc(npc)
     if is_actor(npc) then
@@ -306,7 +290,7 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     else
         -- tier based formula with overpen, and flinch
         calcs.ap_calc = npc_standard(s_hit, precalc)
-        process_flinch(npc, precalc)
+        -- process_flinch(npc, precalc)
     end
     if not is_actor(npc) then
         calcs.hollowpoint = process_hp(precalc, ctx.is_npc)
@@ -318,7 +302,45 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     return s_hit
 end
 
+function apply_flinch(npc, chance, health_dmg)
+    if math_random() < chance then
+        stun_npc(npc)
+        npc.health = clamp(npc.health - health_dmg, 0.05, 1)
+        return true
+    end
+end
 
+-- flinch applies up to 3 levels above the tier
+function disruptor(npc, s_hit, ctx)
+    local precalc = prework(npc, s_hit, ctx)
+    local ammo_data = precalc.ammo_data
+    local bone_data = precalc.bone_data
+    local flinch_adj = (bone_data.armor - ammo_data.k_ap) * 5
+    local flinch_chance = clamp(0.95 - flinch_adj, 0.01, 0.8)
+    local health_damage = (5 + math_random(10)) / 100 
+    if head_bones[ctx.bone_id] then 
+        flinch_chance = clamp(flinch_chance + 0.1, 0, 1) 
+        health_damage = health_damage * 2
+    end
+    npc:move_to_ruck(npc:active_item())
+    print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
+    
+    local chest_armor = npc_bone_protection(npc, 11).armor
+    local health_damage = (5 + math_random(10)) / 100 
+    local flinch = apply_flinch(npc, flinch_chance, health_damage)
+    return ballistic_handlers.default(npc, s_hit, ctx)
+end
+
+function head_disruptor(npc, s_hit, ctx)
+    local precalc = prework(npc, s_hit, ctx)
+    local ammo_data = precalc.ammo_data
+    local bone_data = precalc.bone_data
+    if head_bones[ctx.bone_id] then
+        local chest_armor = npc_bone_protection(npc, 11).armor
+        apply_flinch(npc, clamp(0.9 + ammo_data.k_ap - chest_armor, 0, 1), 0.75 - chest_armor)
+    end
+    return ballistic_handlers.default(npc, s_hit, ctx)
+end
 local boar_clsid = {
     [clsid.boar] 				= true,
     [clsid.boar_s] 				= true,
@@ -558,7 +580,7 @@ function dragonsbreath(npc, s_hit, ctx)
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
     end
     if not is_actor(npc) then
-        ignite_npc(npc, ctx.bone_id, {10, 16}, 10, 4)
+        ignite_npc(npc, ctx.bone_id, {5, 12}, 8, math_random(8, 16))
     end
     s_hit.type = hit.burn
     change_damage_type(s_hit, hit.burn, bone_data, is_actor(npc))

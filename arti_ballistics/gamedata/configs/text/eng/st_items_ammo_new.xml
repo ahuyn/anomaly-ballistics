@@ -103,6 +103,9 @@
 	<string id="st_ballistics_head">
 		<text>headshots ignore armor</text>
 	</string>
+	<string id="st_ballistics_headstun">
+		<text>headshots stun, deal extra damage</text>
+	</string>
 	<string id="st_ballistics_fire_melt">
 		<text>ignites targets, reduces armor</text>
 	</string>
