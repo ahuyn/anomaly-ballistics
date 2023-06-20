@@ -127,6 +127,9 @@
 	<string id="st_ballistics_tracer">
 		<text>marks targets for 20% increased damage</text>
 	</string>
+	<string id="st_ballistics_match">
+		<text>distance increases armor piercing</text>
+	</string>
 	<string id="st_ballistics_firebomb">
 		<text>ignites all targets</text>
 	</string>

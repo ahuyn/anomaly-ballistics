@@ -496,6 +496,32 @@ function ambush(npc, s_hit, ctx)
     s_hit.power = final_hit
     return s_hit
 end
+-- 0-200 no damage falloff
+function match(npc, s_hit, ctx) 
+   local distance = get_distance(db.actor, npc)
+    
+   local calcs = {}
+   local precalc = prework(npc, s_hit, ctx)
+   ammo_data = precalc.ammo_data
+   bone_data = precalc.bone_data
+
+   apply_std_calcs(calcs, npc, s_hit, precalc)
+   calcs.distance = nil
+   -- distance based ap increase
+   local distance_mult = clamp(1 + (distance / 200), 1, 2)
+   ammo_data.k_ap = clamp(ammo_data.k_ap * distance_mult, 0, 0.399) 
+    if not ctx.is_npc then
+        calcs.ap_calc = mutant_standard(s_hit, precalc)
+    else
+        -- tier based formula with overpen, and flinch
+        calcs.ap_calc = npc_standard(s_hit, precalc)
+    end
+    
+    local final_hit = tbl_reduce(calcs)
+    print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
+    s_hit.power = final_hit
+    return s_hit
+end
 
 local marked
 
