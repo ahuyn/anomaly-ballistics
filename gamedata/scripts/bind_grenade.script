@@ -130,19 +130,25 @@ function custom_grenade_binder:fastcall()
     end 
 end
 
+local func
+local last_ammo
 function custom_grenade_binder:explode(pos, dir)
-    local weapon = self.object:parent() or db.actor:active_item()
-    local ammo = "ammo_vog-25"
-    if weapon ~= nil then
-        ammo_map = utils_item.get_ammo(nil, weapon:id())
-        if not is_empty(ammo_map) then
-            ammo = ammo_map[weapon:get_ammo_type() + 1]
+    if not last_ammo then
+        local weapon = self.object:parent() or db.actor:active_item()
+        local ammo = "ammo_vog-25"
+        if weapon ~= nil then
+            ammo_map = utils_item.get_ammo(nil, weapon:id())
+            if not is_empty(ammo_map) then
+                ammo = ammo_map[weapon:get_ammo_type() + 1]
+            end
         end
+        last_ammo = ammo
+        func = ballistics_mcm.get_handler(ammo)
     end
-    local func = ballistics_mcm.get_handler(ammo)
     if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
-        _G[func[1]][func[2]](pos, dir, ammo)
+        _G[func[1]][func[2]](pos, dir, last_ammo)
     end
+    func = nil
 end
 
 function custom_grenade_binder:net_spawn(se_abstract)
@@ -153,6 +159,20 @@ function custom_grenade_binder:net_spawn(se_abstract)
     return true
 end
 
+-- lock the grenade handler for the next round
+function actor_on_weapon_before_fire(flags)
+    local weapon = db.actor:active_item()
+    if weapon and weapon:weapon_in_grenade_mode() then
+        local ammo = "ammo_vog-25"
+        if weapon ~= nil then
+            ammo_map = utils_item.get_ammo(nil, weapon:id())
+            if not is_empty(ammo_map) then
+                ammo = ammo_map[weapon:get_ammo_type() + 1]
+            end
+        end
+        func = ballistics_mcm.get_handler(ammo)
+    end
+end
 
 function explode(pos, dir, ammo)
     local lvid = db.actor:level_vertex_id()
@@ -169,4 +189,9 @@ function explode(pos, dir, ammo)
             return false
         end
     end)
+end
+
+function on_game_start()
+    RegisterScriptCallback("actor_on_weapon_before_fire", actor_on_weapon_before_fire)
+    func = nil
 end
