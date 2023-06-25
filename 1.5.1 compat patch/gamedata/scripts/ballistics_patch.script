@@ -1,5 +1,4 @@
 ini_captures = ini_file("creatures\\hardcoded_models_capture.ltx")
-ini_damage = ballistics_utils.ini_damage
 
 ReadBone = ballistics_utils.read_npc_bone_sec
 function ballistics_utils.read_npc_bone_sec(npc, bone_id)
