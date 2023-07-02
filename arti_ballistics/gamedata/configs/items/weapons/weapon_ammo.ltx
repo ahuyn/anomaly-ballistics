@@ -783,6 +783,10 @@ inv_name_short		                     = ammo_new_5.45x39_fmjs_s
 cost        = 1950
 impair      = 1
 
+tracer = true
+tracer_color_ID = 3
+4to1_tracer = false
+
 k_disp			= 0.7
 k_impulse		= 0.58
 k_ap			= 0.38
@@ -841,7 +845,7 @@ k_disp			= 0.7
 k_impulse		= 0.42
 k_ap			= 0.48
 k_air_resistance = 0.25
-k_bullet_speed	= 1.05
+k_bullet_speed	= 1.1
 impair      = 1.05
 
 
@@ -874,7 +878,7 @@ icons_texture = ui\ui_maid_ammo
 inv_name = ammo_new_5.45x39_ap
 inv_name_short		                     = ammo_new_5.45x39_ap_s
 
-k_disp			= 0.77
+k_disp			= 0.7
 k_impulse		= 0.55
 k_ap			= 0.6
 
@@ -894,7 +898,7 @@ cost        = 2950
 inv_name = ammo_new_5.45x39_aps
 inv_name_short		                     = ammo_new_5.45x39_aps_s
 
-k_disp			= 0.84
+k_disp			= 0.77
 k_impulse		= 0.42
 k_ap			= 0.58
 impair      = 1.1
@@ -951,11 +955,14 @@ icons_texture = ui\ui_maid_ammo
 inv_name = ammo_new_5.56x45_fmjs
 inv_name_short		                     = ammo_new_5.56x45_fmjs_s
 
-k_disp			= 0.63
+k_disp			= 0.7
 k_impulse		= 0.56
-k_ap			= 0.70 ; barrier defeating
-k_bullet_speed	= 1.1
+k_ap			= 0.33 
+k_bullet_speed	= 1
 
+tracer = true
+tracer_color_ID = 3
+4to1_tracer = false
 
 
 wm_size         = 0.058
@@ -1041,7 +1048,7 @@ icons_texture = ui\ui_maid_ammo
 inv_name = ammo_new_5.56x45_ss190
 inv_name_short		                     = ammo_new_5.56x45_ss190_s
 
-k_disp			= 0.8
+k_disp			= 0.77
 k_ap			= 0.55
 k_impulse		= 0.54
 k_air_resistance = 0.25
@@ -1738,7 +1745,7 @@ inv_name_short		                     = ammo_new_7.62x51_slap_s
 k_disp			= 0.63
 k_hit			= 1.0 ;  0.95
 k_impulse		= 0.48
-k_ap		    = 10
+k_ap		    = 0.8
 k_bullet_speed	= 1.2
 
 wm_size         = 0.053

@@ -216,7 +216,7 @@ function npc_bone_protection(npc, bone_id)
             bone_cache[bone_sec] = {} 
         end
         if not bone_cache[bone_sec][bone_id] then
-            local bone_armor_str = ini_damage:r_string_ex(bone_sec, bone_name) or "0, 0.15"
+            local bone_armor_str = SYS_GetParam(0, bone_sec, bone_name) or "0, 0.15"
             local bone_armor = str_explode(bone_armor_str, ",") 
             bone_cache[bone_sec][bone_id] = tonumber(bone_armor[2]) or 0.15
         end
@@ -229,7 +229,7 @@ end
 
 function hit_frac(npc, bone_id)
     local bone_sec = read_npc_bone_sec(npc) or "stalker_hero_1"
-    return ini_damage:r_string_ex(bone_sec, "hit_fraction_npc") or 0.5
+    return SYS_GetParam(2, bone_sec, "hit_fraction_npc") or 0.5
 end
 
 -- compute actor bone prot based on active suit
@@ -325,6 +325,12 @@ function mutant_prot_values(mutant, id)
     if not hit_frac then hit_frac = 0.5 end
     local mult = mutant_hp[clsid] and (get_config("mutant") or undead_clsid[clsid]) and 1/mutant_hp[clsid] or 1
     
+    local snork = get_config("snork")
+    if snork > 0 and clsid == SM_SNORK then
+        skin_armor = skin_armor / (snork * 2)
+        mult = mult * (1 + snork)
+    end
+
     if burer[clsid] then
         if burer_lv > 0 then
             skin_armor = skin_armor / 2

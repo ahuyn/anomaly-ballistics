@@ -159,7 +159,7 @@ function trader_on_restock(npc)
 
     if trader_autoinject.get_trader_type(npc) == 1 then
         trader_autoinject.spawn_items(npc, {
-            powder_fire = 5
+            powder_fire = 10
         }, true)
     end
 

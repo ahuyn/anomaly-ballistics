@@ -103,6 +103,9 @@
 	<string id="st_ballistics_head">
 		<text>headshots ignore armor</text>
 	</string>
+	<string id="st_ballistics_headstun">
+		<text>headshots stun, deal extra damage</text>
+	</string>
 	<string id="st_ballistics_fire_melt">
 		<text>ignites targets, reduces armor</text>
 	</string>
@@ -120,6 +123,12 @@
 	</string>
 	<string id="st_ballistics_soulripper">
 		<text>headshots heal</text>
+	</string>
+	<string id="st_ballistics_tracer">
+		<text>marks targets for 20% increased damage</text>
+	</string>
+	<string id="st_ballistics_match">
+		<text>distance increases armor piercing</text>
 	</string>
 	<string id="st_ballistics_firebomb">
 		<text>ignites all targets</text>
@@ -228,10 +237,10 @@
 	</string>
 	
 	<string id="ammo_new_9x19_pbps">
-		<text>9x19mm JSP +P rounds</text>
+		<text>9x19mm Disruptor rounds</text>
 	</string>
 	<string id="ammo_new_9x19_pbps_descr">
-		<text>Match grade 9mm hand loaded JSP rounds. Soft Point rounds are semi-jacketed and expose the lead tip, and expand like hollowpoint rounds while retaining better armor penetration properties. These are custom-order rounds from folk craftsmen that have earned the nickname of 'Man stopper' due to their purported ability to stop men dead in their tracks.</text>
+		<text>Modified hand loaded 9mm JSP rounds. The metal jacket around the tip has been cut back like a Soft Point round, and the cartridge and powder charge modified for higher pressure. The tip of the bullet is coated in a thin slurry of gravitational artifacts that creates micro-singularities on impact. Created as an unconventional means for common stalkers to deal with heavily armored foes.</text>
 	</string>
 	<string id="ammo_new_9x19_pbps_s">
 		<text>9x19 JSP</text>
@@ -464,23 +473,23 @@
 	</string>	
 	
 	<string id="ammo_new_5.45x39_fmjs">
-		<text>5.45x39mm EP rounds</text>
+		<text>5.45x39mm Tracer rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_descr">
-		<text>Standard-issue 5.45x39 caliber 7N10 is an enhanced penetration round for automatic rifles of Warsaw Pact countries. A harder and sleeker steel core is used to improve penetration. Standard issue round with modern SSU ground forces, and is readily found in stock with most military personnel. Improved penetration capabilities make a huge difference in combat effectiveness when fighting Mercenaries and Monolith forces.</text>
+		<text>Special-issue 5.45x39 caliber 7T3 tracer round. Used to adjust fire and designate targets. Suffers from mildly reduced performance compared to the standard issue FMJ round, but is valuable for coordinating fire in concentrated operations. Seldom used in the Zone except by the Military, and usually only carried by officers to coordinate fire.</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_s">
-		<text>5.45x39 EP</text>
+		<text>5.45x39 Tracer</text>
 	</string>
 
 	<string id="ammo_new_5.45x39_sp">
-		<text>5.45x39mm Soft Point rounds</text>
+		<text>5.45x39mm Disruptor rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_sp_descr">
-		<text>Special-issue 5.45x39mm Soft Point rounds used by law enforcement in response to armed and dangerous threats. The jacketed round is cut away at the top, exposing the inner lead core, and the powder charge is increased. Provides penetration capabilities comparable to that of 7N6, but also expands similarly to hollow-point rounds and imparts a stumbling effect on impact.</text>
+		<text>Modified 5.45x39mm hollow point rounds developed by stalkers as a primitive form of experimentation with artifacts.  Embedded in the hollow tip is a common artifact shard that creates a micro-gravitational pulse on impact. The impact, if it does not penetrate body armor, disorients and interrupts the enemy. A popular folk remedy for helping avoid well-armed foes - the rounds may not kill, but distract long enough to retreat to safety.</text>
 	</string>
 	<string id="ammo_new_5.45x39_sp_s">
-		<text>5.45x39 SP</text>
+		<text>5.45x39 Disruptor</text>
 	</string>
 	<string id="ammo_new_5.45x39_hp">
 		<text>5.45x39mm HP rounds</text>
@@ -493,23 +502,23 @@
 	</string>
 
 	<string id="ammo_new_5.45x39_ap">
-		<text>5.45x39mm AP rounds</text>
+		<text>5.45x39mm 7N10 EP rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_ap_descr">
-		<text>Special-issue 5.45x39 caliber 7N22 armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hard-alloy armour-piercing penetrator that is highly effective against body armour. Issued to Spetsnaz units conducting direct action against the most dangerous and well-armed foes, though a handful of these rounds rarely find their way into the hands of Dutyers. </text>
+		<text>Standard-issue 5.45x39 caliber 7N10 is an enhanced penetration round for automatic rifles of Warsaw Pact countries. A harder and sleeker steel core is used to improve penetration. Standard issue round with modern SSU ground forces, and is readily found in stock with most military personnel. Improved penetration capabilities make a huge difference in combat effectiveness when fighting Mercenaries and Monolith forces.</text>
 	</string>
 	<string id="ammo_new_5.45x39_ap_s">
-		<text>5.45x39 AP</text>
+		<text>5.45x39 EP</text>
 	</string>
 
 	<string id="ammo_new_5.45x39_aps">
-		<text>5.45x39mm 7N39 AP rounds</text>
+		<text>5.45x39mm 7N22 AP rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_aps_descr">
-		<text>Classified, extremely rare 5.45x39 caliber 7N39 'super' armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hardened tungsten penetrator and the cartridge packs a high-pressure load, conferring extreme penetration capability against most types of armor. Extremely difficult to find outside of Russian Special Forces armories - it has long been rumored that the Russian Federation is aware of the activities in the Zone and is conducting clandestine activities under the guise of cooperation with the Ukrainian Armed Forces, likely serving their own agenda. No matter the origin, these rounds are likely the best intermediate rifle rounds you can find.</text>
+		<text>Special-issue 5.45x39 caliber 7N22 armour-piercing round for automatic rifles of Warsaw Pact countries. The bullet contains a hard-alloy armour-piercing penetrator that is highly effective against body armour. Issued to Spetsnaz units conducting direct action against the most dangerous and well-armed foes, though a handful of these rounds rarely find their way into the hands of Dutyers. </text>
 	</string>
 	<string id="ammo_new_5.45x39_aps_s">
-		<text>5.45x39 AP+</text>
+		<text>5.45x39 AP</text>
 	</string>
 	
 	
@@ -524,13 +533,13 @@
 	</string>
 
 	<string id="ammo_new_5.56x45_fmjs">
-		<text>5.56x45mm Mk318 FMJ rounds</text>
+		<text>5.56x45mm Tracer rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_descr">
-		<text>Match-grade 5.56x45 FMJ round that is standard issue with U.S. Marines and other elite task groups. Developed in response to M855's reported ineffectiveness at reliably putting down targets, the Mk318 roundprovides tight groupings out of short barrels, penetrates barriers reliably and offers fragmentation potential exceeding that of the M193. These combined properties make the round unmatched in close-range modern warfare. A reasonably rare find, however members of Freedom maintain an unusually high stock of these rounds, the origin of which is a well-guarded secret.</text>
+		<text>Special issue 5.56x45 Tracer round used for target designation and fire adjustment. Standard issue in most NATO militaries for officers, light machine gunners and sometimes used by rank and file to provide a visual warning for low ammo. These rounds can </text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_s">
-		<text>5.56x45 FMJ+</text>
+		<text>5.56x45 Tracer</text>
 	</string>
 	
 	<string id="ammo_new_5.56x45_hp">
@@ -567,7 +576,7 @@
 		<text>5.56x45mm EP rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_ss190_descr">
-		<text>Relatively obsolete NATO 5.56x45 caliber round with a steel core. Initially developed as a means to counter body armor, the round, designated M855, lost the fragmentation properties that made the M193 such an effective round and thus traded a huge amount of stopping power for respectable armor defeating capability. Large quantities of this round have made it to the Zone as most militaries have abandoned their stocks of this ineffectual round. Even despite the commonality, most stalkers only use these rounds begrudgingly.</text>
+		<text>Relatively obsolete NATO 5.56x45 caliber round with a steel core. Initially developed as a means to counter body armor, the round, designated M855, lost the fragmentation properties that made the M193 such an effective round and thus traded a huge amount of stopping power for respectable armor defeating capability. Large quantities have made it to the Zone as most militaries have abandoned their stocks of this ineffectual round. Even despite the commonality, most stalkers only use these rounds begrudgingly.</text>
 	</string>
 	<string id="ammo_new_5.56x45_ss190_s">
 		<text>5.56x45 EP</text>
