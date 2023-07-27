@@ -101,7 +101,6 @@ function custom_grenade_binder:fastcall()
     if obj:parent() then
         return
     end
-
     -- shamelessly stolen from molotovs
     if (not self.position) then
         -- self.velocity = 0
@@ -162,7 +161,7 @@ end
 -- lock the grenade handler for the next round
 function actor_on_weapon_before_fire(flags)
     local weapon = db.actor:active_item()
-    if weapon and weapon:weapon_in_grenade_mode() then
+    if weapon and (weapon:weapon_in_grenade_mode() or weapon:clsid() == clsid.wpn_rg6_s or weapon:clsid() == clsid.wpn_rg6) then
         local ammo = "ammo_vog-25"
         if weapon ~= nil then
             ammo_map = utils_item.get_ammo(nil, weapon:id())
