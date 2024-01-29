@@ -48,19 +48,21 @@ function is_actor(npc)
 end
 
 -- deal residual impact damage only
+-- 2-40%
 function impact(diff, ap_frac, ammo_data, bone_data)
     -- print_dbg("Impact")
     if head_bones[bone_data.id] then
         bone_data.hit_fraction = clamp(bone_data.hit_fraction * 1.1, 0, 1)
     end
     local frac_adj = 1 - bone_data.hit_fraction
-    return 0.2 + clamp(ammo_data.k_imp - frac_adj, -0.165, 0.2)
+    return 0.2 + clamp(ammo_data.k_imp - frac_adj, -0.18, 0.2)
 end
 
 -- reduction based on AP frac and diff
+-- base 40-80%
 -- diff is 0-2
 function reduce(diff, ap_frac, ammo_data, bone_data)
-    local modifier =  1 - (0.2 * (diff + (1 - ap_frac)))
+    local modifier =  0.8 - (0.2 * (diff  - ap_frac))
     return modifier
 end
 
@@ -528,7 +530,7 @@ end
 local marked
 
 function tracer(npc, s_hit, ctx)
-    if marked == npc:id() then return end
+    if marked == npc:id() then return ballistic_handlers.default(npc, s_hit, ctx) end
     marked = npc:id()
     play_sound_on_location("elite", db.actor)
     -- aggro companions
@@ -557,9 +559,9 @@ function on_before_hit(npc, s_hit, bone_id, flags)
     if npc:id() == marked then
         local companions = axr_companions.companion_squads
         if s_hit.draftsman:id() == AC_ID then
-            s_hit.power = s_hit.power * 1.2
+            s_hit.power = clamp(s_hit.power * 1.2, 0, 0.99)
         elseif companions[s_hit.draftsman:id()] then
-            s_hit.power = s_hit.power * 1.3
+            s_hit.power = clamp(s_hit.power * 1.3, 0, 0.99)
         end
     end
 end
