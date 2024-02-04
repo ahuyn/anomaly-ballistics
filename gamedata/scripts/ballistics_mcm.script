@@ -70,6 +70,7 @@ function on_before_hit(npc,s_hit,bone_id, is_npc)
     -- pass to the ammo processor
     -- return value should be the new hit
     if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
+        
         ret_val = _G[func[1]][func[2]](npc, s_hit, hit_ctx)
         if ret_val then s_hit = ret_val end
     end
@@ -190,6 +191,7 @@ local defaults = {
     ["impair"] = true,
     ["mutant"] = true,
     ["burer"] = 0,
+    ["snork"] = 0,
     ["legs"] = true,
 }
 

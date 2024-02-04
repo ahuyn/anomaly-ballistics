@@ -579,13 +579,18 @@ function rip(npc, s_hit, ctx)
     return s_hit
 end
 
-function ignite_npc(npc, bone_id, damage, stack, duration)
+function ignite_npc(npc, bone_id, damage, stack, duration, hit_frac)
     play_particle(npc, bone_id, "artefact\\af_thermal_idle")
+ 
     stack = stack or 1
     duration = duration or 5
     dmg_low = damage[1] or 5
     dmg_high = damage[2] or 15
     dmg_low = clamp(dmg_low, 0, dmg_high)
+    if hit_frac then
+       dmg_low = dmg_low * hit_frac
+       dmg_high = dmg_high * hit_frac
+    end
     print_dbg("Ignited %s", npc:id())
     play_sound_on_location("incendiary", npc)
     play_particle(npc, 11, "damage_fx\\effects\\body_burn_01", duration)
@@ -605,12 +610,15 @@ end
 function dragonsbreath(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     -- shred 0.06 off each hit
-    local bone_data = npc_bone_data(npc, ctx.bone_id)
+    local bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or mutant_prot_values(npc, ctx.bone_id)
+    local hit_frac = 0
     if ctx.is_npc then
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
+    else
+        hit_frac = bone_data.hit_fraction
     end
     if not is_actor(npc) then
-        ignite_npc(npc, ctx.bone_id, {5, 12}, 8, math_random(8, 16))
+        ignite_npc(npc, ctx.bone_id, {5, 12}, 8, math_random(8, 16), hit_frac)
     end
     s_hit.type = hit.burn
     change_damage_type(s_hit, hit.burn, bone_data, is_actor(npc))
@@ -667,7 +675,7 @@ function chaos_damage(npc, s_hit, ctx)
     local extra_effect = math_random(15)
     if not is_actor(npc) then
         if extra_effect == 3 then
-            ignite_npc(npc, ctx.bone_id, {1, 20}, 3, 10)
+            ignite_npc(npc, ctx.bone_id, {1, 20}, 3, 10, ctx.is_npc and 1 or bone_data.hit_fraction)
         elseif extra_effect == 4 and ctx.is_npc then
             stun_npc(npc)
         elseif extra_effect == 5 then
