@@ -121,13 +121,13 @@ function prop_radius(obj, sec)
     return ini_ammo:r_float_ex(sec, "radius") or 0
 end
 
--- 'normal' bullet dispersion is out of 0.66
-local BASE = 0.7
+-- 'normal' bullet dispersion is out of 1
+local BASE = 1
 function prop_accuracy(obj, sec)
     local accuracy = SYS_GetParam(2, sec, "k_disp") or BASE
     local proj = SYS_GetParam(2, sec, "buck_shot")
     if math.abs(accuracy - BASE) > 0.01 and proj == 1 then
-        return math.floor(100 * (BASE - accuracy)/BASE)
+        return math.floor(100 * (1 - accuracy))
     else return 0 end
 end
 
@@ -141,10 +141,9 @@ function prop_flatness(obj, sec)
 end
 
 function prop_recoil(obj, sec)
-    if not enhanced_recoil_mcm then return 0 end
-    local recoil = SYS_GetParam(2, sec, "recoil")
+    local recoil = SYS_GetParam(2, sec, "k_cam_dispersion")
     if recoil ~= 1 then
-        return recoil
+        return math.floor(100 * recoil)
     else return 0
     end
 end
