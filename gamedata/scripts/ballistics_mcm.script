@@ -186,12 +186,12 @@ end
 -- If you don't use MCM, change your defaults from here.
 local defaults = {
     ["debug"] = true,
-    ["incoming"] = false,
+    -- ["incoming"] = false,
     ["cost"] = true,
     ["impair"] = true,
     ["mutant"] = true,
-    ["burer"] = 0,
-    ["snork"] = 0,
+    -- ["burer"] = 0,
+    -- ["snork"] = 0,
     ["legs"] = true,
 }
 
@@ -203,14 +203,13 @@ function on_mcm_load()
     op = { id= "ballistics",sh=true ,gr={
             { id= "title",type= "slide",link= "ui_options_slider_player",text="ui_mcm_ballistics_title",size= {512,50},spacing= 20 },
             {id = "debug", type = "check", val = 1, def=true},
-            {id = "incoming", type = "check", val = 1, def=false},
+            -- {id = "incoming", type = "check", val = 1, def=false},
             -- {id = "osp", type = "check", val = 1, def=false},
             {id = "cost", type = "check", val = 1, def=true},
             {id = "impair", type = "check", val = 1, def=true},
             {id = "mutant", type = "check", val = 1, def=true},
-            {id = "burer", type = "list", val = 2, def=0, content= {{0,"bclassic"} , {1,"bmeaty"} , {2,"bsith"}}},
-            {id = "snork", type = "list", val = 2, def=0, content= {{0,"snormal"} , {1,"sfat"} , {2,"ssfat"}}},
-
+            -- {id = "burer", type = "list", val = 2, def=0, content= {{0,"bclassic"} , {1,"bmeaty"} , {2,"bsith"}}},
+            -- {id = "snork", type = "list", val = 2, def=0, content= {{0,"snormal"} , {1,"sfat"} , {2,"ssfat"}}},
             {id = "legs", type = "check", val = 1, def=true},
         }
     }

@@ -236,11 +236,15 @@ end
 function actor_bone_prot(bone_id)
     local helmet = db.actor:item_in_slot(12)
     if head_bones[bone_id] and helmet then
-        return helmet:cast_Helmet():GetBoneArmor(bone_id)
+        local cond_mult = clamp(helmet:condition(), 0, 0.8) / 0.8
+        return helmet:cast_Helmet():GetBoneArmor(bone_id) * cond_mult
     else
         local outfit = db.actor:item_in_slot(7)
         if not outfit then return 0 
-        else return outfit:cast_CustomOutfit():GetBoneArmor(bone_id) end
+        else         
+            local cond_mult = clamp(outfit:condition(), 0, 0.8) / 0.8
+            return outfit:cast_CustomOutfit():GetBoneArmor(bone_id) * cond_mult 
+        end
     end
 end
 
@@ -288,31 +292,11 @@ function npc_on_death_callback(npc, who)
     end
 end
 
--- zombies have an inexplicable 0.1x damage multiplier that isn't reflected anywhere, so I added it here
-local undead_clsid = {
-    SM_IZLOM 				= true,
-    SM_ZOMBI 				= true
-}
-
-local mutant_hp = {
-    SM_BLOOD 			= 1.5,
-    SM_CONTR 			= 3,
-    SM_CHIMS 			= 3,
-    SM_IZLOM 			= 10,
-    SM_ZOMBI			= 10,
-}
-
-local burer = {
-    SM_BURER            = 3
-}
 function mutant_prot_values(mutant, id)
     
     local sec = mutant:section()
     local skin_armor = SYS_GetParam(2, sec, "skin_armor")
-    local clsid = SYS_GetParam(0, sec, "kind")
-    if not clsid or clsid == "" then clsid = SYS_GetParam(0, sec, "class") or "" end 
     local prot_sec = SYS_GetParam(0, sec, "protections_sect")
-    local burer_lv = get_config("burer") or 0
     if not skin_armor then
         if prot_sec then
             skin_armor = SYS_GetParam(2, prot_sec, "skin_armor") or 0
@@ -323,28 +307,13 @@ function mutant_prot_values(mutant, id)
         hit_frac = SYS_GetParam(2, prot_sec, "hit_fraction_monster")
     end
     if not hit_frac then hit_frac = 0.5 end
-    local mult = mutant_hp[clsid] and (get_config("mutant") or undead_clsid[clsid]) and 1/mutant_hp[clsid] or 1
     
-    local snork = get_config("snork")
-    if snork > 0 and clsid == SM_SNORK then
-        skin_armor = skin_armor / (snork * 2)
-        mult = mult * (1 + snork)
-    end
-
-    if burer[clsid] then
-        if burer_lv > 0 then
-            skin_armor = skin_armor / 2
-        end
-        if burer_lv == 1 then
-            mult = 0.4
-        end
-    end
     return {
         id = id,
         hit_fraction = hit_frac,
         armor = skin_armor,
-        deflect = (burer[clsid] and burer_lv == 2) and true or false,
-        mult = mult
+        -- deflect = clsid == SM_BURER,
+        -- mult = mult
     }
 end
 

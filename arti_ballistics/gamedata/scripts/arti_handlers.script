@@ -102,7 +102,7 @@ local damage_subcalcs = {
 function tbl_reduce(x)
     local acc = 1
     for k,v in pairs(x) do
-        print_dbg("Applying key %s, val %s", k ,v)
+        -- print_dbg("Applying key %s, val %s", k ,v)
         acc = acc * v
     end
     return acc
@@ -135,14 +135,37 @@ end
         bone_data: data on bones (bone id, name, bone armor, if it's been modified, etc)
     }
 ]]
+-- zombies have an inexplicable 0.1x damage multiplier that isn't reflected anywhere
+-- Mutant 'HP' table
+local mutant_hp = {
+    SM_BLOOD 			= 1.5,
+    SM_BOARW            = 1.5,
+    SM_SNORK            = 2,
+    SM_CONTR 			= 3,
+    SM_CHIMS 			= 5,
+    SM_IZLOM 			= 10,
+    SM_ZOMBI			= 10,
+    SM_GIANT            = 10
+}
 function prework(npc, s_hit, ctx)
     local precalc = {}
     
     precalc.base_power = ctx.hit_data.wpn:cast_Weapon():GetHitPower()
     precalc.ammo_data = get_ammo_data(ctx.hit_data.ammo)
-    precalc.bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or mutant_prot_values(npc, ctx.bone_id)
+    precalc.bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or get_mutant_protection(npc, ctx.bone_id)
 
     return precalc
+end
+
+function get_mutant_protection(npc, bone_id)
+    base_vals = mutant_prot_values(npc, bone_id)
+    
+    local sec = npc:section()
+    local clsid = SYS_GetParam(0, sec, "kind")
+    if not clsid or clsid == "" then clsid = SYS_GetParam(0, sec, "class") or "" end 
+    base_vals.mult = mutant_hp[clsid] and 1/mutant_hp[clsid] or 1
+    base_vals.deflect = clsid == SM_BURER
+    return base_vals
 end
 
 function apply_std_calcs(tbl, npc, s_hit, precalc)
@@ -159,6 +182,7 @@ end
 -- determine if a hit fully penetrates either mutant or npc
 local function full_pen_modifier(precalc, is_npc)
     if not is_npc then
+        if (precalc.ammo_data.k_imp > (1 - precalc.bone_data.armor)) then return 1 end
         return 1 - clamp(2 * (precalc.bone_data.armor - precalc.ammo_data.k_ap), 0, 1)
     else
         return clamp(precalc.ammo_data.k_ap - precalc.bone_data.armor, 0, 1)
@@ -171,13 +195,11 @@ function process_hp(precalc, is_npc)
     if not hp_mult then return 1 end
     local modifier = full_pen_modifier(precalc, is_npc)
     -- mutants get partial hp expansion
-    if not is_npc then
-        local hp_frac = hp_mult - 1        
-        if modifier > 0 then hp_mult = 1 + (hp_frac * modifier) end
-        print_dbg("Mutant with armor %s, bullet with AP %s, HP modifier %s, final HP %s", precalc.bone_data.armor, precalc.ammo_data.k_ap, modifier, hp_mult)
+    if not is_npc or modifier > 0 then
+        -- local hp_frac = hp_mult - 1        
+        -- if modifier > 0 then hp_mult = 1 + (hp_frac * modifier) end
+        -- print_dbg("Mutant with armor %s, bullet with AP %s, HP modifier %s, final HP %s", precalc.bone_data.armor, precalc.ammo_data.k_ap, modifier, hp_mult)
         return hp_mult
-    else
-        if modifier > 0 then return hp_mult end
     end
     return 1
 end
@@ -231,13 +253,24 @@ function mutant_standard(s_hit, precalc)
             return 0
         end
     end
+    -- two layers of protection
+    -- skin armor - skin thickness. rifle rounds should reliably pierce mutants (0.2-0.25). maximum reduction is 50%
+    -- damage reduction is (ap - 0.5*skin armor) * 2
+    local armor_adj = clamp(bone_data.armor, 0, 0.5)
+    local ap_modifier = 1 + clamp((2 * ammo_data.k_ap) - armor_adj, -0.5, 0)
+    print_dbg("Ammo=%s, skin armor=%s, AP=%s, modifier=%s",ammo_data.sec, armor_adj, ammo_data.k_ap, ap_modifier)
 
-    local ap_val = ammo_data.k_ap * 2
-    if ap_val > bone_data.armor then
-        return clamp((ap_val - bone_data.armor)/ap_val, bone_data.hit_fraction, 1)
-    else
-        return bone_data.hit_fraction
-    end
+    -- hit fraction - mutant meat density
+    -- take adj hit frac - impact, range -0.1 (max dmg) to 0.5 (min dmg)
+    -- formula is ((1 - hit frac) - impact + 0.1), clamped from 0-0.6, * 0.15 for damage reduction
+    -- range is 0.1 - 1
+    local impact_modifier = clamp(1.1 - bone_data.hit_fraction - ammo_data.k_imp, 0, 0.6)
+    impact_modifier = impact_modifier * 1.5
+    impact_modifier = 1 - impact_modifier
+    print_dbg("Ammo=%s, adjusted hit frac=%s, impact=%s, modifier=%s",ammo_data.sec, 1 - bone_data.hit_fraction, ammo_data.k_imp, impact_modifier)
+    print_dbg("Final hit %s",impact_modifier * ap_modifier)
+    return impact_modifier * ap_modifier
+    
 end
 
 local npc_stun = {}
@@ -345,26 +378,18 @@ function head_disruptor(npc, s_hit, ctx)
     end
     return ballistic_handlers.default(npc, s_hit, ctx)
 end
-local boar_clsid = {
-    [clsid.boar] 				= true,
-    [clsid.boar_s] 				= true,
-}
 
 -- buckshot ignores up to 20 armor on limb hit
 function buckshot_damage(npc, s_hit, ctx)
-    if boar_clsid[get_clsid(npc)] or (ctx.is_npc and ballistics_utils.limbs[ctx.bone_id] and not is_actor(npc)) then
+    if ctx.is_npc and ballistics_utils.limbs[ctx.bone_id] then
         local calcs = {}
         local precalc = prework(npc, s_hit, ctx)
         bone_data = precalc.bone_data
         ammo_data = precalc.ammo_data
         -- reduce armor
         
-        if boar_clsid[get_clsid(npc)] then
-            bone_data.mult = 1.3
-        else
-            bone_data.armor = clamp(bone_data.armor - 0.1, 0, 1)
-            ammo_data.k_imp = ammo_data.k_imp + 0.15
-        end
+        bone_data.armor = clamp(bone_data.armor - 0.1, 0, 1)
+        ammo_data.k_imp = ammo_data.k_imp + 0.15
         
         calcs.base_power = precalc.base_power
     
@@ -841,4 +866,8 @@ function on_game_start()
     RegisterScriptCallback("npc_on_before_hit", on_before_hit)
     RegisterScriptCallback("monster_on_before_hit", on_before_hit)
 
+    ini_ammo:section_for_each(function(sec)
+        data = get_ammo_data(sec)
+        printf("sec=%s, hit=%s, ap=%s, imp=%s", ui_item.get_sec_short_name(data.sec), data.k_hit, data.k_ap, data.k_imp)
+    end)
 end
