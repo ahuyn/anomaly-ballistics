@@ -1571,7 +1571,7 @@ k_air_resistance = 0.25
 
 tier                                     = 4
 
-[ammo_7.92x33_fmj_bad]:ammo_7.92x33_fmj ; match
+[ammo_7.92x33_fmj_bad]:ammo_7.92x33_fmj ; ap
 
 cost        = 1500
 inv_grid_width = 2
@@ -1582,21 +1582,21 @@ icons_texture = ui\ui_maid_ammo
 inv_name = ammo_new_7.92x33_match
 inv_name_short		                     = ammo_new_7.92x33_match_s
 
-k_dist          = 1.2
-k_disp			= 0.7
+k_dist          = 1
+k_disp			= 1.1
 k_hit			= 1.0 ;  0.95
 k_impulse		= 0.66
 k_ap		    = 0.43
 wm_size         = 0.066
 k_air_resistance = 0.25
 k_bullet_speed	= 1.1
-k_cam_dispersion                         = 0.8
-
+k_cam_dispersion= 1.4
+impair          = 1.1
 tier                                     = 4
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-[ammo_7.92x33_ap]:ammo_base ; 7.92x57 SA AP
+[ammo_7.92x33_ap]:ammo_base ; 7.92x57 hollowpoint
 GroupControlSection	= spawn_group
 discovery_dependency = 
 ;$spawn			= "weapons\ammo\ammo_7.62x39_ap" ; option for Level Editor
@@ -1617,12 +1617,13 @@ icons_texture = ui\ui_maid_ammo
 inv_name = ammo_new_7.92x33_ap
 inv_name_short		                     = ammo_new_7.92x33_ap_s
 
-k_disp			= 1.1
+k_dist          = 1.2
+k_disp			= 0.9
 k_impulse		= 0.5
 k_ap		    = 0.55
 wm_size         = 0.057
 k_air_resistance = 0.25
-k_cam_dispersion                         = 1.4
+k_cam_dispersion                         = 1
 
 tier                                     = 4
 
