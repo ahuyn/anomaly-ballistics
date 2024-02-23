@@ -640,7 +640,7 @@ function dragonsbreath(npc, s_hit, ctx)
     if ctx.is_npc then
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
     else
-        hit_frac = bone_data.hit_fraction
+        hit_frac = bone_data.hit_fraction * bone_data.mult
     end
     if not is_actor(npc) then
         ignite_npc(npc, ctx.bone_id, {5, 12}, 8, math_random(8, 16), hit_frac)
@@ -700,7 +700,7 @@ function chaos_damage(npc, s_hit, ctx)
     local extra_effect = math_random(15)
     if not is_actor(npc) then
         if extra_effect == 3 then
-            ignite_npc(npc, ctx.bone_id, {1, 20}, 3, 10, ctx.is_npc and 1 or bone_data.hit_fraction)
+            ignite_npc(npc, ctx.bone_id, {1, 20}, 3, 10, ctx.is_npc and 1 or bone_data.hit_fraction * bone_data.mult)
         elseif extra_effect == 4 and ctx.is_npc then
             stun_npc(npc)
         elseif extra_effect == 5 then
