@@ -152,12 +152,12 @@ function prework(npc, s_hit, ctx)
     
     precalc.base_power = ctx.hit_data.wpn:cast_Weapon():GetHitPower()
     precalc.ammo_data = get_ammo_data(ctx.hit_data.ammo)
-    precalc.bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or get_mutant_protection(npc, ctx.bone_id)
+    precalc.bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or mutant_bone_data(npc, ctx.bone_id)
 
     return precalc
 end
 
-function get_mutant_protection(npc, bone_id)
+function mutant_bone_data(npc, bone_id)
     base_vals = mutant_prot_values(npc, bone_id)
     
     local sec = npc:section()
@@ -635,15 +635,15 @@ end
 function dragonsbreath(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     -- shred 0.06 off each hit
-    local bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or mutant_prot_values(npc, ctx.bone_id)
-    local hit_frac = 0
+    local bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or mutant_bone_data(npc, ctx.bone_id)
+    local hit_frac = 1
     if ctx.is_npc then
         modify_bone(npc, ctx.bone_id, clamp(bone_data.armor - 0.03, 0, 1))
     else
-        hit_frac = bone_data.hit_fraction * bone_data.mult
+        hit_frac = bone_data.mult
     end
     if not is_actor(npc) then
-        ignite_npc(npc, ctx.bone_id, {5, 12}, 8, math_random(8, 16), hit_frac)
+        ignite_npc(npc, ctx.bone_id, {5*hit_frac, 12*hit_frac}, 8, math_random(8, 16))
     end
     s_hit.type = hit.burn
     change_damage_type(s_hit, hit.burn, bone_data, is_actor(npc))
@@ -700,7 +700,8 @@ function chaos_damage(npc, s_hit, ctx)
     local extra_effect = math_random(15)
     if not is_actor(npc) then
         if extra_effect == 3 then
-            ignite_npc(npc, ctx.bone_id, {1, 20}, 3, 10, ctx.is_npc and 1 or bone_data.hit_fraction * bone_data.mult)
+            local ratio = ctx.is_npc and 1 or bone_data.hit_fraction * bone_data.mult
+            ignite_npc(npc, ctx.bone_id, {1*ratio, 20*ratio}, 3, 10)
         elseif extra_effect == 4 and ctx.is_npc then
             stun_npc(npc)
         elseif extra_effect == 5 then
@@ -847,16 +848,6 @@ function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_typ
     end
 end
 
--- enhanced recoil patch
-if enhanced_recoil then
-    RecoilMult = enhanced_recoil.recoil_multiplier
-    function enhanced_recoil.recoil_multiplier(wpn, shotc)
-        local sect = wpn:section()
-        local ammo_list = utils_item.get_ammo(sect, wpn:id())
-        local ammo_type = ammo_list[wpn:get_ammo_type() + 1]
-        return RecoilMult(wpn, shotc) * (ini_ammo:r_float_ex(ammo_type, "recoil") or 1)
-    end
-end
 
 function on_game_start()
     RegisterScriptCallback("actor_on_weapon_fired", actor_on_weapon_fired)
