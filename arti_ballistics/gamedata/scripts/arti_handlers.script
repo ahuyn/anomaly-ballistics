@@ -152,11 +152,25 @@ function prework(npc, s_hit, ctx)
     
     precalc.base_power = ctx.hit_data.wpn:cast_Weapon():GetHitPower()
     precalc.ammo_data = get_ammo_data(ctx.hit_data.ammo)
-    precalc.bone_data = ctx.is_npc and npc_bone_data(npc, ctx.bone_id) or mutant_bone_data(npc, ctx.bone_id)
+    precalc.bone_data = ctx.is_npc and npc_bone_data_p(npc, ctx.bone_id) or mutant_bone_data(npc, ctx.bone_id)
 
     return precalc
 end
 
+-- Increase exo npc health
+function npc_bone_data_p(npc, bone_id)
+    base_vals = mutant_prot_values(npc, bone_id)
+    local armor_tier = get_tier(base_vals.armor)
+    -- tweak multiplier based on heavy/exo armor
+    if armor_tier == 7 then
+        local tank_coef = 10 * clamp(base_vals.armor - 0.4, 0.1, 0.3)
+        -- print_dbg("Exo tank coef %s", tank_coef)
+        base_vals.hp_mult = (1/tank_coef)
+    end
+    return base_vals
+end
+
+-- Also add mutant 'health' modifier and burer passive deflection
 function mutant_bone_data(npc, bone_id)
     base_vals = mutant_prot_values(npc, bone_id)
     
@@ -224,13 +238,6 @@ function npc_standard(s_hit, precalc)
     --     print_dbg("AP insufficient, reducing multiplier by %s", mult_adj)
     --     mult = mult * mult_adj 
     -- end
-    
-    -- tweak multiplier based on heavy/exo armor
-    if armor_tier == 7 then
-        local tank_coef = 10 * clamp(bone_data.armor - 0.4, 0.1, 0.3)
-        -- print_dbg("Exo tank coef %s", tank_coef)
-        mult = mult * (1/tank_coef)
-    end
     return mult
 end
 
