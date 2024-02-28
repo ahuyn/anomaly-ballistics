@@ -163,9 +163,10 @@ function npc_bone_data_p(npc, bone_id)
     local armor_tier = get_tier(base_vals.armor)
     -- tweak multiplier based on heavy/exo armor
     if armor_tier == 7 then
+        
         local tank_coef = 10 * clamp(base_vals.armor - 0.4, 0.1, 0.3)
         -- print_dbg("Exo tank coef %s", tank_coef)
-        base_vals.hp_mult = (1/tank_coef)
+        base_vals.hp_mult = 1/(1-tank_coef)
     end
     return base_vals
 end
