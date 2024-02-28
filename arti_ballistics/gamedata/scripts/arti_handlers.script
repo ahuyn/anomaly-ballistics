@@ -159,14 +159,15 @@ end
 
 -- Increase exo npc health
 function npc_bone_data_p(npc, bone_id)
-    base_vals = mutant_prot_values(npc, bone_id)
-    local armor_tier = get_tier(base_vals.armor)
+    base_vals = npc_bone_data(npc, bone_id)
+    local chest_armor = npc_bone_protection(npc, 11).armor
+    local armor_tier = get_tier(chest_armor)
     -- tweak multiplier based on heavy/exo armor
     if armor_tier == 7 then
         
-        local tank_coef = 10 * clamp(base_vals.armor - 0.4, 0.1, 0.3)
-        -- print_dbg("Exo tank coef %s", tank_coef)
-        base_vals.hp_mult = 1/(1-tank_coef)
+        local tank_coef = 10 * clamp(chest_armor - 0.4, 0.01, 0.09)
+        base_vals.mult = base_vals.mult * (1-tank_coef)        print_dbg("Exo tank coef %s, new mult %s", tank_coef, base_vals.mult)
+
     end
     return base_vals
 end
@@ -192,6 +193,7 @@ function apply_std_calcs(tbl, npc, s_hit, precalc)
     tbl.distance = modify_distance(s_hit.draftsman, npc, ammo_data.sec)
     tbl.bone_mult = is_actor(npc) and 1 or bone_data.mult
     tbl.hit_scale = SYS_GetParam(2, ammo_data.sec, "hit_scale") or 1
+    -- tbl.hp_mult = bone_data.hp_mult or 1
 end
 
 -- determine if a hit fully penetrates either mutant or npc
