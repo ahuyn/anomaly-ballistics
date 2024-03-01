@@ -1,0 +1,35 @@
+-- Subclass hit numbers with some small changes
+
+class "HitNumberCustom" (HitNumber)
+
+-- color is a triple of r, g, b
+function HitNumberCustom:__init(obj, text, bone_index, color) super()
+	self:setText(critical)
+	self:setParams(obj, text, bone_index)
+	self:register()
+	get_hud():AddDialogToRender(self)
+end     
+
+
+function HitNumber:setParams(obj, text, bone_index, color)
+    self.clr_r = color.r
+    self.clr_g = color.g
+    self.clr_b = color.b
+	self.style = settings.style
+	self.obj_position = IsMonster(obj) and getNumberPos(obj)
+		or (bone_index and type(bone_index) == "number" and bone_index ~= 65535 and bone_index >= 0 and utils_obj.safe_bone_pos(obj, obj:bone_name(bone_index)) or utils_obj.safe_bone_pos(obj, "bip01_spine"))
+		or obj:position():add(vector():set(0, 1, 0))
+	self.amount = text
+	self.offset = vector2():set(math.random(-15, 15), math.random(10, 20))
+	self.choice = random_choice(-1, 1)
+	if self.style == 2 then
+		self.movement_x = (100 + math.random(-60, 60)) * self.choice
+		self.movement_y = 200 + math.random(35, 90)
+	else
+		self.movement_x = 0
+		self.movement_y = 150
+	end
+	self.tg = time_global()
+	self.peak_time = settings.display_time
+	self.display_time = self.peak_time * 2
+end
