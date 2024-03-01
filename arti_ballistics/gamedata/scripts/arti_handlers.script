@@ -144,8 +144,7 @@ local mutant_hp = {
     SM_CONTR 			= 3,
     SM_CHIMS 			= 5,
     SM_IZLOM 			= 10,
-    SM_ZOMBI			= 10,
-    SM_GIANT            = 10
+    SM_ZOMBI			= 10
 }
 function prework(npc, s_hit, ctx)
     local precalc = {}
