@@ -878,7 +878,6 @@ function hit_num_data(ctx, calcs)
     local color = {}
     -- base power
     local amt = round_idp(100 * calcs.base_power * calcs.k_hit * (calcs.velocity or 1) * (calcs.distance or 1) * (calcs.hollowpoint or 1) * calcs.ap_calc)
-    printf("Hit amount %s", amt)
     if (calcs.is_npc) then amt = amt * (calcs.bone_mult) end
     if calcs.ap_calc <= 0.4 then
         color.r = 140 -- grey

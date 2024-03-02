@@ -60,13 +60,10 @@ function on_before_hit(npc,s_hit,bone_id, is_npc)
     local bullet_id = s_hit.bullet_id
     if bullet_store[bullet_id] then
         local npc_id = npc:id()
-        printf("processing bullet hit %s to npc %s", bullet_id, npc_id)
         local bullet_hits = bullet_store[bullet_id]
         if bullet_hits[npc_id] and bullet_hits[npc_id] == 0 then
-            printf("registering bullet hit %s to npc hit %s", bullet_id, npc_id)
             bullet_hits[npc_id] = 1
         else
-            printf("bullet %s already processed", bullet_id)
             s_hit.power = 0.0001
             return {
                 ["s_hit"] = s_hit,
@@ -76,7 +73,6 @@ function on_before_hit(npc,s_hit,bone_id, is_npc)
         -- one hit registered already - send back no-op hit
     else
         -- no impact recorded - add to store and flush later
-        printf("bullet %s did not impact", bullet_id)
         bullet_store[bullet_id] = {[npc:id()] = 1}
         CreateTimeEvent("bullet_remove", bullet_id, 0.1, function()
             bullet_store[bullet_id] = nil
@@ -228,7 +224,6 @@ function bullet_on_impact(bullet)
         end)
     end
     -- should also invoke any impact functors
-    printf("impact %s, %s",bullet.bullet_id, bullet.section)
     if not bullet.section then return end
     local func = ini_ammo:r_string_ex(bullet.section, "impact_h") or ""
     if func == "" then return end
