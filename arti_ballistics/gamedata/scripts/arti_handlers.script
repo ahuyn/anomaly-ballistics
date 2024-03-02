@@ -343,6 +343,7 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
+    hit_num(npc, ctx, calcs)
     return s_hit
 end
 
@@ -408,6 +409,7 @@ function buckshot_damage(npc, s_hit, ctx)
         local final_hit = tbl_reduce(calcs)
         print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
         s_hit.power = final_hit
+        hit_num(npc, ctx, calcs)
     else
         s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     end
@@ -468,6 +470,7 @@ function slug(npc, s_hit, ctx)
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
+    hit_num(npc, ctx, calcs)
     return s_hit
 end
 
@@ -494,6 +497,7 @@ function headshot(npc, s_hit, ctx)
     local final_hit = tbl_reduce(calcs)
     
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
+    hit_num(npc, ctx, calcs)
     s_hit.power = final_hit
     return s_hit
 end
@@ -532,6 +536,7 @@ function ambush(npc, s_hit, ctx)
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
+    hit_num(npc, ctx, calcs)
     return s_hit
 end
 -- 0-200 no damage falloff
@@ -558,6 +563,7 @@ function match(npc, s_hit, ctx)
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
+    hit_num(npc, ctx, calcs)
     return s_hit
 end
 
@@ -738,6 +744,7 @@ function chaos_damage(npc, s_hit, ctx)
     -- add random effect
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
+    hit_num(npc, ctx, calcs)
     s_hit.power = final_hit
     return s_hit
 end
@@ -775,11 +782,13 @@ function shock_damage(npc, s_hit, ctx)
     end
     s_hit.power = tbl_reduce(calcs)
     play_sound_on_location(snd, npc)
+    hit_num(npc, ctx, calcs)
     return s_hit
 end
 
 function soulripper(npc, s_hit, ctx)
     s_hit = head_bones[ctx.bone_id] and rip(npc, s_hit, ctx) or ballistic_handlers.default(npc, s_hit, ctx)
+    
     return s_hit
 end
 
@@ -795,10 +804,9 @@ function get_point_of_aim()
 end
 
 local mine_id = 0
-function explode_handler()
-    local aim_point = get_point_of_aim()
+function explode_handler(aim_point)
     if not aim_point then return end
-    local explode_obj = alife_create_item("bullet_blow", aim_point)
+    local explode_obj = alife_create_item("bullet_blow", {aim_point, level.vertex_id(aim_point), db.actor:game_vertex_id()})
     CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
     function(id)
         local explode_obj = get_object_by_id(id)
@@ -838,7 +846,7 @@ function play_fire_big()
 end
 
 local custom_proj_table = {
-    ["explodes"] = explode_handler,
+    -- ["explodes"] = explode_handler,
     ["impair"] = pab,
     ["soulripper"] = play_grav_sound,
     ["chaos"] = play_grav,
@@ -857,6 +865,39 @@ function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_typ
     end
 end
 
+function hit_num(npc, ctx, calcs)
+    -- if enabled
+    if hit_numbers and not hit_numbers.settings.enabled and get_config("hitnum") then
+        hit_data = hit_num_data(ctx, calcs)
+        hit_numbers_arti.hit_num(npc, hit_data.amount, ctx.bone_id, hit_data.color)
+    end
+end
+
+-- return damage number and color 
+function hit_num_data(ctx, calcs)
+    local color = {}
+    -- base power
+    local amt = round_idp(100 * calcs.base_power * calcs.k_hit * (calcs.velocity or 1) * (calcs.distance or 1) * (calcs.hollowpoint or 1) * calcs.ap_calc)
+    printf("Hit amount %s", amt)
+    if (calcs.is_npc) then amt = amt * (calcs.bone_mult) end
+    if calcs.ap_calc <= 0.4 then
+        color.r = 140 -- grey
+        color.g = 140
+        color.b = 140
+    elseif calcs.ap_calc > 0.9 then
+        color.r = 255 -- yellow
+        color.g = 255
+        color.b = 0
+    else
+        color.r = 255 -- white
+        color.g = 255
+        color.b = 255
+    end
+    return {
+        color = color,
+        amount = amt
+    }
+end
 
 function on_game_start()
     RegisterScriptCallback("actor_on_weapon_fired", actor_on_weapon_fired)

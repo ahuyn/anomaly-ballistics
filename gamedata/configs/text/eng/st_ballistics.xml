@@ -23,11 +23,11 @@
 <string id="ui_mcm_ballistics_cost_desc">
 	<text>Use the base cost defined in custom ammo config.</text>
 </string>
-<string id="ui_mcm_ballistics_mutant">
-	<text>Increased Mutant Health</text>
+<string id="ui_mcm_ballistics_hitnum">
+	<text>Damage Numbers</text>
 </string>
 <string id="ui_mcm_ballistics_mutant_desc">
-	<text>Artificially increases the mutant health of select mutants (Controllers, Chimeras, Bloodsuckers) when leveraging ballistics_utils.mutant_prot_values func. Note that zombies always have 10x hp to replicate a hidden script calculation.</text>
+	<text>Plays damage numbers. Requires Demonized hit numbers to work.</text>
 </string>
 <string id="ui_mcm_ballistics_incoming">
 	<text>Ballistics Applies to Actor</text>

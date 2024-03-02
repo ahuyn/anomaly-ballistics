@@ -2,6 +2,7 @@
 
 ini_ammo = ini_file("ammo\\importer.ltx")
 
+local bullet_store = {}
 local dbg_log
 function print_dbg( text , ...)
 	if get_config("debug") or false then
@@ -84,38 +85,38 @@ end
 -- Overriding hit callbacks so our custom hits can communicate with other scripts
 local flags = { ret_value = true }
 
-_G.CActor__BeforeHitCallback = function(actor,s_hit,bone_id) 
-    if (s_hit.type ~= hit.strike) then
-		if (bind_stalker_ext.invulnerable_time and time_global() < bind_stalker_ext.invulnerable_time) then 
-			bind_stalker_ext.invulnerable_time = bind_stalker_ext.invulnerable_time - 500
-			return false
-		end
-	end
+-- _G.CActor__BeforeHitCallback = function(actor,s_hit,bone_id) 
+--     if (s_hit.type ~= hit.strike) then
+-- 		if (bind_stalker_ext.invulnerable_time and time_global() < bind_stalker_ext.invulnerable_time) then 
+-- 			bind_stalker_ext.invulnerable_time = bind_stalker_ext.invulnerable_time - 500
+-- 			return false
+-- 		end
+-- 	end
 	
-	if (s_hit.power > 0) then 
-		if (s_hit.draftsman and s_hit.draftsman:id() ~= 0 and IsStalker(s_hit.draftsman) and s_hit.draftsman:relation(db.actor) == game_object.friend) then 
-			return false 
-		end
-	end
+-- 	if (s_hit.power > 0) then 
+-- 		if (s_hit.draftsman and s_hit.draftsman:id() ~= 0 and IsStalker(s_hit.draftsman) and s_hit.draftsman:relation(db.actor) == game_object.friend) then 
+-- 			return false 
+-- 		end
+-- 	end
 	
-	flags.ret_value = true
-    -- go to original 
-    if not get_config("incoming") then     
-    	SendScriptCallback("actor_on_before_hit",s_hit,bone_id,flags)
-        return flags.ret_value 
-    end
+-- 	flags.ret_value = true
+--     -- go to original 
+--     if not get_config("incoming") then     
+--     	SendScriptCallback("actor_on_before_hit",s_hit,bone_id,flags)
+--         return flags.ret_value 
+--     end
 
-    -- pass through processor
-    local custom_hit = on_before_hit(actor,s_hit,bone_id, true)
-    custom_hit = custom_hit and custom_hit.s_hit or s_hit
-    if custom_hit then
-        SendScriptCallback("actor_on_before_hit",custom_hit,bone_id,flags)
-        if flags.ret_value and get_config("incoming") then
-            s_hit.power = custom_hit.power
-        end
-    end
-	return flags.ret_value
-end
+--     -- pass through processor
+--     local custom_hit = on_before_hit(actor,s_hit,bone_id, true)
+--     custom_hit = custom_hit and custom_hit.s_hit or s_hit
+--     if custom_hit then
+--         SendScriptCallback("actor_on_before_hit",custom_hit,bone_id,flags)
+--         if flags.ret_value and get_config("incoming") then
+--             s_hit.power = custom_hit.power
+--         end
+--     end
+-- 	return flags.ret_value
+-- end
 
 _G.CAI_Stalker__BeforeHitCallback = function(npc,s_hit,bone_id)
     flags.ret_value = true
@@ -139,6 +140,8 @@ end
 -- bone mult is unknown for monster, so simply assume skin armor vs ap calcs
 _G.CBaseMonster__BeforeHitCallback = function(monster,s_hit,bone_id)
     flags.ret_value = true
+    -- check for multihit. each bullet can only deal damage once
+
     local custom_hit = on_before_hit(monster,s_hit,bone_id, false)
     if custom_hit then
         SendScriptCallback("monster_on_before_hit",monster,custom_hit.s_hit,custom_hit.bone_id, flags)
@@ -182,6 +185,29 @@ function ui_item.build_desc_footer(obj, sec, str)
     end
 end
 
+-- bullet callback
+function bullet_on_impact(bullet)
+    if not bullet then return end
+    -- load bullet in bullet store, in on before hit, pass bullet id
+    -- if bullet id has already hit something, ignore subsequent hits to the same npc
+    -- bullet_store[bullet.bullet_id] = bullet.target_id
+    -- CreateTimeEvent("bullet_remove", bullet.bullet_id, 0.1, function()
+    --     bullet_store[bullet.bullet_id] = nil
+    -- end)
+    -- should also invoke any impact functors
+    printf("impact %s", bullet.section)
+    if not bullet.section then return end
+    local func = ini_ammo:r_string_ex(bullet.section, "impact_h") or ""
+    printf("func %s", func)
+    if func == "" then return end
+    func = str_explode(func, "%.")
+    
+    if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
+        printf("executing %s.%s", func[1], func[2])
+        _G[func[1]][func[2]](bullet.position)
+    end
+end
+
 
 -- If you don't use MCM, change your defaults from here.
 local defaults = {
@@ -189,7 +215,7 @@ local defaults = {
     -- ["incoming"] = false,
     ["cost"] = true,
     ["impair"] = true,
-    ["mutant"] = true,
+    ["hitnum"] = true,
     -- ["burer"] = 0,
     -- ["snork"] = 0,
     ["legs"] = true,
@@ -207,11 +233,16 @@ function on_mcm_load()
             -- {id = "osp", type = "check", val = 1, def=false},
             {id = "cost", type = "check", val = 1, def=true},
             {id = "impair", type = "check", val = 1, def=true},
-            {id = "mutant", type = "check", val = 1, def=true},
+            {id = "hitnum", type = "check", val = 1, def=true},
             -- {id = "burer", type = "list", val = 2, def=0, content= {{0,"bclassic"} , {1,"bmeaty"} , {2,"bsith"}}},
             -- {id = "snork", type = "list", val = 2, def=0, content= {{0,"snormal"} , {1,"sfat"} , {2,"ssfat"}}},
             {id = "legs", type = "check", val = 1, def=true},
         }
     }
     return op
+end
+
+
+function on_game_start()
+    RegisterScriptCallback("bullet_on_impact", bullet_on_impact)
 end

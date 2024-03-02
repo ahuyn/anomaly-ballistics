@@ -1,23 +1,30 @@
 -- Subclass hit numbers with some small changes
 
-class "HitNumberCustom" (HitNumber)
+function hit_num(obj, text, bone_index, color)
+    HitNumberCustom(obj, text, bone_index, color)
+end
+
+class "HitNumberCustom" (hit_numbers.HitNumber)
 
 -- color is a triple of r, g, b
-function HitNumberCustom:__init(obj, text, bone_index, color) super()
-	self:setText(critical)
+function HitNumberCustom:__init(obj, text, bone_index, color) super(obj, text, bone_index, false)
+    self.clr_r = color.r
+    self.clr_g = color.g
+    self.clr_b = color.b
+
+    self:setText()
 	self:setParams(obj, text, bone_index)
 	self:register()
 	get_hud():AddDialogToRender(self)
 end     
 
 
-function HitNumber:setParams(obj, text, bone_index, color)
-    self.clr_r = color.r
-    self.clr_g = color.g
-    self.clr_b = color.b
-	self.style = settings.style
-	self.obj_position = IsMonster(obj) and getNumberPos(obj)
-		or (bone_index and type(bone_index) == "number" and bone_index ~= 65535 and bone_index >= 0 and utils_obj.safe_bone_pos(obj, obj:bone_name(bone_index)) or utils_obj.safe_bone_pos(obj, "bip01_spine"))
+function HitNumberCustom:setParams(obj, text, bone_index)
+	self.style = hit_numbers.settings.style
+	self.obj_position = 
+    IsMonster(obj) and hit_numbers.getNumberPos(obj)
+		or (bone_index and type(bone_index) == "number" and bone_index ~= 65535 and bone_index >= 0 and utils_obj.safe_bone_pos(obj, obj:bone_name(bone_index)) 
+        or utils_obj.safe_bone_pos(obj, "bip01_spine"))
 		or obj:position():add(vector():set(0, 1, 0))
 	self.amount = text
 	self.offset = vector2():set(math.random(-15, 15), math.random(10, 20))
@@ -30,6 +37,76 @@ function HitNumber:setParams(obj, text, bone_index, color)
 		self.movement_y = 150
 	end
 	self.tg = time_global()
-	self.peak_time = settings.display_time
+	self.peak_time = hit_numbers.settings.display_time
 	self.display_time = self.peak_time * 2
 end
+
+function HitNumberCustom:setText() 
+    
+	self.xml = utils_xml.get_hud_xml()
+	self.amount_text_shadow = self.xml:InitTextWnd("companion_list:slot:distance", self)
+	self.amount_text_shadow:SetFont(hit_numbers.sizeToFonts[hit_numbers.settings.font_size]())
+	self.amount_text_shadow:SetTextColor(GetARGB(
+		hit_numbers.settings.opacity,
+		0,
+		0,
+		0
+	))
+
+	self.amount_text = self.xml:InitTextWnd("companion_list:slot:distance", self)
+	self.amount_text:SetFont(hit_numbers.sizeToFonts[hit_numbers.settings.font_size]())
+	self.amount_text:SetTextColor(GetARGB(
+		hit_numbers.settings.opacity,
+        self.clr_r,
+        self.clr_g,
+        self.clr_b
+	))
+	self.critical = critical
+end
+
+function HitNumberCustom:actor_on_update()
+	local time = time_global() - self.tg
+	if time > self.display_time then
+		self:destroy()
+		return
+	end
+	local k = normalize(time_global(), self.tg, self.tg + self.peak_time)
+	k = self:easingFunc(k)
+	-- printf("%s", k)
+	local y = self:movementFunc(k) * self.movement_y
+
+	self.amount_text:SetText(self.amount)
+	self.amount_text_shadow:SetText(self.amount)
+
+	local pos
+	if self.style == 1 then
+		pos = game.world2ui(self.obj_position)
+		pos.y = pos.y - self.offset.y - y
+		
+	elseif self.style == 2 then
+		pos = game.world2ui(self.obj_position)
+		pos.x = pos.x + self.offset.x + (k * self.movement_x)
+		pos.y = pos.y - self.offset.y - k * y
+	else
+		pos = vector2():set(hit_numbers.settings.static_2d_x, hit_numbers.settings.static_2d_y)
+		pos.y = pos.y - self.offset.y - y
+	end
+
+	local transparency = clamp(1 - normalize(time_global(), self.tg + self.peak_time, self.tg + self.display_time), 0, 1)
+	self.amount_text:SetTextColor(GetARGB(
+		math.floor(hit_numbers.settings.opacity * transparency),
+		self.clr_r,
+		self.clr_g,
+		self.clr_b
+	))
+	self.amount_text_shadow:SetTextColor(GetARGB(
+		math.floor(hit_numbers.settings.opacity * transparency),
+		0,
+		0,
+		0
+	))
+
+	self.amount_text:SetWndPos(pos)
+	self.amount_text_shadow:SetWndPos(vector2():set(pos.x + 1, pos.y + 1))
+end
+
