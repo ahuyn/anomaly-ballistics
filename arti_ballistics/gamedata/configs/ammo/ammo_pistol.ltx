@@ -96,7 +96,7 @@ k_hp        = 1.1
 flinch      = 1
 impair      = 1.1
 cost        = 1759
-special     = flinch ; check flashbang code for npc stuns
+special     = flinch
 dg_ammo     = ammo_9x19_pbp
 dg_chance   = 0.35
 
@@ -128,7 +128,6 @@ k_hit       = 1.3
 k_ap        = 0.09
 k_imp       = 0.45
 cost        = 800
-special     = headstun
 
 [ammo_11.43x23_fmj_bad]:ammo_11.43x23_fmj;AP +P
 name		= ammo_new_11.43x23_fmjs
@@ -144,12 +143,13 @@ dg_chance   = 0.6
 handler     = arti_handlers.varmageddon
 name		= ammo_new_11.43x23_hp
 k_hit		= 1.2
-k_ap        = 0.069
+k_ap        = 0.029
 k_imp       = 0.4
 k_hp	    = 1.5
-flinch_head = 1
 cost        = 1000
 special     = hp
+dg_ammo     = ammo_11.43x23_fmj
+dg_chance   = 0.4
 
 [ammo_11.43x23_hydro_bad]:ammo_11.43x23_hydro; RIP
 handler     = arti_handlers.rip
@@ -214,8 +214,6 @@ special     = hp
 
 [ammo_7.62x25_ps_bad]:ammo_7.62x25_ps; acid
 handler     = arti_handlers.acid_damage
-i_handler   = ballistic_handlers.particle
-i_particle  = artefact\\effects\\af_acidic_idle_color
 name		= ammo_new_7.62x25_cor
 k_hit		= 0.8
 k_ap		= 0.149
@@ -266,16 +264,42 @@ special     = chaos
 dg_ammo     = ammo_5.7x28_ss190
 dg_chance   = 0.7
 
-[ammo_9x18_fmj_verybad]:ammo_9x18_fmj_bad
-[ammo_9x18_pmm_verybad]:ammo_9x18_pmm_bad
-[ammo_9x18_ap_verybad]:ammo_9x18_ap_bad
-[ammo_9x19_fmj_verybad]:ammo_9x19_fmj_bad
-[ammo_9x19_pbp_verybad]:ammo_9x19_pbp_bad
-[ammo_9x19_ap_verybad]:ammo_9x19_ap_bad
-[ammo_5.7x28_ss190_verybad]:ammo_5.7x28_ss190_bad
-[ammo_5.7x28_ss195_verybad]:ammo_5.7x28_ss195_bad
-[ammo_7.62x25_p_verybad]:ammo_7.62x25_p_bad
-[ammo_7.62x25_ps_verybad]:ammo_7.62x25_ps_bad
-[ammo_11.43x23_fmj_verybad]:ammo_11.43x23_fmj_bad
+[ammo_9x18_fmj_verybad]:ammo_9x18_fmj
+dg_ammo     = ammo_9x18_fmj
+dg_chance   = 1
+[ammo_9x18_pmm_verybad]:ammo_9x18_pmm
+dg_ammo     = ammo_9x18_pmm
+dg_chance   = 1
+[ammo_9x18_ap_verybad]:ammo_9x18_ap
+dg_ammo     = ammo_9x18_ap
+dg_chance   = 1
+[ammo_9x19_fmj_verybad]:ammo_9x19_fmj
+dg_ammo     = ammo_9x19_fmj
+dg_chance   = 1
+[ammo_9x19_pbp_verybad]:ammo_9x19_pbp
+dg_ammo     = ammo_9x19_pbp
+dg_chance   = 1
+[ammo_9x19_ap_verybad]:ammo_9x19_ap
+dg_ammo     = ammo_9x19_ap
+dg_chance   = 1
+[ammo_5.7x28_ss190_verybad]:ammo_5.7x28_ss190
+dg_ammo     = ammo_5.7x28_ss190
+dg_chance   = 1
+[ammo_5.7x28_ss195_verybad]:ammo_5.7x28_ss195
+dg_ammo     = ammo_5.7x28_ss195
+dg_chance   = 1
+[ammo_7.62x25_p_verybad]:ammo_7.62x25_p
+dg_ammo     = ammo_7.62x25_p
+dg_chance   = 1
+[ammo_7.62x25_ps_verybad]:ammo_7.62x25_ps
+dg_ammo     = ammo_7.62x25_ps
+dg_chance   = 1
+[ammo_11.43x23_fmj_verybad]:ammo_11.43x23_fmj
+dg_ammo     = ammo_11.43x23_fmj
+dg_chance   = 1
 [ammo_11.43x23_hydro_verybad]:ammo_11.43x23_hydro_bad
+dg_ammo     = ammo_11.43x23_hydro
+dg_chance   = 1
 [ammo_357_hp_mag_verybad]:ammo_357_hp_mag_bad
+dg_ammo     = ammo_357_hp_mag_bad
+dg_chance   = 1

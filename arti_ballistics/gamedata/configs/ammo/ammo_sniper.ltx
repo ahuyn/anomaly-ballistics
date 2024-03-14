@@ -88,7 +88,7 @@ k_ap		= 0.225
 k_imp       = 0.85
 cost        = 1800
 
-[ammo_7.62x51_fmj_bad]:ammo_7.62x51_fmj; mk316?
+[ammo_7.62x51_fmj_bad]:ammo_7.62x51_fmj; mk316
 handler     = arti_handlers.match
 name		= ammo_new_7.62x51_fmjs
 k_hit		= 1.05
@@ -107,7 +107,7 @@ k_imp       = 0.85
 k_pen       = 0.6
 cost        = 2500
 dg_ammo     = ammo_7.62x51_fmj
-dg_chance   = 0.4
+dg_chance   = 0.5
 
 [ammo_7.62x51_ap_bad]:ammo_7.62x51_ap ; slap
 name		= ammo_new_7.62x51_slap
@@ -115,8 +115,8 @@ k_hit		= 0.75
 k_ap		= 0.395
 k_pen       = 0.8
 cost        = 2750
-dg_ammo     = ammo_7.62x51_ap
-dg_chance   = 0.6
+dg_ammo     = ammo_7.62x51_fmj
+dg_chance   = 0.7
 special     = pierce
 
 
@@ -148,6 +148,7 @@ cost        = 1200
 
 [ammo_7.92x33_ap_bad]:ammo_7.92x33_ap ; lightning
 handler     = arti_handlers.shock_damage
+impact_h    = arti_handlers.shock_handler
 name		= ammo_new_7.92x33_shock
 k_hit		= 0.4
 k_ap		= 0.399

@@ -192,14 +192,15 @@ function apply_std_calcs(tbl, npc, s_hit, precalc)
     tbl.distance = modify_distance(s_hit.draftsman, npc, ammo_data.sec)
     tbl.bone_mult = is_actor(npc) and 1 or bone_data.mult
     tbl.hit_scale = SYS_GetParam(2, ammo_data.sec, "hit_scale") or 1
-    -- tbl.hp_mult = bone_data.hp_mult or 1
 end
 
 -- determine if a hit fully penetrates either mutant or npc
+-- positive for full pen, negative otherwise
 local function full_pen_modifier(precalc, is_npc)
     if not is_npc then
-        if (precalc.ammo_data.k_imp > (1 - precalc.bone_data.armor)) then return 1 end
-        return 1 - clamp(2 * (precalc.bone_data.armor - precalc.ammo_data.k_ap), 0, 1)
+        -- 1 + clamp((2 * ammo_data.k_ap) - armor_adj, -0.5, 0)
+        local armor_adj = clamp(bone_data.armor, 0, 0.5)
+        return 0.01 + clamp((2 * ammo_data.k_ap) - armor_adj, -0.5, 0)
     else
         return clamp(precalc.ammo_data.k_ap - precalc.bone_data.armor, 0, 1)
     end
@@ -211,11 +212,16 @@ function process_hp(precalc, is_npc)
     if not hp_mult then return 1 end
     local modifier = full_pen_modifier(precalc, is_npc)
     -- mutants get partial hp expansion
-    if not is_npc or modifier > 0 then
+    if modifier > 0 then
         -- local hp_frac = hp_mult - 1        
         -- if modifier > 0 then hp_mult = 1 + (hp_frac * modifier) end
         -- print_dbg("Mutant with armor %s, bullet with AP %s, HP modifier %s, final HP %s", precalc.bone_data.armor, precalc.ammo_data.k_ap, modifier, hp_mult)
         return hp_mult
+    elseif not is_npc then
+        -- scale fractional part down to 50% of bonus
+        local hp_frac = hp_mult - 1
+        hp_frac = hp_frac * (1 + modifier)
+        return 1 + hp_frac     
     end
     return 1
 end
@@ -232,14 +238,6 @@ function npc_standard(s_hit, precalc)
     local diff = ap_tier - armor_tier
     local mult = damage_subcalcs[diff](math_abs(diff), ap_frac, ammo_data, bone_data)
     print_dbg("Computed AP multipler is %s", mult)
-    -- modify bone multiplier if above 1, to limit effectiveness of headshots
-    -- if diff < 1 and mult < 1 and bone_data.mult > 1 then
-    --     bone_adj = bone_data.mult - 1
-    --     bone_adj = bone_adj * mult
-    --     local mult_adj = clamp((1 + bone_adj) / bone_data.mult, 0.6, 1)
-    --     print_dbg("AP insufficient, reducing multiplier by %s", mult_adj)
-    --     mult = mult * mult_adj 
-    -- end
     return mult
 end
 
@@ -248,7 +246,7 @@ function mutant_standard(s_hit, precalc)
     bone_data = precalc.bone_data
     -- print_dbg("[MUT] Ammo %s: Hit %s, AP %s. Bone: ID %s, Armor %s", ammo_data.sec, ammo_data.k_hit, ammo_data.k_ap, bone_data.id, bone_data.armor)
     
-    -- chance to zero damage, capped at 50% and play particle
+    -- chance to zero damage opposed by velocity, capped at 50% and play particle
     if bone_data.deflect then
         local air_res = SYS_GetParam(2, ammo_data.sec, "k_air_resistance") or 0.05
         air_res = clamp(air_res, 0, 0.5)
@@ -287,7 +285,9 @@ function stun_npc(npc)
     if is_actor(npc) then
         level.add_cam_effector("camera_effects\\fusker.anm",959,false,"")
     else
-        play_anim(npc)
+        if IsStalker(npc) then
+            play_anim(npc)
+        end
         npc_stun[npc:id()] = time_global() + 750
     end
 end
@@ -308,9 +308,22 @@ function on_enemy_eval(obj, enemy, flags)
         else 
             flags.override = true
             flags.ret_value = false 
+            cause_fake_damage(obj)
         end
     end
 end
+
+--Cause fake damage
+function cause_fake_damage(obj)
+    --Burer has to receive some fake damage, or it will just stand
+      local h= hit()
+      h.type = hit.telepatic
+      h.power = 0.0001
+      h.impulse = 1
+      h.direction = VEC_Z
+      h.draftsman = db.actor
+      obj:hit(h)
+  end
 
 function npc_on_death_callback(victim, who)
     npc_stun[victim:id()] = nil
@@ -357,54 +370,55 @@ end
 
 -- flinch applies up to 3 levels above the tier
 function disruptor(npc, s_hit, ctx)
-    if ctx.is_npc then
-        local precalc = prework(npc, s_hit, ctx)
-        local ammo_data = precalc.ammo_data
-        local bone_data = precalc.bone_data
-        local flinch_adj = (bone_data.armor - ammo_data.k_ap) * 5
-        local flinch_chance = clamp(0.95 - flinch_adj, 0.01, 0.8)
-        local health_damage = (5 + math_random(10)) / 100 
-        if head_bones[ctx.bone_id] then 
-            flinch_chance = clamp(flinch_chance + 0.1, 0, 1) 
-            health_damage = health_damage * 2
-        end
-        
-        print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)
-        
-        local chest_armor = npc_bone_protection(npc, 11).armor
-        local health_damage = (5 + math_random(10)) / 100 
-        local flinch = apply_flinch(npc, flinch_chance, health_damage)
-    end
-    return ballistic_handlers.default(npc, s_hit, ctx)
-end
-
-function head_disruptor(npc, s_hit, ctx)
     local precalc = prework(npc, s_hit, ctx)
     local ammo_data = precalc.ammo_data
     local bone_data = precalc.bone_data
-    if ctx.is_npc and head_bones[ctx.bone_id] then
-        local chest_armor = npc_bone_protection(npc, 11).armor
-        apply_flinch(npc, clamp(0.9 + ammo_data.k_ap - chest_armor, 0, 1), 0.75 - chest_armor)
+    
+    local flinch_adj = (bone_data.armor - ammo_data.k_ap) * 5
+    local flinch_chance = clamp(0.95 - flinch_adj, 0.01, 0.8)
+
+    if ctx.is_npc then
+        -- local health_damage = (5 + math_random(10)) / 100 
+        if head_bones[ctx.bone_id] then 
+            flinch_chance = clamp(flinch_chance + 0.1, 0, 1) 
+            -- health_damage = health_damage * 2
+        end
     end
+    print_dbg("Stagger adj %s, chance %s", flinch_adj, flinch_chance)        
+    apply_flinch(npc, flinch_chance, 0)
     return ballistic_handlers.default(npc, s_hit, ctx)
 end
 
--- buckshot ignores up to 20 armor on limb hit
+-- unused
+-- stun on headshot
+-- function head_disruptor(npc, s_hit, ctx)
+--     local precalc = prework(npc, s_hit, ctx)
+--     local ammo_data = precalc.ammo_data
+--     local bone_data = precalc.bone_data
+--     if ctx.is_npc and head_bones[ctx.bone_id] then
+--         local chest_armor = npc_bone_protection(npc, 11).armor
+--         apply_flinch(npc, clamp(0.9 + ammo_data.k_ap - chest_armor, 0, 1), 0.75 - chest_armor)
+--     end
+--     return ballistic_handlers.default(npc, s_hit, ctx)
+-- end
+
+-- buckshot ignores up to 2 armor classes on limb hit
 function buckshot_damage(npc, s_hit, ctx)
     if ctx.is_npc and ballistics_utils.limbs[ctx.bone_id] then
         local calcs = {}
         local precalc = prework(npc, s_hit, ctx)
         bone_data = precalc.bone_data
         ammo_data = precalc.ammo_data
-        -- reduce armor
-        
+
+        -- reduce armor, increase impact
         bone_data.armor = clamp(bone_data.armor - 0.1, 0, 1)
         ammo_data.k_imp = ammo_data.k_imp + 0.15
         
         calcs.base_power = precalc.base_power
     
         apply_std_calcs(calcs, npc, s_hit, precalc)
-        calcs.ap_calc = ctx.is_npc and npc_standard(s_hit, precalc) or mutant_standard(s_hit, precalc)
+        -- always npc
+        calcs.ap_calc = npc_standard(s_hit, precalc)
 
         local final_hit = tbl_reduce(calcs)
         print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
@@ -681,11 +695,18 @@ end
 function acid_damage(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     change_damage_type(s_hit, hit.chemical_burn, bone_data, is_actor(npc))
-    if not ctx.is_npc or  is_actor(npc) then return s_hit end
-    -- shred ONCE per bone
-    local bone_data = npc_bone_data(npc, ctx.bone_id)
+    if not ctx.is_npc  then 
+        -- base 15% modified by chem immunity
+        mutant_immunity = SYS_GetParam(0, npc:section(), "immunities_sect")
+        chem_immunity = SYS_GetParam(0, mutant_immunity, "chemical_burn_immunity") or 1
+        local reduction = 0.15 * chem_immunity
+        modify_bone(npc, 1, clamp(bone_data.armor * (1 - reduction), 0, 1))
+    else
+        -- -20% armor per hit
+        local bone_data = npc_bone_data(npc, ctx.bone_id)
+        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.8, 0, 1))
+    end
     play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
-    modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.8, 0, 1))
     play_sound_on_location("acid", npc)
     return s_hit
 end
@@ -751,10 +772,13 @@ end
 
 local shock_effect = particles_object("artefact\\effects\\af_electra_show_flash_00")
 -- for shock anti armor
+-- also cause electric novas on hitting metal objects
 function shock_damage(npc, s_hit, ctx)
     local precalc = prework(npc, s_hit, ctx)
     change_damage_type(s_hit, hit.shock, precalc.bone_data, is_actor(npc))
-    if not ctx.is_npc then return ballistic_handlers.default(npc, s_hit, ctx)
+    if not ctx.is_npc then 
+        -- for burers and controllers, stun them for 5 seconds + particle
+        return ballistic_handlers.default(npc, s_hit, ctx)
     end
     local calcs = {}
     
@@ -766,24 +790,42 @@ function shock_damage(npc, s_hit, ctx)
     if armor_tier > 3 then
         snd = "electric_big"
         play_particle(npc, ctx.bone_id, "amik\\anomaly\\electra\\electra_dust_distort")
-        local h = hit()
-        h.type = hit.shock
-        h.draftsman = db.actor
-        h.power = armor_tier * 0.3
-        h.bone = "bip01_spine"
-        radius = armor_tier / 2
-
-        level.iterate_nearest(npc:position(), radius, function(obj)
-            if obj and obj:alive() and obj:id() ~= AC_ID then
-                obj:hit(h)
-                shock_effect:play_at_pos(obj:position())
-            end
-        end)
+        electric_nova(npc:position(), armor_tier/2, armor_tier * 0.3)
     end
     s_hit.power = tbl_reduce(calcs)
     play_sound_on_location(snd, npc)
     hit_num(npc, ctx, calcs)
     return s_hit
+end
+
+function shock_handler(bullet)
+    if not bullet then return end
+    local aim_point = bullet.position    
+    -- check material hit, if metal, create small electric nova
+    
+    if string.find(bullet.material, "metal") then
+        snd = "electric_big"
+        ballistics_utils.play_particle_pos( "amik\\anomaly\\electra\\electra_dust_distort", aim_point)
+        electric_nova(aim_point, 3, 0.5)
+    end
+    local dist = db.actor:position():distance_to(aim_point)
+    ballistics_utils.play_sound_distance(snd, dist)
+end
+
+function electric_nova(pos, radius, power)
+    
+    local h = hit()
+    h.type = hit.shock
+    h.draftsman = db.actor
+    h.power = power
+    h.bone = "bip01_spine"
+
+    level.iterate_nearest(pos, radius, function(obj)
+        if obj and obj.alive and obj:alive() and obj:id() ~= AC_ID then
+            obj:hit(h)
+            shock_effect:play_at_pos(obj:position())
+        end
+    end)
 end
 
 function soulripper(npc, s_hit, ctx)
@@ -792,20 +834,10 @@ function soulripper(npc, s_hit, ctx)
     return s_hit
 end
 
--- get position of where actor is aiming
-function get_point_of_aim()
-    gvid = db.actor:game_vertex_id()
-    local r = level.get_target_dist and level.get_target_dist() or 3
-    if r > 1000 then return end
-    pos = vector():set(db.actor:position())
-    pos:add(device().cam_dir:mul(r))
-    lvid = level.vertex_id(pos)
-    return {pos, lvid, gvid}
-end
-
 local mine_id = 0
-function explode_handler(aim_point)
-    if not aim_point then return end
+function explode_handler(bullet)
+    if not bullet then return end
+    local aim_point = bullet.position
     local explode_obj = alife_create_item("bullet_blow", {aim_point, level.vertex_id(aim_point), db.actor:game_vertex_id()})
     CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
     function(id)

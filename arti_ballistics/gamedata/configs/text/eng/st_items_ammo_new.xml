@@ -828,7 +828,7 @@
 		<text>7.92x57mm Lightning rounds</text>
 	</string>
 	<string id="ammo_new_7.92x33_shock_descr">
-		<text>7.92x57 round with a bullet made from a reactive alloy of electrical artifacts. Similar to the Flash artifact, this projectile contains a tremendous amount of energy. However, the bullet is propelled by conventional means, with the high pressure and temperature of the gunpowder setting off a reaction with the artifact. On contact with a target, electrical energy is transferred. While this has limited stopping power against lightly armored targets, on heavily armored targets and powered armor the effect is devastating to both the target and the area around the target. Deals minimal damage to mutants and unarmored targets.</text>
+		<text>7.92x57 round with a bullet made from a reactive alloy of electrical artifacts. Leveraging the interaction between heat and electrical artifact fragments, this round generates an extreme amount of electrical energy in flight, discharged on impact. Highly effective against metal armor or surfaces and exoskeletons, but against lightly armored foes or mutants minimal electrical energy can be effectively transferred. </text>
 	</string>
 	<string id="ammo_new_7.92x33_shock_s">
 		<text>7.92x57 Shock</text>

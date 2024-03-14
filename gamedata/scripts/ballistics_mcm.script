@@ -71,9 +71,10 @@ function on_before_hit(npc,s_hit,bone_id, is_npc)
             }
         end 
         -- one hit registered already - send back no-op hit
-    else
+    elseif npc then
         -- no impact recorded - add to store and flush later
-        bullet_store[bullet_id] = {[npc:id()] = 1}
+        hits = {[npc:id()] = 1}
+        bullet_store[bullet_id] = hits
         CreateTimeEvent("bullet_remove", bullet_id, 0.1, function()
             bullet_store[bullet_id] = nil
         end)
@@ -212,6 +213,8 @@ function bullet_on_impact(bullet)
     if not bullet then return end
     -- load bullet in bullet store, in on before hit, pass bullet id
     -- if bullet id has already hit something, ignore subsequent hits to the same npc
+    -- news_manager.send_tip(db.actor, "hit material " .. bullet.material, nil, "swiss_knife", 6000)
+
     local target = bullet.target_id ~= 65535 and level.object_by_id(bullet.target_id)
     if target and target:alive() then
         -- check for existing impact to the target
@@ -230,7 +233,7 @@ function bullet_on_impact(bullet)
     func = str_explode(func, "%.")
     
     if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
-        _G[func[1]][func[2]](bullet.position)
+        _G[func[1]][func[2]](bullet)
     end
 end
 
