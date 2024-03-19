@@ -111,29 +111,35 @@ limbs = {
 	[45] = "bip01_r_finger22", 
 }
 
-
+local hit_particle
+local muzzle_particle
 -- play particle at npc bone
 function play_particle(npc, bone_id, name, duration)
     bone_id = (not bone_id or bone_id == 65535) and 1 or bone_id
     bone_name = Bone_IDs[bone_id] or "bip01_spine"
     duration = duration or 1
-    local particle = particles_object(name)
     local bone_pos = npc:bone_position(bone_name)
     
-    if particle and not particle:playing() then
-        particle:play_at_pos(bone_pos)
-    end
+    play_particle_pos(name, bone_pos)
     local timeout = time_global() + (duration * 1000)
     CreateTimeEvent(npc:id(), name, 0, function(npc, bone, particle, timeout)
         if time_global() > timeout then 
             return true 
         end
         local bp = npc:bone_position(bone)
-        if not particle:playing() then
-            particle:play_at_pos(bp)
+        if not hit_particle:playing() then
+            hit_particle:play_at_pos(bp)
         end
-        particle:move_to(bp, VEC_Z)
+        hit_particle:move_to(bp, VEC_Z)
     end, npc, bone_name, particle, timeout)
+end
+
+function play_particle_pos(name, position)
+    hit_particle = particles_object(name)
+    
+    if hit_particle and not hit_particle:playing() then
+        hit_particle:play_at_pos(position)
+    end
 end
 
 -- play a particle at the weapon bone firepoint. good for emulating fancier muzzle fx
@@ -141,16 +147,16 @@ function play_particle_firepoint(name)
     local wpn = db.actor:active_item()
     if not wpn then return end
 
-    last_particle = particles_object(name)
-    if last_particle and not last_particle:playing() then
+    muzzle_particle = particles_object(name)
+    if muzzle_particle and not muzzle_particle:playing() then
         local hud = utils_data.read_from_ini(nil,wpn:section(),"hud","string",nil)
         local fire_bone = utils_data.read_from_ini(nil,hud,"fire_bone","string",nil) or "wpn_body"
         local offset = utils_data.read_from_ini(nil,hud,"fire_point","string",nil) or VEC_ZERO
         offset = offset and utils_data.string_to_vector(offset)
-        last_particle:play_at_pos( wpn:bone_position(fire_bone, true), offset ) 
+        muzzle_particle:play_at_pos( wpn:bone_position(fire_bone, true), offset ) 
         CreateTimeEvent("particle_stop", math.random(30), 0.7, 
         function()
-            last_particle:stop()
+            muzzle_particle:stop()
             return true
         end)
     end
@@ -236,11 +242,15 @@ end
 function actor_bone_prot(bone_id)
     local helmet = db.actor:item_in_slot(12)
     if head_bones[bone_id] and helmet then
-        return helmet:cast_Helmet():GetBoneArmor(bone_id)
+        local cond_mult = clamp(helmet:condition(), 0, 0.8) / 0.8
+        return helmet:cast_Helmet():GetBoneArmor(bone_id) * cond_mult
     else
         local outfit = db.actor:item_in_slot(7)
         if not outfit then return 0 
-        else return outfit:cast_CustomOutfit():GetBoneArmor(bone_id) end
+        else         
+            local cond_mult = clamp(outfit:condition(), 0, 0.8) / 0.8
+            return outfit:cast_CustomOutfit():GetBoneArmor(bone_id) * cond_mult 
+        end
     end
 end
 
@@ -288,63 +298,33 @@ function npc_on_death_callback(npc, who)
     end
 end
 
--- zombies have an inexplicable 0.1x damage multiplier that isn't reflected anywhere, so I added it here
-local undead_clsid = {
-    SM_IZLOM 				= true,
-    SM_ZOMBI 				= true
-}
-
-local mutant_hp = {
-    SM_BLOOD 			= 1.5,
-    SM_CONTR 			= 3,
-    SM_CHIMS 			= 3,
-    SM_IZLOM 			= 10,
-    SM_ZOMBI			= 10,
-}
-
-local burer = {
-    SM_BURER            = 3
-}
 function mutant_prot_values(mutant, id)
     
     local sec = mutant:section()
     local skin_armor = SYS_GetParam(2, sec, "skin_armor")
-    local clsid = SYS_GetParam(0, sec, "kind")
-    if not clsid or clsid == "" then clsid = SYS_GetParam(0, sec, "class") or "" end 
     local prot_sec = SYS_GetParam(0, sec, "protections_sect")
-    local burer_lv = get_config("burer") or 0
     if not skin_armor then
         if prot_sec then
             skin_armor = SYS_GetParam(2, prot_sec, "skin_armor") or 0
         else skin_armor = 0 end
+    end
+    -- skin armor can be modified (default bone is 1)
+    if custom_bone_data[mutant:id()] then
+        skin_armor = custom_bone_data[mutant:id()][1]
     end
     local hit_frac = SYS_GetParam(2, sec, "hit_fraction_monster") 
     if not hit_frac and prot_sec then
         hit_frac = SYS_GetParam(2, prot_sec, "hit_fraction_monster")
     end
     if not hit_frac then hit_frac = 0.5 end
-    local mult = mutant_hp[clsid] and (get_config("mutant") or undead_clsid[clsid]) and 1/mutant_hp[clsid] or 1
     
-    local snork = get_config("snork")
-    if snork > 0 and clsid == SM_SNORK then
-        skin_armor = skin_armor / (snork * 2)
-        mult = mult * (1 + snork)
-    end
-
-    if burer[clsid] then
-        if burer_lv > 0 then
-            skin_armor = skin_armor / 2
-        end
-        if burer_lv == 1 then
-            mult = 0.4
-        end
-    end
     return {
         id = id,
         hit_fraction = hit_frac,
         armor = skin_armor,
-        deflect = (burer[clsid] and burer_lv == 2) and true or false,
-        mult = mult
+        immunities = SYS_GetParam(0, sec, "immunities_sect")
+        -- deflect = clsid == SM_BURER,
+        -- mult = mult
     }
 end
 

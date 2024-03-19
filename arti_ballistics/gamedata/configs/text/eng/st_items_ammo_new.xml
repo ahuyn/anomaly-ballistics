@@ -327,7 +327,7 @@
 		<text>7.62x25mm P rounds</text>
 	</string>
 	<string id="ammo_new_7.62x25_p_descr">
-		<text>The 7.62x25mm cartridge is a Russian bottle-necked pistol cartridge widely used in former Soviet satellite states, China and Pakistan among other countries. The cartridge is an enhanced Russian version of the 7.63x25mm Mauser. Possesses excellent penetration capabilities and can easily defeat lighter ballistic vests as well as kevlar helmets. Although most firearms chambered in this caliber are obsolete and removed from military inventories, the cartridge still sees widespread use because of the large quantity of stored ammunition available.</text>
+		<text>The 7.62x25mm cartridge is a Russian bottle-necked pistol cartridge widely used in former Soviet satellite states, China and Pakistan among other countries. The cartridge is an enhanced Russian version of the 7.63x25mm Mauser. Possesses excellent penetration capabilities and can easily defeat lighter ballistic vests as well as kevlar helmets, at the cost of overall stopping power. Although most firearms chambered in this caliber are obsolete and removed from military inventories, the cartridge still sees widespread use because of the large quantity of stored ammunition available.</text>
 	</string>
 	<string id="ammo_new_7.62x25_p_s">
 		<text>7.62x25 P</text>
@@ -804,6 +804,15 @@
 	<string id="ammo_new_7.92x33_match_s">
 		<text>7.92x57 Match</text>
 	</string>
+	<string id="ammo_new_7.92x33_hp">
+		<text>7.92x57mm HP rounds</text>
+	</string>
+	<string id="ammo_new_7.92x33_hp_descr">
+		<text>Hunting 7.92x57 round with a hollow tip and boat-tail base bullet. The ubiquity of historic firearms has created a secondary market for modern hunting ammunition. Such rounds are popular with hunters and sport shooters for their flatness, tight groupings and reliable kill power for medium and large game.</text>
+	</string>
+	<string id="ammo_new_7.92x33_hp_s">
+		<text>7.92x57 HP</text>
+	</string>
 
 	<string id="ammo_new_7.92x33_ap">
 		<text>7.92x57mm SA rounds</text>
@@ -819,7 +828,7 @@
 		<text>7.92x57mm Lightning rounds</text>
 	</string>
 	<string id="ammo_new_7.92x33_shock_descr">
-		<text>7.92x57 round with a bullet made from a reactive alloy of electrical artifacts. Similar to the Flash artifact, this projectile contains a tremendous amount of energy. However, the bullet is propelled by conventional means, with the high pressure and temperature of the gunpowder setting off a reaction with the artifact. On contact with a target, electrical energy is transferred. While this has limited stopping power against lightly armored targets, on heavily armored targets and powered armor the effect is devastating to both the target and the area around the target. Deals minimal damage to mutants and unarmored targets.</text>
+		<text>7.92x57 round with a bullet made from a reactive alloy of electrical artifacts. Leveraging the interaction between heat and electrical artifact fragments, this round generates an extreme amount of electrical energy in flight, discharged on impact. Highly effective against metal armor or surfaces and exoskeletons, but against lightly armored foes or mutants minimal electrical energy can be effectively transferred. </text>
 	</string>
 	<string id="ammo_new_7.92x33_shock_s">
 		<text>7.92x57 Shock</text>

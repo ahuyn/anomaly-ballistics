@@ -5,6 +5,11 @@ Base framework for playing with ballistic damage in Anomaly.
 
 This framework maps ammo types to custom damage functions, allowing a user to pass cutsom calculations for damage on a per-bullet, per-npc or per-mutant basis. Additional utilities are provided to overwrite many properties of weapon_ammo, reducing the dependency on the file as much as possible.
 
+## Requirements
+
+- [STALKER Anomaly modded exes](https://github.com/themrdemonized/STALKER-Anomaly-modded-exes)
+- [STALKER Anomaly damage numbers](https://www.moddb.com/mods/stalker-anomaly/addons/arcade-damage-numbers) (optional if you want to enable damage feedback) 
+
 ## Detail
 
 This addon does nothing by itself. However, two addons are provided to give an idea of how to use this framework. In theory it is possible to port other damage systems to this framework as desired.
