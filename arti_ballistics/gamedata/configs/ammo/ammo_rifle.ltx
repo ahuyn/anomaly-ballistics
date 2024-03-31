@@ -21,11 +21,11 @@ special     = tracer
 
 [ammo_5.45x39_ep]:ammo_base ; hunting HP
 name		= ammo_new_5.45x39_hp
-k_hit		= 1.1
+k_hit		= 1
 hit_scale   = 0.85
 k_ap		= 0.12
-k_imp       = 0.6
-k_hp        = 1.4
+k_imp       = 0.55
+k_hp        = 1.45
 impair      = 1
 cost        = 1550
 special     = hp
@@ -33,10 +33,10 @@ special     = hp
 [ammo_5.45x39_ep_bad]:ammo_5.45x39_ep ; soft point
 handler     = arti_handlers.disruptor
 name		= ammo_new_5.45x39_sp
-k_hit		= 1.1
+k_hit		= 1
 k_ap		= 0.15
-k_imp       = 0.65
-k_hp        = 1.1
+k_imp       = 0.6
+k_hp        = 1.2
 impair      = 1.1
 special     = flinch
 cost        = 1750
@@ -51,10 +51,9 @@ k_ap		= 0.245
 k_imp       = 0.6
 k_pen       = 0.5
 impair      = 1.1
-recoil		= 1.05
 cost        = 2210
 dg_ammo     = ammo_5.45x39_fmj
-dg_chance   = 0.5
+dg_chance   = 0.2
 
 [ammo_5.45x39_ap_bad]:ammo_5.45x39_ap ; 7N22 AP
 name		= ammo_new_5.45x39_aps
@@ -63,7 +62,6 @@ k_ap		= 0.295
 k_pen       = 0.6
 impair      = 1.5
 cost        = 2650
-recoil		= 1.2
 dg_ammo     = ammo_5.45x39_ap
 dg_chance   = 0.75
 
@@ -94,8 +92,8 @@ name		= ammo_new_5.56x45_hp
 k_hit		= 1
 hit_scale   = 0.85
 k_ap		= 0.105
-k_imp       = 0.6
-k_hp        = 1.5
+k_imp       = 0.55
+k_hp        = 1.45
 cost        = 1600
 
 [ammo_5.56x45_ss190_bad]:ammo_5.56x45_ss190 ; varmageddon
@@ -103,11 +101,10 @@ handler     = arti_handlers.varmageddon
 name		= ammo_new_5.56x45_varma
 k_hit		= 1.05
 k_ap		= 0.125
-k_hp        = 1.4
+k_hp        = 1.3
 varma       = 1.2
 impair      = 1.1
 cost        = 1900
-recoil		= 1.05
 special     = varma
 dg_ammo     = ammo_5.56x45_ss190
 dg_chance   = 0.6
@@ -117,11 +114,10 @@ dg_chance   = 0.6
 name		= ammo_new_5.56x45_ss190
 k_hit		= 0.75
 hit_scale   = 0.85
-k_ap		= 0.255
+k_ap		= 0.245
 k_imp       = 0.6
 k_pen       = 0.6
-cost        = 1800
-recoil		= 1.05
+cost        = 1600
 
 [ammo_5.56x45_ap_bad]:ammo_5.56x45_ap ; M855A1
 name		= ammo_new_5.56x45_ap
@@ -129,9 +125,8 @@ k_hit		= 1
 k_ap		= 0.265
 k_pen       = 0.2
 cost        = 2500
-recoil		= 1.05
 dg_ammo     = ammo_5.56x45_ap
-dg_chance   = 0.75
+dg_chance   = 0.8
 
 
 [ammo_7.62x39_fmj]:ammo_base ; 57-N-231
@@ -156,7 +151,6 @@ k_hit		= 1.1
 k_imp       = 0.7
 impair      = 1.15
 k_ap		= 0.255
-recoil		= 1.05
 cost		= 2530
 dg_ammo     = ammo_7.62x39_fmj
 dg_chance   = 0.6
@@ -169,7 +163,6 @@ k_ap		= 0.275
 ignite      = 0.6
 impair      = 2
 cost		= 3330
-recoil		= 1.05
 special     = fire
 dg_ammo     = ammo_7.62x39_ap
 dg_chance   = 0.6
@@ -200,7 +193,6 @@ k_ap		= 0.28
 k_imp       = 0.7
 impair      = 2.5
 cost		= 1900
-recoil		= 1.05
 special     = impair
 
 [ammo_9x39_ap_bad]:ammo_9x39_ap ; SP6

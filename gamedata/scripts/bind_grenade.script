@@ -142,7 +142,7 @@ function custom_grenade_binder:explode(pos, dir)
             end
         end
         last_ammo = ammo
-        func = ballistics_mcm.get_handler(ammo)
+        func = ballistics_mcm.get_handler(ammo, "bind_grenade.explode")
     end
     if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
         _G[func[1]][func[2]](pos, dir, last_ammo)
@@ -169,7 +169,7 @@ function actor_on_weapon_before_fire(flags)
                 ammo = ammo_map[weapon:get_ammo_type() + 1]
             end
         end
-        func = ballistics_mcm.get_handler(ammo)
+        func = ballistics_mcm.get_handler(ammo, "bind_grenade.explode")
     end
 end
 

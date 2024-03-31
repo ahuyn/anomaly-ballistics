@@ -2,6 +2,7 @@
 
 ini_ammo = ini_file("ammo\\importer.ltx")
 
+local bullet_store = {}
 local dbg_log
 function print_dbg( text , ...)
 	if get_config("debug") or false then
@@ -35,16 +36,14 @@ function validate_hit(s_hit, is_actor)
     } -- returning stuff we parsed, so we don't parse it again
 end
 
-function get_handler(ammo_sec)
+function get_handler(ammo_sec, default)
     if ini_ammo:section_exist(ammo_sec) then
-        local is_grenade = SYS_GetParam(0, ammo_sec, "fake_grenade_name")
-        local default = is_grenade and "bind_grenade.explode" or "ballistic_handlers.default"
-        local proc = ini_ammo:r_string_ex(ammo_sec, "handler") or ("ballistic_handlers.default")
+        default = default  or "ballistic_handlers.default"
+        local proc = ini_ammo:r_string_ex(ammo_sec, "handler") or default
         proc = str_explode(proc, "%.")
         return proc
     end
 end
-
 -- for the most part calculations will be deferred to function-specifics for each ammo type
 -- Generically it will call a function specified in config. Function determines how damage is applied.
 -- is_npc is either 0 (actor), 1 (npc), 2 (mutant)
@@ -54,6 +53,29 @@ function on_before_hit(npc,s_hit,bone_id, is_npc)
     local valid_hit_data = validate_hit(s_hit, npc:id() == AC_ID)
     if not (valid_hit_data) then -- no data, so we don't care about the hit
         return false 
+    end
+    -- subsequent hits (e.g. one bullet hitting multiple bones) should not run
+    local bullet_id = s_hit.bullet_id
+    if bullet_id and bullet_store[bullet_id] then
+        local npc_id = npc:id()
+        local bullet_hits = bullet_store[bullet_id]
+        if bullet_hits[npc_id] and bullet_hits[npc_id] == 0 then
+            bullet_hits[npc_id] = 1
+        else
+            s_hit.power = 0.0001
+            return {
+                ["s_hit"] = s_hit,
+                ["bone_id"] = bone_id
+            }
+        end 
+        -- one hit registered already - send back no-op hit
+    elseif bullet_id and npc then
+        -- no impact recorded - add to store and flush later
+        hits = {[npc:id()] = 1}
+        bullet_store[bullet_id] = hits
+        CreateTimeEvent("bullet_remove", bullet_id, 0.1, function()
+            bullet_store[bullet_id] = nil
+        end)
     end
     local wpn = valid_hit_data.wpn
     local ammo = valid_hit_data.ammo
@@ -84,38 +106,38 @@ end
 -- Overriding hit callbacks so our custom hits can communicate with other scripts
 local flags = { ret_value = true }
 
-_G.CActor__BeforeHitCallback = function(actor,s_hit,bone_id) 
-    if (s_hit.type ~= hit.strike) then
-		if (bind_stalker_ext.invulnerable_time and time_global() < bind_stalker_ext.invulnerable_time) then 
-			bind_stalker_ext.invulnerable_time = bind_stalker_ext.invulnerable_time - 500
-			return false
-		end
-	end
+-- _G.CActor__BeforeHitCallback = function(actor,s_hit,bone_id) 
+--     if (s_hit.type ~= hit.strike) then
+-- 		if (bind_stalker_ext.invulnerable_time and time_global() < bind_stalker_ext.invulnerable_time) then 
+-- 			bind_stalker_ext.invulnerable_time = bind_stalker_ext.invulnerable_time - 500
+-- 			return false
+-- 		end
+-- 	end
 	
-	if (s_hit.power > 0) then 
-		if (s_hit.draftsman and s_hit.draftsman:id() ~= 0 and IsStalker(s_hit.draftsman) and s_hit.draftsman:relation(db.actor) == game_object.friend) then 
-			return false 
-		end
-	end
+-- 	if (s_hit.power > 0) then 
+-- 		if (s_hit.draftsman and s_hit.draftsman:id() ~= 0 and IsStalker(s_hit.draftsman) and s_hit.draftsman:relation(db.actor) == game_object.friend) then 
+-- 			return false 
+-- 		end
+-- 	end
 	
-	flags.ret_value = true
-    -- go to original 
-    if not get_config("incoming") then     
-    	SendScriptCallback("actor_on_before_hit",s_hit,bone_id,flags)
-        return flags.ret_value 
-    end
+-- 	flags.ret_value = true
+--     -- go to original 
+--     if not get_config("incoming") then     
+--     	SendScriptCallback("actor_on_before_hit",s_hit,bone_id,flags)
+--         return flags.ret_value 
+--     end
 
-    -- pass through processor
-    local custom_hit = on_before_hit(actor,s_hit,bone_id, true)
-    custom_hit = custom_hit and custom_hit.s_hit or s_hit
-    if custom_hit then
-        SendScriptCallback("actor_on_before_hit",custom_hit,bone_id,flags)
-        if flags.ret_value and get_config("incoming") then
-            s_hit.power = custom_hit.power
-        end
-    end
-	return flags.ret_value
-end
+--     -- pass through processor
+--     local custom_hit = on_before_hit(actor,s_hit,bone_id, true)
+--     custom_hit = custom_hit and custom_hit.s_hit or s_hit
+--     if custom_hit then
+--         SendScriptCallback("actor_on_before_hit",custom_hit,bone_id,flags)
+--         if flags.ret_value and get_config("incoming") then
+--             s_hit.power = custom_hit.power
+--         end
+--     end
+-- 	return flags.ret_value
+-- end
 
 _G.CAI_Stalker__BeforeHitCallback = function(npc,s_hit,bone_id)
     flags.ret_value = true
@@ -139,6 +161,8 @@ end
 -- bone mult is unknown for monster, so simply assume skin armor vs ap calcs
 _G.CBaseMonster__BeforeHitCallback = function(monster,s_hit,bone_id)
     flags.ret_value = true
+    -- check for multihit. each bullet can only deal damage once
+
     local custom_hit = on_before_hit(monster,s_hit,bone_id, false)
     if custom_hit then
         SendScriptCallback("monster_on_before_hit",monster,custom_hit.s_hit,custom_hit.bone_id, flags)
@@ -182,16 +206,45 @@ function ui_item.build_desc_footer(obj, sec, str)
     end
 end
 
+-- bullet callback
+function bullet_on_impact(bullet)
+    if not bullet then return end
+    -- load bullet in bullet store, in on before hit, pass bullet id
+    -- if bullet id has already hit something, ignore subsequent hits to the same npc
+    -- news_manager.send_tip(db.actor, "hit material " .. bullet.material, nil, "swiss_knife", 6000)
+
+    local target = bullet.target_id ~= 65535 and level.object_by_id(bullet.target_id)
+    if target and target.alive and target:alive() then
+        -- check for existing impact to the target
+        local bullet_hits = bullet_store[bullet.bullet_id]
+        if not bullet_hits then bullet_hits = {} end
+        if not bullet_hits[bullet.bullet_id] then bullet_hits[bullet.target_id] = 0 end
+        -- bullet_store[bullet.bullet_id] = {bullet.target_id}
+        CreateTimeEvent("bullet_remove", bullet.bullet_id, 0.1, function()
+            bullet_store[bullet.bullet_id] = nil
+        end)
+    end
+    -- should also invoke any impact functors
+    if not bullet.section then return end
+    local func = ini_ammo:r_string_ex(bullet.section, "impact_h") or ""
+    if func == "" then return end
+    func = str_explode(func, "%.")
+    
+    if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
+        _G[func[1]][func[2]](bullet)
+    end
+end
+
 
 -- If you don't use MCM, change your defaults from here.
 local defaults = {
     ["debug"] = true,
-    ["incoming"] = false,
+    -- ["incoming"] = false,
     ["cost"] = true,
     ["impair"] = true,
-    ["mutant"] = true,
-    ["burer"] = 0,
-    ["snork"] = 0,
+    ["hitnum"] = true,
+    -- ["burer"] = 0,
+    -- ["snork"] = 0,
     ["legs"] = true,
 }
 
@@ -203,16 +256,20 @@ function on_mcm_load()
     op = { id= "ballistics",sh=true ,gr={
             { id= "title",type= "slide",link= "ui_options_slider_player",text="ui_mcm_ballistics_title",size= {512,50},spacing= 20 },
             {id = "debug", type = "check", val = 1, def=true},
-            {id = "incoming", type = "check", val = 1, def=false},
+            -- {id = "incoming", type = "check", val = 1, def=false},
             -- {id = "osp", type = "check", val = 1, def=false},
             {id = "cost", type = "check", val = 1, def=true},
             {id = "impair", type = "check", val = 1, def=true},
-            {id = "mutant", type = "check", val = 1, def=true},
-            {id = "burer", type = "list", val = 2, def=0, content= {{0,"bclassic"} , {1,"bmeaty"} , {2,"bsith"}}},
-            {id = "snork", type = "list", val = 2, def=0, content= {{0,"snormal"} , {1,"sfat"} , {2,"ssfat"}}},
-
+            {id = "hitnum", type = "check", val = 1, def=true},
+            -- {id = "burer", type = "list", val = 2, def=0, content= {{0,"bclassic"} , {1,"bmeaty"} , {2,"bsith"}}},
+            -- {id = "snork", type = "list", val = 2, def=0, content= {{0,"snormal"} , {1,"sfat"} , {2,"ssfat"}}},
             {id = "legs", type = "check", val = 1, def=true},
         }
     }
     return op
+end
+
+
+function on_game_start()
+    RegisterScriptCallback("bullet_on_impact", bullet_on_impact)
 end
