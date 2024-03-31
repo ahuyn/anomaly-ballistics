@@ -36,16 +36,14 @@ function validate_hit(s_hit, is_actor)
     } -- returning stuff we parsed, so we don't parse it again
 end
 
-function get_handler(ammo_sec)
+function get_handler(ammo_sec, default)
     if ini_ammo:section_exist(ammo_sec) then
-        local is_grenade = SYS_GetParam(0, ammo_sec, "fake_grenade_name")
-        local default = is_grenade and "bind_grenade.explode" or "ballistic_handlers.default"
-        local proc = ini_ammo:r_string_ex(ammo_sec, "handler") or ("ballistic_handlers.default")
+        default = default  or "ballistic_handlers.default"
+        local proc = ini_ammo:r_string_ex(ammo_sec, "handler") or default
         proc = str_explode(proc, "%.")
         return proc
     end
 end
-
 -- for the most part calculations will be deferred to function-specifics for each ammo type
 -- Generically it will call a function specified in config. Function determines how damage is applied.
 -- is_npc is either 0 (actor), 1 (npc), 2 (mutant)
@@ -216,7 +214,7 @@ function bullet_on_impact(bullet)
     -- news_manager.send_tip(db.actor, "hit material " .. bullet.material, nil, "swiss_knife", 6000)
 
     local target = bullet.target_id ~= 65535 and level.object_by_id(bullet.target_id)
-    if target and target:alive() then
+    if target and target.alive and target:alive() then
         -- check for existing impact to the target
         local bullet_hits = bullet_store[bullet.bullet_id]
         if not bullet_hits then bullet_hits = {} end
