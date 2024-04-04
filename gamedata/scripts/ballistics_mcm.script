@@ -208,10 +208,11 @@ end
 
 -- bullet callback
 function bullet_on_impact(bullet)
-    if not bullet then return end
+    if not bullet or bullet.parent_id ~= 0 then return end
     -- load bullet in bullet store, in on before hit, pass bullet id
     -- if bullet id has already hit something, ignore subsequent hits to the same npc
     -- news_manager.send_tip(db.actor, "hit material " .. bullet.material, nil, "swiss_knife", 6000)
+
 
     local target = bullet.target_id ~= 65535 and level.object_by_id(bullet.target_id)
     if target and target.alive and target:alive() then
