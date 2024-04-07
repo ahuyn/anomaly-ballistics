@@ -799,7 +799,7 @@ function shock_damage(npc, s_hit, ctx)
 end
 
 function shock_handler(bullet)
-    if not bullet then return end
+    if not bullet or bullet.parent_id ~= 0 then return end
     local aim_point = bullet.position    
     -- check material hit, if metal, create small electric nova
     
@@ -807,9 +807,9 @@ function shock_handler(bullet)
         snd = "electric_big"
         ballistics_utils.play_particle_pos( "amik\\anomaly\\electra\\electra_dust_distort", aim_point)
         electric_nova(aim_point, 3, 0.5)
+        local dist = db.actor:position():distance_to(aim_point)
+        ballistics_utils.play_sound_distance(snd, dist)
     end
-    local dist = db.actor:position():distance_to(aim_point)
-    ballistics_utils.play_sound_distance(snd, dist)
 end
 
 function electric_nova(pos, radius, power)
@@ -836,7 +836,7 @@ end
 
 local mine_id = 0
 function explode_handler(bullet)
-    if not bullet then return end
+    if not bullet or bullet.parent_id ~= 0 then return end
     local aim_point = bullet.position
     local explode_obj = alife_create_item("bullet_blow", {aim_point, level.vertex_id(aim_point), db.actor:game_vertex_id()})
     CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
