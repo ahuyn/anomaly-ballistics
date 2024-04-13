@@ -226,6 +226,15 @@ function process_hp(precalc, is_npc)
     return 1
 end
 
+function ap_standard(ctx, s_hit, precalc)
+    if not ctx.is_npc then
+        return mutant_standard(s_hit, precalc)
+    else
+        return npc_standard(s_hit, precalc)
+    end
+
+end
+
 function npc_standard(s_hit, precalc)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
@@ -342,13 +351,8 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     -- add standard calcs for hit, bone mult, etc
     apply_std_calcs(calcs, npc, s_hit, precalc)
 
-    if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(s_hit, precalc)
-    else
-        -- tier based formula with overpen, and flinch
-        calcs.ap_calc = npc_standard(s_hit, precalc)
-        -- process_flinch(npc, precalc)
-    end
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
     if not is_actor(npc) then
         calcs.hollowpoint = process_hp(precalc, ctx.is_npc)
     end
@@ -540,12 +544,8 @@ function ambush(npc, s_hit, ctx)
         calcs.ambush = 1.2
         ammo_data.k_ap = ammo_data.k_ap + 0.05
     end
-    if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(s_hit, precalc)
-    else
-        -- tier based formula with overpen, and flinch
-        calcs.ap_calc = npc_standard(s_hit, precalc)
-    end
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
     
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
@@ -555,25 +555,21 @@ function ambush(npc, s_hit, ctx)
 end
 -- 0-200 no damage falloff
 function match(npc, s_hit, ctx) 
-   local distance = get_distance(db.actor, npc)
-    
-   local calcs = {}
-   local precalc = prework(npc, s_hit, ctx)
-   ammo_data = precalc.ammo_data
-   bone_data = precalc.bone_data
+    local distance = get_distance(db.actor, npc)
 
-   apply_std_calcs(calcs, npc, s_hit, precalc)
-   calcs.distance = nil
-   -- distance based ap increase
-   local distance_mult = clamp(1 + (distance / 200), 1, 2)
-   ammo_data.k_ap = clamp(ammo_data.k_ap * distance_mult, 0, 0.399) 
-    if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(s_hit, precalc)
-    else
-        -- tier based formula with overpen, and flinch
-        calcs.ap_calc = npc_standard(s_hit, precalc)
-    end
-    
+    local calcs = {}
+    local precalc = prework(npc, s_hit, ctx)
+    ammo_data = precalc.ammo_data
+    bone_data = precalc.bone_data
+
+    apply_std_calcs(calcs, npc, s_hit, precalc)
+    calcs.distance = nil
+    -- distance based ap increase
+    local distance_mult = clamp(1 + (distance / 200), 1, 2)
+    ammo_data.k_ap = clamp(ammo_data.k_ap * distance_mult, 0, 0.399) 
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
+
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
@@ -725,11 +721,8 @@ function chaos_damage(npc, s_hit, ctx)
 
     -- ap +/- 2 tiers randomly
     ammo_data.k_ap = clamp(ammo_data.k_ap + random/9, 0, 1)
-    if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(s_hit, precalc)
-    else
-        calcs.ap_calc = npc_standard(s_hit, precalc)
-    end
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
     -- damage inverse of ap
     calcs.chaos = 0.6 + (1 - random)
     
@@ -785,6 +778,8 @@ function shock_damage(npc, s_hit, ctx)
     local armor_tier = get_tier(precalc.bone_data.armor)
 
     apply_std_calcs(calcs, npc, s_hit, precalc)
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
     calcs.lightning_bonus = 1 + (armor_tier * 0.6)
     snd = "electric"
     if armor_tier > 3 then
@@ -799,7 +794,7 @@ function shock_damage(npc, s_hit, ctx)
 end
 
 function shock_handler(bullet)
-    if not bullet or bullet.parent_id ~= 0 then return end
+    if not bullet or bullet.target_id ~= 65535 then return end
     local aim_point = bullet.position    
     -- check material hit, if metal, create small electric nova
     
@@ -834,17 +829,16 @@ function soulripper(npc, s_hit, ctx)
     return s_hit
 end
 
-local mine_id = 0
 function explode_handler(bullet)
     if not bullet or bullet.parent_id ~= 0 then return end
     local aim_point = bullet.position
-    local explode_obj = alife_create_item("bullet_blow", {aim_point, level.vertex_id(aim_point), db.actor:game_vertex_id()})
+    local explode_obj = alife_create_item("bullet_blow", {aim_point, db.actor:level_vertex_id(), db.actor:game_vertex_id()})
     CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
     function(id)
         local explode_obj = get_object_by_id(id)
         if explode_obj then
             explode_obj:explode(0)
-            explode_obj:destroy_object()
+            -- explode_obj:destroy_object()
             return true
         end
         return false

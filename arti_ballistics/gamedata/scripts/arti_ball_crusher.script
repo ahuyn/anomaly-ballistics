@@ -19,6 +19,7 @@
 tbl = {}
 ini_balls = ini_file("items\\settings\\ball_crusher.ltx")
 gc = game.translate_string
+math_random = math.random
 -- to powderize artifacts into crafting material
 
 local modes = {
@@ -62,6 +63,99 @@ function crush(obj, bag, mode)
     alife_release(obj)
 end
 
+
+random_parts = {
+    {
+        item = "casing_p"
+    },
+    {
+        item = "casing_s",
+        reroll = "casing_p",
+        reroll_chance = 20
+    },
+    {
+        item = "casing_r5"
+    },
+    {
+        item = "casing_r7",
+        reroll = "casing_r5",
+        reroll_chance = 20
+    },
+    {
+        item = "powder_1"
+    },
+    {
+        item = "powder_2"
+    },
+    {
+        item = "powder_3"
+    },
+    {
+        item = "bullet_pistol_ap",
+        reroll = "bullet_pistol",
+        reroll_chance = 75
+    },
+    {
+        item = "bullet_shotgun_ap",
+        reroll = "bullet_shotgun",
+        reroll_chance = 80
+    },
+    {
+        item = "bullet_r5_ap",
+        reroll = "bullet_r5",
+        reroll_chance = 85
+    },
+    {
+        item = "bullet_r7_ap",
+        reroll = "bullet_r7",
+        reroll_chance = 90
+    }
+}
+
+-- yield 5-10 random ammo parts
+function get_ammoparts(tbl)
+    tbl = tbl or {}
+    for i=1,math_random(5, 10) do
+        part = random_parts[math_random(#random_parts)]
+        part_sec = (part.reroll and math_random(100) < part.reroll_chance) and part.reroll or part.item
+        if not tbl[part_sec] then tbl[part_sec] = 1
+        else
+            tbl[part_sec] = tbl[part_sec] + 1
+        end
+    end
+    return tbl
+end
+
+function check_ammopart(obj, bag, mode)
+    printf("Checking part %s", obj:section())
+    if obj and bags[bag] and modes[mode] and obj:section() == "prt_i_ammo" then return gc("st_item_disassemble") end
+end
+
+function sort_ammopart(obj, bag, mode)
+    tbl = get_ammoparts()
+    ammo_maker.timer_disassembly_item(0, tbl, obj:section())
+    alife_release(obj)
+end
+
+function str_ammopart_batch(obj, bag, mode)
+    if not check_ammopart(obj, bag, mode) then return end
+    count = 0
+    db.actor:iterate_inventory(function(npc, item)
+        if item:section() == "prt_i_ammo" then count = count + 1 end
+    end)
+    if count > 1 then return gc("st_batch_breakdown") end
+end
+function sort_ammopart_batch(obj, bag, mode)
+    tbl = {}
+    sec = obj:section()
+    db.actor:iterate_inventory(function(npc, item)
+        if item:section() == "prt_i_ammo" then 
+            tbl = get_ammoparts(tbl) 
+            alife_release(obj)
+        end
+    end)
+    ammo_maker.timer_disassembly_item(0, tbl, gc("prt_i_ammo"))
+end
 SpawnTreasure = treasure_manager.try_spawn_treasure
 
 function treasure_manager.try_spawn_treasure(box)
@@ -88,5 +182,7 @@ end
 
 function on_game_start()
     custom_functor_autoinject.add_functor("arti_crush", try_crush, try_crush, nil, crush, true)
+    custom_functor_autoinject.add_functor("sort_ammopart", check_ammopart, check_ammopart, nil, sort_ammopart, true)
+    custom_functor_autoinject.add_functor("sort_ammopart_batch", check_ammopart, str_ammopart_batch, nil, sort_ammopart_batch, true)
     load_table()
 end

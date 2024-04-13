@@ -155,15 +155,23 @@ end
 
 function check_batch(obj)
     local sec = obj:section()
-    if IsAmmo(obj) and part_lookup:section_exist(sec) then
+    if IsAmmo(obj) and part_lookup:section_exist(sec) and not part_lookup:r_bool_ex(sec, "disallow") then
         return 'st_batch_breakdown'
+    end
+end
+
+MenuDis = item_parts.menu_disassembly
+function item_parts.menu_disassembly(obj)
+    if part_lookup:section_exist(obj:section()) and part_lookup:r_bool_ex(obj:section(), "disallow") then return
+    else
+        return MenuDis(obj)
     end
 end
 
 NameCustom = ui_inventory.UIInventory.Name_Custom
 function ui_inventory.UIInventory:Name_Custom(obj, bag, temp, i)
 	obj = self:CheckItem(obj,"Name_Custom " .. i)
-	if i == 4 and IsAmmo(obj) then -- check unjam
+	if i == 4 and IsAmmo(obj) then
 		return check_batch(obj)
 	else
 		return NameCustom(self, obj, bag, temp, i)
@@ -173,7 +181,7 @@ end
 ActionCustom = ui_inventory.UIInventory.Action_Custom
 function ui_inventory.UIInventory:Action_Custom(obj, bag, temp, i)
 	obj = self:CheckItem(obj,"Action_Custom " .. i)
-	if i == 4 and IsAmmo(obj) then -- check unjam
+	if i == 4 and IsAmmo(obj) then
 		wrap_disassemble(obj, nil, true)
 	else
 		ActionCustom(self, obj, bag, temp, i)
@@ -201,4 +209,5 @@ function on_game_start()
     end)
     workshop_autoinject.remove_existing_recipes("ammo_vog-25")
     workshop_autoinject.remove_existing_recipes("ammo_m209")
+
 end
