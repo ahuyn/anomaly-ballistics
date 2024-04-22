@@ -151,7 +151,7 @@ function sort_ammopart_batch(obj, bag, mode)
     db.actor:iterate_inventory(function(npc, item)
         if item:section() == "prt_i_ammo" then 
             tbl = get_ammoparts(tbl) 
-            alife_release(obj)
+            alife_release(item)
         end
     end)
     ammo_maker.timer_disassembly_item(0, tbl, gc("prt_i_ammo"))

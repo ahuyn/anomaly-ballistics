@@ -285,7 +285,7 @@ function npc_bone_data(npc, bone_id)
         hit_fraction = hit_frac(npc, bone_id)
     }
     -- halve leg armor and damage multiplier
-    if get_config("legs") and limbs[bone_id] then
+    if limbs[bone_id] then
         data.armor = data.armor / 2
         data.mult = data.mult / 2
     end
@@ -416,7 +416,6 @@ end
 -- eg. if ammo degrade in custom config is 1.5 and is 1 in weapon_ammo, reduce weapon dura by 0.5 x condition_shot_dec
 function actor_on_weapon_fired(obj, weapon, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
     if weapon:id() ~= cur_wep_data.id then return end
-    if not get_config("impair") then return end
     local sec = weapon:section()
     ammo_map = utils_item.get_ammo(nil, cur_wep_data.id)
     local ammo = ammo_map[weapon:get_ammo_type() + 1]
@@ -433,8 +432,6 @@ function on_get_item_cost(kind, obj, profile, calculated_cost, ret)
 	if not (obj and profile) then
 		return nil
 	end
-
-    if not get_config("cost") then return end
 
 	local sec = obj:section()
 	local discount = profile.discount

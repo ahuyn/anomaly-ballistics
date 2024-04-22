@@ -259,12 +259,12 @@ function on_mcm_load()
             {id = "debug", type = "check", val = 1, def=true},
             -- {id = "incoming", type = "check", val = 1, def=false},
             -- {id = "osp", type = "check", val = 1, def=false},
-            {id = "cost", type = "check", val = 1, def=true},
-            {id = "impair", type = "check", val = 1, def=true},
+            -- {id = "cost", type = "check", val = 1, def=true},
+            -- {id = "impair", type = "check", val = 1, def=true},
             {id = "hitnum", type = "check", val = 1, def=true},
             -- {id = "burer", type = "list", val = 2, def=0, content= {{0,"bclassic"} , {1,"bmeaty"} , {2,"bsith"}}},
             -- {id = "snork", type = "list", val = 2, def=0, content= {{0,"snormal"} , {1,"sfat"} , {2,"ssfat"}}},
-            {id = "legs", type = "check", val = 1, def=true},
+            -- {id = "legs", type = "check", val = 1, def=true},
         }
     }
     return op
