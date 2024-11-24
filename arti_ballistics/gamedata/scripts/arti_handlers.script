@@ -297,10 +297,19 @@ function stun_npc(npc)
         if IsStalker(npc) then
             play_anim(npc)
         end
-        npc_stun[npc:id()] = time_global() + 750
+        npc_stun[npc:id()] = time_global() + 2000
     end
 end
-
+function npc_shot_dispersion(obj, wpn, body_state, move_type, temp_disp)
+    if npc_stun[obj:id()] then
+        
+        if time_global() > npc_stun[obj:id()] then
+            npc_stun[obj:id()] = false
+        else
+            temp_disp.dispersion = 1
+        end
+    end
+end
 
 function play_anim(npc)
     if npc:movement_type() == move.walk or npc:movement_type() == move.run then
@@ -310,15 +319,13 @@ function play_anim(npc)
     state_mgr.set_state(npc, "idle")
 end
 
+local berserked = {}
+
 function on_enemy_eval(obj, enemy, flags)
-    if npc_stun[obj:id()] then
-        if time_global() > npc_stun[obj:id()] then
-            npc_stun[obj:id()] = false
-        else 
-            flags.override = true
-            flags.ret_value = false 
-            cause_fake_damage(obj)
-        end
+    
+    if berserked[obj:id()] or berserked[enemy:id()] then
+        flags.override = true
+        flags.ret_value = true
     end
 end
 
@@ -336,10 +343,8 @@ function cause_fake_damage(obj)
 
 function npc_on_death_callback(victim, who)
     npc_stun[victim:id()] = nil
-    if marked == victim:id() then 
-        RemoveTimeEvent("clear_mark", "clear_mark")
-        marked = nil 
-    end
+    if berserked[npc:id()] then berserked[npc:id()] = nil end
+
 end
 
 -- refer to ballistics_mcm.txt for logic details
@@ -814,6 +819,14 @@ function soulripper(npc, s_hit, ctx)
     return s_hit
 end
 
+function enrage(npc, s_hit, ctx)
+    if not berserked[npc:id()] then 
+        berserked[npc:id()] = true 
+    end
+    npc.health = 1
+    return ballistic_handlers.default(npc, s_hit, ctx)
+end
+
 function explode_handler(bullet)
     if not bullet or bullet.parent_id ~= 0 then return end
     local aim_point = bullet.position
@@ -839,31 +852,31 @@ function pab()
     end
 end
 
-function play_acid()
-    play_particle_firepoint("artefact\\effects\\af_acidic_idle_color_trail")
-end
-function play_shock()
-    play_particle_firepoint("anomaly2\\effects\\electra_entrance_small")
-end
-function play_grav_sound()
-    play_particle_firepoint("anomaly2\\bloodsucker_shield")
-    play_sound_on_location("soulripper", db.actor)
-end
-function play_grav()
-    play_particle_firepoint("anomaly2\\bloodsucker_shield")
-end
-function play_fire_big()
-    play_particle_firepoint("artefact\\af_thermal_idle")
-end
+-- function play_acid()
+--     play_particle_firepoint("artefact\\effects\\af_acidic_idle_color_trail")
+-- end
+-- function play_shock()
+--     play_particle_firepoint("anomaly2\\effects\\electra_entrance_small")
+-- end
+-- function play_grav_sound()
+--     play_particle_firepoint("anomaly2\\bloodsucker_shield")
+--     play_sound_on_location("soulripper", db.actor)
+-- end
+-- function play_grav()
+--     play_particle_firepoint("anomaly2\\bloodsucker_shield")
+-- end
+-- function play_fire_big()
+--     play_particle_firepoint("artefact\\af_thermal_idle")
+-- end
 
 local custom_proj_table = {
     -- ["explodes"] = explode_handler,
     ["impair"] = pab,
-    ["soulripper"] = play_grav_sound,
-    ["chaos"] = play_grav,
-    ["shock"] = play_shock,
-    ["fire_melt"] = play_fire_big,
-    ["acid"] = play_acid
+    -- ["soulripper"] = play_grav_sound,
+    -- ["chaos"] = play_grav,
+    -- ["shock"] = play_shock,
+    -- ["fire_melt"] = play_fire_big,
+    -- ["acid"] = play_acid
 }
 
 
@@ -871,8 +884,17 @@ local custom_proj_table = {
 function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
     local ammo_table = utils_item.get_ammo(wpn:section(), wpn:id())
     ammo_type = wpn:get_ammo_type()
-    if ammo_table[ammo_type + 1] and custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")] then
-        custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")]()
+    if ammo_table[ammo_type + 1] then
+        ammo = ammo_table[ammo_type + 1]
+        sound = ini_ammo:r_string_ex(ammo, "sound")
+        if sound then
+            play_sound_on_location(sound, db.actor)
+        end
+        particle = ini_ammo:r_string_ex(ammo, "particle")
+        if particle then
+            play_particle_firepoint(particle)
+        end
+
     end
 end
 
