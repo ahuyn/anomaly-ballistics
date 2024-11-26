@@ -124,8 +124,11 @@
 	<string id="st_ballistics_soulripper">
 		<text>headshots heal</text>
 	</string>
-	<string id="st_ballistics_tracer">
-		<text>marks targets for 20% increased damage</text>
+	<string id="st_ballistics_terminal">
+		<text>increased close-range effectiveness</text>
+	</string>
+	<string id="st_ballistics_enrage">
+		<text>permanently enrages targets</text>
 	</string>
 	<string id="st_ballistics_match">
 		<text>distance increases armor piercing</text>
@@ -473,13 +476,13 @@
 	</string>	
 	
 	<string id="ammo_new_5.45x39_fmjs">
-		<text>5.45x39mm Tracer rounds</text>
+		<text>5.45x39mm Terminal rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_descr">
-		<text>Special-issue 5.45x39 caliber 7T3 tracer round. Used to adjust fire and designate targets. Suffers from mildly reduced performance compared to the standard issue FMJ round, but is valuable for coordinating fire in concentrated operations. Seldom used in the Zone except by the Military, and usually only carried by officers to coordinate fire.</text>
+		<text>Modified and hand reloaded 5.45x39 7N6 rounds produced by Zone craftsmen. These bullets, when fired, experience a brief reaction that increases energy transferred to the target if fired at very short ranges. The increased stopping power only happens at very short ranges, so stalkers prefer to use this round in close quarters or when clearing mutant dens. Due to instability of the reaction, these rounds are subsonic loads.</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_s">
-		<text>5.45x39 Tracer</text>
+		<text>5.45x39 Terminal</text>
 	</string>
 
 	<string id="ammo_new_5.45x39_sp">
@@ -533,13 +536,13 @@
 	</string>
 
 	<string id="ammo_new_5.56x45_fmjs">
-		<text>5.56x45mm Tracer rounds</text>
+		<text>5.56x45mm Terminal rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_descr">
-		<text>Special issue 5.56x45 Tracer round used for target designation and fire adjustment. Standard issue in most NATO militaries for officers, light machine gunners and sometimes used by rank and file to provide a visual warning for low ammo. These rounds can </text>
+		<text>Modified 5.56x45mm rounds subjected to anomalous treatment. These rounds hit harder at short range thanks to enhancements with gravitational artifacts. Due to the relative cheapness of production, these rounds are popular to produce despite their niche effects. Ineffective beyond ten meters. </text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_s">
-		<text>5.56x45 Tracer</text>
+		<text>5.56x45 Terminal</text>
 	</string>
 	
 	<string id="ammo_new_5.56x45_hp">
@@ -893,6 +896,21 @@
 	<string id="ammo_new_338_ap_s">
 		<text>.338 DU AP</text>
 	</string>
+
+	<string id="ammo_new_gauss">
+		<text>Batteries</text>
+	</string>
+	<string id="ammo_new_gauss_descr">
+		<text>Batteries that use a capsulated fragment of the "Flash" artefact as their power source. Accelerates a 2mm slug to near-relativistic speeds, with unrivaled terminal effects. Manufactured using hi-tech equipment.</text>
+	</string>
+	
+	<string id="ammo_new_gauss_rage">
+		<text>Psionic Insanity Batteries</text>
+	</string>
+	<string id="ammo_new_gauss_rage_descr">
+		<text>Batteries that use a capsulated fragment of the "Moonlight" artefact as their power source. Developed based on a study of controller psionic abilities. Emits a coherent pulse of psionic energy that overwhelms the target's visual cortex with terrifying  audiospatial hallucinations. The effect is permanent and lasts until the target is killed or collapses from exhaustion. Does no physical damage.</text>
+	</string>
+	
 	
 	<string id="ammo_new_vog25">
 		<text>VOG-25 Grenade</text>
