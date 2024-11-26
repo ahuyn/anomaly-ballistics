@@ -323,23 +323,14 @@ local berserked = {}
 
 function on_enemy_eval(obj, enemy, flags)
     
-    if berserked[obj:id()] or berserked[enemy:id()] then
+    if berserked[enemy:id()] then
         flags.override = true
-        flags.ret_value = true
+        flags.result = true
+    elseif berserked[obj:id()] then
+        flags.override = true
+        flags.result = enemy:id() ~= 0
     end
 end
-
---Cause fake damage
-function cause_fake_damage(obj)
-    --Burer has to receive some fake damage, or it will just stand
-      local h= hit()
-      h.type = hit.telepatic
-      h.power = 0.0001
-      h.impulse = 1
-      h.direction = VEC_Z
-      h.draftsman = db.actor
-      obj:hit(h)
-  end
 
 function npc_on_death_callback(victim, who)
     npc_stun[victim:id()] = nil
@@ -824,6 +815,25 @@ function enrage(npc, s_hit, ctx)
         berserked[npc:id()] = true 
     end
     npc.health = 1
+    s_hit.draftsman = db.actor:active_item()
+    CreateTimeEvent(npc:id(), npc:id(), 60, 
+    function()
+        berserked[npc:id()] = nil 
+    end)
+    level.iterate_nearest(npc:position(), 15, function(obj)
+        if obj:alive() then
+            local h = hit()
+            h.power = 0.0001
+            h.direction = vector():set(0,0,0)
+            h.bone = "bip01_spine"
+            h.draftsman = obj
+            h.impulse = 0	--6000
+            h.type = hit.wound
+            npc:hit(h)
+            return true
+        end
+    end)
+    npc:set_mental_state(anim.panic)
     return ballistic_handlers.default(npc, s_hit, ctx)
 end
 
@@ -852,50 +862,21 @@ function pab()
     end
 end
 
--- function play_acid()
---     play_particle_firepoint("artefact\\effects\\af_acidic_idle_color_trail")
--- end
--- function play_shock()
---     play_particle_firepoint("anomaly2\\effects\\electra_entrance_small")
--- end
--- function play_grav_sound()
---     play_particle_firepoint("anomaly2\\bloodsucker_shield")
---     play_sound_on_location("soulripper", db.actor)
--- end
--- function play_grav()
---     play_particle_firepoint("anomaly2\\bloodsucker_shield")
--- end
--- function play_fire_big()
---     play_particle_firepoint("artefact\\af_thermal_idle")
--- end
-
-local custom_proj_table = {
-    -- ["explodes"] = explode_handler,
-    ["impair"] = pab,
-    -- ["soulripper"] = play_grav_sound,
-    -- ["chaos"] = play_grav,
-    -- ["shock"] = play_shock,
-    -- ["fire_melt"] = play_fire_big,
-    -- ["acid"] = play_acid
-}
-
-
-
-function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
-    local ammo_table = utils_item.get_ammo(wpn:section(), wpn:id())
-    ammo_type = wpn:get_ammo_type()
-    if ammo_table[ammo_type + 1] then
-        ammo = ammo_table[ammo_type + 1]
-        sound = ini_ammo:r_string_ex(ammo, "sound")
-        if sound then
-            play_sound_on_location(sound, db.actor)
-        end
-        particle = ini_ammo:r_string_ex(ammo, "particle")
-        if particle then
-            play_particle_firepoint(particle)
-        end
-
-    end
+function play_acid()
+    play_particle_firepoint("artefact\\effects\\af_acidic_idle_color_trail")
+end
+function play_shock()
+    play_particle_firepoint("anomaly2\\effects\\electra_entrance_small")
+end
+function play_grav_sound()
+    play_particle_firepoint("anomaly2\\bloodsucker_shield")
+    play_sound_on_location("soulripper", db.actor)
+end
+function play_grav()
+    play_particle_firepoint("anomaly2\\bloodsucker_shield")
+end
+function play_fire_big()
+    play_particle_firepoint("artefact\\af_thermal_idle")
 end
 
 function hit_num(npc, ctx, calcs)
@@ -932,7 +913,6 @@ function hit_num_data(ctx, calcs)
 end
 
 function on_game_start()
-    RegisterScriptCallback("actor_on_weapon_fired", actor_on_weapon_fired)
     RegisterScriptCallback("on_enemy_eval", on_enemy_eval)
     RegisterScriptCallback("npc_on_death_callback", npc_on_death_callback)
     RegisterScriptCallback("monster_on_death_callback",npc_on_death_callback)

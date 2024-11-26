@@ -419,12 +419,22 @@ function actor_on_weapon_fired(obj, weapon, ammo_elapsed, grenade_elapsed, ammo_
     local sec = weapon:section()
     ammo_map = utils_item.get_ammo(nil, cur_wep_data.id)
     local ammo = ammo_map[weapon:get_ammo_type() + 1]
+    printf("shot ammo: %s", ammo)
     local base_degrade = SYS_GetParam(2, ammo, "impair")
     local actual_degrade = ini_ammo:r_float_ex(ammo, "impair") or base_degrade
-    if base_degrade == actual_degrade then return end
-    local diff = (actual_degrade - base_degrade) * cur_wep_data.dec
-    -- print_dbg("Adjusting weapon cond by %s", diff)
-    weapon:set_condition(clamp(weapon:condition() - diff, 0.001, 0.999))
+    if base_degrade ~= actual_degrade then 
+        local diff = (actual_degrade - base_degrade) * cur_wep_data.dec
+        -- print_dbg("Adjusting weapon cond by %s", diff)
+        weapon:set_condition(clamp(weapon:condition() - diff, 0.001, 0.999))\
+     end
+    
+    local on_shoot = ini_ammo:r_string_ex(ammo, "on_shoot") or nil
+    if not on_shoot then return end
+    func = str_explode(on_shoot, "%.")
+
+    if func and func[1] and func[2] and _G[func[1]] and _G[func[1]][func[2]] then
+        _G[func[1]][func[2]]()
+    end
 end
 
 
