@@ -226,6 +226,15 @@ function process_hp(precalc, is_npc)
     return 1
 end
 
+function ap_standard(ctx, s_hit, precalc)
+    if not ctx.is_npc then
+        return mutant_standard(s_hit, precalc)
+    else
+        return npc_standard(s_hit, precalc)
+    end
+
+end
+
 function npc_standard(s_hit, precalc)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
@@ -288,10 +297,19 @@ function stun_npc(npc)
         if IsStalker(npc) then
             play_anim(npc)
         end
-        npc_stun[npc:id()] = time_global() + 750
+        npc_stun[npc:id()] = time_global() + 2000
     end
 end
-
+function npc_shot_dispersion(obj, wpn, body_state, move_type, temp_disp)
+    if npc_stun[obj:id()] then
+        
+        if time_global() > npc_stun[obj:id()] then
+            npc_stun[obj:id()] = false
+        else
+            temp_disp.dispersion = 1
+        end
+    end
+end
 
 function play_anim(npc)
     if npc:movement_type() == move.walk or npc:movement_type() == move.run then
@@ -301,36 +319,23 @@ function play_anim(npc)
     state_mgr.set_state(npc, "idle")
 end
 
+local berserked = {}
+
 function on_enemy_eval(obj, enemy, flags)
-    if npc_stun[obj:id()] then
-        if time_global() > npc_stun[obj:id()] then
-            npc_stun[obj:id()] = false
-        else 
-            flags.override = true
-            flags.ret_value = false 
-            cause_fake_damage(obj)
-        end
+    
+    if berserked[enemy:id()] then
+        flags.override = true
+        flags.result = true
+    elseif berserked[obj:id()] then
+        flags.override = true
+        flags.result = enemy:id() ~= 0
     end
 end
 
---Cause fake damage
-function cause_fake_damage(obj)
-    --Burer has to receive some fake damage, or it will just stand
-      local h= hit()
-      h.type = hit.telepatic
-      h.power = 0.0001
-      h.impulse = 1
-      h.direction = VEC_Z
-      h.draftsman = db.actor
-      obj:hit(h)
-  end
-
 function npc_on_death_callback(victim, who)
     npc_stun[victim:id()] = nil
-    if marked == victim:id() then 
-        RemoveTimeEvent("clear_mark", "clear_mark")
-        marked = nil 
-    end
+    if berserked[npc:id()] then berserked[npc:id()] = nil end
+
 end
 
 -- refer to ballistics_mcm.txt for logic details
@@ -342,13 +347,8 @@ function ballistic_handlers.default(npc, s_hit, ctx)
     -- add standard calcs for hit, bone mult, etc
     apply_std_calcs(calcs, npc, s_hit, precalc)
 
-    if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(s_hit, precalc)
-    else
-        -- tier based formula with overpen, and flinch
-        calcs.ap_calc = npc_standard(s_hit, precalc)
-        -- process_flinch(npc, precalc)
-    end
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
     if not is_actor(npc) then
         calcs.hollowpoint = process_hp(precalc, ctx.is_npc)
     end
@@ -500,12 +500,11 @@ function headshot(npc, s_hit, ctx)
     -- ignore armor on headshot, set armor to one below ap to guarantee full damage
     if head_bones[ctx.bone_id] and bone_data.armor < 0.35 and not dialogs_axr_companion.is_actor_companion(db.actor, npc) then
         print_dbg("Ignoring armor on headshot")
-        calcs.ap_calc = 1
+        -- calcs.ap_calc = 1
+        ammo_data.k_imp = 2
         headsplode(npc)
-    else
-        calcs.ap_calc = npc_standard(s_hit, precalc)
     end
-
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
     calcs.hollowpoint = process_hp(precalc, ctx.is_npc)
 
     local final_hit = tbl_reduce(calcs)
@@ -540,12 +539,8 @@ function ambush(npc, s_hit, ctx)
         calcs.ambush = 1.2
         ammo_data.k_ap = ammo_data.k_ap + 0.05
     end
-    if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(s_hit, precalc)
-    else
-        -- tier based formula with overpen, and flinch
-        calcs.ap_calc = npc_standard(s_hit, precalc)
-    end
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
     
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
@@ -555,25 +550,21 @@ function ambush(npc, s_hit, ctx)
 end
 -- 0-200 no damage falloff
 function match(npc, s_hit, ctx) 
-   local distance = get_distance(db.actor, npc)
-    
-   local calcs = {}
-   local precalc = prework(npc, s_hit, ctx)
-   ammo_data = precalc.ammo_data
-   bone_data = precalc.bone_data
+    local distance = get_distance(db.actor, npc)
 
-   apply_std_calcs(calcs, npc, s_hit, precalc)
-   calcs.distance = nil
-   -- distance based ap increase
-   local distance_mult = clamp(1 + (distance / 200), 1, 2)
-   ammo_data.k_ap = clamp(ammo_data.k_ap * distance_mult, 0, 0.399) 
-    if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(s_hit, precalc)
-    else
-        -- tier based formula with overpen, and flinch
-        calcs.ap_calc = npc_standard(s_hit, precalc)
-    end
-    
+    local calcs = {}
+    local precalc = prework(npc, s_hit, ctx)
+    ammo_data = precalc.ammo_data
+    bone_data = precalc.bone_data
+
+    apply_std_calcs(calcs, npc, s_hit, precalc)
+    calcs.distance = nil
+    -- distance based ap increase
+    local distance_mult = clamp(1 + (distance / 200), 1, 2)
+    ammo_data.k_ap = clamp(ammo_data.k_ap * distance_mult, 0, 0.399) 
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
+
     local final_hit = tbl_reduce(calcs)
     print_dbg("Bone: %s. BA: %s. BM: %s. AP: %s. Vis: %s. Original: %s. Base hit: %s. Final hit: %s", bone_data.name, bone_data.armor, bone_data.mult, ammo_data.k_ap, npc:get_visual_name(), s_hit.power, calcs.base_power, final_hit)
     s_hit.power = final_hit
@@ -581,44 +572,30 @@ function match(npc, s_hit, ctx)
     return s_hit
 end
 
-local marked
+-- 10 meters or less, increase damage
+-- 10-20 meters, reduce damage
+function terminal(npc, s_hit, ctx)
+    local distance = get_distance(db.actor, npc)
 
-function tracer(npc, s_hit, ctx)
-    if marked == npc:id() then return ballistic_handlers.default(npc, s_hit, ctx) end
-    marked = npc:id()
-    play_sound_on_location("elite", db.actor)
-    -- aggro companions
-    for k,v in pairs(axr_companions.list_actor_squad_by_id()) do
-        companion = get_object_by_id(v)
-        if companion then
-            local h = hit()
-            h.type = hit.fire_wound
-            h.power = 0.0
-            h.impulse = 0.0
-            h.direction = VEC_Y
-            h.draftsman = npc
-            companion:hit(h)
-        end
-    end
+    local calcs = {}
+    local precalc = prework(npc, s_hit, ctx)
+    ammo_data = precalc.ammo_data
+    bone_data = precalc.bone_data
 
-    RemoveTimeEvent("clear_mark", "clear_mark")
-    CreateTimeEvent("clear_mark", "clear_mark", 5, function()
-        marked = nil
-        return true
-    end)
-    return ballistic_handlers.default(npc, s_hit, ctx)
+    apply_std_calcs(calcs, npc, s_hit, precalc)
+
+    local distance_mult = clamp(1 - (distance / 10), -1, 1)
+    ammo_data.k_ap = clamp(ammo_data.k_ap * (1 + (0.06 * distance_mult)), 0, 0.399)
+    calcs.k_hit = calcs.k_hit * (1 + (0.3 * distance_mult))
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
+    local final_hit = tbl_reduce(calcs)
+
+    s_hit.power = final_hit
+    hit_num(npc, ctx, calcs)
+    return s_hit
 end
 
-function on_before_hit(npc, s_hit, bone_id, flags)
-    if npc:id() == marked then
-        local companions = axr_companions.companion_squads
-        if s_hit.draftsman:id() == AC_ID then
-            s_hit.power = clamp(s_hit.power * 1.2, 0, 0.99)
-        elseif companions[s_hit.draftsman:id()] then
-            s_hit.power = clamp(s_hit.power * 1.3, 0, 0.99)
-        end
-    end
-end
 
 function rip(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
@@ -725,11 +702,8 @@ function chaos_damage(npc, s_hit, ctx)
 
     -- ap +/- 2 tiers randomly
     ammo_data.k_ap = clamp(ammo_data.k_ap + random/9, 0, 1)
-    if not ctx.is_npc then
-        calcs.ap_calc = mutant_standard(s_hit, precalc)
-    else
-        calcs.ap_calc = npc_standard(s_hit, precalc)
-    end
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
     -- damage inverse of ap
     calcs.chaos = 0.6 + (1 - random)
     
@@ -785,6 +759,8 @@ function shock_damage(npc, s_hit, ctx)
     local armor_tier = get_tier(precalc.bone_data.armor)
 
     apply_std_calcs(calcs, npc, s_hit, precalc)
+    calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
+
     calcs.lightning_bonus = 1 + (armor_tier * 0.6)
     snd = "electric"
     if armor_tier > 3 then
@@ -799,7 +775,7 @@ function shock_damage(npc, s_hit, ctx)
 end
 
 function shock_handler(bullet)
-    if not bullet or bullet.parent_id ~= 0 then return end
+    if not bullet or bullet.target_id ~= 65535 then return end
     local aim_point = bullet.position    
     -- check material hit, if metal, create small electric nova
     
@@ -834,17 +810,43 @@ function soulripper(npc, s_hit, ctx)
     return s_hit
 end
 
-local mine_id = 0
+function enrage(npc, s_hit, ctx)
+    if not berserked[npc:id()] then 
+        berserked[npc:id()] = true 
+    end
+    npc.health = 1
+    s_hit.draftsman = db.actor:active_item()
+    CreateTimeEvent(npc:id(), npc:id(), 60, 
+    function()
+        berserked[npc:id()] = nil 
+    end)
+    level.iterate_nearest(npc:position(), 15, function(obj)
+        if obj:alive() then
+            local h = hit()
+            h.power = 0.0001
+            h.direction = vector():set(0,0,0)
+            h.bone = "bip01_spine"
+            h.draftsman = obj
+            h.impulse = 0	--6000
+            h.type = hit.wound
+            npc:hit(h)
+            return true
+        end
+    end)
+    npc:set_mental_state(anim.panic)
+    return ballistic_handlers.default(npc, s_hit, ctx)
+end
+
 function explode_handler(bullet)
     if not bullet or bullet.parent_id ~= 0 then return end
     local aim_point = bullet.position
-    local explode_obj = alife_create_item("bullet_blow", {aim_point, level.vertex_id(aim_point), db.actor:game_vertex_id()})
+    local explode_obj = alife_create_item("bullet_blow", {aim_point, db.actor:level_vertex_id(), db.actor:game_vertex_id()})
     CreateTimeEvent(explode_obj.id, explode_obj.id, 0, 
     function(id)
         local explode_obj = get_object_by_id(id)
         if explode_obj then
             explode_obj:explode(0)
-            explode_obj:destroy_object()
+            -- explode_obj:destroy_object()
             return true
         end
         return false
@@ -875,26 +877,6 @@ function play_grav()
 end
 function play_fire_big()
     play_particle_firepoint("artefact\\af_thermal_idle")
-end
-
-local custom_proj_table = {
-    -- ["explodes"] = explode_handler,
-    ["impair"] = pab,
-    ["soulripper"] = play_grav_sound,
-    ["chaos"] = play_grav,
-    ["shock"] = play_shock,
-    ["fire_melt"] = play_fire_big,
-    ["acid"] = play_acid
-}
-
-
-
-function actor_on_weapon_fired(obj, wpn, ammo_elapsed, grenade_elapsed, ammo_type, grenade_type)
-    local ammo_table = utils_item.get_ammo(wpn:section(), wpn:id())
-    ammo_type = wpn:get_ammo_type()
-    if ammo_table[ammo_type + 1] and custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")] then
-        custom_proj_table[ini_ammo:r_string_ex(ammo_table[ammo_type + 1], "special")]()
-    end
 end
 
 function hit_num(npc, ctx, calcs)
@@ -931,12 +913,9 @@ function hit_num_data(ctx, calcs)
 end
 
 function on_game_start()
-    RegisterScriptCallback("actor_on_weapon_fired", actor_on_weapon_fired)
     RegisterScriptCallback("on_enemy_eval", on_enemy_eval)
     RegisterScriptCallback("npc_on_death_callback", npc_on_death_callback)
     RegisterScriptCallback("monster_on_death_callback",npc_on_death_callback)
-    RegisterScriptCallback("npc_on_before_hit", on_before_hit)
-    RegisterScriptCallback("monster_on_before_hit", on_before_hit)
 
     -- ini_ammo:section_for_each(function(sec)
     --     data = get_ammo_data(sec)

@@ -778,7 +778,7 @@ wm_size         = 0.034
 
 tier                                     = 2
 
-[ammo_5.45x39_fmj_bad]:ammo_5.45x39_fmj ; 7N6M
+[ammo_5.45x39_fmj_bad]:ammo_5.45x39_fmj ; 7N6 terminal
 inv_grid_width = 2
 inv_grid_height = 1
 inv_grid_x = 14
@@ -789,18 +789,15 @@ inv_name_short		                     = ammo_new_5.45x39_fmjs_s
 cost        = 1950
 impair      = 1
 
-tracer = true
-tracer_color_ID = 3
-4to1_tracer = false
-
-k_disp			= 1
+k_disp			= 1.1
+k_cam_dispersion                         = 0.8
+k_bullet_speed	= 0.9
 k_impulse		= 0.58
 k_ap			= 0.38
 
 
 wm_size         = 0.034
 k_air_resistance = 0.25
-k_bullet_speed	= 1.05
 
 tier                                     = 2
 
@@ -964,10 +961,12 @@ icons_texture = ui\ui_maid_ammo
 inv_name = ammo_new_5.56x45_fmjs
 inv_name_short		                     = ammo_new_5.56x45_fmjs_s
 
-k_disp			= 1
+k_disp			= 1.1
+k_cam_dispersion                         = 0.8
+k_bullet_speed	= 0.9
+
 k_impulse		= 0.56
-k_ap			= 0.33 
-k_bullet_speed	= 1
+k_ap			= 0.33
 
 tracer = true
 tracer_color_ID = 3

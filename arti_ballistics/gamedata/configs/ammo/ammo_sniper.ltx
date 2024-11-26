@@ -154,6 +154,7 @@ k_hit		= 0.4
 k_ap		= 0.399
 impair      = 1.5
 cost        = 3400
+on_shoot    = arti_handlers.play_shock
 dg_ammo     = ammo_7.92x33_ap
 dg_chance   = 0.7
 special     = shock
@@ -215,8 +216,30 @@ k_ap		= 0.399
 impair      = 2
 cost        = 5540
 special     = soulripper
+on_shoot    = arti_handlers.play_grav_sound
+sound       = soulripper
 dg_ammo     = ammo_magnum_300
 dg_chance   = 0.8
+
+
+; [ammo_gauss]:ammo_base; fmj
+; name		= ammo_new_gauss
+; k_hit		= 2.5
+; k_ap		= 0.399
+; k_imp       = 1
+; impair      = 1
+; cost        = 11990
+
+; [ammo_gauss_bad]:ammo_magnum_300; saboted DU 
+; handler     = arti_handlers.enrage
+; name		= ammo_new_gauss_rage
+; k_hit		= 0
+; k_ap		= 0.399
+; impair      = 1
+; cost        = 14990
+; special     = enrage
+; dg_ammo     = ammo_new_gauss
+; dg_chance   = 1
 
 [ammo_7.92x33_fmj_verybad]:ammo_7.92x33_fmj_bad
 [ammo_7.92x33_ap_verybad]:ammo_7.92x33_ap_bad

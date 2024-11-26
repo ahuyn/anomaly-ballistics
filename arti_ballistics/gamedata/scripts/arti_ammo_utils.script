@@ -80,12 +80,12 @@ function process_wpn(wpn, bypass)
     end
 end
 
-local recipe_trader = {
+local recipe_trader = {    
     killer = {
-       "recipe_ammo_nato",
-       "recipe_ammo_pistol",
-       "recipe_ammo_powder",
-       "recipe_ammo_bullet"
+        "recipe_ammo_nato",
+        "recipe_ammo_pistol",
+        "recipe_ammo_powder",
+        "recipe_ammo_bullet"
     },
     army = {
         "recipe_ammo_ru1",
@@ -255,12 +255,12 @@ function treasure_manager.try_spawn_treasure(box)
 end
 if magazines then
     RollAmmo = magazines_loot.determine_ammo
-    -- subject the ammo pop in mags to downgrade
+    -- always downgrade magazined ammo
     function magazines_loot.determine_ammo(ammo_to_pick, mag_sec, rank)
         if RollAmmo then
             print_dbg("Roll to downgrade %s in %s", ammo_to_pick, mag_sec)
             ammo_to_pick = RollAmmo(ammo_to_pick, mag_sec, rank)
-            ammo_to_pick = downgrade_ammo(ammo_to_pick)
+            ammo_to_pick = downgrade_ammo(ammo_to_pick, true)
         end
         return ammo_to_pick
     end
