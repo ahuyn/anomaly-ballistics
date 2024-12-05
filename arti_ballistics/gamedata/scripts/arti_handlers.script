@@ -334,7 +334,7 @@ end
 
 function npc_on_death_callback(victim, who)
     npc_stun[victim:id()] = nil
-    if berserked[victim:id()] then berserked[victim:id()] = nil end
+    if berserked[npc:id()] then berserked[npc:id()] = nil end
 
 end
 
