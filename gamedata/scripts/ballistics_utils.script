@@ -425,7 +425,7 @@ function actor_on_weapon_fired(obj, weapon, ammo_elapsed, grenade_elapsed, ammo_
     if base_degrade ~= actual_degrade then 
         local diff = (actual_degrade - base_degrade) * cur_wep_data.dec
         -- print_dbg("Adjusting weapon cond by %s", diff)
-        weapon:set_condition(clamp(weapon:condition() - diff, 0.001, 0.999))\
+        weapon:set_condition(clamp(weapon:condition() - diff, 0.001, 0.999))
      end
     
     local on_shoot = ini_ammo:r_string_ex(ammo, "on_shoot") or nil
