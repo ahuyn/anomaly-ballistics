@@ -367,10 +367,8 @@ function actor_on_weapon_before_fire(flags)
             end
             cur_wep_data.vel_mod = vel_add/base_vel
             cur_wep_data.dec = base_degrade
-            -- print_dbg("Stored velocity mod %s, recoil %s, degradation %s for wpn %s", cur_wep_data.vel_mod, cur_wep_data.recoil, base_degrade, sec)
         else
             -- clear
-            -- print_dbg("Clearing cwd")
             cur_wep_data.id = 0
             cur_wep_data.vel_mod = 0
             cur_wep_data.dec = 0
@@ -419,7 +417,6 @@ function actor_on_weapon_fired(obj, weapon, ammo_elapsed, grenade_elapsed, ammo_
     local sec = weapon:section()
     ammo_map = utils_item.get_ammo(nil, cur_wep_data.id)
     local ammo = ammo_map[weapon:get_ammo_type() + 1]
-    printf("shot ammo: %s", ammo)
     local base_degrade = SYS_GetParam(2, ammo, "impair")
     local actual_degrade = ini_ammo:r_float_ex(ammo, "impair") or base_degrade
     if base_degrade ~= actual_degrade then 
