@@ -411,7 +411,7 @@ function buckshot_damage(npc, s_hit, ctx)
         ammo_data = precalc.ammo_data
 
         -- reduce armor, increase impact
-        bone_data.armor = clamp(bone_data.armor - 0.1, 0, 1)
+        bone_data.armor = clamp(math.max(bone_data.armor - 0.1, bone_data.armor/2), 0, 1)
         ammo_data.k_imp = ammo_data.k_imp + 0.15
         
         calcs.base_power = precalc.base_power
@@ -582,9 +582,10 @@ function terminal(npc, s_hit, ctx)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
 
+    local distance_mult = clamp(1 - (distance / 10), -1, 1)
+    ammo_data.k_imp = ammo_data.k_imp * (1 + (0.3 * distance_mult))
     apply_std_calcs(calcs, npc, s_hit, precalc)
 
-    local distance_mult = clamp(1 - (distance / 10), -1, 1)
     ammo_data.k_ap = clamp(ammo_data.k_ap * (1 + (0.06 * distance_mult)), 0, 0.399)
     calcs.k_hit = calcs.k_hit * (1 + (0.3 * distance_mult))
     calcs.ap_calc = ap_standard(ctx, s_hit, precalc)
@@ -695,7 +696,6 @@ function chaos_damage(npc, s_hit, ctx)
     ammo_data = precalc.ammo_data
     bone_data = precalc.bone_data
 
-    -- these work for mutant or man
     apply_std_calcs(calcs, npc, s_hit, precalc)
     
     random = math_random()
