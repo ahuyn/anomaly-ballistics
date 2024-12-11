@@ -1,21 +1,3 @@
--- arti_crusher = {
---     af_pin = "powder_nightstar:3",
---     af_night_star = "powder_nightstar:5",
-    
---     af_medusa = "powder_gravi,3",
---     af_vyvert = "powder_gravi,4",
---     af_gravi = "powder_gravi,5",
-    
---     af_cristall = "powder_fireball,3",
---     af_fireball = "powder_fireball,5",
-    
---     af_blood = "powder_blood,3",
---     af_mincer_meat = "powder_blood,5",
-
---     af_electra_sparkler = "powder_battery,4",
---     af_dummy_battery = "powder_battery,5",
--- }
-
 tbl = {}
 ini_balls = ini_file("items\\settings\\ball_crusher.ltx")
 gc = game.translate_string

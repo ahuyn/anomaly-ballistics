@@ -5,7 +5,7 @@ math_random = math.random
 -- m209 cluster
 
 local bomb_min_force = 2000
-local bomb_force = 3000
+local bomb_force = 4000
 function detonate(item_id)
     local bomb = get_object_by_id(item_id)
     if bomb then
@@ -20,7 +20,7 @@ function bomb_scatter(item_id)
             bomb_min_force + (random_float(-1, 1) * bomb_force * 5),
             (bomb_min_force + (math_random() * bomb_force * 5)),
             bomb_min_force + (random_float(-1, 1) * bomb_force * 5))
-        CreateTimeEvent(item_id, math_random(10), 0.2 + 1.5 * math_random(), detonate, item_id)
+        CreateTimeEvent(item_id, math_random(10), 0.2 + 3 * math_random(), detonate, item_id)
         return true
     end
     return false

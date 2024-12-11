@@ -7,7 +7,7 @@
 <string_table>
 	<!-- descriptors -->
 	<string id="st_dot">
-		<text>•</text>
+		<text>ï¿½</text>
 	</string>
 	<string id="st_ball_properties">
 		<text>PROPERTIES:</text>
@@ -125,7 +125,7 @@
 		<text>headshots heal</text>
 	</string>
 	<string id="st_ballistics_terminal">
-		<text>increased close-range effectiveness</text>
+		<text>increased damage+ap at close range</text>
 	</string>
 	<string id="st_ballistics_enrage">
 		<text>permanently enrages targets</text>
@@ -479,7 +479,7 @@
 		<text>5.45x39mm Terminal rounds</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_descr">
-		<text>Modified and hand reloaded 5.45x39 7N6 rounds produced by Zone craftsmen. These bullets, when fired, experience a brief reaction that increases energy transferred to the target if fired at very short ranges. The increased stopping power only happens at very short ranges, so stalkers prefer to use this round in close quarters or when clearing mutant dens. Due to instability of the reaction, these rounds are subsonic loads.</text>
+		<text>Modified and hand reloaded 5.45x39 7N6 rounds produced by Zone craftsmen. A relatively simple modification, these bullets are tipped with a gravitational artifact shard that transforms into a short-lived plasma on round discharge. Overall effectiveness is vastly increased in close range, but due to the short lifespan of the reaction, effectiveness is heavily reduced past that.</text>
 	</string>
 	<string id="ammo_new_5.45x39_fmjs_s">
 		<text>5.45x39 Terminal</text>
@@ -539,7 +539,7 @@
 		<text>5.56x45mm Terminal rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_descr">
-		<text>Modified 5.56x45mm rounds subjected to anomalous treatment. These rounds hit harder at short range thanks to enhancements with gravitational artifacts. Due to the relative cheapness of production, these rounds are popular to produce despite their niche effects. Ineffective beyond ten meters. </text>
+		<text>Modified 5.56x45mm rounds produced in the Zone. A relatively simple modification, these bullets are tipped with a gravitational artifact shard that transforms into a short-lived plasma on round discharge. Overall effectiveness is vastly increased in close range, but due to the short lifespan of the reaction, effectiveness is heavily reduced past that.</text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_s">
 		<text>5.56x45 Terminal</text>
