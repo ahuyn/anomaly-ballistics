@@ -536,13 +536,13 @@
 	</string>
 
 	<string id="ammo_new_5.56x45_fmjs">
-		<text>5.56x45mm Terminal rounds</text>
+		<text>5.56x45mm Mk 262 rounds</text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_descr">
-		<text>Modified 5.56x45mm rounds produced in the Zone. A relatively simple modification, these bullets are tipped with a gravitational artifact shard that transforms into a short-lived plasma on round discharge. Overall effectiveness is vastly increased in close range, but due to the short lifespan of the reaction, effectiveness is heavily reduced past that.</text>
+		<text>Special-issue Mk. 262 rounds optimized for ballistic performances at long range. These rounds are designed to be used with designated marksman rifles and feature tighter groupings, better flight characteristics and enhanced effectiveness at long range.</text>
 	</string>
 	<string id="ammo_new_5.56x45_fmjs_s">
-		<text>5.56x45 Terminal</text>
+		<text>5.56x45 Match</text>
 	</string>
 	
 	<string id="ammo_new_5.56x45_hp">
@@ -595,13 +595,13 @@
 		<text>7.62x39 FMJ</text>
 	</string>	
 	<string id="ammo_new_7.62x39_fmjs">
-		<text>7.62x39mm M67 FMJ rounds</text>
+		<text>7.62x39mm Acid rounds</text>
 	</string>
 	<string id="ammo_new_7.62x39_fmjs_descr">
-		<text>Brass cased 7.62x39 originally developed in Yugoslavia, but now used as a catch-all for the more modern manufacture brass-cased ammo. The round still features a mild steel core and provides slightly better performance to the M43 round, but the main selling point is the better feeding and reduced wear on the weapon. Clear Sky faction maintains an agreement with an unknown party to supply these rounds through their faction.</text>
+		<text>7.62x39 hollowpoint rounds modified with a scaled-up artifact tip similar to that used in the experimental 7.62x25 Acid rounds. After the success of initial experimentation, applications were quickly found in larger-caliber rounds, giving less well-supplied factions a fighting chance.</text>
 	</string>
 	<string id="ammo_new_7.62x39_fmjs_s">
-		<text>7.62x39 FMJ+</text>
+		<text>7.62x39 Acid</text>
 	</string>	
 
 	<string id="ammo_new_7.62x39_ap">

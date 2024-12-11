@@ -56,7 +56,7 @@ function ignite(pos, dir, ammo)
     fire_particle:play_at_pos(pos)
     fire_particle2:play_at_pos(pos)
     level.iterate_nearest(pos, 10, function(obj)
-        if obj and obj:id() ~= AC_ID and obj:alive()  then
+        if obj and obj:id() ~= AC_ID and obj:alive()  then  
             arti_handlers.ignite_npc(obj, 11, {20, 40}, 1, 10)
         end
     end)

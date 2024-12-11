@@ -334,7 +334,7 @@ end
 
 function npc_on_death_callback(victim, who)
     npc_stun[victim:id()] = nil
-    if berserked[npc:id()] then berserked[npc:id()] = nil end
+    if berserked[victim:id()] then berserked[victim:id()] = nil end
 
 end
 
@@ -673,16 +673,17 @@ end
 function acid_damage(npc, s_hit, ctx)
     s_hit = ballistic_handlers.default(npc, s_hit, ctx)
     change_damage_type(s_hit, hit.chemical_burn, bone_data, is_actor(npc))
+    k_acid = ini_ammo:r_float_ex(ctx.hit_data.ammo, "k_acid") or 0.2
     if not ctx.is_npc  then 
         -- base 15% modified by chem immunity
         mutant_immunity = SYS_GetParam(0, npc:section(), "immunities_sect")
         chem_immunity = SYS_GetParam(0, mutant_immunity, "chemical_burn_immunity") or 1
-        local reduction = 0.15 * chem_immunity
+        local reduction = k_acid * chem_immunity
         modify_bone(npc, 1, clamp(bone_data.armor * (1 - reduction), 0, 1))
     else
         -- -20% armor per hit
         local bone_data = npc_bone_data(npc, ctx.bone_id)
-        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * 0.8, 0, 1))
+        modify_bone(npc, ctx.bone_id, clamp(bone_data.armor * (1 - k_acid), 0, 1))
     end
     play_particle(npc, ctx.bone_id, "artefact\\effects\\af_acidic_idle_color")
     play_sound_on_location("acid", npc)
